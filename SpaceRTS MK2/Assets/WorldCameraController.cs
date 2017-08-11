@@ -9,6 +9,7 @@ public class WorldCameraController : MonoBehaviour {
 	const float BaseSensitivity = 5;
 	float Sensitivity;
 	Vector3 offset;
+	Vector3 mousePos;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,8 @@ public class WorldCameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		 mousePos = cam.ScreenToWorldPoint (Input.mousePosition);
+
 		InputLoop ();
 
 		transform.position = new Vector3 (transform.position.x + offset.x, transform.position.y, transform.position.z + offset.z);
@@ -37,10 +40,14 @@ public class WorldCameraController : MonoBehaviour {
 		offset.x = Input.GetAxis ("Horizontal") * Sensitivity;
 
 		float zoom = Input.GetAxis ("Mouse ScrollWheel");
-		if (zoom > 0)
-			cam.orthographicSize -= Sensitivity * 150;
+
+		if (zoom > 0) {
+			cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 3f, Sensitivity);
+			//zoom to mouse
+			cam.transform.position = Vector3.Lerp (cam.transform.position, new Vector3 (mousePos.x, cam.transform.position.y, mousePos.z), 15f * Time.deltaTime);
+		}
 		else if (zoom < 0)
-			cam.orthographicSize += Sensitivity * 150;
+			cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 125f, Sensitivity);
 		if (cam.orthographicSize < 3)
 			cam.orthographicSize = 3;
 
@@ -82,7 +89,6 @@ public class WorldCameraController : MonoBehaviour {
 	}
 
 	void DoubleClick(){
-		Vector3 mousePos = cam.ScreenToWorldPoint (Input.mousePosition);
 		transform.position = new Vector3 ( mousePos.x, transform.position.y, mousePos.z);
 	}
 

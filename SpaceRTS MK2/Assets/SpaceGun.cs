@@ -19,7 +19,7 @@ public class SpaceGun : MonoBehaviour {
 		if (s) {
 			if (s.faction != self.faction) {
 				target = s;
-				shooting = true;
+			//	shooting = true;
 			}
 		}
 	}

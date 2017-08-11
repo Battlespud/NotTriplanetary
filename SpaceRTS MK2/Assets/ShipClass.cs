@@ -26,11 +26,11 @@ public class Screen{
 public class Screens{
 	public Dictionary<GeneralDirection,Screen> dic = new Dictionary<GeneralDirection,Screen> ();
 	public ShipClass parent;
-	Screen ForeScreen = new Screen (10); 
-	Screen AftScreen = new Screen (10);
-	Screen PortScreen = new Screen (10);
-	Screen StarboardScreen = new Screen (10);
-	public Screen WallScreen = new Screen(10);
+	Screen ForeScreen = new Screen (0); 
+	Screen AftScreen = new Screen (0);
+	Screen PortScreen = new Screen (0);
+	Screen StarboardScreen = new Screen (0);
+	public Screen WallScreen = new Screen(0);
 	public Screens(ShipClass p){
 		parent = p;
 		dic.Add (GeneralDirection.Forwards, ForeScreen);
@@ -38,7 +38,7 @@ public class Screens{
 		dic.Add (GeneralDirection.Left, PortScreen);
 		dic.Add (GeneralDirection.Right, StarboardScreen);
 	}
-	public void Damage(float dam, Screen s){
+	public void Damage(float dam, Screen s, Vector3 source){
 		if (s.strength > 0f) {
 			s.strength -= dam;
 			if (s.strength < 0f)
@@ -50,6 +50,9 @@ public class Screens{
 					WallScreen.strength = 0f;
 			} else {
 				parent.integrity -= Random.Range (20f, 110f) * dam;		
+				if (parent.integrity <= 0f) {
+					parent.ship.SpawnDebris (source);
+				}
 			}
 
 		}
@@ -60,7 +63,7 @@ public class Screens{
 public class ShipClass : MonoBehaviour {
 
 	public float integrity = 100f;
-
+	public Ship ship;
 	//just for inspector testing
 	public float Fore;
 	public float Aft;
@@ -76,6 +79,7 @@ public class ShipClass : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		screens  = new Screens(this);
+		ship = GetComponent<Ship> ();
 	}
 	
 	// Update is called once per frame
@@ -89,7 +93,7 @@ public class ShipClass : MonoBehaviour {
 	}
 
 	public void Damage(float f, Vector3 origin){
-		screens.Damage (f, screens.dic[GetDirection (transform.position, origin)]);
+		screens.Damage (f, screens.dic[GetDirection (transform.position, origin)], origin);
 	}
 
 

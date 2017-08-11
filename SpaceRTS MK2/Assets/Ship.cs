@@ -6,6 +6,8 @@ public class Ship : MonoBehaviour {
 
 	//this only handles things specific to this entity, like movement.
 
+	public static GameObject Debris; //spawns on death.
+
 	public ShipClass shipClass;
 
 	//combat
@@ -24,6 +26,7 @@ public class Ship : MonoBehaviour {
 	public NavMeshAgent Agent;
 	// Use this for initialization
 	void Start () {
+		Debris = Resources.Load<GameObject> ("Debris") as GameObject;
 		Agent = GetComponent<NavMeshAgent> ();
 		foreach (SpaceGun sg in GetComponentsInChildren<SpaceGun>()) {
 			Guns.Add (sg);
@@ -38,8 +41,15 @@ public class Ship : MonoBehaviour {
 		dir = ShipClass.GetDirection (transform.position, transform.position - new Vector3(mousePos.x,transform.position.y,mousePos.z));
 	}
 
-
-
+	public void SpawnDebris(Vector3 source){
+		Vector3 dir = transform.position - source;
+		dir = dir.normalized;
+		GameObject deb = Instantiate (Debris);
+		deb.transform.position = transform.position+dir*.1f;
+		Rigidbody rb = deb.GetComponent<Rigidbody> ();
+		rb.AddForce (dir*125f);
+		Destroy (gameObject);
+	}
 
 	public void IssueMovementCommand(Vector2 vec){
 		StopAllCoroutines ();
