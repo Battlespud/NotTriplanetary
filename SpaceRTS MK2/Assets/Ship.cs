@@ -12,10 +12,11 @@ public class Ship : MonoBehaviour {
 	public static GameObject Debris; //spawns on death.
 	public static GameObject Torpedo;
 
-
+	bool moveAssigned = false;
 
 	public ShipClass shipClass;
 
+	Vector3 mousePos;
 
 	//combat
 	public int faction;
@@ -26,6 +27,12 @@ public class Ship : MonoBehaviour {
 	bool engineDisabled;
 	public bool underTractor;
 	public bool usingTractor;
+
+	//Pathfinding
+	public List<Vector2>Waypoints = new List<Vector2>();
+
+	LineRenderer lr;
+
 
 	//main
 
@@ -52,15 +59,43 @@ public class Ship : MonoBehaviour {
 			Guns.Add (sg);
 		}
 		shipClass = gameObject.AddComponent<ShipClass> ();
+		lr = this.gameObject.AddComponent<LineRenderer> ();
+		lr.enabled = false;
+		lr.SetWidth (.05f, .05f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(lr.enabled)SetPaths() ;
+		mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Agent.acceleration = mass / enginePower;
-		if (usingTractor)
-			Agent.acceleration *= .35f;
-		Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		dir = Direction.GetDirection (transform.position, transform.position - new Vector3(mousePos.x,transform.position.y,mousePos.z));
+		if (usingTractor)Agent.acceleration *= .35f;
+		TractorLoop ();
+
+		if (!moveAssigned) {
+			if (Waypoints.Count != 0) {
+				IssueMovementCommand(Waypoints[0]);
+			}
+		}
+		if( Agent.remainingDistance <= float.Epsilon && Waypoints.Count != 0) {
+			Waypoints.Remove (Waypoints [0]);
+			moveAssigned = false;
+			SetPaths ();
+			if (Waypoints.Count != 0) {
+				IssueMovementCommand(Waypoints[0]);
+			}
+		}
+	}
+
+	public List<LineRenderer> path = new List<LineRenderer>();
+
+	public void TogglePath(){
+		lr.enabled = !lr.enabled;
+	}
+
+	void TractorLoop(){
+
+		//dir = Direction.GetDirection (transform.position, transform.position - new Vector3(mousePos.x,transform.position.y,mousePos.z));
 		if (underTractor || engineDisabled)
 			immobile = true;
 		else
@@ -69,9 +104,10 @@ public class Ship : MonoBehaviour {
 			Agent.acceleration=0f;
 	}
 
+
+
 	public void SetUnderTractor(){
 		underTractor = true;
-//		Agent.destination = null;
 	}
 
 	public void SpawnDebris(Vector3 source){
@@ -90,16 +126,45 @@ public class Ship : MonoBehaviour {
 		t.GetComponent<Rigidbody> ().AddForce (transform.forward * 150f);
 	}
 
+
+	public void AddWaypoint(Vector2 targ,bool shift){
+		if (shift) {
+			Waypoints.Add (targ);
+		} else {
+			Waypoints.Clear();
+			Waypoints.Add (targ);
+			IssueMovementCommand(Waypoints[0]);
+		}
+	}
+
+	public void SetPaths(){
+		List<Vector3> LinePoints = new List<Vector3> ();
+		LinePoints.Add (transform.position);
+		foreach (Vector2 v in Waypoints) {
+			LinePoints.Add(ToVector3(v));
+		}
+		lr.positionCount = LinePoints.Count;
+		lr.SetPositions (LinePoints.ToArray());
+	}
+
+	public static Vector3 ToVector3(Vector2 vec){
+		return new Vector3 (vec.x, .5f, vec.y);
+	}
+
 	public void IssueMovementCommand(Vector2 vec){
+		moveAssigned = true;
 		StopAllCoroutines ();
+	//	Agent.SetDestination (transform.position);
+		Agent.velocity = new Vector3();
 		StartCoroutine("Movement", (new Vector3(vec.x,transform.position.y, vec.y)));
 	}
 
 	public IEnumerator Movement(Vector3 dest){
+		Agent.isStopped = false;
 		float dotProd = 0f;
 		Agent.SetDestination (dest);
 		while (dotProd < .85) {
-			Agent.acceleration = .2f * Agent.acceleration;
+			Agent.acceleration = .01f*Agent.acceleration;
 			dotProd = Vector3.Dot (transform.forward, (dest - transform.position).normalized);
 			DotProdUI = dotProd;
 			yield return null;

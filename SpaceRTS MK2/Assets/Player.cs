@@ -68,10 +68,12 @@ public class Player : MonoBehaviour {
 	void SelectShip(Ship s){
 		if (SelectedShips.Contains (s)) {
 			SelectedShips.Remove (s);
+			s.TogglePath ();
 			s.GetComponentInChildren<Renderer> ().material.color = Color.green;
 			Debug.Log ("Ship " + s.ShipName + " removed.");
 		} else {
 			SelectedShips.Add (s);
+			s.TogglePath ();
 			s.GetComponentInChildren<Renderer> ().material.color = Color.blue;
 			Debug.Log ("Ship " + s.ShipName + " selected.");
 		}
@@ -79,7 +81,7 @@ public class Player : MonoBehaviour {
 
 	void MoveShips(Vector2 vec){
 		foreach (Ship s in SelectedShips) {
-			s.IssueMovementCommand (vec);
+			s.AddWaypoint (vec, Input.GetKey(KeyCode.LeftShift));
 		}
 	}
 }
