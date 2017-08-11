@@ -9,6 +9,8 @@ public class SpaceGun : MonoBehaviour {
 	public bool shooting = false;
 	public bool CanFire = true;
 
+	float powerCost = 5f;
+
 	// Use this for initialization
 	void Start () {
 		self = GetComponentInParent<Ship> ();
@@ -42,7 +44,7 @@ public class SpaceGun : MonoBehaviour {
 	}
 
 	void Fire(){
-		if (!CanFire || !target)
+		if (!CanFire || !target || !self.shipClass.Power.UsePower(powerCost))
 			return;
 		Debug.DrawLine (self.transform.position, target.transform.position, Color.red, .05f);
 		target.shipClass.Damage (1f, transform.position);

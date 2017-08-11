@@ -7,12 +7,21 @@ public class Ship : MonoBehaviour {
 	//this only handles things specific to this entity, like movement.
 
 	public static GameObject Debris; //spawns on death.
+	public static GameObject Torpedo;
+
 
 	public ShipClass shipClass;
 
 	//combat
 	public int faction;
 	public List<SpaceGun> Guns = new List<SpaceGun> ();
+
+	//movement
+	public bool immobile;
+	bool engineDisabled;
+	public bool underTractor;
+	public bool usingTractor;
+
 	//main
 
 	public string ShipName;
@@ -27,6 +36,7 @@ public class Ship : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Debris = Resources.Load<GameObject> ("Debris") as GameObject;
+		Torpedo = Resources.Load<GameObject> ("Torpedo") as GameObject;
 		Agent = GetComponent<NavMeshAgent> ();
 		foreach (SpaceGun sg in GetComponentsInChildren<SpaceGun>()) {
 			Guns.Add (sg);
@@ -37,8 +47,21 @@ public class Ship : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Agent.acceleration = mass / enginePower;
+		if (usingTractor)
+			Agent.acceleration *= .35f;
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		dir = ShipClass.GetDirection (transform.position, transform.position - new Vector3(mousePos.x,transform.position.y,mousePos.z));
+		if (underTractor || engineDisabled)
+			immobile = true;
+		else
+			immobile = false;
+		if (immobile)
+			Agent.acceleration=0f;
+	}
+
+	public void SetUnderTractor(){
+		underTractor = true;
+//		Agent.destination = null;
 	}
 
 	public void SpawnDebris(Vector3 source){
@@ -49,6 +72,12 @@ public class Ship : MonoBehaviour {
 		Rigidbody rb = deb.GetComponent<Rigidbody> ();
 		rb.AddForce (dir*125f);
 		Destroy (gameObject);
+	}
+
+	public void FireTorpedo(){
+		GameObject t  = Instantiate (Torpedo);
+		t.transform.position = transform.position + transform.forward * .25f;
+		t.GetComponent<Rigidbody> ().AddForce (transform.forward * 150f);
 	}
 
 	public void IssueMovementCommand(Vector2 vec){

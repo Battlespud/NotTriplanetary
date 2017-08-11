@@ -19,10 +19,10 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector3 mousePos = cam.ScreenToWorldPoint (Input.mousePosition);
+		Ray clickRay = new Ray (mousePos,Vector3.down);
 
 		if (Input.GetMouseButtonDown (0)) {
 		//	Debug.Log("Trying to select");
-			Ray clickRay = new Ray (mousePos,Vector3.down);
 			Debug.DrawRay (mousePos, Vector3.down, Color.white, 25f);
 			RaycastHit hit;
 			if (Physics.Raycast(clickRay, out hit,10000f)){
@@ -41,6 +41,26 @@ public class Player : MonoBehaviour {
 		if (Input.GetMouseButtonDown (1)) {
 			MoveShips (new Vector2 (mousePos.x, mousePos.z));
 		}
+		if (Input.GetKeyDown (KeyCode.T)) {
+			RaycastHit hit;
+			if (Physics.Raycast(clickRay, out hit,10000f)){
+				Debug.Log (hit.collider.name);
+				if (hit.collider.GetComponent<Ship> ()) {
+					Ship hitShip = hit.collider.GetComponent<Ship> ();
+					if (hitShip.faction != faction)
+						SelectedShips [0].shipClass.ActivateTractor (hitShip);
+				} else {
+					SelectedShips [0].shipClass.DeactivateTractor();
+				}
+			}
+		}
+
+		if (Input.GetKeyDown(KeyCode.B)) {
+			foreach (Ship s in SelectedShips) {
+				s.FireTorpedo ();
+			}
+		}
+
 	}
 
 	void SelectShip(Ship s){
