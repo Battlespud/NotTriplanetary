@@ -45,13 +45,14 @@ public class SpaceGun : MonoBehaviour {
 		if (!CanFire || !target)
 			return;
 		Debug.DrawLine (self.transform.position, target.transform.position, Color.red, .05f);
-		Debug.Log (gameObject.name + " firing");
+		target.shipClass.Damage (1f, transform.position);
+	//	Debug.Log (gameObject.name + " firing");
 		StartCoroutine ("Reload");
 		CanFire = false;
 	}
 
 	IEnumerator Reload(){
-		float timer = .05f;
+		float timer = .75f;
 		while (timer > 0) {
 			timer -= Time.deltaTime;
 			yield return null;

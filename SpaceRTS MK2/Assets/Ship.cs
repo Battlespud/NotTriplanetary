@@ -28,13 +28,14 @@ public class Ship : MonoBehaviour {
 		foreach (SpaceGun sg in GetComponentsInChildren<SpaceGun>()) {
 			Guns.Add (sg);
 		}
+		shipClass = gameObject.AddComponent<ShipClass> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Agent.acceleration = mass / enginePower;
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		dir = ShipClass.GetDirection (transform.position, new Vector3(mousePos.x,transform.position.y,mousePos.z));
+		dir = ShipClass.GetDirection (transform.position, transform.position - new Vector3(mousePos.x,transform.position.y,mousePos.z));
 	}
 
 

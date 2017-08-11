@@ -123,3 +123,6 @@ G:\Unity\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
 G:\Unity\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.HoloLens.xml
 G:\Unity\SpaceRTS MK2\obj\Debug\Assembly-CSharp.dll
 G:\Unity\SpaceRTS MK2\obj\Debug\Assembly-CSharp.pdb
+G:\Unity\NotTriplanetary\SpaceRTS MK2\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+G:\Unity\NotTriplanetary\SpaceRTS MK2\obj\Debug\Assembly-CSharp.dll
+G:\Unity\NotTriplanetary\SpaceRTS MK2\obj\Debug\Assembly-CSharp.pdb

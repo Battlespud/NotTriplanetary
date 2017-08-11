@@ -12,7 +12,7 @@ public enum GeneralDirection {
 	Down
 }
 
-class Screen{
+public class Screen{
 	public float strength;
 	public float mStrength;
 	Color color;
@@ -23,14 +23,14 @@ class Screen{
 	}
 }
 
-class Screens{
+public class Screens{
 	public Dictionary<GeneralDirection,Screen> dic = new Dictionary<GeneralDirection,Screen> ();
-	ShipClass parent;
+	public ShipClass parent;
 	Screen ForeScreen = new Screen (10); 
 	Screen AftScreen = new Screen (10);
 	Screen PortScreen = new Screen (10);
 	Screen StarboardScreen = new Screen (10);
-	public Screen WallScreen = new Screen(20);
+	public Screen WallScreen = new Screen(10);
 	public Screens(ShipClass p){
 		parent = p;
 		dic.Add (GeneralDirection.Forwards, ForeScreen);
@@ -39,17 +39,17 @@ class Screens{
 		dic.Add (GeneralDirection.Right, StarboardScreen);
 	}
 	public void Damage(float dam, Screen s){
-		if (s.strength >= 0f) {
+		if (s.strength > 0f) {
 			s.strength -= dam;
 			if (s.strength < 0f)
 				s.strength = 0f;
 		} else {
-			if (WallScreen.strength >= 0f) {
+			if (WallScreen.strength > 0f) {
 				WallScreen.strength -= dam;
 				if (WallScreen.strength < 0f)
 					WallScreen.strength = 0f;
 			} else {
-				parent.integrity -= Random.Range (2.25f, 10f) * dam;		
+				parent.integrity -= Random.Range (20f, 110f) * dam;		
 			}
 
 		}
@@ -61,22 +61,36 @@ public class ShipClass : MonoBehaviour {
 
 	public float integrity = 100f;
 
+	//just for inspector testing
+	public float Fore;
+	public float Aft;
+	public float Star;
+	public float Port;
+	public float Wall;
+
+	public Screens screens;
 
 
-	public void Damage (float dam, Vector3 source){
-		GeneralDirection dir = GetDirection(transform.position,source);
-	}
+	public List<float> ScreenStrengthsUI = new List<float>();
 
 	// Use this for initialization
 	void Start () {
-		
+		screens  = new Screens(this);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		Fore = screens.dic [GeneralDirection.Forwards].strength;
+		Aft = screens.dic [GeneralDirection.Back].strength;
+		Star = screens.dic [GeneralDirection.Right].strength;
+		Port = screens.dic [GeneralDirection.Left].strength;
+		Wall = screens.WallScreen.strength;
+
 	}
 
+	public void Damage(float f, Vector3 origin){
+		screens.Damage (f, screens.dic[GetDirection (transform.position, origin)]);
+	}
 
 
 	public static GeneralDirection GetDirection (Vector3 ourPosition, Vector3 PositionShotFrom) {
