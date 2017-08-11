@@ -18,6 +18,8 @@ public class Ship : MonoBehaviour {
 
 	Vector3 mousePos;
 
+	bool dead = false;
+
 	//combat
 	public int faction;
 	public List<SpaceGun> Guns = new List<SpaceGun> ();
@@ -32,6 +34,7 @@ public class Ship : MonoBehaviour {
 	public List<Vector2>Waypoints = new List<Vector2>();
 
 	LineRenderer lr;
+	public Renderer render;
 
 
 	//main
@@ -61,7 +64,9 @@ public class Ship : MonoBehaviour {
 		shipClass = gameObject.AddComponent<ShipClass> ();
 		lr = this.gameObject.AddComponent<LineRenderer> ();
 		lr.enabled = false;
-		lr.SetWidth (.05f, .05f);
+		lr.SetWidth (.035f, .035f);
+	//	render = GetComponentInChildren<Renderer> ();
+
 	}
 	
 	// Update is called once per frame
@@ -111,13 +116,78 @@ public class Ship : MonoBehaviour {
 	}
 
 	public void SpawnDebris(Vector3 source){
+		if (dead)
+			return;
+		dead = true;
 		Vector3 dir = transform.position - source;
 		dir = dir.normalized;
 		GameObject deb = Instantiate (Debris);
 		deb.transform.position = transform.position+dir*.1f;
 		Rigidbody rb = deb.GetComponent<Rigidbody> ();
 		rb.AddForce (dir*125f);
+		Explode ();
+	}
+
+	public void Explode(){
+		Collider[] col = Physics.OverlapSphere (transform.position, 5f);
+		StartCoroutine ("ExplosionRadius");
+		foreach (Collider hit in col) {
+			Rigidbody rb = hit.GetComponent<Rigidbody> ();
+			float Force = 160f;
+			if (rb) {
+				ShipClass c = rb.GetComponent<ShipClass> ();
+				if (c) {
+					if (!c.screens.ScreensWillHold (20f * (1f / Vector3.Distance (c.transform.position, transform.position)), transform.position))
+						rb.AddExplosionForce (Force, transform.position, 5f, 0f);
+					c.Damage (20f * (2f / Vector3.Distance (c.transform.position, transform.position)), transform.position);
+					Debug.Log (c.name);
+				} else {
+					rb.AddExplosionForce (Force, transform.position, 5f, 0f);
+				}
+			}
+		}
 		Destroy (gameObject);
+
+	}
+
+	IEnumerator ExplosionRadius(){
+		GameObject g = new GameObject();
+		g.name = "Explosion Radius";
+		g.transform.position = this.transform.position;
+		g.transform.parent = null;
+		LineRenderer l = g.AddComponent<LineRenderer>();
+		RenderCircle (l, 5f);
+		float a = 0f;
+		Color c = new Color (l.startColor.r, l.startColor.g, l.startColor.b);
+		while( a < 5.5f){
+			c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, Mathf.Lerp (l.startColor.a, 0f, .1f * Time.deltaTime));
+			a += Time.deltaTime;
+			l.SetColors (c, c);
+		yield return null;
+		}
+		Destroy (g);
+
+	}
+
+	void RenderCircle (LineRenderer l, float r) {
+		int numSegments = 255;
+		float radius = r;
+		l.material = new Material(Shader.Find("Particles/Additive"));
+		l.SetColors(Color.yellow, Color.yellow);
+		l.SetWidth(0.025f, 0.025f);
+		l.SetVertexCount(numSegments + 1);
+		l.useWorldSpace = false;
+
+		float deltaTheta = (float) (2.0 * Mathf.PI) / numSegments;
+		float theta = 0f;
+
+		for (int i = 0 ; i < numSegments + 1 ; i++) {
+			float x = radius * Mathf.Cos(theta);
+			float z = radius * Mathf.Sin(theta);
+			Vector3 pos = new Vector3(x, 0, z);
+			l.SetPosition(i, pos);
+			theta += deltaTheta;
+		}
 	}
 
 	public void FireTorpedo(){

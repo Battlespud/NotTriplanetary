@@ -47,8 +47,16 @@ public class PowerSystem {
 		}
 	}
 
-	Generator generator = new Generator(10f);
+	public void GeneratePower(){
+		battery.Recharge (generator.GetOutput () * Time.deltaTime);
+	}
+
+	Generator generator = new Generator(1f);
 	Battery battery = new Battery(10f);
+
+	public float GetBatteryPower(){
+		return battery.charge;
+	}
 
 	public bool UsePower(float a){
 		if (generator.GetOutput () > a) {

@@ -30,15 +30,19 @@ public class Screens{
 	}
 	public void Damage(float dam, Screen s, Vector3 source){
 		if (s.strength > 0f) {
-			s.strength -= dam;
+			float applyDam = dam;
+			dam -= s.strength;
+			s.strength -= applyDam;
 			if (s.strength < 0f)
 				s.strength = 0f;
-		} else {
+		} if(dam >0f) {
 			if (WallScreen.strength > 0f) {
-				WallScreen.strength -= dam;
+				float applyDam = dam;
+				dam -= WallScreen.strength;
+				WallScreen.strength -= applyDam;
 				if (WallScreen.strength < 0f)
 					WallScreen.strength = 0f;
-			} else {
+			} if(dam > 0f) {
 				parent.integrity -= Random.Range (20f, 110f) * dam;		
 				if (parent.integrity <= 0f) {
 					parent.ship.SpawnDebris (source);
@@ -46,5 +50,10 @@ public class Screens{
 			}
 
 		}
+	}
+	public bool ScreensWillHold(float dam, Vector3 source){
+		if (dic [Direction.GetDirection (parent.transform.position, source)].strength >= dam)
+			return true;
+		return false;
 	}
 }

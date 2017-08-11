@@ -31,6 +31,7 @@ public class ShipClass : MonoBehaviour {
 	public float Star;
 	public float Port;
 	public float Wall;
+	public float BatteryPower;
 
 	public Screens screens;
 
@@ -58,6 +59,8 @@ public class ShipClass : MonoBehaviour {
 	void Update () {
 		if (tractor.active)
 			TractorLoop ();
+		BatteryPower = Power.GetBatteryPower ();
+		Power.GeneratePower ();
 	}
 
 

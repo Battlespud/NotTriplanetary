@@ -17,7 +17,7 @@ public class SpaceYard : MonoBehaviour {
 
 	public static void Build(){
 		GameObject s = Instantiate (ShipPrefabs[drop.value]);
-		s.transform.position = new Vector3 (active.transform.position.x, s.transform.position.y, active.transform.position.z);
+		s.transform.position = new Vector3 (active.transform.position.x, 1f, active.transform.position.z);
 		s.GetComponent<Ship>().faction = 0;
 		if (s.GetComponent<Ship>().faction == 0)
 			s.GetComponentInChildren<Renderer> ().material.color = Color.green;

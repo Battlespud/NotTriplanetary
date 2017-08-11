@@ -225,6 +225,8 @@ MonoBehaviour:
   immobile: 0
   underTractor: 0
   usingTractor: 0
+  Waypoints: []
+  render: {fileID: 0}
   ShipName: 
   mass: 100
   enginePower: 25
@@ -232,6 +234,7 @@ MonoBehaviour:
   DotProdUI: 0
   dir: 0
   Agent: {fileID: 0}
+  path: []
 --- !u!195 &42618933
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -291,7 +294,7 @@ Transform:
   m_PrefabInternal: {fileID: 911761349}
   m_GameObject: {fileID: 42618931}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.20534223, y: 1, z: 7.748}
+  m_LocalPosition: {x: 2.15, y: 1, z: 7.748}
   m_LocalScale: {x: 10, y: 25, z: 10}
   m_Children:
   - {fileID: 39017337}
@@ -421,6 +424,8 @@ MonoBehaviour:
   immobile: 0
   underTractor: 0
   usingTractor: 0
+  Waypoints: []
+  render: {fileID: 0}
   ShipName: 
   mass: 100
   enginePower: 25
@@ -428,6 +433,7 @@ MonoBehaviour:
   DotProdUI: 0
   dir: 0
   Agent: {fileID: 0}
+  path: []
 --- !u!195 &95139851
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -755,7 +761,7 @@ Camera:
   far clip plane: 10000
   field of view: 60
   orthographic: 1
-  orthographic size: 100
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -778,7 +784,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 351782350}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 14.88, z: 0}
+  m_LocalPosition: {x: 0, y: 14.88, z: 10.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1432,6 +1438,8 @@ MonoBehaviour:
   immobile: 0
   underTractor: 0
   usingTractor: 0
+  Waypoints: []
+  render: {fileID: 0}
   ShipName: 
   mass: 100
   enginePower: 25
@@ -1439,6 +1447,7 @@ MonoBehaviour:
   DotProdUI: 0
   dir: 0
   Agent: {fileID: 0}
+  path: []
 --- !u!195 &433267236
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1498,7 +1507,7 @@ Transform:
   m_PrefabInternal: {fileID: 1631629212}
   m_GameObject: {fileID: 433267234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.08, y: 1, z: 7.748}
+  m_LocalPosition: {x: -2.941, y: 1, z: 7.748}
   m_LocalScale: {x: 10, y: 25, z: 10}
   m_Children:
   - {fileID: 417749000}
@@ -1611,7 +1620,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 518796966}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 968603874}
@@ -2233,7 +2242,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4549694615272038, guid: b1dbf3db7389338479c3e98b37f63180, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.20534223
+      value: 2.15
       objectReference: {fileID: 0}
     - target: {fileID: 4549694615272038, guid: b1dbf3db7389338479c3e98b37f63180, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3104,6 +3113,8 @@ MonoBehaviour:
   immobile: 0
   underTractor: 0
   usingTractor: 0
+  Waypoints: []
+  render: {fileID: 0}
   ShipName: 
   mass: 100
   enginePower: 25
@@ -3111,6 +3122,7 @@ MonoBehaviour:
   DotProdUI: 0
   dir: 0
   Agent: {fileID: 0}
+  path: []
 --- !u!195 &1482430463
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3590,7 +3602,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4549694615272038, guid: b1dbf3db7389338479c3e98b37f63180, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.08
+      value: -2.941
       objectReference: {fileID: 0}
     - target: {fileID: 4549694615272038, guid: b1dbf3db7389338479c3e98b37f63180, type: 2}
       propertyPath: m_LocalPosition.y

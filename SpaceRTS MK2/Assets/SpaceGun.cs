@@ -6,7 +6,7 @@ public class SpaceGun : MonoBehaviour {
 
 	public Ship self;
 	public Ship target;
-	public bool shooting = false;
+	public bool shooting = true;
 	public bool CanFire = true;
 
 	float powerCost = 5f;
@@ -21,7 +21,7 @@ public class SpaceGun : MonoBehaviour {
 		if (s) {
 			if (s.faction != self.faction) {
 				target = s;
-			//	shooting = true;
+				shooting = true;
 			}
 		}
 	}
@@ -47,14 +47,14 @@ public class SpaceGun : MonoBehaviour {
 		if (!CanFire || !target || !self.shipClass.Power.UsePower(powerCost))
 			return;
 		Debug.DrawLine (self.transform.position, target.transform.position, Color.red, .05f);
-		target.shipClass.Damage (1f, transform.position);
+		target.shipClass.Damage (5f, transform.position);
 	//	Debug.Log (gameObject.name + " firing");
 		StartCoroutine ("Reload");
 		CanFire = false;
 	}
 
 	IEnumerator Reload(){
-		float timer = .75f;
+		float timer = 1.5f;
 		while (timer > 0) {
 			timer -= Time.deltaTime;
 			yield return null;

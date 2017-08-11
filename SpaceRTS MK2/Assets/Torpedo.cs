@@ -41,7 +41,7 @@ public class Torpedo : MonoBehaviour {
 		{
 			Rigidbody rb = hit.GetComponent<Rigidbody>();
 
-			if (rb != null)
+			if (rb)
 				rb.AddExplosionForce(Force, transform.position, 15f, 0f);
 		}
 		Destroy (gameObject);

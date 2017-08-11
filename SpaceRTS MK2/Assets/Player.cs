@@ -13,7 +13,6 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		cam = Camera.main;
-
 	}
 	
 	// Update is called once per frame
@@ -69,7 +68,7 @@ public class Player : MonoBehaviour {
 		if (SelectedShips.Contains (s)) {
 			SelectedShips.Remove (s);
 			s.TogglePath ();
-			s.GetComponentInChildren<Renderer> ().material.color = Color.green;
+			s.render.material.color = Color.green;
 			Debug.Log ("Ship " + s.ShipName + " removed.");
 		} else {
 			SelectedShips.Add (s);
