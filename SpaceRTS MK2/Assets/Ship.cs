@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
+
+
 public class Ship : MonoBehaviour {
 
 	//this only handles things specific to this entity, like movement.
@@ -10,7 +13,9 @@ public class Ship : MonoBehaviour {
 	public static GameObject Torpedo;
 
 
+
 	public ShipClass shipClass;
+
 
 	//combat
 	public int faction;
@@ -35,6 +40,11 @@ public class Ship : MonoBehaviour {
 	public NavMeshAgent Agent;
 	// Use this for initialization
 	void Start () {
+		if (faction == 0)
+			GetComponentInChildren<Renderer> ().material.color = Color.green;
+		else {
+			GetComponentInChildren<Renderer> ().material.color = Color.red;
+		}
 		Debris = Resources.Load<GameObject> ("Debris") as GameObject;
 		Torpedo = Resources.Load<GameObject> ("Torpedo") as GameObject;
 		Agent = GetComponent<NavMeshAgent> ();
@@ -50,7 +60,7 @@ public class Ship : MonoBehaviour {
 		if (usingTractor)
 			Agent.acceleration *= .35f;
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		dir = ShipClass.GetDirection (transform.position, transform.position - new Vector3(mousePos.x,transform.position.y,mousePos.z));
+		dir = Direction.GetDirection (transform.position, transform.position - new Vector3(mousePos.x,transform.position.y,mousePos.z));
 		if (underTractor || engineDisabled)
 			immobile = true;
 		else

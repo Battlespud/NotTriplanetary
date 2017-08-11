@@ -34,7 +34,9 @@ public class Player : MonoBehaviour {
 				}
 				if (hit.collider.GetComponentInParent<SpaceYard> ()) {
 					Debug.Log ("Spaceyard");
-					hit.collider.GetComponentInParent<SpaceYard> ().Build (faction);
+					SpaceYard s = hit.collider.GetComponentInParent<SpaceYard> ();
+					s.Toggle ();
+					SpaceYard.active = s;
 				}
 			}
 		}

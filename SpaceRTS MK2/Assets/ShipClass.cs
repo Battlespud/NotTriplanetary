@@ -3,73 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum GeneralDirection {
-	None,
-	Forwards,
-	Back,
-	Left,
-	Right,
-	Up,
-	Down
+
+
+public enum ShipPrefabTypes{
+	DEF, //defensive wall ship
+	DD, //destroyer 
+	CS, //strike cruiser
+	DN, //dreadnought
+	CV, //carrier
 }
 
-public class Screen{
-	public float strength;
-	public float mStrength;
-	Color color;
-	public Screen(float m ){
-		mStrength = m;
-		strength = mStrength;
-		color = Color.white;
-	}
-}
 
-public class Screens{
-	public Dictionary<GeneralDirection,Screen> dic = new Dictionary<GeneralDirection,Screen> ();
-	public ShipClass parent;
-	Screen ForeScreen = new Screen (2); 
-	Screen AftScreen = new Screen (0);
-	Screen PortScreen = new Screen (1);
-	Screen StarboardScreen = new Screen (1);
-	public Screen WallScreen = new Screen(2);
-	public Screens(ShipClass p){
-		parent = p;
-		dic.Add (GeneralDirection.Forwards, ForeScreen);
-		dic.Add (GeneralDirection.Back, AftScreen);
-		dic.Add (GeneralDirection.Left, PortScreen);
-		dic.Add (GeneralDirection.Right, StarboardScreen);
-	}
-	public void Damage(float dam, Screen s, Vector3 source){
-		if (s.strength > 0f) {
-			s.strength -= dam;
-			if (s.strength < 0f)
-				s.strength = 0f;
-		} else {
-			if (WallScreen.strength > 0f) {
-				WallScreen.strength -= dam;
-				if (WallScreen.strength < 0f)
-					WallScreen.strength = 0f;
-			} else {
-				parent.integrity -= Random.Range (20f, 110f) * dam;		
-				if (parent.integrity <= 0f) {
-					parent.ship.SpawnDebris (source);
-				}
-			}
 
-		}
-	}
-}
 
-public class Tractor{
-	public Ship target;
-	public bool active;
-	public float mRange;
-	public float force = 5f;
-	public Tractor(){
-		active = false;
-		mRange = 20f;
-	}
-}
+
+
 
 
 public class ShipClass : MonoBehaviour {
@@ -125,7 +73,7 @@ public class ShipClass : MonoBehaviour {
 	}
 
 	public void Damage(float f, Vector3 origin){
-		screens.Damage (f, screens.dic[GetDirection (transform.position, origin)], origin);
+		screens.Damage (f, screens.dic[Direction.GetDirection (transform.position, origin)], origin);
 	}
 
 
@@ -193,58 +141,4 @@ public class ShipClass : MonoBehaviour {
 
 
 
-
-
-
-
-
-	//ToDo not quite accurate. Doesnt account for rotation for some reason. Probably an issue in inputs, not the formula itself.
-	public static GeneralDirection GetDirection (Vector3 ourPosition, Vector3 PositionShotFrom) {
-
-		GeneralDirection result = GeneralDirection.None;
-		float shortestDistance = Mathf.Infinity;
-		float distance = 0;
-
-		Vector3 vectorPosition = ourPosition + PositionShotFrom;
-
-		distance = Mathf.Abs (((ourPosition + Vector3.forward) - PositionShotFrom).magnitude);
-		if (distance < shortestDistance)
-		{
-			shortestDistance = distance;
-			result = GeneralDirection.Forwards;
-		}
-		distance = Mathf.Abs (((ourPosition  -Vector3.forward) - PositionShotFrom).magnitude);
-		if (distance < shortestDistance)
-		{
-			shortestDistance = distance;
-			result = GeneralDirection.Back;
-		}
-		distance = Mathf.Abs (((ourPosition + Vector3.up) - PositionShotFrom).magnitude);
-		if (distance < shortestDistance)
-		{
-			shortestDistance = distance;
-			result = GeneralDirection.Up;
-		}
-		distance = Mathf.Abs (((ourPosition + -Vector3.up) - PositionShotFrom).magnitude);
-		if (distance < shortestDistance)
-		{
-			shortestDistance = distance;
-			result = GeneralDirection.Down;
-		}
-		distance = Mathf.Abs (((ourPosition + Vector3.left) - PositionShotFrom).magnitude);
-		if (distance < shortestDistance)
-		{
-			shortestDistance = distance;
-			result = GeneralDirection.Left;
-		}
-		distance = Mathf.Abs (((ourPosition + Vector3.right) - PositionShotFrom).magnitude);
-		if (distance < shortestDistance)
-		{
-			shortestDistance = distance;
-			result = GeneralDirection.Right;
-		}
-
-		return result;
-
-	}
 }
