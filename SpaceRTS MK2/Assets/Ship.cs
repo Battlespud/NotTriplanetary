@@ -146,8 +146,7 @@ public class Ship : MonoBehaviour {
 				}
 			}
 		}
-		Destroy (gameObject);
-
+		Destroy (render);
 	}
 
 	IEnumerator ExplosionRadius(){
@@ -159,13 +158,13 @@ public class Ship : MonoBehaviour {
 		RenderCircle (l, 5f);
 		float a = 0f;
 		Color c = new Color (l.startColor.r, l.startColor.g, l.startColor.b);
-		while( a < 5.5f){
-			c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, Mathf.Lerp (l.startColor.a, 0f, .1f * Time.deltaTime));
+		while( c.a > 0f){
+			c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, Mathf.Lerp (l.startColor.a, 0f, 5f * Time.deltaTime));
 			a += Time.deltaTime;
 			l.SetColors (c, c);
 		yield return null;
 		}
-		Destroy (g);
+		Destroy (gameObject);
 
 	}
 
@@ -191,9 +190,12 @@ public class Ship : MonoBehaviour {
 	}
 
 	public void FireTorpedo(){
-		GameObject t  = Instantiate (Torpedo);
-		t.transform.position = transform.position + transform.forward * .25f;
-		t.GetComponent<Rigidbody> ().AddForce (transform.forward * 150f);
+		if (shipClass.Torpedos > 0) {
+			shipClass.Torpedos -= 1;
+			GameObject t = Instantiate (Torpedo);
+			t.transform.position = transform.position + transform.forward * .25f;
+			t.GetComponent<Rigidbody> ().AddForce (transform.forward * 150f);
+		}
 	}
 
 
@@ -218,7 +220,7 @@ public class Ship : MonoBehaviour {
 	}
 
 	public static Vector3 ToVector3(Vector2 vec){
-		return new Vector3 (vec.x, .5f, vec.y);
+		return new Vector3 (vec.x, .6f, vec.y);
 	}
 
 	public void IssueMovementCommand(Vector2 vec){

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+ 
 
 public class Screen{
 	public float strength;
@@ -14,13 +15,15 @@ public class Screen{
 }
 
 public class Screens{
+	public static GameObject ScreenPrefab;
+
 	public Dictionary<GeneralDirection,Screen> dic = new Dictionary<GeneralDirection,Screen> ();
 	public ShipClass parent;
 	Screen ForeScreen = new Screen (2); 
 	Screen AftScreen = new Screen (0);
 	Screen PortScreen = new Screen (1);
 	Screen StarboardScreen = new Screen (1);
-	public Screen WallScreen = new Screen(2);
+	public Screen WallScreen = new Screen(25);
 	public Screens(ShipClass p){
 		parent = p;
 		dic.Add (GeneralDirection.Forwards, ForeScreen);
@@ -29,6 +32,11 @@ public class Screens{
 		dic.Add (GeneralDirection.Right, StarboardScreen);
 	}
 	public void Damage(float dam, Screen s, Vector3 source){
+		GameObject g = GameObject.Instantiate (ScreenPrefab);
+		LineRenderer l = g.GetComponent<LineRenderer> ();
+		g.transform.position = parent.transform.position;
+		g.transform.position = Vector3.MoveTowards (g.transform.position, source, .2f);
+		parent.ScreenProxyDelete (g);
 		if (s.strength > 0f) {
 			float applyDam = dam;
 			dam -= s.strength;
@@ -51,6 +59,11 @@ public class Screens{
 
 		}
 	}
+
+
+
+
+
 	public bool ScreensWillHold(float dam, Vector3 source){
 		if (dic [Direction.GetDirection (parent.transform.position, source)].strength >= dam)
 			return true;

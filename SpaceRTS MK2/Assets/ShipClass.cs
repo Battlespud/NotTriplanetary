@@ -36,12 +36,16 @@ public class ShipClass : MonoBehaviour {
 	public Screens screens;
 
 
+
 	//Resources and parts
 	public int crew;
 	public int mCrew;
 
 	public int marines;
 	public int mMarines;
+
+	public int Torpedos = 3;
+
 
 	public PowerSystem Power = new PowerSystem();
 	public Tractor tractor = new Tractor();
@@ -54,7 +58,7 @@ public class ShipClass : MonoBehaviour {
 		screens  = new Screens(this);
 		ship = GetComponent<Ship> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (tractor.active)
@@ -65,7 +69,18 @@ public class ShipClass : MonoBehaviour {
 
 
 
+	public void ScreenProxyDelete(GameObject g){
+		StartCoroutine ("Delete",g);
+	}
 
+	public IEnumerator Delete(GameObject g){
+		float a = 0f;
+		while (a < .5f) {
+			a += Time.deltaTime;
+			yield return null;
+		}
+		GameObject.Destroy (g);
+	}
 
 	void UpdateScreenUI(){
 		Fore = screens.dic [GeneralDirection.Forwards].strength;

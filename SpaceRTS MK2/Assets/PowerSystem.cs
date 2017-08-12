@@ -67,6 +67,7 @@ public class PowerSystem {
 			battery.charge -= a;
 			return true;
 		}
+		Debug.Log ("Out of power!");
 		return false;
 	}
 

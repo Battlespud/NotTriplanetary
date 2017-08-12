@@ -47,7 +47,7 @@ public class SpaceGun : MonoBehaviour {
 		if (!CanFire || !target || !self.shipClass.Power.UsePower(powerCost))
 			return;
 		Debug.DrawLine (self.transform.position, target.transform.position, Color.red, .05f);
-		target.shipClass.Damage (5f, transform.position);
+		target.shipClass.Damage (1f, transform.position);
 	//	Debug.Log (gameObject.name + " firing");
 		StartCoroutine ("Reload");
 		CanFire = false;
