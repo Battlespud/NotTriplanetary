@@ -130,7 +130,8 @@ public class Ship : MonoBehaviour {
 
 	public void Explode(){
 		Collider[] col = Physics.OverlapSphere (transform.position, 5f);
-		StartCoroutine ("ExplosionRadius");
+		//StartCoroutine ("ExplosionRadius");
+		StartCoroutine("ExplosionExpansion",5f);
 		foreach (Collider hit in col) {
 			Rigidbody rb = hit.GetComponent<Rigidbody> ();
 			float Force = 160f;
@@ -155,6 +156,7 @@ public class Ship : MonoBehaviour {
 		g.transform.position = this.transform.position;
 		g.transform.parent = null;
 		LineRenderer l = g.AddComponent<LineRenderer>();
+		l.startColor = Color.red;
 		RenderCircle (l, 5f);
 		float a = 0f;
 		Color c = new Color (l.startColor.r, l.startColor.g, l.startColor.b);
@@ -168,11 +170,40 @@ public class Ship : MonoBehaviour {
 
 	}
 
+	IEnumerator ExplosionExpansion(float eRadius){
+		GameObject g = new GameObject();
+		g.name = "Shockwave";
+		g.transform.position = this.transform.position;
+		g.transform.parent = null;
+		LineRenderer l = g.AddComponent<LineRenderer>();
+//		l.material = new Material (Shader.Find ("Particles/Additive"));
+		l.startColor = Color.green;
+		if(faction != 0)
+		l.startColor = Color.red;
+		Color c = new Color (l.startColor.r, l.startColor.g, l.startColor.b);
+		float f = .1f;
+		float b = 0f;
+		float alpha = 100f;
+		while(f < eRadius && b < 3f){
+			RenderCircle (l, f);
+			f = Mathf.Lerp (f, eRadius, 1f * Time.deltaTime);
+			float a = 0f;
+			b += Time.deltaTime;
+			alpha = Mathf.Lerp (alpha, 0f, 4f* Time.deltaTime);
+			c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, alpha );
+			a += Time.deltaTime;
+			l.SetColors (c, c);
+			yield return null;
+		}
+		Destroy (g);
+		Destroy (gameObject);
+	}
+
 	void RenderCircle (LineRenderer l, float r) {
 		int numSegments = 255;
 		float radius = r;
 		l.material = new Material(Shader.Find("Particles/Additive"));
-		l.SetColors(Color.yellow, Color.yellow);
+	//	l.SetColors(Color.yellow, Color.yellow);
 		l.SetWidth(0.025f, 0.025f);
 		l.SetVertexCount(numSegments + 1);
 		l.useWorldSpace = false;

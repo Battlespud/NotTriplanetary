@@ -23,13 +23,16 @@ public class Screens{
 	Screen AftScreen = new Screen (0);
 	Screen PortScreen = new Screen (1);
 	Screen StarboardScreen = new Screen (1);
-	public Screen WallScreen = new Screen(25);
+	public Screen WallScreen = new Screen(0);
 	public Screens(ShipClass p){
 		parent = p;
 		dic.Add (GeneralDirection.Forwards, ForeScreen);
 		dic.Add (GeneralDirection.Back, AftScreen);
 		dic.Add (GeneralDirection.Left, PortScreen);
 		dic.Add (GeneralDirection.Right, StarboardScreen);
+		dic.Add (GeneralDirection.Up, WallScreen);
+		dic.Add (GeneralDirection.Down, WallScreen);
+
 	}
 	public void Damage(float dam, Screen s, Vector3 source){
 		GameObject g = GameObject.Instantiate (ScreenPrefab);

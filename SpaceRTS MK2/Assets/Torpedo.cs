@@ -31,9 +31,11 @@ public class Torpedo : MonoBehaviour {
 	}
 
 	public void Detonate(){
-		StartCoroutine ("ExplosionRadius");
+		//StartCoroutine ("ExplosionRadius");
+		StartCoroutine ("ExplosionExpansion");
+
 		foreach (Ship s in InBlastZone) {
-			s.shipClass.Damage (5f, transform.position);
+			s.shipClass.Damage (25f, transform.position);
 
 
 		}
@@ -59,12 +61,15 @@ public class Torpedo : MonoBehaviour {
 		RenderCircle (l, eRadius);
 		float a = 0f;
 		Color c = new Color (l.startColor.r, l.startColor.g, l.startColor.b);
-		while( c.a > .1f){
-			c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, Mathf.Lerp (l.startColor.a, 0f, 5f * Time.deltaTime));
+		while( c.a > .05f){
+			c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, Mathf.Lerp (l.startColor.a, 0f, 4f * Time.deltaTime));
 			a += Time.deltaTime;
 			l.SetColors (c, c);
 			yield return null;
 		}
+		c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, 0f);
+		l.SetColors (c, c);
+
 		float b = 0f;
 		while( b < 3f){
 			b += Time.deltaTime;
@@ -80,15 +85,19 @@ public class Torpedo : MonoBehaviour {
 		g.transform.position = this.transform.position;
 		g.transform.parent = null;
 		LineRenderer l = g.AddComponent<LineRenderer>();
+		l.SetColors (Color.yellow, Color.yellow);
+		l.material = new Material (Shader.Find ("Particles/Additive"));
 		Color c = new Color (l.startColor.r, l.startColor.g, l.startColor.b);
 		float f = .1f;
 		float b = 0f;
+		float alpha = 100f;
 		while(f < eRadius && b < 3f){
 			RenderCircle (l, f);
 			f = Mathf.Lerp (f, eRadius, 1f * Time.deltaTime);
 			float a = 0f;
 			b += Time.deltaTime;
-			c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, Mathf.Lerp (l.startColor.a, 0f, 25f * Time.deltaTime));
+			alpha = Mathf.Lerp (alpha, 0f, 4f* Time.deltaTime);
+			c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, alpha );
 			a += Time.deltaTime;
 			l.SetColors (c, c);
 			yield return null;
