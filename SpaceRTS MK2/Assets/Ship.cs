@@ -9,8 +9,11 @@ public class Ship : MonoBehaviour {
 
 	//this only handles things specific to this entity, like movement.
 
+	public static ShipEvent OnDeath = new ShipEvent();
+
 	public static GameObject Debris; //spawns on death.
 	public static GameObject Torpedo;
+
 
 	bool moveAssigned = false;
 
@@ -29,6 +32,8 @@ public class Ship : MonoBehaviour {
 	bool engineDisabled;
 	public bool underTractor;
 	public bool usingTractor;
+
+	public Rigidbody rb;
 
 	//Pathfinding
 	public List<Vector2>Waypoints = new List<Vector2>();
@@ -50,6 +55,9 @@ public class Ship : MonoBehaviour {
 	public NavMeshAgent Agent;
 	// Use this for initialization
 	void Start () {
+		if (!render)
+			render = GetComponentInChildren<Renderer> ();
+		rb = GetComponent<Rigidbody> ();
 		if (faction == 0)
 			GetComponentInChildren<Renderer> ().material.color = Color.green;
 		else {
@@ -115,6 +123,12 @@ public class Ship : MonoBehaviour {
 		underTractor = true;
 	}
 
+	public void Die(){
+		Debug.Log (name + " is lost!");
+		DisableWeapons ();
+		OnDeath.Invoke (this);
+	}
+
 	public void SpawnDebris(Vector3 source){
 		if (dead)
 			return;
@@ -123,8 +137,8 @@ public class Ship : MonoBehaviour {
 		dir = dir.normalized;
 		GameObject deb = Instantiate (Debris);
 		deb.transform.position = transform.position+dir*.1f;
-		Rigidbody rb = deb.GetComponent<Rigidbody> ();
-		rb.AddForce (dir*125f);
+		Rigidbody r = deb.GetComponent<Rigidbody> ();
+		r.AddForce (dir*125f);
 		Explode ();
 	}
 
@@ -133,23 +147,25 @@ public class Ship : MonoBehaviour {
 		//StartCoroutine ("ExplosionRadius");
 		StartCoroutine("ExplosionExpansion",5f);
 		foreach (Collider hit in col) {
-			Rigidbody rb = hit.GetComponent<Rigidbody> ();
-			float Force = 160f;
-			if (rb) {
+			Rigidbody r = hit.GetComponent<Rigidbody> ();
+			float Force = 20f;
+			if (r) {
 				ShipClass c = rb.GetComponent<ShipClass> ();
 				if (c) {
 					if (!c.screens.ScreensWillHold (20f * (1f / Vector3.Distance (c.transform.position, transform.position)), transform.position))
-						rb.AddExplosionForce (Force, transform.position, 5f, 0f);
+						r.AddExplosionForce (Force, transform.position, 5f, 0f);
 					c.Damage (20f * (2f / Vector3.Distance (c.transform.position, transform.position)), transform.position);
-					Debug.Log (c.name);
+//					Debug.Log (c.name);
 				} else {
-					rb.AddExplosionForce (Force, transform.position, 5f, 0f);
+					r.AddExplosionForce (Force, transform.position, 5f, 0f);
+
 				}
 			}
 		}
 		Destroy (render);
 	}
 
+	#region Explosion Coroutines
 	IEnumerator ExplosionRadius(){
 		GameObject g = new GameObject();
 		g.name = "Explosion Radius";
@@ -167,7 +183,6 @@ public class Ship : MonoBehaviour {
 		yield return null;
 		}
 		Destroy (gameObject);
-
 	}
 
 	IEnumerator ExplosionExpansion(float eRadius){
@@ -219,13 +234,32 @@ public class Ship : MonoBehaviour {
 			theta += deltaTheta;
 		}
 	}
+	#endregion
+
+	public IEnumerator TorpedoArm(){
+		GameObject g = new GameObject ();
+		g.transform.rotation = transform.rotation;
+		g.transform.position = transform.position;
+		LineRenderer l = g.AddComponent<LineRenderer> ();
+		l.positionCount = 2;
+		l.useWorldSpace = true;
+		l.material = new Material(Shader.Find("Particles/Additive"));
+		l.SetColors (Color.grey, Color.red);
+		l.SetWidth (.05f, .05f);
+		while (Input.GetKey (KeyCode.B)) {
+			l.SetPositions (new Vector3[2]{ transform.position, transform.forward.normalized * 2.5f });
+			yield return null;
+		}
+		FireTorpedo ();
+		Destroy (g);
+	}
 
 	public void FireTorpedo(){
 		if (shipClass.Torpedos > 0) {
 			shipClass.Torpedos -= 1;
 			GameObject t = Instantiate (Torpedo);
+			t.transform.rotation = transform.rotation;
 			t.transform.position = transform.position + transform.forward * .25f;
-			t.GetComponent<Rigidbody> ().AddForce (transform.forward * 150f);
 		}
 	}
 
@@ -256,8 +290,7 @@ public class Ship : MonoBehaviour {
 
 	public void IssueMovementCommand(Vector2 vec){
 		moveAssigned = true;
-		StopAllCoroutines ();
-	//	Agent.SetDestination (transform.position);
+		StopCoroutine("Movement");
 		Agent.velocity = new Vector3();
 		StartCoroutine("Movement", (new Vector3(vec.x,transform.position.y, vec.y)));
 	}
@@ -267,10 +300,16 @@ public class Ship : MonoBehaviour {
 		float dotProd = 0f;
 		Agent.SetDestination (dest);
 		while (dotProd < .85) {
-			Agent.acceleration = .01f*Agent.acceleration;
+			Agent.acceleration = .14f*Agent.acceleration;
 			dotProd = Vector3.Dot (transform.forward, (dest - transform.position).normalized);
 			DotProdUI = dotProd;
 			yield return null;
+		}
+	}
+
+	public void DisableWeapons(){
+		foreach (SpaceGun s in Guns) {
+			s.enabled = false;
 		}
 	}
 }

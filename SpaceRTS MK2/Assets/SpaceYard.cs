@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
+
 
 public class SpaceYard : MonoBehaviour {
-
+	public static Player player;
 	public int faction;
 	public static List<GameObject> ShipPrefabs = new List<GameObject>();
 	static bool ListBuilt = false;
@@ -17,7 +19,7 @@ public class SpaceYard : MonoBehaviour {
 
 	public static void Build(){
 		GameObject s = Instantiate (ShipPrefabs[drop.value]);
-		s.transform.position = new Vector3 (active.transform.position.x, 1f, active.transform.position.z);
+		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (active.transform.position.x, .59f, active.transform.position.z));
 		s.GetComponent<Ship>().faction = 0;
 		if (s.GetComponent<Ship>().faction == 0)
 			s.GetComponentInChildren<Renderer> ().material.color = Color.green;
@@ -29,6 +31,7 @@ public class SpaceYard : MonoBehaviour {
 
 	public void Toggle(){
 		SpaceYardUI.SetActive (!SpaceYardUI.activeSelf);
+		player.InMenu = !player.InMenu;
 	}
 
 

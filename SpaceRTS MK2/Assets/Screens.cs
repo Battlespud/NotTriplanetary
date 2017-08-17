@@ -56,6 +56,7 @@ public class Screens{
 			} if(dam > 0f) {
 				parent.integrity -= Random.Range (20f, 110f) * dam;		
 				if (parent.integrity <= 0f) {
+					parent.ship.Die ();
 					parent.ship.SpawnDebris (source);
 				}
 			}
@@ -63,7 +64,38 @@ public class Screens{
 		}
 	}
 
+	public void PhysicsDamage(float dam, Screen s, Vector3 source, Vector3 force){
+		GameObject g = GameObject.Instantiate (ScreenPrefab);
+		LineRenderer l = g.GetComponent<LineRenderer> ();
+		g.transform.position = parent.transform.position;
+		g.transform.position = Vector3.MoveTowards (g.transform.position, source, .2f);
+		parent.ScreenProxyDelete (g);
+		if (!ScreensWillHold(dam,source)) {
+			parent.ship.rb.AddForce (force);
+		}
+		if (s.strength > 0f) {
+			float applyDam = dam;
+			dam -= s.strength;
+			s.strength -= applyDam;
+			if (s.strength < 0f)
+				s.strength = 0f;
+		} if(dam >0f) {
+			if (WallScreen.strength > 0f) {
+				float applyDam = dam;
+				dam -= WallScreen.strength;
+				WallScreen.strength -= applyDam;
+				if (WallScreen.strength < 0f)
+					WallScreen.strength = 0f;
+			} if(dam > 0f) {
+				parent.integrity -= Random.Range (20f, 110f) * dam;		
+				if (parent.integrity <= 0f) {
+					parent.ship.Die ();
+					parent.ship.SpawnDebris (source);
+				}
+			}
 
+		}
+	}
 
 
 

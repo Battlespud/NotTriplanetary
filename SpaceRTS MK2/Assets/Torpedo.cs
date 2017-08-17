@@ -8,11 +8,17 @@ public class Torpedo : MonoBehaviour {
 
 	public List<Ship> InBlastZone = new List<Ship>();
 
-	public float Force = 125f;
+
+	 float LaunchForce = 50f;
+	public float Force = 450f;
+
+	float fuseTimer = .5f;
+	public bool armed = false;
 
 	// Use this for initialization
 	void Start () {
-		
+		StartCoroutine ("ArmingTimer");
+		GetComponent<Rigidbody> ().AddForce (transform.forward * LaunchForce);
 	}
 
 	void OnTriggerEnter(Collider col){
@@ -26,16 +32,18 @@ public class Torpedo : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision col){
+		if (!armed)
+			return;
 		if (col.collider.GetComponent<Ship> ())
 			Detonate ();
 	}
 
 	public void Detonate(){
-		//StartCoroutine ("ExplosionRadius");
+		StartCoroutine ("ExplosionRadius");
 		StartCoroutine ("ExplosionExpansion");
 
 		foreach (Ship s in InBlastZone) {
-			s.shipClass.Damage (25f, transform.position);
+			s.shipClass.Damage (45f, transform.position);
 
 
 		}
@@ -128,6 +136,15 @@ public class Torpedo : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+
+	}
+
+	IEnumerator ArmingTimer(){
+		float a = 0f;
+		while (a < fuseTimer) {
+			a += Time.deltaTime;
+			yield return null;
+		}
+		armed = true;
 	}
 }

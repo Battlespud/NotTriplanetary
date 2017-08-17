@@ -13,96 +13,128 @@ public class Player : MonoBehaviour {
 	public List<Ship> SelectedShips = new List<Ship>();
 	Vector3 mousePos;
 
+	public bool InMenu = true;
+
 	// Use this for initialization
 	void Start () {
+		SpaceYard.player = this;
 		Screens.ScreenPrefab = Resources.Load <GameObject>("ScreenPrefab") as GameObject;
 		cam = Camera.main;
 		SelectionUI = GameObject.FindGameObjectWithTag ("SelectionUI");
 		selectText = SelectionUI.GetComponentInChildren<Text> ();
+		Ship.OnDeath.AddListener (RemoveShip);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		mousePos = cam.ScreenToWorldPoint (Input.mousePosition);
-		Ray clickRay = new Ray (mousePos,Vector3.down);
-		if (Input.GetMouseButtonDown (0)) {
-			StartCoroutine ("SelectionBox");
-		}
-		if (Input.GetMouseButtonDown (0)) {
-		//	Debug.Log("Trying to select");
-			Debug.DrawRay (mousePos, Vector3.down, Color.white, 25f);
-			RaycastHit hit;
-			if (Physics.Raycast (clickRay, out hit, 10000f)) {
-				Debug.Log (hit.collider.name);
-				if (hit.collider.GetComponent<Ship> ()) {
-					Ship hitShip = hit.collider.GetComponent<Ship> ();
-					if (hitShip.faction == faction)
-						SelectShip (hitShip);
-				}
-				if (hit.collider.GetComponentInParent<SpaceYard> ()) {
-					Debug.Log ("Spaceyard");
-					SpaceYard s = hit.collider.GetComponentInParent<SpaceYard> ();
-					s.Toggle ();
-					SpaceYard.active = s;
+		Ray clickRay = new Ray (mousePos, Vector3.down);
+		RaycastHit hit;
+		Ship hitS = null;
+		if(Physics.Raycast (clickRay, out hit, 10000f))
+			hitS = hit.collider.GetComponent<Ship> ();
+		if (!InMenu) {
+			if (Input.GetMouseButtonDown (0)) {
+				StartCoroutine ("SelectionBox");
+				if (hit.collider != null) {
+					if (hit.collider.GetComponentInParent<SpaceYard> ()) {
+						Debug.Log ("Spaceyard");
+						SpaceYard s = hit.collider.GetComponentInParent<SpaceYard> ();
+						s.Toggle ();
+						SpaceYard.active = s;
+					}
 				}
 			}
-
-		}
-		if (Input.GetMouseButtonDown (1)) {
-			MoveShips (new Vector2 (mousePos.x, mousePos.z));
-		}
-		if (Input.GetKeyDown (KeyCode.T)) {
-			RaycastHit hit;
-			if (Physics.Raycast(clickRay, out hit,10000f)){
-				Debug.Log (hit.collider.name);
-				if (hit.collider.GetComponent<Ship> ()) {
-					Ship hitShip = hit.collider.GetComponent<Ship> ();
-					if (hitShip.faction != faction)
-						SelectedShips [0].shipClass.ActivateTractor (hitShip);
+			if (Input.GetMouseButtonDown (1)) {
+				if (hitS) {
+					if (hitS.faction != faction) {
+						foreach (Ship s in SelectedShips) {
+							foreach (SpaceGun a in s.Guns) {
+								a.AssignTarget (hitS);
+							}
+						}
+					}
 				} else {
-					SelectedShips [0].shipClass.DeactivateTractor();
+					MoveShips (new Vector2 (mousePos.x, mousePos.z));
+				}
+			}
+			if (Input.GetKeyDown (KeyCode.T)) {
+				if (hitS) {
+					SelectedShips [0].shipClass.ActivateTractor (hitS);
+				} else {
+					SelectedShips [0].shipClass.DeactivateTractor ();
+				}
+			}
+			if (Input.GetKeyDown (KeyCode.B)) {
+				foreach (Ship s in SelectedShips) {
+					s.StartCoroutine("TorpedoArm");
 				}
 			}
 		}
-
-		if (Input.GetKeyDown(KeyCode.B)) {
-			foreach (Ship s in SelectedShips) {
-				s.FireTorpedo ();
-			}
-		}
-
 	}
 
 	IEnumerator SelectionBox(){
+		bool additive = false;
+		if(Input.GetKey(KeyCode.LeftShift)){
+			additive = true;
+		}
+		if (!additive)
+			ClearSelection ();
 		Vector3 origin = mousePos;
-		Vector3 end;
+		Vector3 end = new Vector3 ();
 		GameObject selectionOutline = new GameObject ();
 		LineRenderer s = selectionOutline.AddComponent<LineRenderer> ();
 		s.material = new Material(Shader.Find("Particles/Additive"));
 		s.SetWidth (.05f, .05f);
 		s.positionCount = 5;
 		s.SetColors (Color.green, Color.green);
+		Vector3[] pos = new Vector3[5];
+		float height =2f;
 		while (Input.GetMouseButton (0)) {
 			end = mousePos;
-			Vector3[] pos = new Vector3[5]{new Vector3(origin.x,1f,origin.z), new Vector3 (end.x, 1f, origin.z), new Vector3(end.x,1f,end.z), new Vector3 (origin.x, 1f, end.z), new Vector3(origin.x,1f,origin.z) };  
+			pos = new Vector3[5]{new Vector3(origin.x,height,origin.z), new Vector3 (end.x, height, origin.z), new Vector3(end.x,height,end.z), new Vector3 (origin.x, height, end.z), new Vector3(origin.x,height,origin.z) };  
 			s.SetPositions (pos);
 			yield return null;
 		}
+		GameObject b = new GameObject ();
+		SelectionProxy proxy = b.AddComponent<SelectionProxy> ();
+		proxy.player = this;
+		Collider box = b.AddComponent<BoxCollider> ();
+		box.isTrigger = true;
+		foreach (Vector3 v in pos) {
+	//		box.bounds.Encapsulate (v);  //Why doesnt this work tho. seems to have no effect.
+		}
+		box.transform.position = new Vector3 (origin.x + ((end.x - origin.x) * .5f), 1f, origin.z + ((end.z - origin.z) * .5f));
+		box.transform.localScale = new Vector3 (Mathf.Abs (end.x - origin.x), 5f, Mathf.Abs (end.z - origin.z));
+
+
 		Destroy (selectionOutline);
+
+		float timer = .05f;
+		while (timer > 0f) { //Why is this needed?
+			timer -= Time.deltaTime;
+			yield return null;
+		}
+		if (proxy.Contents.Count < 1 && !additive)
+			ClearSelection ();
+		Destroy (b);
+
+
 	}
 
-	void SelectShip(Ship s){
-
+	public void SelectShip(Ship s){
 		if (SelectedShips.Contains (s)) {
 			SelectedShips.Remove (s);
 			s.TogglePath ();
+			if(s.render)
 			s.render.material.color = Color.green;
-			Debug.Log ("Ship " + s.ShipName + " removed.");
+		//	Debug.Log ("Ship " + s.ShipName + " removed.");
 		} else {
 			SelectedShips.Add (s);
 			s.TogglePath ();
+			if(s.render)
 			s.render.material.color = Color.blue;
-			Debug.Log ("Ship " + s.ShipName + " selected.");
+		//	Debug.Log ("Ship " + s.ShipName + " selected.");
 		}
 		selectText.text = "Selected: ";
 		foreach (Ship c in SelectedShips) {
@@ -110,9 +142,35 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	public void ClearSelection(){
+		List<Ship> mirror = new List<Ship> ();
+		mirror.AddRange (SelectedShips);
+		foreach (Ship s in mirror) {
+			SelectShip (s);
+		}
+	}
+
+	public void RemoveShip(Ship s){
+		if(SelectedShips.Contains(s)){
+			SelectShip (s);
+		}
+	}
+
 	void MoveShips(Vector2 vec){
+		float offset = .5f;
+		int row = 0;
+		int mMow = 3;
+		int counter = 0;
+		float invert = 1;
 		foreach (Ship s in SelectedShips) {
-			s.AddWaypoint (vec, Input.GetKey(KeyCode.LeftShift));
+			Vector3 local = new Vector2 (vec.x+(counter*invert*offset),  vec.y+(row*-1f*offset));
+			s.AddWaypoint (local, Input.GetKey(KeyCode.LeftShift));
+			counter++;
+			if (counter > mMow) {
+				row++;
+				counter = 0;
+			}
+			invert *= -1;
 		}
 	}
 }

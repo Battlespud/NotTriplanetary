@@ -94,7 +94,9 @@ public class ShipClass : MonoBehaviour {
 		screens.Damage (f, screens.dic[Direction.GetDirection (transform.position, origin)], origin);
 	}
 
-
+	public void PhysicsDamage(float f, Vector3 origin, float fMag){
+		screens.PhysicsDamage (f, screens.dic[Direction.GetDirection (transform.position, origin)], origin,(transform.position - origin)*fMag);
+	}
 
 
 
