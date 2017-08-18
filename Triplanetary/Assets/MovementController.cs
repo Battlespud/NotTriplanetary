@@ -22,7 +22,7 @@ public class MovementController : MonoBehaviour {
 	public bool grounded = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 	//	controller = GetComponent<CharacterController> ();
 		cam = GetComponentInChildren<Camera> ();
 		rb = GetComponent<Rigidbody> ();
@@ -44,7 +44,7 @@ public class MovementController : MonoBehaviour {
 		velocityChange.y = 0;
 
 		// Jump
-		if (canJump && Input.GetButton ("Jump")) {
+		if (canJump && Input.GetButton ("Jump") && !busy) {
 			rb.velocity = new Vector3 (velocity.x, CalculateJumpVerticalSpeed (), velocity.z);
 		}
 		//	}
@@ -53,7 +53,6 @@ public class MovementController : MonoBehaviour {
 		offset += Input.GetAxis ("Vertical") * transform.forward;
 		offset += Input.GetAxis ("Horizontal") * transform.right;
 		if (!busy) {
-			//	controller.Move (offset * Time.deltaTime * speed);
 			rb.AddForce (velocityChange, ForceMode.VelocityChange);
 			transform.RotateAround (transform.position, Vector3.up, 180f * Time.fixedDeltaTime * Input.GetAxis ("Mouse X"));
 		}

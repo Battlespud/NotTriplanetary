@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Equipment : MonoBehaviour {
+public abstract class Equipment {
 
 	public bool Equipped = false;
-	Player p;
+	public Player p;
 
-	public virtual void Equip(Player p){
+	public GameObject Prefab;
+
+	public void Equip(Player pa){
+		p = pa;
 		Equipped = true;
-		gameObject.SetActive (true);
+		if (Prefab)
+			Prefab.SetActive (true);
+		else {
+			Load ();
+		}
+		OnEquip ();
 	}
 
-	public virtual void Unequip(){
+	public void Unequip(){
 		Equipped = false;
-		gameObject.SetActive (false);
+		if (Prefab)
+			Prefab.SetActive (false);
+		OnUnequip ();
 	}
 
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public abstract void OnEquip();
+	public abstract void OnUnequip();
+	public abstract void Load();
 }

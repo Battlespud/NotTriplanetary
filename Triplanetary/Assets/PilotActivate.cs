@@ -155,6 +155,7 @@ public class PilotActivate : MonoBehaviour, IActivate {
 		else
 			ren.material.color = Color.red;
 		if(Active && Input.GetKey(KeyCode.LeftAlt))shipCamera.transform.RotateAround (shipCamera.transform.position, Vector3.up, 180f * Time.deltaTime * Input.GetAxis ("Mouse X"));
+		if (Input.GetKeyUp (KeyCode.LeftAlt) && Active)	shipCamera.transform.rotation = Ship.transform.rotation;
 		//if(Active && Input.GetKey(KeyCode.LeftAlt))shipCamera.transform.RotateAround (shipCamera.transform.position, Vector3.right, 180f * Time.deltaTime * Input.GetAxis ("Mouse Y"));
 
 	}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerEndpoint : MonoBehaviour {
+public class PowerEndpoint : MonoBehaviour, IRepairable {
 	public const int PowerLayer = 10;
 
 	public Generator gen;
@@ -10,7 +10,22 @@ public class PowerEndpoint : MonoBehaviour {
 	LineRenderer lr;
 	GameObject lrObj;
 
+
+	public bool Functional = true;
+
 	public bool Recieving = false;
+
+	public bool IsFunctional(){
+		return Functional;
+	}
+
+	public void Repair(){
+		Functional = true;
+	}
+
+	public string GetName(){
+		return gameObject.name;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -33,7 +48,7 @@ public class PowerEndpoint : MonoBehaviour {
 	void Update () {
 		Recieving = true;
 		foreach (PowerNode n in Nodes) {
-			if (!n.Active)
+			if (!n.Functional)
 				Recieving = false;
 		}
 		if (Recieving) {

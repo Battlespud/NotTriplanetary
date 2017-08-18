@@ -2,9 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerNode : MonoBehaviour {
+public class PowerNode : MonoBehaviour, IRepairable {
 
-	public bool Active = true;
+	public string NodeID ="";
+
+	public bool Functional = true;
+
+	public bool IsFunctional(){
+		return Functional;
+	}
+
+	public string GetName(){
+		return "Node: " + NodeID;
+	}
+
+	public void Repair(){
+		Functional = true;
+	}
 
 	// Use this for initialization
 	void Start () {
