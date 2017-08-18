@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
 	[SerializeField]string equipName;
 		//equip ui
 	public Text RepairText;
+	public Text EquippedItemText;
 
 
 
@@ -33,6 +34,9 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		ConstructEquips();
+		for (int i = 0; i < Equips.Count; i++) {
+			Equip (i);
+		}
 		Equip (0);
 	}
 	
@@ -78,6 +82,7 @@ public class Player : MonoBehaviour {
 		equip = Equips [EquipIndex];
 		equip.Equip (this);
 		equipName = equip.ToString ();
+		EquippedItemText.text = equipName;
 	}
 	void Equip(int a){
 		if(equip!=null)
@@ -86,7 +91,7 @@ public class Player : MonoBehaviour {
 		equip = Equips [EquipIndex];
 		equip.Equip (this);
 		equipName = equip.ToString ();
-
+		EquippedItemText.text = equipName;
 	}
 
 }
