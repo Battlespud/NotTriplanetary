@@ -1059,7 +1059,7 @@ Prefab:
     - target: {fileID: 114241838269693648, guid: 0f1e42f3b1f74b94e95928592c54691b,
         type: 2}
       propertyPath: faction
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0f1e42f3b1f74b94e95928592c54691b, type: 2}

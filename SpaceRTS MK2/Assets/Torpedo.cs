@@ -16,12 +16,18 @@ public class Torpedo : MonoBehaviour {
 	float fuseTimer = .5f;
 	public bool armed = false;
 
+	Renderer r;
+
 	// Use this for initialization
 	void Start () {
 		GetComponent<Rigidbody> ().AddForce (transform.forward * LaunchForce);
 		col = GetComponent<Collider> ();
 		col.enabled = false;
 		StartCoroutine ("ArmingTimer");
+		r = GetComponent<Renderer> ();
+		r.material.color = new Color(255,140,0); //orange
+		r.material.SetColor ("_EmissionColor", new Color(255,140,0));
+		r.material.EnableKeyword ("_EMISSION");
 	}
 
 	void OnTriggerEnter(Collider col){
