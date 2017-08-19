@@ -41,7 +41,7 @@ public class PilotActivate : MonoBehaviour, IActivate {
 		if (!Powered)
 			return;
 		pilot = a.gameObject;
-		pilot.transform.parent = Ship.transform;
+	//	pilot.transform.parent = Ship.transform;
 		a.GetComponent<MovementController> ().busy = true;
 		a.GetComponent<MovementController> ().cam.enabled = false;
 		EnableShipCamera ();
@@ -49,7 +49,7 @@ public class PilotActivate : MonoBehaviour, IActivate {
 
 	void TurnOff(Activator a){
 		Active = false;
-		pilot.transform.parent = null;
+		//pilot.transform.parent = null;
 		a.GetComponent<MovementController> ().busy = false;
 		a.GetComponent<MovementController> ().cam.enabled = true;
 		shipCamera.enabled = false;
@@ -126,6 +126,7 @@ public class PilotActivate : MonoBehaviour, IActivate {
 					rb.AddTorque (transform.up * 6000 * Input.GetAxis ("Mouse X"));
 			}
 
+			pilot.transform.rotation = Ship.transform.rotation;
 			yield return waitF;
 		}
 		Cursor.visible = true;
@@ -154,7 +155,7 @@ public class PilotActivate : MonoBehaviour, IActivate {
 			ren.material.color = Color.cyan;
 		else
 			ren.material.color = Color.red;
-		if(Active && Input.GetKey(KeyCode.LeftAlt))shipCamera.transform.RotateAround (shipCamera.transform.position, Vector3.up, 180f * Time.deltaTime * Input.GetAxis ("Mouse X"));
+		if(Active && Input.GetKey(KeyCode.LeftAlt))shipCamera.transform.RotateAround (shipCamera.transform.position, Ship.transform.up, 180f * Time.deltaTime * Input.GetAxis ("Mouse X"));
 		if (Input.GetKeyUp (KeyCode.LeftAlt) && Active)	shipCamera.transform.rotation = Ship.transform.rotation;
 		//if(Active && Input.GetKey(KeyCode.LeftAlt))shipCamera.transform.RotateAround (shipCamera.transform.position, Vector3.right, 180f * Time.deltaTime * Input.GetAxis ("Mouse Y"));
 

@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 	public Text RepairText;
 	public Text EquippedItemText;
 
-
+	public Ship ship;
 
 	public float Health = 100;
 	const float mHealth = 100;
@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
 		Equips.Add (new EmptyEquipment ());
 		Equips.Add(new Analyzer());
 		Equips.Add (new ElectricRepairTool ());
+		Equips.Add (new Pistol ());
 	}
 
 	// Use this for initialization
@@ -49,6 +50,11 @@ public class Player : MonoBehaviour {
 	//	equip.Prefab.transform.rotation = transform.rotation;
 		if (Input.GetKeyDown (KeyCode.I))
 			ScrollEquipment ();
+		float temp = Input.GetAxis ("Mouse ScrollWheel");
+		if (temp > 0)
+			ScrollEquipment (1);
+		if (temp < 0)
+			ScrollEquipment (-1);
 	}
 
 
@@ -73,6 +79,15 @@ public class Player : MonoBehaviour {
 		EquipIndex++;
 		if (EquipIndex >= Equips.Count)
 			EquipIndex = 0;
+		Equip ();
+	}
+
+	void ScrollEquipment(int i){
+		EquipIndex+=i;
+		if (EquipIndex >= Equips.Count)
+			EquipIndex = 0;
+		if (EquipIndex < 0)
+			EquipIndex = Equips.Count - 1;
 		Equip ();
 	}
 

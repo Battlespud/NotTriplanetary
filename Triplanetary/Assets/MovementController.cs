@@ -11,6 +11,7 @@ public class MovementController : MonoBehaviour {
 	public Vector3 offset;
 	float rOffset;
 	Rigidbody rb;
+	public Player p;
 
 
 
@@ -26,6 +27,7 @@ public class MovementController : MonoBehaviour {
 	//	controller = GetComponent<CharacterController> ();
 		cam = GetComponentInChildren<Camera> ();
 		rb = GetComponent<Rigidbody> ();
+		p = GetComponent<Player> ();
 	}
 	
 	// Update is called once per frame
@@ -54,8 +56,13 @@ public class MovementController : MonoBehaviour {
 		offset += Input.GetAxis ("Horizontal") * transform.right;
 		if (!busy) {
 			rb.AddForce (velocityChange, ForceMode.VelocityChange);
-			transform.RotateAround (transform.position, Vector3.up, 180f * Time.fixedDeltaTime * Input.GetAxis ("Mouse X"));
+		//	transform.RotateAroundLocal (p.transform.up, 10 * Time.fixedDeltaTime * Input.GetAxis ("Mouse X"));
 		}
+	}
+
+	void LateUpdate(){
+		rb.transform.rotation = Quaternion.Slerp (rb.transform.rotation, Quaternion.AngleAxis (100f * Time.deltaTime * Input.GetAxis ("Mouse X"), p.ship.transform.up) * transform.rotation, 10f);
+
 	}
 
 		float CalculateJumpVerticalSpeed () {
