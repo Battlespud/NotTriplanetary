@@ -22,7 +22,7 @@ public class PowerNode : MonoBehaviour, IRepairable {
 
 	// Use this for initialization
 	void Start () {
-		
+		NodeID = NameGen.GenerateName ("L3N2L1");
 	}
 	
 	// Update is called once per frame

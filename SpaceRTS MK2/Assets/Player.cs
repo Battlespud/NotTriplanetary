@@ -126,14 +126,19 @@ public class Player : MonoBehaviour {
 		if (SelectedShips.Contains (s)) {
 			SelectedShips.Remove (s);
 			s.TogglePath ();
-			if(s.render)
-			s.render.material.color = Color.green;
+			foreach (Renderer r in s.rens) {
+				r.material.SetColor ("_EmissionColor", Color.blue);
+			}
+			s.render.material.color = Color.blue;
 		//	Debug.Log ("Ship " + s.ShipName + " removed.");
 		} else {
 			SelectedShips.Add (s);
 			s.TogglePath ();
 			if(s.render)
-			s.render.material.color = Color.blue;
+				s.render.material.color = Color.green;
+			foreach (Renderer r in s.rens) {
+				r.material.SetColor ("_EmissionColor", Color.green);
+			}
 		//	Debug.Log ("Ship " + s.ShipName + " selected.");
 		}
 		selectText.text = "Selected: ";

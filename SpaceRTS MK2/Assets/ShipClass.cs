@@ -65,6 +65,7 @@ public class ShipClass : MonoBehaviour {
 			TractorLoop ();
 		BatteryPower = Power.GetBatteryPower ();
 		Power.GeneratePower ();
+		UpdateScreenUI ();
 	}
 
 
@@ -90,26 +91,13 @@ public class ShipClass : MonoBehaviour {
 		Wall = screens.WallScreen.strength;
 	}
 
-	public void Damage(float f, Vector3 origin){
-		screens.Damage (f, screens.dic[Direction.GetDirection (transform.position, origin)], origin);
+	public void Damage(float dam, Vector3 origin, Transform en){
+		screens.Damage (dam, screens.dic[Direction.GetDirection (origin,en,transform.position,transform)], origin);
 	}
 
-	public void PhysicsDamage(float f, Vector3 origin, float fMag){
-		screens.PhysicsDamage (f, screens.dic[Direction.GetDirection (transform.position, origin)], origin,(transform.position - origin)*fMag);
+	public void PhysicsDamage(float f, Vector3 origin, float fMag, Transform s){
+		screens.PhysicsDamage (f, screens.dic[Direction.GetDirection (origin,s,transform.position,transform)], origin,(transform.position - origin)*fMag,s);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

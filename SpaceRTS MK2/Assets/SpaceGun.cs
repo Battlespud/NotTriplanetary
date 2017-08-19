@@ -11,7 +11,7 @@ public  class SpaceGun : MonoBehaviour {
 	public bool shooting = true;
 	public bool CanFire = true;
 
-	public float powerCost = 5f;
+	public float powerCost = 1f;
 
 	public float ReloadTime = 1.5f;
 	public float Damage = 1f;
@@ -50,21 +50,20 @@ public  class SpaceGun : MonoBehaviour {
 	public virtual void OnTriggerExit(Collider col){
 		Ship s = col.GetComponent<Ship> ();
 		if (s) {
-			if (s.faction != self.faction) {
-				if (target == s) {
-					targets.Remove (s);
-					target = null;
-					if (targets.Count != 0)
-						target = targets [0];
-				}
+			if (targets.Contains (s)) {
+				targets.Remove (s);
 			}
+				if (target == s) {
+					target = null;
+			}
+			if (targets.Count != 0)
+				target = targets [0];
 		}
 	}
 
 	// Update is called once per frame
 	public virtual void Update () {
-		if ( !target && targets.Count != 0)
-			target = targets [0];
+		ResetTarget ();
 		if (target && shooting) {
 			Fire ();
 		}
@@ -75,9 +74,9 @@ public  class SpaceGun : MonoBehaviour {
 			return;
 		Debug.DrawLine (self.transform.position, target.transform.position, lineC, .05f);
 		if (ForceMagnitude > 0f) {
-			target.shipClass.PhysicsDamage (Damage, transform.position,ForceMagnitude);
+			target.shipClass.PhysicsDamage (Damage, self.transform.position,ForceMagnitude, self.transform);
 		} else {
-			target.shipClass.Damage (Damage, transform.position);
+			target.shipClass.Damage (Damage, self.transform.position, self.transform);
 		}
 		StartCoroutine ("Reload");
 		CanFire = false;

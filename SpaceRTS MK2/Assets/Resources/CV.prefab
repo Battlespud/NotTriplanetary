@@ -127,7 +127,7 @@ Transform:
   m_GameObject: {fileID: 1843142239926852}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1088.1913, y: 0.59, z: -240.7344}
-  m_LocalScale: {x: 25, y: 45, z: 20}
+  m_LocalScale: {x: 50, y: 45, z: 50}
   m_Children:
   - {fileID: 4717564663569074}
   - {fileID: 4228349005236268}
@@ -183,7 +183,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 19e1af79641cb3c44a3a880c44e500bd, type: 3}
+  - {fileID: 2100000, guid: 535046d32560ad1409d2069cc2eedd26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -267,19 +267,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6892c7b8d6467f7429638bb317373560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dirTarget: {fileID: 0}
+  dirTest: 0
+  dirInverse: 0
   shipClass: {fileID: 0}
   faction: 0
   Guns: []
   immobile: 0
   underTractor: 0
   usingTractor: 0
+  rb: {fileID: 0}
+  Waypoints: []
+  render: {fileID: 0}
+  rens: []
+  dir: 0
   ShipName: 
   mass: 100
   enginePower: 25
   VelocityUI: {x: 0, y: 0, z: 0}
   DotProdUI: 0
-  dir: 0
   Agent: {fileID: 0}
+  path: []
 --- !u!195 &195960225384203116
 NavMeshAgent:
   m_ObjectHideFlags: 1

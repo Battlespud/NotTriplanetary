@@ -17,6 +17,8 @@ public class SpaceYard : MonoBehaviour {
 	public static Dropdown drop;
 	public static Button buildButton;
 
+
+
 	public static void Build(){
 		GameObject s = Instantiate (ShipPrefabs[drop.value]);
 		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (active.transform.position.x, .59f, active.transform.position.z));

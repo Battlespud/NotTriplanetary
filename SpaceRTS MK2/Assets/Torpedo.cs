@@ -7,9 +7,10 @@ public class Torpedo : MonoBehaviour {
 	public float eRadius = 7.5f;
 
 	public List<Ship> InBlastZone = new List<Ship>();
+	Collider col;
 
 
-	 float LaunchForce = 50f;
+	 float LaunchForce = 50f; //50
 	public float Force = 450f;
 
 	float fuseTimer = .5f;
@@ -17,8 +18,10 @@ public class Torpedo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		StartCoroutine ("ArmingTimer");
 		GetComponent<Rigidbody> ().AddForce (transform.forward * LaunchForce);
+		col = GetComponent<Collider> ();
+		col.enabled = false;
+		StartCoroutine ("ArmingTimer");
 	}
 
 	void OnTriggerEnter(Collider col){
@@ -43,7 +46,7 @@ public class Torpedo : MonoBehaviour {
 		StartCoroutine ("ExplosionExpansion");
 
 		foreach (Ship s in InBlastZone) {
-			s.shipClass.Damage (45f, transform.position);
+			s.shipClass.Damage (45f, transform.position,transform);
 
 
 		}
@@ -145,6 +148,7 @@ public class Torpedo : MonoBehaviour {
 			a += Time.deltaTime;
 			yield return null;
 		}
+		col.enabled = true;
 		armed = true;
 	}
 }

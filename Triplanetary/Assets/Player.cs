@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
 		}
 		Equip (0);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 

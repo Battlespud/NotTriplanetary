@@ -13,6 +13,10 @@ public class Ship : MonoBehaviour {
 
 	public static GameObject Debris; //spawns on death.
 	public static GameObject Torpedo;
+	//debugging direction
+	public GameObject dirTarget;
+	public GeneralDirection dirTest;
+	public GeneralDirection dirInverse;
 
 
 	bool moveAssigned = false;
@@ -41,6 +45,8 @@ public class Ship : MonoBehaviour {
 	LineRenderer lr;
 	public Renderer render;
 
+	public List<Renderer> rens; 
+	public GeneralDirection dir;
 
 	//main
 
@@ -50,19 +56,30 @@ public class Ship : MonoBehaviour {
 	public float enginePower; //newtons
 	public Vector3 VelocityUI;
 	public float DotProdUI;
-	public GeneralDirection dir;
 
 	public NavMeshAgent Agent;
 	// Use this for initialization
 	void Start () {
 		if (!render)
 			render = GetComponentInChildren<Renderer> ();
+		rens.AddRange( GetComponentsInChildren<Renderer> ());
 		rb = GetComponent<Rigidbody> ();
-		if (faction == 0)
-			GetComponentInChildren<Renderer> ().material.color = Color.green;
-		else {
-			GetComponentInChildren<Renderer> ().material.color = Color.red;
+		if (faction == 0) {
+			foreach (Renderer r in rens) {
+				r.material.color = Color.blue;
+				r.material.SetColor ("_EmissionColor", Color.blue);
+				r.material.EnableKeyword ("_EMISSION");
+			}
+
 		}
+		else {
+			foreach (Renderer r in rens) {
+				r.material.color = Color.red;
+				r.material.SetColor ("_EmissionColor", Color.red);
+				r.material.EnableKeyword ("_EMISSION");
+			}
+		}
+
 		Debris = Resources.Load<GameObject> ("Debris") as GameObject;
 		Torpedo = Resources.Load<GameObject> ("Torpedo") as GameObject;
 		Agent = GetComponent<NavMeshAgent> ();
@@ -79,8 +96,13 @@ public class Ship : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (dirTarget) {
+			dirTest = Direction.GetDirection (dirTarget.transform.position, dirTarget.transform, transform.position, transform);
+		}
 		if(lr.enabled)SetPaths() ;
 		mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		if (enginePower == 0)
+			enginePower = 1;
 		Agent.acceleration = mass / enginePower;
 		if (usingTractor)Agent.acceleration *= .35f;
 		TractorLoop ();
@@ -148,13 +170,13 @@ public class Ship : MonoBehaviour {
 		StartCoroutine("ExplosionExpansion",5f);
 		foreach (Collider hit in col) {
 			Rigidbody r = hit.GetComponent<Rigidbody> ();
-			float Force = 20f;
+			float Force = 5f;
 			if (r) {
 				ShipClass c = rb.GetComponent<ShipClass> ();
 				if (c) {
-					if (!c.screens.ScreensWillHold (20f * (1f / Vector3.Distance (c.transform.position, transform.position)), transform.position))
+					if (!c.screens.ScreensWillHold (20f * (1f / Vector3.Distance (c.transform.position, transform.position)), transform.position,c.transform))
 						r.AddExplosionForce (Force, transform.position, 5f, 0f);
-					c.Damage (20f * (2f / Vector3.Distance (c.transform.position, transform.position)), transform.position);
+					c.Damage (20f * (2f / Vector3.Distance (c.transform.position, transform.position)), transform.position, c.transform);
 //					Debug.Log (c.name);
 				} else {
 					r.AddExplosionForce (Force, transform.position, 5f, 0f);
@@ -246,20 +268,22 @@ public class Ship : MonoBehaviour {
 		l.material = new Material(Shader.Find("Particles/Additive"));
 		l.SetColors (Color.grey, Color.red);
 		l.SetWidth (.05f, .05f);
+		Vector3 targ = new Vector3();
 		while (Input.GetKey (KeyCode.B)) {
-			l.SetPositions (new Vector3[2]{ transform.position, transform.forward.normalized * 2.5f });
+			targ = new Vector3 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, transform.position.y, Camera.main.ScreenToWorldPoint (Input.mousePosition).z);
+			l.SetPositions (new Vector3[2]{ transform.position,targ	 });
 			yield return null;
 		}
-		FireTorpedo ();
+		FireTorpedo (targ);
 		Destroy (g);
 	}
 
-	public void FireTorpedo(){
+	public void FireTorpedo(Vector3 targ){
 		if (shipClass.Torpedos > 0) {
 			shipClass.Torpedos -= 1;
 			GameObject t = Instantiate (Torpedo);
-			t.transform.rotation = transform.rotation;
-			t.transform.position = transform.position + transform.forward * .25f;
+			t.transform.position = transform.position;
+			t.transform.LookAt(targ);
 		}
 	}
 

@@ -34,7 +34,7 @@ static class NameGen
                         break;
                     case false:
                         for (int j = 0; j < int.Parse(format[i].ToString()); j++)
-                            sb.Append(numbers[rand.Next(-1, numbers.Length)]);
+                            sb.Append(numbers[rand.Next(0, numbers.Length)]);
                         break;
                     default:
                         break;
