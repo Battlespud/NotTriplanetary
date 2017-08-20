@@ -41,7 +41,10 @@ public class SpaceYard : MonoBehaviour {
 		Debug.Log ("Open Berth is #" + open.Designation);
 		GameObject s = Instantiate (ShipPrefabs[drop.value]);
 		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (open.transform.position.x, .59f, open.transform.position.z));
+		s.transform.rotation = open.transform.rotation;
 		s.GetComponent<Ship>().faction = 0;
+		s.GetComponent<Ship>().BaseType = (ShipPrefabTypes) drop.value;
+
 		if (s.GetComponent<Ship>().faction == 0)
 			s.GetComponentInChildren<Renderer> ().material.color = Color.green;
 		else {

@@ -1,2 +1,423 @@
+Alabama 
+Alaska 
+Arizona 
+Arkansas 
 California 
-Colorado
+Colorado 
+Connecticut 
+Delaware 
+Florida 
+Georgia 
+Hawaii 
+Idaho 
+Illinois Indiana 
+Iowa 
+Kansas 
+Kentucky 
+Louisiana 
+Maine 
+Maryland 
+Massachusetts 
+Michigan 
+Minnesota 
+Mississippi 
+Missouri 
+Montana Nebraska 
+Nevada 
+New Hampshire 
+New Jersey 
+New Mexico 
+New York 
+North Carolina 
+North Dakota 
+Ohio 
+Oklahoma 
+Oregon 
+Pennsylvania Rhode Island 
+South Carolina 
+South Dakota 
+Tennessee 
+Texas 
+Utah 
+Vermont 
+Virginia 
+Washington 
+West Virginia 
+Wisconsin 
+Wyoming
+Abyssinia
+Achilles
+Africa
+Agamemnon
+Agincourt
+Ajax
+Albemarle
+Albion
+Alexandra
+Anson
+Audacious
+Barfleur
+Barham
+Belleisle
+Bellerophon
+Benbow
+Black Prince
+Britannia
+Bulwark
+Caesar
+Caledonia
+Camperdown
+Canada
+Canopus
+Captain
+Centurion
+Cerberus
+Collingwood
+Colossus
+Commonwealth
+Conqueror
+Cornwallis
+Defence
+Devastation
+Dominion
+Dreadnought
+Duke of York
+Duncan
+Edinburgh
+Empress of India
+Enterprise
+Erin
+Exmouth
+Favorite
+Formidable
+Glatton
+Glory
+Goliath
+Hannibal
+Hector
+Hercules
+Hero
+Hibernia
+Hindustan
+Hood
+Hotspur
+Howe
+Illustrious
+Implacable
+Inflexible
+Invincible
+Iron Duke
+Irresistible
+Jupiter
+King Edward VII
+King George V
+Lion
+London
+Lord Clyde
+Lord Nelson
+Lord Warden
+Magdala
+Magnificent
+Majestic
+Malaya
+Marlborough
+Mars
+Minotaur
+Monarch
+Montagu
+Nelson
+Neptune
+New Zealand
+Nile
+Northumberland
+Ocean
+Orion
+Pallas
+Penelope
+Prince Albert
+Prince Consort
+Prince George
+Prince of Wales
+Queen
+Queen Elizabeth
+Ramillies
+Renown
+Repulse
+Research
+Resistance
+Resolution
+Revenge
+Rodney
+Royal Alfred
+Royal Oak
+Royal Sovereign
+Rupert
+Russell
+Sans Pareil
+Scorpion
+St Vincent
+Sultan
+Superb
+Swiftsure
+Téméraire
+Thunderer
+Trafalgar
+Triumph
+Valiant
+Vanguard
+Venerable
+Vengeance
+Victoria
+Victorious
+Warrior
+Warspite
+Wivern
+Zealous
+Andrei Pervozvanny
+Archangelsk
+Borodino
+Dvienadsat Apostolov
+Ekaterina II
+Evstafi
+Gangut
+Georgii Pobiedonosets
+Imperator Aleksandr II
+Imperator Aleksandr III
+Imperator Nikolai I
+Imperator Pavel
+Imperatritsa Mariya
+Ioann Zlatoust
+Izmail
+Kinburn
+Kniaz Pojarski
+Kniaz Potemkin-Tavricheski
+Kniaz Suvarov
+Kreml
+Kronstadt
+Minin
+Moskva
+Navarin
+Netron Menya
+Novorossiysk
+Orel
+Oslyabya
+Peresviet
+Pervenetz
+Petr Velikyy
+Petropavlovsk
+Pobieda
+Poltava
+Retvizan
+Rostislav
+Sevastopol
+Sinop
+Sissoi Velikyy
+Slava
+Sovetskaya Byelorussia
+Sovetskaya Rossiya
+Sovetskaya Ukraina
+Sovetsky Soyuz
+Stalingrad
+Tchesma
+Tri Sviatitelia
+Tsesarevich
+Ägir
+Arminius
+Baden
+Bayern
+Beowulf
+Bismarck 
+Borussia
+Brandenburg
+Braunschweig
+Derfflinger
+Deutschland
+Elsaß
+Ersatz Freya
+Ersatz Gneisenau
+Ersatz Scharnhorst
+Ersatz York
+Friedrich Carl
+Friedrich der Große
+Frithjof
+Gneisenau
+Goeben
+Graf Spee
+Großer Kurfürst
+Hagen
+Hannover
+Heimdall
+Helgoland
+Hessen
+Hildebrand
+Hindenburg
+Kaiser
+Kaiser Barbarossa
+Kaiser Friedrich III
+Kaiser Karl der Große
+Kaiser Wilhelm der Große
+Kaiser Wilhelm II
+Kaiserin
+König
+König Albert
+König Wilhelm
+Kronprinz
+Kronprinz Wilhelm
+Kurfürst Friedrich Wilhelm
+Lothringen
+Lutzow
+Mackensen
+Markgraf
+Mars
+Mecklenburg
+Moltke
+Nassau
+Odin
+Oldenburg
+Ostfriesland
+Pommern
+Posen
+Preußen
+Prinz Adalbert
+Prinzregent Luitpold
+Rheinland
+Sachsen
+Scharnhorst
+Schlesien
+Schleswig-Holstein
+Schwaben
+Seydlitz
+Siegfried
+Thüringen
+Tirpitz
+Von Der Tann
+Weißenburg
+Westfalen
+Wettin
+Wittelsbach
+Wörth
+Württemberg
+Zähringen
+Affondatore
+Ammiraglio di Saint Bon
+Ancona
+Andrea Doria
+Benedetto Brin
+Caio Duilio
+Castelfidardo
+Conte di Cavour
+Conte Verde
+Cristoforo Colombo
+Dandolo
+Dante Alighieri
+Emanuele Filiberto
+Formidabile
+Francesco Caracciolo
+Francesco Morosini
+Giulio Cesare
+Impero
+Italia
+Leonardo da Vinci
+Lepanto
+Littorio
+Marcantonio Colonna
+Messina
+Napoli
+Palestro
+Principe Amadeo
+Principe di Carignano
+Re d'Italia
+Re di Portogallo
+Re Umberto
+Regina Elena
+Regina Margherita
+Regina Maria Pia
+Roma
+Ruggiero di Lauria
+San Martino
+Sardegna
+Sicilia
+Terribile
+Venezia
+Vittorio Emanuele
+Vittorio Veneto
+Alsace
+Amiral Baudin
+Amiral Duperré
+Béarn
+Bourgogne
+Bouvet
+Brennus
+Bretagne
+Caïman
+Carnot
+Charlemagne
+Charles Martel
+Clemenceau
+Colbert
+Condorcet
+Congreve
+Courbet
+Couronne
+Danton
+Démocratie
+Dévastation
+Diderot
+Dunkerque
+Duquesne
+Flandre
+Formidable
+Foudroyante
+France
+Friedland
+Gascogne
+Gaulois
+Gauloise
+Gloire
+Guyenne
+Henri IV
+Héroïne
+Hoche
+Iena
+Indomptable
+Invincible
+Jauréguiberry
+Jean Bart
+Justice
+Languedoc
+Lave
+Liberté
+Lille
+Lorraine
+Lyon
+Magenta
+Magnanime
+Marceau
+Marengo
+Masséna
+Mirabeau
+Neptune
+Normandie
+Océan
+Paris
+Patrie
+Provence
+Redoutable
+République
+Requin
+Revanche
+Richelieu
+Savoie
+Solferino
+St Louis
+Strasbourg
+Suffren
+Surveillante
+Terrible
+Tonnante
+Tourville
+Trident
+Valeureuse
+Vergniaud
+Vérité
+Voltaire

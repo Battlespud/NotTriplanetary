@@ -36,7 +36,6 @@ public class ShipClass : MonoBehaviour {
 	public Screens screens;
 
 
-
 	//Resources and parts
 	public int crew;
 	public int mCrew;

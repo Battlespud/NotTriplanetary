@@ -368,6 +368,7 @@ MonoBehaviour:
   dirTest: 0
   dirInverse: 0
   shipClass: {fileID: 0}
+  BaseType: 0
   faction: 0
   Guns: []
   immobile: 0
@@ -459,4 +460,4 @@ NavMeshAgent:
   m_Height: 0.05
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 3
+  m_ObstacleAvoidanceType: 4

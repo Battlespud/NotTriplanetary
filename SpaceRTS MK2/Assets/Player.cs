@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log (NameManager.names.Count + " names have been loaded");
 		SpaceYard.player = this;
 		Screens.ScreenPrefab = Resources.Load <GameObject>("ScreenPrefab") as GameObject;
 		cam = Camera.main;
@@ -27,7 +28,6 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (NameManager.names.Count);
 		mousePos = cam.ScreenToWorldPoint (Input.mousePosition);
 		Ray clickRay = new Ray (mousePos, Vector3.down);
 		RaycastHit hit;
@@ -69,6 +69,12 @@ public class Player : MonoBehaviour {
 			if (Input.GetKeyDown (KeyCode.B)) {
 				foreach (Ship s in SelectedShips) {
 					s.StartCoroutine("TorpedoArm");
+				}
+			}
+			if (Input.GetKeyDown (KeyCode.Backspace)) {
+				foreach (Ship s in SelectedShips) {
+					s.Agent.Stop ();
+					s.Waypoints.Clear ();
 				}
 			}
 		}
@@ -138,6 +144,7 @@ public class Player : MonoBehaviour {
 			if(s.render)
 				s.render.material.color = Color.green;
 			foreach (Renderer r in s.rens) {
+				if(r)
 				r.material.SetColor ("_EmissionColor", Color.green);
 			}
 		//	Debug.Log ("Ship " + s.ShipName + " selected.");
@@ -163,13 +170,17 @@ public class Player : MonoBehaviour {
 	}
 
 	void MoveShips(Vector2 vec){
-		float offset = .5f;
+		float offset = .75f;
 		int row = 0;
 		int mMow = 3;
 		int counter = 0;
 		float invert = 1;
 		foreach (Ship s in SelectedShips) {
-			Vector3 local = new Vector2 (vec.x+(counter*invert*offset),  vec.y+(row*-1f*offset));
+			float sizeAdjust = 0f;
+			if (s.BaseType == ShipPrefabTypes.CV || s.BaseType == ShipPrefabTypes.DN) {
+				sizeAdjust += 1f;
+			}
+			Vector3 local = new Vector2 (vec.x+(counter*invert*(offset+sizeAdjust)),  vec.y+(row*-1f*(offset+sizeAdjust)));
 			s.AddWaypoint (local, Input.GetKey(KeyCode.LeftShift));
 			counter++;
 			if (counter > mMow) {

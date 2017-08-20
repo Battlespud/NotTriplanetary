@@ -22,6 +22,7 @@ public class Ship : MonoBehaviour {
 	bool moveAssigned = false;
 
 	public ShipClass shipClass;
+	public ShipPrefabTypes BaseType;
 
 	Vector3 mousePos;
 
@@ -115,6 +116,7 @@ public class Ship : MonoBehaviour {
 		}
 		if( Agent.remainingDistance <= float.Epsilon && Waypoints.Count != 0) {
 			Waypoints.Remove (Waypoints [0]);
+			Agent.Stop (); // TODO
 			moveAssigned = false;
 			SetPaths ();
 			if (Waypoints.Count != 0) {
@@ -126,6 +128,7 @@ public class Ship : MonoBehaviour {
 	public List<LineRenderer> path = new List<LineRenderer>();
 
 	public void TogglePath(){
+		if(lr)
 		lr.enabled = !lr.enabled;
 	}
 
@@ -319,6 +322,7 @@ public class Ship : MonoBehaviour {
 		moveAssigned = true;
 		StopCoroutine("Movement");
 		Agent.velocity = new Vector3();
+		Agent.isStopped = false;
 		StartCoroutine("Movement", (new Vector3(vec.x,transform.position.y, vec.y)));
 	}
 

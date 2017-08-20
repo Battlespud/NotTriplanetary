@@ -17,7 +17,7 @@ using System.Text;
 //}
 public class NameManager// : MonoBehaviour
 {
-    static readonly string[] RomanNumerals = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
+    static readonly string[] RomanNumerals = { "", "", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
     static string dir = Directory.GetCurrentDirectory() + "\\Text Files";
     static string file = dir + "\\Ship Names.txt";
  public   static List<string> names;
@@ -42,6 +42,7 @@ public class NameManager// : MonoBehaviour
         }
 
 		foreach (string n in names) {
+			if(!Frequency.ContainsKey(n))
 			Frequency.Add (n, 0);
 		}
     }
@@ -55,7 +56,7 @@ public class NameManager// : MonoBehaviour
         usedNames.Add(name);
 		Frequency [name]++;
 		usedNamesShip.Add (ship, name);
-		return name + AssignNumeral(name);
+		return ship.BaseType.ToString() + " " + name + AssignNumeral(name);
     }
 
 	static void CheckDic(string name){

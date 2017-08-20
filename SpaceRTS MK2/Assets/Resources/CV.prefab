@@ -309,6 +309,7 @@ MonoBehaviour:
   dirTest: 0
   dirInverse: 0
   shipClass: {fileID: 0}
+  BaseType: 0
   faction: 0
   Guns: []
   immobile: 0
