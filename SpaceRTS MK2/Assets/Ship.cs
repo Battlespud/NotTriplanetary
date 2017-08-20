@@ -60,6 +60,7 @@ public class Ship : MonoBehaviour {
 	public NavMeshAgent Agent;
 	// Use this for initialization
 	void Start () {
+        ShipName = NameManager.AssignName();
 		if (!render)
 			render = GetComponentInChildren<Renderer> ();
 		rens.AddRange( GetComponentsInChildren<Renderer> ());
@@ -90,8 +91,8 @@ public class Ship : MonoBehaviour {
 		lr = this.gameObject.AddComponent<LineRenderer> ();
 		lr.enabled = false;
 		lr.SetWidth (.035f, .035f);
-	//	render = GetComponentInChildren<Renderer> ();
-
+        //	render = GetComponentInChildren<Renderer> ();
+        gameObject.name = ShipName;
 	}
 	
 	// Update is called once per frame
