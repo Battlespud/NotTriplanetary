@@ -150,6 +150,7 @@ public class Ship : MonoBehaviour {
 		Debug.Log (name + " is lost!");
 		DisableWeapons ();
 		OnDeath.Invoke (this);
+		NameManager.RecycleName (ShipName);
 	}
 
 	public void SpawnDebris(Vector3 source){

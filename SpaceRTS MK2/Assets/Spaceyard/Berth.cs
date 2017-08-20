@@ -32,4 +32,5 @@ public class Berth : MonoBehaviour {
 			ShipList.Remove (col.GetComponent<Ship> ());
 		}
 	}
+
 }
