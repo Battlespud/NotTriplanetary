@@ -27,6 +27,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log (NameManager.names.Count);
 		mousePos = cam.ScreenToWorldPoint (Input.mousePosition);
 		Ray clickRay = new Ray (mousePos, Vector3.down);
 		RaycastHit hit;

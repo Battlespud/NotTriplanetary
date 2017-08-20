@@ -60,7 +60,7 @@ public class Ship : MonoBehaviour {
 	public NavMeshAgent Agent;
 	// Use this for initialization
 	void Start () {
-        ShipName = NameManager.AssignName();
+        ShipName = NameManager.AssignName(this);
 		if (!render)
 			render = GetComponentInChildren<Renderer> ();
 		rens.AddRange( GetComponentsInChildren<Renderer> ());
@@ -150,7 +150,6 @@ public class Ship : MonoBehaviour {
 		Debug.Log (name + " is lost!");
 		DisableWeapons ();
 		OnDeath.Invoke (this);
-		NameManager.RecycleName (ShipName);
 	}
 
 	public void SpawnDebris(Vector3 source){
@@ -200,7 +199,7 @@ public class Ship : MonoBehaviour {
 		RenderCircle (l, 5f);
 		float a = 0f;
 		Color c = new Color (l.startColor.r, l.startColor.g, l.startColor.b);
-		while( c.a > 0f){
+		while( c.a > .1f){
 			c = new Color (l.startColor.r, l.startColor.g, l.startColor.b, Mathf.Lerp (l.startColor.a, 0f, 5f * Time.deltaTime));
 			a += Time.deltaTime;
 			l.SetColors (c, c);
@@ -234,6 +233,8 @@ public class Ship : MonoBehaviour {
 			l.SetColors (c, c);
 			yield return null;
 		}
+		NameManager.RecycleName (this);
+
 		Destroy (g);
 		Destroy (gameObject);
 	}

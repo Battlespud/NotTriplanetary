@@ -20,9 +20,10 @@ public class NameManager// : MonoBehaviour
     static readonly string[] RomanNumerals = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
     static string dir = Directory.GetCurrentDirectory() + "\\Text Files";
     static string file = dir + "\\Ship Names.txt";
-    static List<string> names;
+ public   static List<string> names;
     static List<string> usedNames;
 	static Dictionary <string,int> Frequency = new Dictionary<string,int>();
+	public static Dictionary <Ship,string> usedNamesShip = new Dictionary<Ship, string>();
 
     //private void Start()
     static NameManager()
@@ -45,30 +46,30 @@ public class NameManager// : MonoBehaviour
 		}
     }
 
-    static public string AssignName()
+	static public string AssignName(Ship ship)
     {
-		
-        System.Random rand = new System.Random();
-        //string name = names[rand.Next(0, names.Count)];
-        string name = AssignNumeral(names[rand.Next(0, names.Count)]) ?? names[rand.Next(0, names.Count)];
+		System.Random rand = new System.Random();
+		int index = rand.Next (0, names.Count);
+		string name = names[index];   //AssignNumeral(names[]) ?? names[rand.Next(0, names.Count)];
         names.Remove(name);
         usedNames.Add(name);
-		CheckDic (name);
-        return name;
+		Frequency [name]++;
+		usedNamesShip.Add (ship, name);
+		return name + AssignNumeral(name);
     }
 
 	static void CheckDic(string name){
-		Frequency [name]++;
 	}
 
-	static public void RecycleName(string name)
+	static public void RecycleName(Ship s)
     {
-		usedNames.Remove (name);
-		names.Add (name);
+		string n = usedNamesShip[s];
+		usedNames.Remove (n);
+		names.Add (n);
 	}
 
     static public string AssignNumeral(string name)
     {
-        return Frequency[name] == 0 ? null : name += " " + RomanNumerals[Frequency[name]];
+        return   Frequency[name] == 0 ? null : " " + RomanNumerals[Frequency[name]];
     }
 }
