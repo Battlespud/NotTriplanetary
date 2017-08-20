@@ -86,7 +86,7 @@ public class Ship : MonoBehaviour {
 		foreach (SpaceGun sg in GetComponentsInChildren<SpaceGun>()) {
 			Guns.Add (sg);
 		}
-		shipClass = gameObject.AddComponent<ShipClass> ();
+		shipClass = gameObject.GetComponent<ShipClass> ();
 		lr = this.gameObject.AddComponent<LineRenderer> ();
 		lr.enabled = false;
 		lr.SetWidth (.035f, .035f);

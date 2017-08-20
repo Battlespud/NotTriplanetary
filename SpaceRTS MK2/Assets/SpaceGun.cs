@@ -64,7 +64,7 @@ public  class SpaceGun : MonoBehaviour {
 	// Update is called once per frame
 	public virtual void Update () {
 		ResetTarget ();
-		if (target && shooting) {
+		if (target) {
 			Fire ();
 		}
 	}

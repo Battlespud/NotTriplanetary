@@ -15,17 +15,20 @@ public class Screen{
 }
 
 public class Screens{
+	//linear transformation formula
+	//NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
+
 	public static GameObject ScreenPrefab;
 
 	bool dead = false;
 
 	public Dictionary<GeneralDirection,Screen> dic = new Dictionary<GeneralDirection,Screen> ();
 	public ShipClass parent;
-	Screen ForeScreen = new Screen (10); 
-	Screen AftScreen = new Screen (5);
-	Screen PortScreen = new Screen (20);
-	Screen StarboardScreen = new Screen (20);
-	public Screen WallScreen = new Screen(15);
+	Screen ForeScreen = new Screen (0); 
+	Screen AftScreen = new Screen (0); 
+	Screen PortScreen = new Screen (0); 
+	Screen StarboardScreen = new Screen (0); 
+	public Screen WallScreen = new Screen (0); 
 	public Screens(ShipClass p){
 		parent = p;
 		dic.Add (GeneralDirection.Forwards, ForeScreen);
@@ -35,6 +38,11 @@ public class Screens{
 		dic.Add (GeneralDirection.Up, WallScreen);
 		dic.Add (GeneralDirection.Down, WallScreen);
 
+			 ForeScreen = new Screen (parent.StartingScreenStrengths[0]); 
+			 AftScreen = new Screen (parent.StartingScreenStrengths[1]); 
+			 PortScreen = new Screen (parent.StartingScreenStrengths[2]); 
+			 StarboardScreen = new Screen (parent.StartingScreenStrengths[3]); 
+			 WallScreen = new Screen (parent.StartingScreenStrengths[4]); 
 	}
 
 	public void Damage(float dam, Screen s, Vector3 source){

@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 65262133231939670}
   - component: {fileID: 195960225384203116}
   - component: {fileID: 114241838269693648}
+  - component: {fileID: 114167995337998646}
   m_Layer: 0
   m_Name: CV
   m_TagString: Untagged
@@ -224,9 +225,9 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843142239926852}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 4
+  m_Drag: 0.12
+  m_AngularDrag: 0.12
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -256,6 +257,43 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114167995337998646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1843142239926852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6785a250cfe743b4c8ed90012c903f06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  integrity: 100
+  ship: {fileID: 0}
+  Fore: 0
+  Aft: 0
+  Star: 0
+  Port: 0
+  Wall: 0
+  BatteryPower: 0
+  crew: 0
+  mCrew: 0
+  marines: 0
+  mMarines: 0
+  Torpedos: 4
+  ScreenStrengthsUI: []
+  ScreenOrder:
+  - Fore
+  - Aft
+  - Port
+  - Star
+  - Wall
+  StartingScreenStrengths:
+  - 2
+  - 1
+  - 4
+  - 4
+  - 3
 --- !u!114 &114241838269693648
 MonoBehaviour:
   m_ObjectHideFlags: 1

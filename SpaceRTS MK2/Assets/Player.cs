@@ -85,7 +85,7 @@ public class Player : MonoBehaviour {
 		GameObject selectionOutline = new GameObject ();
 		LineRenderer s = selectionOutline.AddComponent<LineRenderer> ();
 		s.material = new Material(Shader.Find("Particles/Additive"));
-		s.SetWidth (.05f, .05f);
+		s.SetWidth (.2f, .2f);
 		s.positionCount = 5;
 		s.SetColors (Color.green, Color.green);
 		Vector3[] pos = new Vector3[5];

@@ -43,13 +43,13 @@ public static class Direction {
 		if (distance < shortestDistance)
 		{
 			shortestDistance = distance;
-			result = GeneralDirection.Up;
+			result = GeneralDirection.Forwards; //UP
 		}
 		distance = Mathf.Abs (((ourPosition + -Vector3.up) - PositionShotFrom).magnitude);
 		if (distance < shortestDistance)
 		{
 			shortestDistance = distance;
-			result = GeneralDirection.Down;
+			result = GeneralDirection.Back; //DOWN
 		}
 		distance = Mathf.Abs (((ourPosition - us.right) - PositionShotFrom).magnitude);
 		if (distance < shortestDistance)

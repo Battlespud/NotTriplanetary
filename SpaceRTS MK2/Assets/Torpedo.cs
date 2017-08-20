@@ -10,10 +10,10 @@ public class Torpedo : MonoBehaviour {
 	Collider col;
 
 
-	 float LaunchForce = 50f; //50
-	public float Force = 450f;
+	 float LaunchForce = 30f; //50
+	public float Force = 400f;
 
-	float fuseTimer = .5f;
+	float fuseTimer = .25f;
 	public bool armed = false;
 
 	Renderer r;
@@ -43,26 +43,27 @@ public class Torpedo : MonoBehaviour {
 	void OnCollisionEnter(Collision col){
 		if (!armed)
 			return;
-		if (col.collider.GetComponent<Ship> ())
+		if (col.collider.GetComponent<Ship> () || col.collider.GetComponentInChildren<Ship>() || col.collider.GetComponentInParent<Ship>())
 			Detonate ();
 	}
 
 	public void Detonate(){
+		foreach (Ship s in InBlastZone) {
+			s.shipClass.Damage (12f-(2f*Vector3.Distance(s.transform.position,transform.position)), transform.position,transform);
+		}
 		StartCoroutine ("ExplosionRadius");
 		StartCoroutine ("ExplosionExpansion");
 
-		foreach (Ship s in InBlastZone) {
-			s.shipClass.Damage (45f, transform.position,transform);
 
-
-		}
 		Collider[] col = Physics.OverlapSphere (transform.position, eRadius);
 		foreach (Collider hit in col)
 		{
-			Rigidbody rb = hit.GetComponent<Rigidbody>();
+			if (!hit.gameObject.GetComponent<Torpedo> ()) { //wont knock away torpedoes
+				Rigidbody rb = hit.GetComponent<Rigidbody> ();
 
-			if (rb)
-				rb.AddExplosionForce(Force, transform.position, eRadius, 0f);
+				if (rb)
+					rb.AddExplosionForce (Force, transform.position, eRadius, 0f);
+			}
 		}
 		Destroy (GetComponent<Renderer>());
 

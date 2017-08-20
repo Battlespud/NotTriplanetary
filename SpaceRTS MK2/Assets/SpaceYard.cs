@@ -11,6 +11,7 @@ public class SpaceYard : MonoBehaviour {
 	public static List<GameObject> ShipPrefabs = new List<GameObject>();
 	static bool ListBuilt = false;
 
+
 	//UI
 	public static GameObject SpaceYardUI;
 	public static SpaceYard active;
@@ -18,10 +19,28 @@ public class SpaceYard : MonoBehaviour {
 	public static Button buildButton;
 
 
+	public GameObject BerthsParent;
+	public List<Berth> Berths = new List<Berth>();
 
 	public static void Build(){
+		Berth open = active.Berths[0];
+		bool openslot = false;
+		foreach (Berth b in active.Berths) {
+			if (!b.Full)
+				openslot = true;
+		}
+		if (!openslot) {
+			Debug.Log ("No open slots");
+			return;
+		}
+		int i = 0;
+		while (open.Full) {
+			i++;
+			open = active.Berths [i];
+		}
+		Debug.Log ("Open Berth is #" + open.Designation);
 		GameObject s = Instantiate (ShipPrefabs[drop.value]);
-		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (active.transform.position.x, .59f, active.transform.position.z));
+		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (open.transform.position.x, .59f, open.transform.position.z));
 		s.GetComponent<Ship>().faction = 0;
 		if (s.GetComponent<Ship>().faction == 0)
 			s.GetComponentInChildren<Renderer> ().material.color = Color.green;
@@ -50,6 +69,12 @@ public class SpaceYard : MonoBehaviour {
 			List<string> shipStringTypes = new List<string> ();
 			foreach (var val in System.Enum.GetValues(typeof(ShipPrefabTypes)))	{
 				shipStringTypes.Add (val.ToString ());
+			}
+			int i = 0;
+			foreach (Berth b in BerthsParent.GetComponentsInChildren<Berth>()) {
+				Berths.Add (b);
+				b.Designation = i;
+				i++;
 			}
 			drop.ClearOptions ();
 			drop.AddOptions (shipStringTypes);

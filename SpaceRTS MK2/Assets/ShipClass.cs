@@ -44,7 +44,7 @@ public class ShipClass : MonoBehaviour {
 	public int marines;
 	public int mMarines;
 
-	public int Torpedos = 3;
+	public int Torpedos = 12;
 
 
 	public PowerSystem Power = new PowerSystem();
@@ -90,6 +90,8 @@ public class ShipClass : MonoBehaviour {
 		Port = screens.dic [GeneralDirection.Left].strength;
 		Wall = screens.WallScreen.strength;
 	}
+	public string[] ScreenOrder = new string[5]{"Fore","Aft","Port","Star","Wall"};
+	public float[] StartingScreenStrengths= new float[5];
 
 	public void Damage(float dam, Vector3 origin, Transform en){
 		screens.Damage (dam, screens.dic[Direction.GetDirection (origin,en,transform.position,transform)], origin);
