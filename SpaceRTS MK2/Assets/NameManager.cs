@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+//using UnityEngine;
 using System.IO;
 
-public class NameManager : MonoBehaviour
+public class NameManager// : MonoBehaviour
 {
     static string dir = Directory.GetCurrentDirectory() + "\\Text Files";
     static string file = dir + "\\Ship Names.txt";
     static List<string> names;
     static List<string> usedNames;
 
-    private void Start()
+    //private void Start()
+    static NameManager()
     {
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
