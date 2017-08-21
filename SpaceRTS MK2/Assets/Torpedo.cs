@@ -14,7 +14,7 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 	public int faction;
 
 	 float LaunchForce = 35f; //50
-	public float Force = 50f;
+	public float Force = 10f;
 
 	float fuseTimer = .25f;
 	public bool armed = false;

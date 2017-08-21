@@ -128,7 +128,7 @@ MonoBehaviour:
   InBlastZone: []
   hp: 1
   faction: 0
-  Force: 500
+  Force: 50
   armed: 0
 --- !u!135 &135932586937960296
 SphereCollider:
