@@ -9,6 +9,8 @@ public class Ship : MonoBehaviour {
 
 	//this only handles things specific to this entity, like movement.
 
+	static GameObject Explosion;
+
 	public static ShipEvent OnDeath = new ShipEvent();
 
 	public static GameObject Debris; //spawns on death.
@@ -18,6 +20,8 @@ public class Ship : MonoBehaviour {
 	public GeneralDirection dirTest;
 	public GeneralDirection dirInverse;
 
+	 GameObject stand;
+	public LineRenderer standlr;
 
 	bool moveAssigned = false;
 
@@ -44,8 +48,6 @@ public class Ship : MonoBehaviour {
 	public List<Vector2>Waypoints = new List<Vector2>();
 
 	LineRenderer lr;
-	public Renderer render;
-
 	public List<Renderer> rens; 
 	public GeneralDirection dir;
 
@@ -61,15 +63,22 @@ public class Ship : MonoBehaviour {
 	public NavMeshAgent Agent;
 	// Use this for initialization
 	void Start () {
+		if (Explosion == null)
+			Explosion = Resources.Load<GameObject> ("Explosion") as GameObject;
+		stand = new GameObject();
+		standlr = stand.AddComponent<LineRenderer> ();
+		stand.transform.position = new Vector3 (this.transform.position.x, 0f, transform.position.z);
+		stand.transform.parent = transform;
+		SetupStand ();
+		Agent = GetComponent<NavMeshAgent> ();
+		Agent.Warp (new Vector3(transform.position.x, .59f, transform.position.z)); 
         ShipName = NameManager.AssignName(this);
-		if (!render)
-			render = GetComponentInChildren<Renderer> ();
-		rens.AddRange( GetComponentsInChildren<Renderer> ());
+		//rens.AddRange( GetComponentsInChildren<Renderer> ());
 		rb = GetComponent<Rigidbody> ();
 		if (faction == 0) {
 			foreach (Renderer r in rens) {
 				r.material.color = Color.blue;
-				r.material.SetColor ("_EmissionColor", Color.blue);
+				r.material.SetColor ("_EmissionColor", new Color(0f,0f,255f,.5f));
 				r.material.EnableKeyword ("_EMISSION");
 			}
 
@@ -84,7 +93,6 @@ public class Ship : MonoBehaviour {
 
 		Debris = Resources.Load<GameObject> ("Debris") as GameObject;
 		Torpedo = Resources.Load<GameObject> ("Torpedo") as GameObject;
-		Agent = GetComponent<NavMeshAgent> ();
 		foreach (SpaceGun sg in GetComponentsInChildren<SpaceGun>()) {
 			Guns.Add (sg);
 		}
@@ -94,6 +102,20 @@ public class Ship : MonoBehaviour {
 		lr.SetWidth (.035f, .035f);
         //	render = GetComponentInChildren<Renderer> ();
         gameObject.name = ShipName;
+	}
+
+	void SetupStand(){
+		float size = 1f;
+		if (BaseType == ShipPrefabTypes.DD)
+			size = .5f;
+		if (BaseType == ShipPrefabTypes.CS)
+			size = .75f;
+		RenderCircle (standlr, size);
+		if (faction == 0) {
+			standlr.SetColors (Color.blue, Color.blue);
+		} else {
+			standlr.SetColors (Color.red, Color.red);
+		}
 	}
 	
 	// Update is called once per frame
@@ -158,6 +180,9 @@ public class Ship : MonoBehaviour {
 	public void SpawnDebris(Vector3 source){
 		if (dead)
 			return;
+		foreach (Renderer re in rens) {
+			re.material.SetColor ("_EmissionColor", Color.grey);
+		}
 		dead = true;
 		Vector3 dir = transform.position - source;
 		dir = dir.normalized;
@@ -169,7 +194,7 @@ public class Ship : MonoBehaviour {
 	}
 
 	public void Explode(){
-		Collider[] col = Physics.OverlapSphere (transform.position, 5f);
+		Collider[] col = Physics.OverlapSphere (transform.position, 2f);
 		//StartCoroutine ("ExplosionRadius");
 		StartCoroutine("ExplosionExpansion",5f);
 		foreach (Collider hit in col) {
@@ -188,7 +213,7 @@ public class Ship : MonoBehaviour {
 				}
 			}
 		}
-		Destroy (render);
+	//	Destroy (render);
 	}
 
 	#region Explosion Coroutines
@@ -208,6 +233,7 @@ public class Ship : MonoBehaviour {
 			l.SetColors (c, c);
 		yield return null;
 		}
+
 		Destroy (gameObject);
 	}
 
@@ -216,7 +242,13 @@ public class Ship : MonoBehaviour {
 		g.name = "Shockwave";
 		g.transform.position = this.transform.position;
 		g.transform.parent = null;
+		GameObject h = Instantiate (Explosion);
+		h.transform.position = transform.position;
 		LineRenderer l = g.AddComponent<LineRenderer>();
+		Renderer[] re = GetComponentsInChildren<Renderer> ();
+		foreach(Renderer roo in re){
+			roo.enabled = false;
+		}
 //		l.material = new Material (Shader.Find ("Particles/Additive"));
 		l.startColor = Color.green;
 		if(faction != 0)
@@ -236,9 +268,10 @@ public class Ship : MonoBehaviour {
 			l.SetColors (c, c);
 			yield return null;
 		}
-		NameManager.RecycleName (this);
 
+		NameManager.RecycleName (this);
 		Destroy (g);
+
 		Destroy (gameObject);
 	}
 
@@ -290,6 +323,7 @@ public class Ship : MonoBehaviour {
 			GameObject t = Instantiate (Torpedo);
 			t.transform.position = transform.position;
 			t.transform.LookAt(targ);
+			t.GetComponent<Torpedo> ().faction = faction;
 		}
 	}
 

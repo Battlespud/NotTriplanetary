@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Torpedo : MonoBehaviour {
+public class Torpedo : MonoBehaviour, IPDTarget {
 
-	public float eRadius = 7.5f;
+	public float eRadius = 2.5f;
 
 	public List<Ship> InBlastZone = new List<Ship>();
 	Collider col;
 
+	public int hp = 1;
 
-	 float LaunchForce = 30f; //50
-	public float Force = 400f;
+	public int faction;
+
+	 float LaunchForce = 35f; //50
+	public float Force = 50f;
 
 	float fuseTimer = .25f;
 	public bool armed = false;
+
+	float fuelTime = 15f;
 
 	Renderer r;
 
 	// Use this for initialization
 	void Start () {
+		transform.position = new Vector3 (transform.position.x, .59f, transform.position.z);
+		gameObject.layer = 9;
 		GetComponent<Rigidbody> ().AddForce (transform.forward * LaunchForce);
 		col = GetComponent<Collider> ();
 		col.enabled = false;
@@ -29,6 +36,22 @@ public class Torpedo : MonoBehaviour {
 		r.material.SetColor ("_EmissionColor", new Color(255,140,0));
 		r.material.EnableKeyword ("_EMISSION");
 	}
+
+	//PD I
+	public void HitByPD(int dam){
+		hp -= dam;
+	}
+
+	public GameObject GetGameObject(){
+		if(gameObject != null)
+			return gameObject;
+		return null;
+	}
+
+	public int GetFaction(){
+		return faction;
+	}
+
 
 	void OnTriggerEnter(Collider col){
 		if(col.GetComponent<Ship>())
@@ -43,7 +66,7 @@ public class Torpedo : MonoBehaviour {
 	void OnCollisionEnter(Collision col){
 		if (!armed)
 			return;
-		if (col.collider.GetComponent<Ship> () || col.collider.GetComponentInChildren<Ship>() || col.collider.GetComponentInParent<Ship>())
+		if (col.collider.GetComponent<Ship> () || col.collider.GetComponentInChildren<Ship>() || col.collider.GetComponentInParent<Ship>() || col.collider.GetComponent<Torpedo> () )
 			Detonate ();
 	}
 
@@ -94,7 +117,7 @@ public class Torpedo : MonoBehaviour {
 			yield return null;
 		}
 		Destroy (g);
-		Destroy (gameObject);
+		hp = -1;
 	}
 
 	IEnumerator ExplosionExpansion(){
@@ -146,7 +169,21 @@ public class Torpedo : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		fuelTime -= Time.deltaTime;
+		if (hp <= 0 || fuelTime <= 0f) {
+			PDTargetAbstract.pdDeath.Invoke (this);
+			transform.position = new Vector3 (100f, 1000f, 100f); //to trigger OnTriggerExit and let guns reset.
+			StartCoroutine("Destroy");
+		}
+	}
 
+	IEnumerator Destroy(){
+		float f = 1f;
+		while (f > 0f) {
+			f -= Time.deltaTime;
+			yield return null;
+		}
+		Destroy (gameObject);
 	}
 
 	IEnumerator ArmingTimer(){

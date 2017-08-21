@@ -39,7 +39,7 @@ public class Player : MonoBehaviour {
 				StartCoroutine ("SelectionBox");
 				if (hit.collider != null) {
 					if (hit.collider.GetComponentInParent<SpaceYard> ()) {
-						Debug.Log ("Spaceyard");
+				//		Debug.Log ("Spaceyard");
 						SpaceYard s = hit.collider.GetComponentInParent<SpaceYard> ();
 						s.Toggle ();
 						SpaceYard.active = s;
@@ -68,6 +68,7 @@ public class Player : MonoBehaviour {
 			}
 			if (Input.GetKeyDown (KeyCode.B)) {
 				foreach (Ship s in SelectedShips) {
+					if(s.shipClass.Torpedos > 0)
 					s.StartCoroutine("TorpedoArm");
 				}
 			}
@@ -136,13 +137,18 @@ public class Player : MonoBehaviour {
 			foreach (Renderer r in s.rens) {
 				r.material.SetColor ("_EmissionColor", Color.blue);
 			}
-			s.render.material.color = Color.blue;
+			s.standlr.SetColors (Color.blue, Color.blue);
+			foreach (Renderer render in s.rens) {
+				render.material.color = Color.blue;
+			}
 		//	Debug.Log ("Ship " + s.ShipName + " removed.");
 		} else {
 			SelectedShips.Add (s);
 			s.TogglePath ();
-			if(s.render)
-				s.render.material.color = Color.green;
+			s.standlr.SetColors (Color.green, Color.green);
+			foreach (Renderer render in s.rens) {
+				render.material.color = Color.blue;
+			}
 			foreach (Renderer r in s.rens) {
 				if(r)
 				r.material.SetColor ("_EmissionColor", Color.green);
@@ -170,7 +176,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void MoveShips(Vector2 vec){
-		float offset = .75f;
+		float offset = 1f;
 		int row = 0;
 		int mMow = 3;
 		int counter = 0;
