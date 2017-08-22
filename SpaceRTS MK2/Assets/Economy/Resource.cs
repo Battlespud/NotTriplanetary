@@ -28,6 +28,9 @@ public class RawResource {
 		}
 		return false;
 	}
+	public float GetAmount(){
+		return Amount;
+	}
 	public void Add(float a){
 		Amount += a;
 	}
@@ -38,7 +41,10 @@ public class RawResource {
 }
 
 public class Product {
-	public float Amount;
+	float Amount;
+	public float GetAmount(){
+		return Amount;
+	}
 	public Products product;
 	public bool Use(float a){
 		if (Amount >= a) {

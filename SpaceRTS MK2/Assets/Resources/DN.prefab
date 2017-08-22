@@ -325,10 +325,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4876384795666296}
   - component: {fileID: 54050935012407802}
-  - component: {fileID: 65262133231939670}
   - component: {fileID: 195960225384203116}
   - component: {fileID: 114241838269693648}
   - component: {fileID: 114669431571424044}
+  - component: {fileID: 136391437229066196}
   m_Layer: 0
   m_Name: DN
   m_TagString: Untagged
@@ -673,8 +673,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843142239926852}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.90102, y: 34.368454, z: -32.2}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 23.091019, y: -5.171547, z: -18.98}
   m_LocalScale: {x: 62.118546, y: 28.288395, z: 60}
   m_Children:
   - {fileID: 4228349005236268}
@@ -682,7 +682,7 @@ Transform:
   - {fileID: 4138469111640716}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &4903290943004462
 Transform:
   m_ObjectHideFlags: 1
@@ -1164,18 +1164,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65262133231939670
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1843142239926852}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.049999993, z: 0.035346393}
-  m_Center: {x: -2.8628634e-18, y: 0, z: -0.00024633209}
 --- !u!65 &65321664053340528
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1700,6 +1688,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &136391437229066196
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1843142239926852}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.019546997
+  m_Height: 0.94412607
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!136 &136830875856114492
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -9,21 +9,28 @@ public class Factory : MonoBehaviour {
 	public RawResources input;
 	Products output;
 	public bool active = true;
+	GameObject controller;
 
 	// Use this for initialization
 	void Start () {
-		
+	controller = GameObject.FindGameObjectWithTag ("Controller");
+	controller.GetComponent<Clock> ().TurnEvent.AddListener (Manufacture);
+	active = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+	}
+
+	public void Manufacture(){
 		output = (Products)input;
-		float f = 5f*Time.deltaTime;
+		float f = 5f;
 		if (active) {
 			if(city.UseResources(input,f)){
 				city.AddProduct (output, f);
 			}
-
 		}
 	}
+
 }
