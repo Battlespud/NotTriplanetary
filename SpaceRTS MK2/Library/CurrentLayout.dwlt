@@ -110,7 +110,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 342}
   m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
-  controlID: 46
+  controlID: 80
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -179,8 +179,8 @@ MonoBehaviour:
     y: 934
     width: 1569
     height: 374
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -341,14 +341,14 @@ MonoBehaviour:
     width: 1567
     height: 913
   m_SceneLighting: 1
-  lastFramingTime: 4597.49420147854
+  lastFramingTime: 526.7052826173413
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 4.680004, y: 0, z: -3.5999994}
+    m_Target: {x: 26.981945, y: 19.217758, z: 54.60443}
     speed: 2
-    m_Value: {x: 4.680004, y: 0, z: -3.5999994}
+    m_Value: {x: 26.981945, y: 19.217758, z: 54.60443}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -371,13 +371,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.43110693, y: 0.023310974, z: -0.0111435745, w: -0.90193087}
+    m_Target: {x: -0.16298082, y: 0.74966806, z: -0.20053622, w: -0.6092785}
     speed: 2
-    m_Value: {x: -0.43110693, y: 0.023310974, z: -0.0111435745, w: -0.90193087}
+    m_Value: {x: -0.16298082, y: 0.74966806, z: -0.20053622, w: -0.6092785}
   m_Size:
-    m_Target: 82.235306
+    m_Target: 5.0579934
     speed: 2
-    m_Value: 82.235306
+    m_Value: 5.0579934
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -465,7 +465,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c827000038280000f6290000fa290000ffffff7f
+    m_ExpandedIDs: 00000000d027000040280000fe290000022a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -493,7 +493,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c827000038280000f6290000fa290000
+    m_ExpandedIDs: 00000000d027000040280000fe290000022a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -576,9 +576,9 @@ MonoBehaviour:
     height: 1287
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 5adef9ff
-    m_LastClickedID: -401830
-    m_ExpandedIDs: 5adef9ff5cdef9ffa6fbffff00000000762b0000aa2b0000
+    m_SelectedIDs: c866ffff
+    m_LastClickedID: -39224
+    m_ExpandedIDs: a6fbffff00000000922b0000ca2b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

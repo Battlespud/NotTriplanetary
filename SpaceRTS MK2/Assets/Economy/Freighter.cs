@@ -10,8 +10,11 @@ public class Freighter : MonoBehaviour {
 	NavMeshAgent agent;
 	ResourceRequest mission;
 
+	public List<City> Orbiting = new List<City> ();
+
 	City target;
 
+	bool loading;
 
 	// Use this for initialization
 	void Start () {
@@ -41,12 +44,40 @@ public class Freighter : MonoBehaviour {
 		}
 		agent.SetDestination (target.transform.position);
 		Debug.Log (gameObject.name + " is enroute to " + target.name);
+		loading = true;
 	}
 
+	void EndMission(){
+		Collections.Available.Add (this);
+		Debug.Log ("Mission complete!");
+		mission = null;
+		target = null;
+	}
+	void OnTriggerEnter(Collider col){
+		if (col.GetComponent<City> ()) {
+			Orbiting.Add (col.GetComponent<City> ());
+		}
+	}
+	void OnTriggerExit(Collider col){
+		if (col.GetComponent<City> ()) {
+			Orbiting.Remove (col.GetComponent<City> ());
+		}
+	}
 
 
 	// Update is called once per frame
 	void Update () {
-		
+		if (target && Orbiting.Contains (target) && loading) {
+			if (target.UseResources(mission.resource,mission.amount)) {
+				target = mission.patron;
+				agent.SetDestination(target.transform.position);
+				Debug.Log (gameObject.name + " is enroute to " + target.name);
+				loading = false;
+			}
+		}
+		else if (target && Orbiting.Contains (target) && !loading) {
+			target.AddResource (mission.resource, mission.amount);
+			EndMission ();
+		}
 	}
 }

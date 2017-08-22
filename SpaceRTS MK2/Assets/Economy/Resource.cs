@@ -40,7 +40,7 @@ public class RawResource {
 	}
 	public RawResource(RawResources r){
 		resource = r;
-		Amount = 100f; //TODO change to 0 later
+		Amount = 1000f; //TODO change to 0 later
 	}
 }
 

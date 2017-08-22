@@ -24,6 +24,16 @@ public class City : MonoBehaviour {
 		}
 		return ResourceStockpile [r].Use (amount);
 	}
+
+	public void AddResource(RawResources r, float amount){
+		if (!ResourceStockpile.ContainsKey (r)) {
+			ResourceStockpile.Add (r, new RawResource (r));
+			Debug.Log (r.ToString () + " has been added");
+		}
+		ResourceStockpile [r].Add(amount);
+		UpdateText ();
+	}
+
 	public Dictionary<Products, Product> ProductStockpile = new Dictionary<Products, Product> ();
 
 	public void AddProduct(Products r, float amount){
@@ -32,6 +42,7 @@ public class City : MonoBehaviour {
 			Debug.Log (r.ToString () + " has been added");
 		}
 		ProductStockpile [r].Add(amount);
+		UpdateText ();
 	}
 		
 	[SerializeField]
