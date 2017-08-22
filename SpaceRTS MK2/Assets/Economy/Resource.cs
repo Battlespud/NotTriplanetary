@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum RawResources{
+	NONE = 0,
 	METAL=1,
 	LUMBER=2,
 	OIL=3,
@@ -11,12 +12,15 @@ public enum RawResources{
 }
 
 public enum Products{
+	NONE=0,
 	WEAPONS=1,
 	WOOD=2,
 	PETROL=3,
 	FOOD=4,
 	PRECIOUS=5
 }
+
+
 
 public class RawResource {
 	float Amount;
@@ -60,5 +64,17 @@ public class Product {
 	public Product(Products r){
 		product = r;
 		Amount = 5f;
+	}
+}
+
+public class ResourceRequest {
+	public RawResources resource;
+	public int amount;
+	public City patron;
+	public Ship assigned;
+
+	public ResourceRequest(RawResources r, int a){
+		resource = r;
+		amount = a;
 	}
 }

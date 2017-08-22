@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class City : MonoBehaviour {
 
 	public Text rSummary;
 	public Text pSummary;
 
+	public bool MakeARequestBitch = false;
+
 	GameObject controller;
 
 	public Dictionary<RawResources, RawResource> ResourceStockpile = new Dictionary<RawResources, RawResource> ();
+
+	public List<ResourceRequest> Requests = new List<ResourceRequest>();
 
 	public bool UseResources(RawResources r, float amount){
 		if (!ResourceStockpile.ContainsKey (r)) {
@@ -36,13 +41,10 @@ public class City : MonoBehaviour {
 	string Name;
 	//Factions Faction;
 
-	//coroutine already running
-	bool busy = false;
-
-
 	// Use this for initialization
 	void Start () {
 		Name = "city";
+		Collections.Cities.Add (this);
 		controller = GameObject.FindGameObjectWithTag ("Controller");
 		controller.GetComponent<Clock> ().TurnEvent.AddListener (HandleEconomy);
 		foreach(Factory f in GetComponentsInChildren<Factory>()){
@@ -57,8 +59,22 @@ public class City : MonoBehaviour {
 
 
 	void Update () {
-
+		if (MakeARequestBitch) {
+			MakeARequestBitch = false;
+			GenerateRequest (RawResources.METAL, 5);
+		}
 	}
+
+	void GenerateRequest(RawResources r, int am){
+		ResourceRequest req = new ResourceRequest (r,am);
+		req.patron = this;
+		List<Freighter> temp = new List<Freighter> ();
+		temp.AddRange (Collections.Available);
+		temp.OrderBy(
+			targ => Vector3.Distance(this.transform.position,targ.transform.position)).ToList();
+		temp [0].AssignMission (req);
+	}
+
 
 	void UpdateText(){
 		rSummary.text = "Resources||\n";
@@ -73,7 +89,7 @@ public class City : MonoBehaviour {
 
 	void HandleEconomy(){
 		foreach (Product p in ProductStockpile.Values) {
-			Debug.Log (p.product.ToString () + " " + p.GetAmount());
+		//	Debug.Log (p.product.ToString () + " " + p.GetAmount());
 		}
 		UpdateText ();
 	}
