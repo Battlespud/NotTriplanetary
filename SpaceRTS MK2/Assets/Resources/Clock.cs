@@ -15,7 +15,6 @@ public class Clock : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		TurnEvent = new UnityEvent ();
 	}
 	
 	// Update is called once per frame

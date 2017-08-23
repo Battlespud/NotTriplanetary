@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class City : MonoBehaviour {
+public class City : MonoBehaviour, IResources {
 
 	public Text rSummary;
 	public Text pSummary;
@@ -13,11 +13,13 @@ public class City : MonoBehaviour {
 
 	GameObject controller;
 
+	public RawResources neededTest;
+
 	public Dictionary<RawResources, RawResource> ResourceStockpile = new Dictionary<RawResources, RawResource> ();
 
 	public List<ResourceRequest> Requests = new List<ResourceRequest>();
 
-	public bool UseResources(RawResources r, float amount){
+	public bool TakeResource(RawResources r, float amount){
 		if (!ResourceStockpile.ContainsKey (r)) {
 			ResourceStockpile.Add (r, new RawResource (r));
 			return false;
@@ -25,13 +27,22 @@ public class City : MonoBehaviour {
 		return ResourceStockpile [r].Use (amount);
 	}
 
-	public void AddResource(RawResources r, float amount){
+	public bool HasResource(RawResources r, float amount){
+		if (!ResourceStockpile.ContainsKey (r)) {
+			ResourceStockpile.Add (r, new RawResource (r));
+			return false;
+		}
+		return ResourceStockpile [r].GetAmount() >= amount;
+	}
+
+	public bool GiveResource(RawResources r, float amount){
 		if (!ResourceStockpile.ContainsKey (r)) {
 			ResourceStockpile.Add (r, new RawResource (r));
 			Debug.Log (r.ToString () + " has been added");
 		}
 		ResourceStockpile [r].Add(amount);
 		UpdateText ();
+		return true;
 	}
 
 	public Dictionary<Products, Product> ProductStockpile = new Dictionary<Products, Product> ();
@@ -56,12 +67,18 @@ public class City : MonoBehaviour {
 	void Start () {
 		Name = "city";
 		Collections.Cities.Add (this);
+		Collections.ResourceSources.Add (this);
 		controller = GameObject.FindGameObjectWithTag ("Controller");
 		controller.GetComponent<Clock> ().TurnEvent.AddListener (HandleEconomy);
 		foreach(Factory f in GetComponentsInChildren<Factory>()){
 			Factories.Add (f);
 			f.city = this;
 		}
+		for (int i = 1; i < 6; i++) {
+			GiveResource ((RawResources)i,0f);
+			AddProduct ((Products)i, 0f);
+		}
+
 	}
 	
 
@@ -72,20 +89,37 @@ public class City : MonoBehaviour {
 	void Update () {
 		if (MakeARequestBitch) {
 			MakeARequestBitch = false;
-			GenerateRequest (RawResources.METAL, 5);
+			GenerateRequest (neededTest, 5, false);
 		}
 	}
 
-	void GenerateRequest(RawResources r, int am){
-		ResourceRequest req = new ResourceRequest (r,am);
+	public GameObject GetGameObject(){
+		return gameObject;
+	}
+
+	void GenerateRequest(RawResources r, int am, bool b){
+		ResourceRequest req = new ResourceRequest (r,am,b);
 		req.patron = this;
 		List<Freighter> temp = new List<Freighter> ();
 		temp.AddRange (Collections.Available);
 		temp.OrderBy(
 			targ => Vector3.Distance(this.transform.position,targ.transform.position)).ToList();
+		try{
 		temp [0].AssignMission (req);
+		}
+		catch{
+			Debug.Log ("No valid ships");
+			return;
+		}
 	}
 
+	public float ResourceAmount(RawResources r){
+		if(ResourceStockpile.ContainsKey(r))
+		{
+			return ResourceStockpile[r].GetAmount();
+		}
+			return 0f;
+	}
 
 	void UpdateText(){
 		rSummary.text = "Resources||\n";

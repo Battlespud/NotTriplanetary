@@ -72,9 +72,10 @@ public class ResourceRequest {
 	public int amount;
 	public City patron;
 	public Ship assigned;
-
-	public ResourceRequest(RawResources r, int a){
+	public bool exact; //will fill cargo if false
+	public ResourceRequest(RawResources r, int a, bool b){
 		resource = r;
 		amount = a;
+		exact = b;
 	}
 }

@@ -1022,7 +1022,7 @@ MonoBehaviour:
   dirInverse: 0
   standlr: {fileID: 0}
   shipClass: {fileID: 0}
-  BaseType: 0
+  BaseType: 2
   faction: 1
   Guns: []
   immobile: 0

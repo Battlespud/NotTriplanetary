@@ -16,12 +16,14 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 	 float LaunchForce = 40f; //50
 	public float Force = 10f;
 
-	float fuseTimer = .45f;
+	float fuseTimer = 1.2f;
 	public bool armed = false;
 
 	float fuelTime = 15f;
 
 	Renderer r;
+
+	Color orange = new Color(255,140,0);
 
 	// Use this for initialization
 	void Start () {
@@ -32,9 +34,10 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 		col.enabled = false;
 		StartCoroutine ("ArmingTimer");
 		r = GetComponent<Renderer> ();
-		r.material.color = new Color(255,140,0); //orange
-		r.material.SetColor ("_EmissionColor", new Color(255,140,0));
+		r.material.SetColor ("_EmissionColor", orange  );
 		r.material.EnableKeyword ("_EMISSION");
+		r.material.color = orange; //orange
+
 	}
 
 	//PD I
@@ -192,6 +195,7 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 			a += Time.deltaTime;
 			yield return null;
 		}
+
 		col.enabled = true;
 		armed = true;
 	}

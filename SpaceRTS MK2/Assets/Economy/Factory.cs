@@ -27,7 +27,7 @@ public class Factory : MonoBehaviour {
 		output = (Products)input;
 		float f = 5f;
 		if (active) {
-			if(city.UseResources(input,f)){
+			if(city.TakeResource(input,f)){
 				city.AddProduct (output, f);
 			}
 		}

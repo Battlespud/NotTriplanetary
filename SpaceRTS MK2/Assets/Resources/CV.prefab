@@ -473,7 +473,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843142239926852}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -25.195412, y: 14.499208, z: 5.7588353}
+  m_LocalPosition: {x: -5.8706236, y: 40.56096, z: -59.78486}
   m_LocalScale: {x: 50, y: 45, z: 50}
   m_Children:
   - {fileID: 4717564663569074}
@@ -860,7 +860,7 @@ Rigidbody:
   m_GameObject: {fileID: 1843142239926852}
   serializedVersion: 2
   m_Mass: 4
-  m_Drag: 0.12
+  m_Drag: 1.2
   m_AngularDrag: 0.12
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1095,7 +1095,7 @@ MonoBehaviour:
   dirInverse: 0
   standlr: {fileID: 0}
   shipClass: {fileID: 0}
-  BaseType: 0
+  BaseType: 4
   faction: 1
   Guns: []
   immobile: 0
