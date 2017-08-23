@@ -14,12 +14,7 @@ static class NameGen
 
         for (int i = 0; i < format.Length; i++)
         {
-            if (char.IsLetter(format[i]))
-                if (format[i] == 'L' || format[i] == 'N')
-                    if (format[i] == 'L')
-                        letter = true;
-                    else
-                        letter = false;
+            if (char.IsLetter(format[i])) if (format[i] == 'L' || format[i] == 'N') letter = format[i] == 'L' ? true : false;
                 else
                 {
                     //bad format error
@@ -30,7 +25,7 @@ static class NameGen
                 {
                     case true:
                         for (int j = 0; j < int.Parse(format[i].ToString()); j++)
-                            sb.Append(alphabet[rand.Next(-1, alphabet.Length)]);
+                            sb.Append(alphabet[rand.Next(0, alphabet.Length)]);
                         break;
                     case false:
                         for (int j = 0; j < int.Parse(format[i].ToString()); j++)
