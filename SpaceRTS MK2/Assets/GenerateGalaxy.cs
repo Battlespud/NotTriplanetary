@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class GenerateGalaxy : MonoBehaviour {
 
-	public int NumStars = 1700;
+	 int NumStars = 500;
 
-	public float minDist = 150;
-	public float maxDist = 450;
+	 float minDist = 225f;
+	 float maxDist = 550f;
 
-	public float bound = 10000;
+	float bound = 60f*OutlineCircleStarMarker.SYSRADIUS;
 
 	//10k max 250
 
-	public float maxLaneDist = 450f;
+	public float maxLaneDist = 400f;
 
 	GameObject star;
 
@@ -21,7 +21,8 @@ public class GenerateGalaxy : MonoBehaviour {
 
 	public bool DoCalc = false;
 
-	public List<GameObject> stars = new List<GameObject>();
+	public List<Vector3> stars = new List<Vector3>();
+	public List<GameObject> starsObj = new List<GameObject>();
 
 	public GameObject parent;
 
@@ -33,48 +34,67 @@ public class GenerateGalaxy : MonoBehaviour {
 
 	IEnumerator Generate(){
 		while (stars.Count < NumStars) {
-			List<GameObject> working = new List<GameObject> ();
-			for (int i = 0; i < NumStars/4; i++) {
-				GameObject g = Instantiate (star);
-				if(parent)
-				g.transform.parent = parent.transform;
-				star.transform.position = new Vector3 (Random.Range (-bound, bound), 0f, Random.Range (-bound, bound));
+			List<Vector3> working = new List<Vector3> ();
+			List<Vector3> W2 = new List<Vector3> ();
+			for (int i = 0; i < NumStars/8f; i++) {
+				Vector3 g = new Vector3(Random.Range (-bound, bound), 0f, Random.Range (-bound, bound));
+		//		if(parent)
+		//		g.transform.parent = parent.transform;
+		//		star.transform.position = new Vector3 (Random.Range (-bound, bound), 0f, Random.Range (-bound, bound));
 				working.Add (g);
 			}
-			List<GameObject> W2 = new List<GameObject> ();
 			W2.AddRange (stars);
 			stars.AddRange (working);
 			working.AddRange (W2);
 			Debug.Log ("Stars initial count");
-			foreach (GameObject g in working) {
+			foreach (Vector3 g in working) {
 				bool tooFar = true;
-				foreach (GameObject f in working) {
-					if (Vector3.Distance (g.transform.position, f.transform.position) < minDist && g!=f) {
+				foreach (Vector3 f in working) {
+					if (Vector3.Distance (g, f) < minDist && g!=f) {
 						if(stars.Contains(g))stars.Remove (g); break;
 					}
-					if (Vector3.Distance (g.transform.position, f.transform.position) <= maxDist && g!=f) {
+			//		if (Vector3.Distance (g, f) <= maxDist && g!=f) {
 						tooFar = false;
-					}
+			//		}
 				}
 				if (tooFar && stars.Contains (g)) {
 					stars.Remove (g);
 				}
 			}
-			foreach (GameObject d in working) {
-				if (!stars.Contains (d))
-					Destroy (d);
-			}
+			foreach (Vector3 d in working) {
+				if (!stars.Contains (d)){
+					//if gameobject then delete, dw about vectors
+				}
+				}
 			Debug.Log ("End frame count: " + stars.Count);
 			yield return null;
 		}
-		foreach (GameObject st in stars) {
-			foreach (GameObject st2 in stars) {
+		foreach(Vector3 vec in stars){
+			GameObject f = Instantiate (star);
+			f.transform.position = vec;
+			starsObj.Add (f);
+		}
+		foreach (GameObject st in starsObj) {
+			foreach (GameObject st2 in starsObj) {
 				if (st != st2 && Vector3.Distance (st.transform.position, st2.transform.position) <= maxLaneDist) {
 					GameObject go = new GameObject ();
 					LineRenderer lr = go.AddComponent<LineRenderer> ();
 					lr.SetPosition (0, st.transform.position);
 					lr.SetPosition (1, st2.transform.position);
+					st.GetComponent<OutlineCircleStarMarker> ().Connections.Add (st2);
+					st2.GetComponent<OutlineCircleStarMarker> ().Connections.Add (st);
+
 				}
+			}
+		}
+		foreach (GameObject st in starsObj) {
+			if (st.GetComponent<OutlineCircleStarMarker> ().Connections.Count < 1) {
+				st.GetComponent<OutlineCircleStarMarker> ().Connections.Add (GetClosest (st));
+				GameObject go = new GameObject ();
+				LineRenderer lr = go.AddComponent<LineRenderer> ();
+				lr.SetPosition (0, st.transform.position);
+				lr.SetPosition (1, st.GetComponent<OutlineCircleStarMarker>().Connections[0].transform.position);
+				st.GetComponent<OutlineCircleStarMarker>().Connections[0].GetComponent<OutlineCircleStarMarker> ().Connections.Add (st);
 			}
 		}
 	}
@@ -83,17 +103,18 @@ public class GenerateGalaxy : MonoBehaviour {
 	void Update () {
 		count = stars.Count;
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			foreach (GameObject g in stars){
+			foreach (GameObject g in starsObj){
 				Destroy (g);
+				stars.Clear ();
 			}
 			StartCoroutine ("Generate");
 		}
 
 		if (DoCalc) {
 			DoCalc = false;
-			GameObject j = stars [Random.Range (0, stars.Count + 1)];
+			GameObject j = starsObj [Random.Range (0, stars.Count + 1)];
 			float dist = 9999f;
-			foreach (GameObject g in stars) {
+			foreach (GameObject g in starsObj) {
 				if (g != j) {
 					float d = Vector3.Distance (g.transform.position, j.transform.position);
 					if (d < dist)
@@ -102,5 +123,21 @@ public class GenerateGalaxy : MonoBehaviour {
 			}
 			Debug.Log("Closest is " + dist);
 		}
+	}
+
+	GameObject GetClosest(GameObject j){
+		DoCalc = false;
+		float dist = 9999f;
+		GameObject closest = new GameObject ();
+		foreach (GameObject g in starsObj) {
+			if (g != j) {
+				float d = Vector3.Distance (g.transform.position, j.transform.position);
+				if (d < dist) {
+					closest = g;
+					dist = d;
+				}
+			}
+		}
+		return closest;
 	}
 }
