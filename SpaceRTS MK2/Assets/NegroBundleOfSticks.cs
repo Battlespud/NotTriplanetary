@@ -27,6 +27,7 @@ using UnityEngine.AI;
                 con.currTime += Time.deltaTime;
                 yield return null;
             }
+		EndMission ();
         }
 
         public void AssignRequest(ConstructionRequests req)
