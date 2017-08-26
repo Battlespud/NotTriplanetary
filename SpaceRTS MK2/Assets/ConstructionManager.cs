@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿//ConstructionManager
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using System.Linq;
 
 
@@ -9,6 +11,9 @@ using System.Linq;
 //ship that is going to do the construction, starts off as null
 public class ConstructionManager
 {
+
+    static public GameObject ConstructablePrefab;
+
     static public List<ConstructionRequests> opened;
     static public List<ConstructionRequests> closed;
     static public List<NegroBundleOfSticks> availableConShips;
@@ -22,26 +27,17 @@ public class ConstructionManager
         unavailableConShips = new List<NegroBundleOfSticks>();
     }
 
-    static void NotTheUpdateLoop()
+    static void UpdateMissionsQuery()
     {
         //to assign open construction request to avaailable conShips
-        if (opened.Count == 0 || availableConShips.Count == 0)
-            return;
-
-        if (availableConShips.Count >= opened.Count)
+        while (availableConShips.Count > 0 && opened.Count > 0)
         {
-            while (availableConShips.Count > 0)
-            {
-                NegroBundleOfSticks conShipZero = new NegroBundleOfSticks();
-                List<ConstructionRequests> reqsts = new List<ConstructionRequests>();
-                reqsts.AddRange(opened);
-                reqsts.OrderBy(targ => Vector3.Distance(conShipZero.transform.position, targ.transform.position)).ToList();
-                AssignMission(reqsts[0], conShipZero);
-            }
-        }
-        else
-        {
-
+            NegroBundleOfSticks conShipZero = availableConShips[0];
+            List<ConstructionRequests> reqsts = new List<ConstructionRequests>();
+            reqsts.AddRange(opened);
+            reqsts.OrderBy(targ => Vector3.Distance(conShipZero.transform.position, targ.constr.transform.position)).ToList();
+            //reqsts.AddRange(opened.OrderBy(targ => Vector3.Distance(conShipZero.transform.position, targ.constr.transform.position)).ToList());
+            AssignMission(reqsts[0], conShipZero);
         }
     }
 
@@ -49,16 +45,13 @@ public class ConstructionManager
     {
         closed.Add(conReq);
         unavailableConShips.Add(conShip);
+        conShip.AssignRequest(conReq);
     }
-}
 
-public class ConstructionRequests : MonoBehaviour
-{
-    public GameObject construction;
-    public NegroBundleOfSticks conShip;
-}
-
-public class NegroBundleOfSticks : MonoBehaviour
-{
-    //ship class
+    static public void Finished(ConstructionRequests req, NegroBundleOfSticks ship)
+    {
+        closed.remove(req);
+        unavailableConShips.remove(ship);
+        availableConShips.add(ship);
+    }
 }
