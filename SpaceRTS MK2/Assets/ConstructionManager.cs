@@ -28,12 +28,20 @@ public class ConstructionManager
         if (opened.Count == 0 || availableConShips.Count == 0)
             return;
 
-        while (availableConShips.Count > 0)
+        if (availableConShips.Count >= opened.Count)
         {
-            NegroBundleOfSticks conShipZero = new NegroBundleOfSticks();
-            List<ConstructionRequests> reqsts = new List<ConstructionRequests>();
-            reqsts.AddRange(opened);
-            reqsts.OrderBy(targ => Vector3.Distance(conShipZero.transform.position, targ.transform.position)).ToList();
+            while (availableConShips.Count > 0)
+            {
+                NegroBundleOfSticks conShipZero = new NegroBundleOfSticks();
+                List<ConstructionRequests> reqsts = new List<ConstructionRequests>();
+                reqsts.AddRange(opened);
+                reqsts.OrderBy(targ => Vector3.Distance(conShipZero.transform.position, targ.transform.position)).ToList();
+                AssignMission(reqsts[0], conShipZero);
+            }
+        }
+        else
+        {
+
         }
     }
 
