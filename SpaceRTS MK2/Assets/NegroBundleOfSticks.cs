@@ -11,15 +11,17 @@ using UnityEngine.AI;
         public ConstructionRequests mission;
         public NavMeshAgent agent;
 
-        private void Awake()
+        void Awake()
         {
-            agent = gameObject.GetComponent<NavMeshAgent>();
+		agent = gameObject.GetComponent<NavMeshAgent>();
+		agent.Warp(new Vector3(transform.position.x, .59f, transform.position.y));
+		ConstructionManager.availableConShips.Add (this);
         }
 
 	IEnumerator Building(Constructable con)
         {
             bool isOccupied = true;
-
+		Debug.Log ("Beginning construction");
             while (con && con.currTime < con.TimeToBuild)
             {
                 con.currTime += Time.deltaTime;
@@ -31,19 +33,24 @@ using UnityEngine.AI;
         {
             StopAllCoroutines();
             mission = req;
-            agent.SetDestination(req.constr.transform.position);
+		agent.SetDestination(mission.constr.transform.position);
         }
 
         void OnTriggerEnter(Collider col)
         {
-			if (mission.constr && col.GetComponent<Constructable>() == mission.constr)
-				StartCoroutine("Building", mission.constr);
+		if (mission != null) {
+			if (col.GetComponent<Constructable> () == mission.constr)
+				StartCoroutine ("Building", mission.constr);
+			agent.Stop();
+		}
         }
 
         void OnTriggerExit(Collider col)
         {
-			if (mission.constr && col.GetComponent<Constructable>() == mission.constr)
+		if(mission != null){
+			if (col.GetComponent<Constructable>() == mission.constr)
                 StopAllCoroutines();
+			}	
         }
 
         void EndMission()

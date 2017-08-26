@@ -17,6 +17,9 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if (!ConstructionManager.ConstructablePrefab) {
+			ConstructionManager.ConstructablePrefab = Resources.Load<GameObject> ("Constructable") as GameObject;
+		}
 		Debug.Log (NameManager.names.Count + " names have been loaded");
 		SpaceYard.player = this;
 		Screens.ScreenPrefab = Resources.Load <GameObject>("ScreenPrefab") as GameObject;

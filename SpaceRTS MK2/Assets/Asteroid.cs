@@ -13,6 +13,7 @@ public class Asteroid : MonoBehaviour, IMineable {
 
 	// Use this for initialization
 	void Awake () {
+
 		deposit = new ResourceDeposit ((RawResources)Random.Range (1, 6));
 		gameObject.name = deposit.resource.ToString () + " Asteroid";
 		Collections.Mineable.Add (this);
@@ -49,6 +50,7 @@ public class Asteroid : MonoBehaviour, IMineable {
     public void ConstructMiningFacility()
     {
         Debug.Log("Constructed a mining Facility");
+		ConstructionRequests r = new ConstructionRequests (new Vector3(transform.position.x +5f,0f,transform.position.y));
     }
 }
 

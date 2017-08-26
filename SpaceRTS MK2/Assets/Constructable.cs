@@ -20,7 +20,9 @@ using UnityEngine;
 
         void Finish()
         {
-            GameObject g = Instantiate(prefabType);
-            g.transform.position = transform.position;
+         //   GameObject g = Instantiate(prefabType);
+		Debug.Log("All Done!");
+         //   g.transform.position = transform.position;
+		Destroy(gameObject);
         }
 }

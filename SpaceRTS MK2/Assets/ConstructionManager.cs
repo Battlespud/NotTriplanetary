@@ -27,11 +27,12 @@ public class ConstructionManager
         unavailableConShips = new List<NegroBundleOfSticks>();
     }
 
-    static void UpdateMissionsQuery()
+    public static void UpdateMissionsQuery()
     {
         //to assign open construction request to avaailable conShips
         while (availableConShips.Count > 0 && opened.Count > 0)
         {
+			Debug.Log ("Looping");
             NegroBundleOfSticks conShipZero = availableConShips[0];
             List<ConstructionRequests> reqsts = new List<ConstructionRequests>();
             reqsts.AddRange(opened);
@@ -43,7 +44,9 @@ public class ConstructionManager
 
     static void AssignMission(ConstructionRequests conReq, NegroBundleOfSticks conShip)
     {
+		opened.Remove (conReq);
         closed.Add(conReq);
+		availableConShips.Remove (conShip);
         unavailableConShips.Add(conShip);
         conShip.AssignRequest(conReq);
     }
@@ -53,5 +56,6 @@ public class ConstructionManager
 		closed.Remove(req);
 		unavailableConShips.Remove(ship);
 		availableConShips.Add(ship);
+		UpdateMissionsQuery ();
     }
 }

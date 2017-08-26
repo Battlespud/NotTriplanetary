@@ -11,12 +11,14 @@ using UnityEngine;
     {
         public NegroBundleOfSticks conShip;
         public Constructable constr;
-
-        public ConstructionRequests(NegroBundleOfSticks co, Vector3 pos)
+		public GameObject go;
+        public ConstructionRequests(Vector3 pos)
         {
 		GameObject g = GameObject.Instantiate(ConstructionManager.ConstructablePrefab);
             g.transform.position = pos;
             constr = g.GetComponent<Constructable>();
-            conShip = co;
+		ConstructionManager.opened.Add (this);
+		ConstructionManager.UpdateMissionsQuery ();
+		go = g;
         }
 }

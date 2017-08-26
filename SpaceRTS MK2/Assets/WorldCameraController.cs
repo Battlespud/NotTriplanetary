@@ -47,7 +47,7 @@ public class WorldCameraController : MonoBehaviour {
 			cam.transform.position = Vector3.Lerp (cam.transform.position, new Vector3 (mousePos.x, cam.transform.position.y, mousePos.z), 15f * Time.deltaTime);
 		}
 		else if (zoom < 0)
-			cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 2000f, Sensitivity*2.5f);
+			cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 1000f, Sensitivity);
 		if (cam.orthographicSize < 3)
 			cam.orthographicSize = 3;
 
