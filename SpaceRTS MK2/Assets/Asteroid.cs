@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
+using UnityEngine.Events;
 
 public class Asteroid : MonoBehaviour, IMineable {
 
@@ -18,6 +19,8 @@ public class Asteroid : MonoBehaviour, IMineable {
 		gameObject.name = deposit.resource.ToString () + " Asteroid";
 		Collections.Mineable.Add (this);
 	}
+
+
 
 	public float Mine(RawResources r,float amount){
 		if (deposit.resource != r)

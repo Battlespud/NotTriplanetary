@@ -52,6 +52,7 @@ public class Player : MonoBehaviour {
 					}
 				}
 			}
+		
 			if (Input.GetMouseButtonDown (1)) {
 				if (hitS) {
 					if (hitS.faction != faction) {

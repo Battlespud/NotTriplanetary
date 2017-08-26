@@ -9,6 +9,8 @@ using UnityEngine;
     //construction requests classs
     public class ConstructionRequests
     {
+	public List<Action> actions;
+
         public NegroBundleOfSticks conShip;
         public Constructable constr;
 		public GameObject go;

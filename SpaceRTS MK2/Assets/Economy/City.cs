@@ -4,8 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System.Text;
+using UnityEngine.Events;
 
-public class City : MonoBehaviour, IResources {
+public class City : MonoBehaviour, IResources, IContext {
+
+	public List<UnityAction> ContextActions(){
+		return new List<UnityAction>{new UnityAction(ToggleUI)};
+	}
+
+	public GameObject getGameObject(){
+		return gameObject;
+	}
 
 	public Text rSummary;
 	public Text pSummary;

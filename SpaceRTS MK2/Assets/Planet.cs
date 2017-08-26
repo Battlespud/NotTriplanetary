@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public enum PlanetType{
@@ -47,7 +48,11 @@ public class ResourceDeposit{
 	}
 }
 
+
+
+
 public class Planet : MonoBehaviour, IMineable {
+
 
 
 
