@@ -31,13 +31,13 @@ public class WorldCameraController : MonoBehaviour {
 	void InputLoop(){
 		offset = new Vector3 ();
 		if(Input.GetKey (KeyCode.LeftShift)){
-			Sensitivity = BaseSensitivity *2.5f *Time.deltaTime;
+			Sensitivity = BaseSensitivity *3.5f *Time.deltaTime;
 		}
 		else{
 			Sensitivity = BaseSensitivity*Time.deltaTime;
 		}
-		offset.z = Input.GetAxis ("Vertical") * Sensitivity;
-		offset.x = Input.GetAxis ("Horizontal") * Sensitivity;
+		offset.z = Input.GetAxis ("Vertical") * Sensitivity*cam.orthographicSize;
+		offset.x = Input.GetAxis ("Horizontal") * Sensitivity*cam.orthographicSize;
 
 		float zoom = Input.GetAxis ("Mouse ScrollWheel");
 
@@ -47,7 +47,7 @@ public class WorldCameraController : MonoBehaviour {
 			cam.transform.position = Vector3.Lerp (cam.transform.position, new Vector3 (mousePos.x, cam.transform.position.y, mousePos.z), 15f * Time.deltaTime);
 		}
 		else if (zoom < 0)
-			cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 125f, Sensitivity);
+			cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 2000f, Sensitivity*2.5f);
 		if (cam.orthographicSize < 3)
 			cam.orthographicSize = 3;
 
