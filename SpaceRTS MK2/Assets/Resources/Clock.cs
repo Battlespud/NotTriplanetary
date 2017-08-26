@@ -7,7 +7,7 @@ public class Clock : MonoBehaviour {
 
 
 
-	public const float TurnLength = 1f; //time in seconds
+	public const float TurnLength =5f; //time in seconds
 	float timer = 0f;
 
 	public UnityEvent TurnEvent = new UnityEvent();

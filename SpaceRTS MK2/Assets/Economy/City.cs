@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.Text;
 
 public class City : MonoBehaviour, IResources {
 
 	public Text rSummary;
 	public Text pSummary;
+
+	public GameObject UI;
 
 	public bool MakeARequestBitch = false;
 
@@ -69,7 +72,8 @@ public class City : MonoBehaviour, IResources {
 		Collections.Cities.Add (this);
 		Collections.ResourceSources.Add (this);
 		controller = GameObject.FindGameObjectWithTag ("Controller");
-		controller.GetComponent<Clock> ().TurnEvent.AddListener (HandleEconomy);
+//		controller.GetComponent<Clock> ().TurnEvent.AddListener (UpdateTextVoid);
+		UI.SetActive(false);
 		foreach(Factory f in GetComponentsInChildren<Factory>()){
 			Factories.Add (f);
 			f.city = this;
@@ -121,22 +125,36 @@ public class City : MonoBehaviour, IResources {
 			return 0f;
 	}
 
-	void UpdateText(){
-		rSummary.text = "Resources||\n";
-		foreach (RawResource r in ResourceStockpile.Values) {
-			rSummary.text += string.Format("{0}: {1} \n",r.resource.ToString(),r.GetAmount());
-		}
-		pSummary.text = "Products||\n";
-		foreach (Product r in ProductStockpile.Values) {
-			pSummary.text += string.Format("{0}: {1} \n",r.product.ToString(),r.GetAmount());
-		}
+	void UpdateTextVoid(){
+		StopAllCoroutines ();
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync (this, UpdateText ());
 	}
 
-	void HandleEconomy(){
-		foreach (Product p in ProductStockpile.Values) {
-		//	Debug.Log (p.product.ToString () + " " + p.GetAmount());
+	//async
+	IEnumerator UpdateText(){
+		StringBuilder sb = new StringBuilder();
+		sb.AppendLine("Resources||");
+		foreach (RawResource r in ResourceStockpile.Values)
+		{
+			sb.AppendLine(string.Format("{0}: {1}", r.resource.ToString(), r.GetAmount()));
 		}
-		UpdateText ();
+		sb.AppendLine("Products||");
+		foreach (Product r in ProductStockpile.Values)
+		{
+			sb.AppendLine(string.Format("{0}: {1} \n", r.product.ToString(), r.GetAmount()));
+		}
+		yield return Ninja.JumpToUnity;
+		rSummary.text = sb.ToString();
+	}
+
+	public void ToggleUI(){
+		UI.SetActive (!UI.active);
+		if (UI.active) {
+			controller.GetComponent<Clock> ().TurnEvent.AddListener (UpdateTextVoid);
+			UpdateTextVoid ();
+		} else {
+			controller.GetComponent<Clock> ().TurnEvent.RemoveListener (UpdateTextVoid);
+		}
 	}
 
 }

@@ -36,5 +36,15 @@ public class Asteroid : MonoBehaviour, IMineable {
 			}
 		}
 
-	}
+
+	void Update(){
+		}
+
+
+
+}
+
+
+
+
 

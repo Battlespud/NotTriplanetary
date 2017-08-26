@@ -19,11 +19,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4327463138888320}
-  - component: {fileID: 114353632291593966}
-  - component: {fileID: 114953656630941998}
   - component: {fileID: 54035261492936052}
   - component: {fileID: 195953464399238174}
   - component: {fileID: 136678719478767480}
+  - component: {fileID: 135256173301537328}
+  - component: {fileID: 114057523877221976}
   m_Layer: 0
   m_Name: Freighter
   m_TagString: Untagged
@@ -168,8 +168,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1316599781102570}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10.86}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 4672797452899630}
   - {fileID: 4784218781917100}
@@ -531,7 +531,7 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114353632291593966
+--- !u!114 &114057523877221976
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -539,68 +539,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1316599781102570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6892c7b8d6467f7429638bb317373560, type: 3}
+  m_Script: {fileID: 11500000, guid: 902ad87d06bee73468d360f804159275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dirTarget: {fileID: 0}
-  dirTest: 0
-  dirInverse: 0
-  standlr: {fileID: 0}
-  shipClass: {fileID: 0}
-  BaseType: 0
-  faction: 0
-  Guns: []
-  immobile: 0
-  underTractor: 0
-  usingTractor: 0
-  rb: {fileID: 0}
-  Waypoints: []
-  rens: []
-  dir: 0
-  ShipName: 
-  mass: 100
-  enginePower: 20
-  VelocityUI: {x: 0, y: 0, z: 0}
-  DotProdUI: 0
-  Agent: {fileID: 0}
-  path: []
---- !u!114 &114953656630941998
-MonoBehaviour:
+  maxLoad: 200
+  load: 0
+--- !u!135 &135256173301537328
+SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1316599781102570}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6785a250cfe743b4c8ed90012c903f06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  integrity: 100
-  ship: {fileID: 0}
-  Fore: 0
-  Aft: 0
-  Star: 0
-  Port: 0
-  Wall: 0
-  BatteryPower: 0
-  crew: 0
-  mCrew: 0
-  marines: 0
-  mMarines: 0
-  Torpedos: 12
-  ScreenStrengthsUI: []
-  ScreenOrder:
-  - Fore
-  - Aft
-  - Port
-  - Star
-  - Wall
-  StartingScreenStrengths:
-  - 2
-  - 2
-  - 2
-  - 2
-  - 0
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136678719478767480
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -623,7 +578,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 3.5
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

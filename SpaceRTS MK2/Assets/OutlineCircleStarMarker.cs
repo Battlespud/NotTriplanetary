@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OutlineCircleStarMarker : MonoBehaviour {
 
-	public const float SYSRADIUS = 100F;
+	public const float SYSRADIUS = 200f;
 
 	// Use this for initialization
 	void Start () {

@@ -674,7 +674,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843142239926852}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -22.03582, y: 16.937674, z: 13.59}
+  m_LocalPosition: {x: -15446.723, y: 11226.132, z: -27141.83}
   m_LocalScale: {x: 62.118546, y: 28.288395, z: 60}
   m_Children:
   - {fileID: 4228349005236268}
@@ -1442,6 +1442,15 @@ MonoBehaviour:
   Waypoints: []
   rens:
   - {fileID: 23443450960421274}
+  - {fileID: 23171515311284604}
+  - {fileID: 23777245627809710}
+  - {fileID: 23022768486289872}
+  - {fileID: 23035549221317068}
+  - {fileID: 23013358662192300}
+  - {fileID: 23035549221317068}
+  - {fileID: 23558831988380826}
+  - {fileID: 23584577791024082}
+  - {fileID: 23734185828689622}
   dir: 0
   ShipName: 
   mass: 100
@@ -1528,6 +1537,7 @@ MonoBehaviour:
   BatteryPower: 0
   crew: 0
   mCrew: 0
+  survivors: 0
   marines: 0
   mMarines: 0
   Torpedos: 8
@@ -1736,10 +1746,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.01
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 5
+  m_Acceleration: 10
   avoidancePriority: 48
-  m_AngularSpeed: 120
+  m_AngularSpeed: 14
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

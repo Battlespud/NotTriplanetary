@@ -1,19 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class GenerateGalaxy : MonoBehaviour {
 
-	 int NumStars = 500;
+	 int NumStars = 400;
 
-	 float minDist = 225f;
-	 float maxDist = 550f;
+	 float minDist = 450;
+	 float maxDist = 1100;
 
-	float bound = 60f*OutlineCircleStarMarker.SYSRADIUS;
+	float bound = 60*OutlineCircleStarMarker.SYSRADIUS;
 
 	//10k max 250
 
-	public float maxLaneDist = 400f;
+	public float maxLaneDist = 650;
 
 	GameObject star;
 
@@ -29,13 +30,14 @@ public class GenerateGalaxy : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		star = Resources.Load<GameObject> ("StarMarker") as GameObject;
-		StartCoroutine ("Generate");
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,Generate());
 	}
 
 	IEnumerator Generate(){
 		while (stars.Count < NumStars) {
 			List<Vector3> working = new List<Vector3> ();
 			List<Vector3> W2 = new List<Vector3> ();
+			yield return Ninja.JumpToUnity;
 			for (int i = 0; i < NumStars/8f; i++) {
 				Vector3 g = new Vector3(Random.Range (-bound, bound), 0f, Random.Range (-bound, bound));
 		//		if(parent)
@@ -43,6 +45,7 @@ public class GenerateGalaxy : MonoBehaviour {
 		//		star.transform.position = new Vector3 (Random.Range (-bound, bound), 0f, Random.Range (-bound, bound));
 				working.Add (g);
 			}
+			yield return Ninja.JumpBack;
 			W2.AddRange (stars);
 			stars.AddRange (working);
 			working.AddRange (W2);
@@ -67,8 +70,8 @@ public class GenerateGalaxy : MonoBehaviour {
 				}
 				}
 			Debug.Log ("End frame count: " + stars.Count);
-			yield return null;
 		}
+		yield return Ninja.JumpToUnity;
 		foreach(Vector3 vec in stars){
 			GameObject f = Instantiate (star);
 			f.transform.position = vec;

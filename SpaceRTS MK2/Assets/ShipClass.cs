@@ -22,8 +22,11 @@ public enum ShipPrefabTypes{
 
 public class ShipClass : MonoBehaviour {
 
+	public static int[]MaxCrews = new int[5]{200, 250, 450, 800, 1200};
+
 	public float integrity = 100f;
 	public Ship ship;
+//	public ShipPrefabTypes BaseClass;
 
 	//just for inspector testing. These show the strength of the corresponding screens.
 	public float Fore;
@@ -40,6 +43,8 @@ public class ShipClass : MonoBehaviour {
 	public int crew;
 	public int mCrew;
 
+	public int survivors = 0;
+
 	public int marines;
 	public int mMarines;
 
@@ -54,8 +59,12 @@ public class ShipClass : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+	//	BaseClass = ship.BaseType;
 		screens  = new Screens(this);
 		ship = GetComponent<Ship> ();
+	//	mCrew = MaxCrews [(int)BaseClass];
+		mCrew = 200;
+		crew = mCrew;
 	}
 
 	// Update is called once per frame

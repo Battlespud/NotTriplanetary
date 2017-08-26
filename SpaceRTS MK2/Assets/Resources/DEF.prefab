@@ -1284,6 +1284,7 @@ MonoBehaviour:
   BatteryPower: 0
   crew: 0
   mCrew: 0
+  survivors: 0
   marines: 0
   mMarines: 0
   Torpedos: 0
@@ -1339,7 +1340,8 @@ MonoBehaviour:
   usingTractor: 0
   rb: {fileID: 0}
   Waypoints: []
-  rens: []
+  rens:
+  - {fileID: 23415334201151510}
   dir: 0
   ShipName: 
   mass: 100

@@ -44,6 +44,9 @@ public class Player : MonoBehaviour {
 						s.Toggle ();
 						SpaceYard.active = s;
 					}
+					if (hit.collider.GetComponent<City> ()) {
+						hit.collider.GetComponent<City> ().ToggleUI ();
+					}
 				}
 			}
 			if (Input.GetMouseButtonDown (1)) {

@@ -10,6 +10,7 @@ public class Ship : MonoBehaviour {
 	//this only handles things specific to this entity, like movement.
 
 	static GameObject Explosion;
+public	static GameObject EscapePod;
 
 	public static ShipEvent OnDeath = new ShipEvent();
 
@@ -63,8 +64,10 @@ public class Ship : MonoBehaviour {
 	public NavMeshAgent Agent;
 	// Use this for initialization
 	void Start () {
-		if (Explosion == null)
+		if (Explosion == null) {
 			Explosion = Resources.Load<GameObject> ("Explosion") as GameObject;
+			EscapePod = Resources.Load<GameObject> ("EscapePod") as GameObject;
+		}
 		stand = new GameObject();
 		standlr = stand.AddComponent<LineRenderer> ();
 		stand.transform.position = new Vector3 (this.transform.position.x, 0f, transform.position.z);
@@ -269,6 +272,12 @@ public class Ship : MonoBehaviour {
 			yield return null;
 		}
 
+		if(Random.Range(0,2) != 0){
+		GameObject life = Instantiate (EscapePod);
+		life.transform.position = transform.position;
+		life.GetComponent<EscapePod> ().Survivors = shipClass.crew /5;
+			life.name = gameObject.name + " Life Boat";
+		}
 		NameManager.RecycleName (this);
 		Destroy (g);
 
@@ -372,9 +381,19 @@ public class Ship : MonoBehaviour {
 		}
 	}
 
+	public void RescueSurvivors(EscapePod e){
+		shipClass.survivors += e.Survivors;
+		Debug.Log ("Rescuing from " + e.name);
+		Destroy (e.gameObject);
+	}
+
 	public void DisableWeapons(){
 		foreach (SpaceGun s in Guns) {
 			s.enabled = false;
 		}
+	}
+
+	public void ShowStrongestSide(GameObject target){
+
 	}
 }
