@@ -138,10 +138,10 @@ public class City : MonoBehaviour, IResources {
 		{
 			sb.AppendLine(string.Format("{0}: {1}", r.resource.ToString(), r.GetAmount()));
 		}
-		sb.AppendLine("Products||");
+		sb.AppendLine("\nProducts||");
 		foreach (Product r in ProductStockpile.Values)
 		{
-			sb.AppendLine(string.Format("{0}: {1} \n", r.product.ToString(), r.GetAmount()));
+			sb.AppendLine(string.Format("{0}: {1}", r.product.ToString(), r.GetAmount()));
 		}
 		yield return Ninja.JumpToUnity;
 		rSummary.text = sb.ToString();
