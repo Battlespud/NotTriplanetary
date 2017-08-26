@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text;
 
 public class Asteroid : MonoBehaviour, IMineable {
 
@@ -30,18 +31,25 @@ public class Asteroid : MonoBehaviour, IMineable {
 	}
 
 	void UpdateText(){
-		stockpileText.text = "Resources||\n";
+        StringBuilder sb = new StringBuilder();
+        //stockpileText.text = "Resources||\n";
+        sb.AppendLine("Resources||");
 		foreach (Mine m in GetComponents<Mine>()) {
-			stockpileText.text += string.Format ("{0}: {1} \n", m.resource.ToString (), m.Stockpile );
+            //stockpileText.text += string.Format ("{0}: {1} \n", m.resource.ToString (), m.Stockpile );
+            sb.AppendFormat("{0}: {1}\n", m.resource.ToString(), m.Stockpile);
 			}
+        stockpileText.text = sb.ToString();
 		}
 
 
 	void Update(){
 		}
 
-
-
+    [SerializeField]
+    public void ConstructMiningFacility()
+    {
+        Debug.Log("Constructed a mining Facility");
+    }
 }
 
 

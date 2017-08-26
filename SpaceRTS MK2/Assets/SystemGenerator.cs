@@ -9,7 +9,7 @@ public class SystemGenerator : MonoBehaviour {
 	static GameObject AsteroidPrefab;
 
 	public int numPlanets = 3;
-	 bool asteroidBelt = false;
+    bool asteroidBelt = true;
 
 	// Use this for initialization
 	void Awake(){
@@ -42,7 +42,7 @@ public class SystemGenerator : MonoBehaviour {
 
 	void GenerateAsteroidRing(float r){
 		List<Vector3> vecs = new List<Vector3> ();
-		int numSegments = 255;
+		int numSegments = 5;
 		float radius = r/12;
 		float deltaTheta = (float) (2.0 * Mathf.PI) / 256;
 		float theta = 0f;
