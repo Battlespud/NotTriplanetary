@@ -50,8 +50,8 @@ public class ConstructionManager
 
     static public void Finished(ConstructionRequests req, NegroBundleOfSticks ship)
     {
-        closed.remove(req);
-        unavailableConShips.remove(ship);
-        availableConShips.add(ship);
+		closed.Remove(req);
+		unavailableConShips.Remove(ship);
+		availableConShips.Add(ship);
     }
 }

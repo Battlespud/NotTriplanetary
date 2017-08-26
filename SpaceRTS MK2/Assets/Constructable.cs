@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Assets
-{
-    class Constructable : MonoBehaviour
+    public class Constructable : MonoBehaviour
     {
         int faction = 0;
         public GameObject prefabType;
@@ -25,5 +23,4 @@ namespace Assets
             GameObject g = Instantiate(prefabType);
             g.transform.position = transform.position;
         }
-    }
 }

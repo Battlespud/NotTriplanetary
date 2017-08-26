@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Assets
-{
     //construction request shiup, make sure to add using UnityEngine.AI;
     public class NegroBundleOfSticks : MonoBehaviour
     {
@@ -18,13 +16,13 @@ namespace Assets
             agent = gameObject.GetComponent<NavMeshAgent>();
         }
 
-        public IEnumerator Building(Constructable con)
+	IEnumerator Building(Constructable con)
         {
             bool isOccupied = true;
 
-            while (con && con.currTime < TimeToBuild)
+            while (con && con.currTime < con.TimeToBuild)
             {
-                con.currTime += time.deltaTime;
+                con.currTime += Time.deltaTime;
                 yield return null;
             }
         }
@@ -33,18 +31,18 @@ namespace Assets
         {
             StopAllCoroutines();
             mission = req;
-            agent.SetDestination(req.transform.position);
+            agent.SetDestination(req.constr.transform.position);
         }
 
         void OnTriggerEnter(Collider col)
         {
-            if (mission.constr && col.getComponent<Constructable>() == const)
-                StartCoroutine("Building", constr);
+			if (mission.constr && col.GetComponent<Constructable>() == mission.constr)
+				StartCoroutine("Building", mission.constr);
         }
 
         void OnTriggerExit(Collider col)
         {
-            if (mission.constr && col.getComponent<Constructable>() == const)
+			if (mission.constr && col.GetComponent<Constructable>() == mission.constr)
                 StopAllCoroutines();
         }
 
@@ -55,4 +53,3 @@ namespace Assets
 
         //ship class
     }
-}

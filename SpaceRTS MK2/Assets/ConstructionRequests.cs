@@ -6,8 +6,6 @@ using System.Text;
 using UnityEngine;
 
 
-namespace Assets
-{
     //construction requests classs
     public class ConstructionRequests
     {
@@ -16,10 +14,9 @@ namespace Assets
 
         public ConstructionRequests(NegroBundleOfSticks co, Vector3 pos)
         {
-            GameObject g = Instantiate(ConstructionManager.ConstructablePrefab);
+		GameObject g = GameObject.Instantiate(ConstructionManager.ConstructablePrefab);
             g.transform.position = pos;
             constr = g.GetComponent<Constructable>();
             conShip = co;
         }
-    }
 }
