@@ -1,32 +1,42 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+
+
 public class ContextMenu : MonoBehaviour
 {
+
+	GameObject c;
+
 	// Use this for initialization
 	void Start () {
 
 	}
 
+	float ySize = 25f;
+	float xSize = 100f;
 
-
-
-	float ySize = 5f;
-	float xSize = 5f;
+	bool destroy = false;
+	int dTime = 0;
 
 	// Update is called once per frame
 	void Update ()
 	{
+
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Ray clickRay = new Ray (mousePos, Vector3.down);
 
 
 		if (Input.GetMouseButtonDown (1)) {
-			GameObject c = Instantiate(Resources.Load<GameObject>("Canvas") as GameObject);
+			Destroy (c);
+			//c = new GameObject ();
+			c = Instantiate(Resources.Load<GameObject>("Canvas") as GameObject);
+			c.GetComponent<Canvas> ().worldCamera = Camera.main;
 			c.transform.position = mousePos;
 			RaycastHit[] hits;
 			hits = Physics.RaycastAll (mousePos, Vector3.down, 100f);    
@@ -40,31 +50,40 @@ public class ContextMenu : MonoBehaviour
 			int i = 0;
 			//make the first menu
 			foreach (IContext con in context) {
-
 				GameObject gxt = new GameObject() ;
 				Text txt = gxt.AddComponent<Text> ();
 				gxt.transform.parent = c.transform;
-				gxt.transform.position = new Vector3 (c.transform.position.x, c.transform.position.y, c.transform.position.z - ySize * i);
+				gxt.transform.position = new Vector3 (c.transform.position.x,  c.transform.position.y - ySize * i,c.transform.position.z);
 				txt.text = con.getGameObject ().name;
 				int j = 0;
 				foreach (UnityAction action in con.ContextActions()) {
 					GameObject bgo = Instantiate(Resources.Load<GameObject>("Button") as GameObject);
 					bgo.transform.parent = c.transform;
-					bgo.transform.position = new Vector3 (c.transform.position.x + xSize * i, c.transform.position.y, c.transform.position.z - ySize * j);
+					bgo.transform.position = new Vector3 (c.transform.position.x + xSize * i, c.transform.position.y - ySize * j, c.transform.position.z );
 					//button.OnClick(action);
 					bgo.GetComponent<Button>().onClick.AddListener( action);
-					bgo.GetComponentInChildren<Text>().text = action.ToString();
+					bgo.GetComponentInChildren<Text>().text = action.Method.ToString();
 					j++;
 				}
 				i++;
 			}
 		}
+		if (destroy) {
+			dTime++;
+			if(dTime >= 5)
+			{
+				dTime = 0;
+				Destroy (c);
+				c = new GameObject ();
+				destroy = false;
+			}
+		}
+
+	}
+
+	void LateUpdate(){
+		if(Input.GetMouseButtonDown(0)){
+			destroy = true;
+		}
 	}
 }
-
-
-
-
-
-
-

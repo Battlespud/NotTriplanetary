@@ -9,7 +9,11 @@ using UnityEngine.Events;
 public class City : MonoBehaviour, IResources, IContext {
 
 	public List<UnityAction> ContextActions(){
-		return new List<UnityAction>{new UnityAction(ToggleUI)};
+		return new List<UnityAction>{new UnityAction(ToggleUI), new UnityAction(RequestResources)};
+	}
+
+	public void RequestResources(){
+		MakeARequestBitch = true;
 	}
 
 	public GameObject getGameObject(){
