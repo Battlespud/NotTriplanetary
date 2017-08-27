@@ -12,13 +12,18 @@ public class City : MonoBehaviour, IResources, IContext {
 		return new List<UnityAction>{new UnityAction(ToggleUI), new UnityAction(RequestResources)};
 	}
 
+	public GameObject getGameObject(){
+		return gameObject;
+	}
+
+
 	public void RequestResources(){
 		MakeARequestBitch = true;
 	}
 
-	public GameObject getGameObject(){
-		return gameObject;
-	}
+
+	public bool Evacuate = false;
+	public bool Settle = false;
 
 	public Text rSummary;
 	public Text pSummary;
@@ -78,6 +83,19 @@ public class City : MonoBehaviour, IResources, IContext {
 
 	string Name;
 	//Factions Faction;
+	public int population = 100;
+
+	public bool TakePop(int amount){
+		if (amount < population) {
+			population -= amount;
+			return true;
+		}
+		return false;
+	}
+
+	public void AddPop(int amount){
+		population += amount;
+	}
 
 	// Use this for initialization
 	void Start () {
