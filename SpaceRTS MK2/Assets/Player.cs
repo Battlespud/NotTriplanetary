@@ -37,6 +37,7 @@ public class Player : MonoBehaviour {
 		Ship hitS = null;
 		if(Physics.Raycast (clickRay, out hit, 10000f))
 			hitS = hit.collider.GetComponent<Ship> ();
+		Debug.DrawRay (mousePos,Vector3.down*1000f, Color.yellow);
 		if (!InMenu) {
 			if (Input.GetMouseButtonDown (0)) {
 				StartCoroutine ("SelectionBox");

@@ -50,6 +50,7 @@ public class ContextMenu : MonoBehaviour
 			int i = 0;
 			//make the first menu
 			foreach (IContext con in context) {
+				Debug.Log ("Context detects " + con.getGameObject ().name);
 				GameObject gxt = new GameObject() ;
 				Text txt = gxt.AddComponent<Text> ();
 				gxt.transform.parent = c.transform;
