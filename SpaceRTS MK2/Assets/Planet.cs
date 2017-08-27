@@ -69,7 +69,7 @@ public class ResourceDeposit
 public class Planet : MonoBehaviour, IMineable
 {
     public Dictionary<RawResources, ResourceDeposit> ResourceDeposits = new Dictionary<RawResources, ResourceDeposit>();
-    public StringBuilder planetComposition = new StringBuilder();
+    public int[] composition;
 
     void AddDeposit(ResourceDeposit r)
     {
@@ -117,26 +117,19 @@ public class Planet : MonoBehaviour, IMineable
 
     private void SetPlanetType(int planetType)
     {
-        int[] comp = CheckTypeCompatibility((PlanetType)planetType);
-        string pt = Enum.GetName(typeof(PlanetType), comp[0]);
-        string at = Enum.GetName(typeof(AtmosphereType), comp[1]);
-        planetComposition.AppendFormat("{0} {1}", pt, at);
-        Debug.Log(string.Format("Planet type set to {0}", planetComposition.ToString()));
+        composition = CheckAndGenerateComposition((PlanetType)planetType);
+        string pt;
+        string at;
+        CreatePlanetCompositionName(composition[0], composition[1], out pt, out at);
+        Debug.Log(string.Format("Planet type set to {0} {1}", pt, at));
     }
-
-    //valid planet compositions
-    /* 
-     * 01, 02, 03, 04 - 1234
-     * 11, 12, 13, 14 - 1234
-     * 21, 23 - 13
-     * 31, 33, 34 - 134
-     * 42, 43  - 23
-     * 50, 52, 53 - 023
-     * 60, 63, 64 - 034
-     */
-    private int[] CheckTypeCompatibility(PlanetType type)
+    private void CreatePlanetCompositionName(int pt, int at, out string ptName, out string atName)
     {
-        int[] composition = new int[2];
+        ptName = Enum.GetName(typeof(PlanetType), pt);
+        atName = Enum.GetName(typeof(AtmosphereType), at);
+    }
+    private int[] CheckAndGenerateComposition(PlanetType type)
+    {
         int pt = -1;
         int at = -1;
         int swap = -1;
@@ -184,8 +177,6 @@ public class Planet : MonoBehaviour, IMineable
                 break;
         }
 
-        composition[0] = pt;
-        composition[1] = at;
-        return composition;
+        return new int[] { at, pt };
     }
 }
