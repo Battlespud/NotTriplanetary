@@ -12,7 +12,7 @@ public class SpaceYard : MonoBehaviour, IContext {
 
 	public List<UnityAction> ContextActions()
 	{
-		List<UnityAction> actions = new List<UnityAction>(){ new UnityAction (BuildDEF), new UnityAction(BuildDD), new UnityAction(BuildCS), new UnityAction(BuildCV), new UnityAction(BuildDN)};
+		List<UnityAction> actions = new List<UnityAction>(){ new UnityAction (BuildDEF), new UnityAction(BuildDD), new UnityAction(BuildCS), new UnityAction(BuildCV), new UnityAction(BuildDN), new UnityAction(BuildFR), new UnityAction(BuildCT)};
 		return actions;
 	}
 
@@ -22,10 +22,7 @@ public class SpaceYard : MonoBehaviour, IContext {
 
 	public static Player player;
 	public int faction;
-	public static List<GameObject> ShipPrefabs = new List<GameObject>();
-	static bool ListBuilt = false;
 
-	public Dictionary<ShipPrefabTypes, GameObject> ShipTypeDict = new Dictionary<ShipPrefabTypes, GameObject>();
 
 	//UI
 	public static GameObject SpaceYardUI;
@@ -54,17 +51,12 @@ public class SpaceYard : MonoBehaviour, IContext {
 			open = active.Berths [i];
 		}
 		Debug.Log ("Open Berth is #" + open.Designation);
-		GameObject s = Instantiate (ShipPrefabs[drop.value]);
+		GameObject s = Instantiate (ShipAbstract.ShipPrefabs[drop.value]);
+		ShipAbstract sb = s.GetComponent < ShipAbstract> ();
 		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (open.transform.position.x, .59f, open.transform.position.z));
 		s.transform.rotation = Quaternion.Inverse(open.transform.rotation);
-		s.GetComponent<Ship>().faction = 0;
-		s.GetComponent<Ship>().BaseType = (ShipPrefabTypes) drop.value;
-
-		if (s.GetComponent<Ship>().faction == 0)
-			s.GetComponentInChildren<Renderer> ().material.color = Color.green;
-		else {
-			s.GetComponentInChildren<Renderer> ().material.color = Color.red;
-		}
+		sb.faction = FAC.PLAYER;
+		sb.Start ();
 		Debug.Log ("Ship built");
 	}
 
@@ -87,17 +79,12 @@ public class SpaceYard : MonoBehaviour, IContext {
 			open = Berths [i];
 		}
 		Debug.Log ("Open Berth is #" + open.Designation);
-		GameObject s = Instantiate (ShipTypeDict[typ]);
+		GameObject s = Instantiate (ShipAbstract.ShipTypeDict[typ]);
 		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (open.transform.position.x, .59f, open.transform.position.z));
 		s.transform.rotation = Quaternion.Inverse(open.transform.rotation);
-		s.GetComponent<Ship>().faction = 0;
+		s.GetComponent<ShipAbstract>().faction = FAC.PLAYER;
 
 
-		if (s.GetComponent<Ship>().faction == 0)
-			s.GetComponentInChildren<Renderer> ().material.color = Color.green;
-		else {
-			s.GetComponentInChildren<Renderer> ().material.color = Color.red;
-		}
 		Debug.Log ("Ship built local");
 	}
 
@@ -116,8 +103,12 @@ public class SpaceYard : MonoBehaviour, IContext {
 	void BuildDN(){
 		Build (ShipPrefabTypes.DN);
 	}
-
-
+	void BuildFR(){
+		Build (ShipPrefabTypes.FR);
+	}
+	void BuildCT(){
+		Build (ShipPrefabTypes.CT);
+	}
 
 	public void Toggle(){
 		SpaceYardUI.SetActive (!SpaceYardUI.activeSelf);
@@ -127,14 +118,7 @@ public class SpaceYard : MonoBehaviour, IContext {
 
 	// Use this for initialization
 	void Start () {
-		if (!ListBuilt) {
-			ListBuilt = true;
 			SpaceYardUI = GameObject.FindGameObjectWithTag ("SpaceYardUI");
-			foreach (ShipPrefabTypes val in System.Enum.GetValues(typeof(ShipPrefabTypes))) {
-				ShipPrefabs.Add (Resources.Load<GameObject> (val.ToString()) as GameObject);
-				ShipTypeDict.Add (val, ShipPrefabs[ShipPrefabs.Count-1] );
-//				Debug.Log ("Loaded " + val.ToString ());
-			}
 			drop = SpaceYardUI.GetComponentInChildren<Dropdown> ();
 			List<string> shipStringTypes = new List<string> ();
 			foreach (var val in System.Enum.GetValues(typeof(ShipPrefabTypes)))	{
@@ -155,7 +139,6 @@ public class SpaceYard : MonoBehaviour, IContext {
 		}
 
 
-	}
 
 
 

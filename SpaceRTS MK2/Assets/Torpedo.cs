@@ -6,17 +6,17 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 
 	public float eRadius = 2.5f;
 
-	public List<Ship> InBlastZone = new List<Ship>();
+	public List<ICAPTarget> InBlastZone = new List<ICAPTarget>();
 	Collider col;
 
-	public int hp = 1;
+	int hp = 1;
 
 	public FAC faction;
 
 	 float LaunchForce = 40f; //50
 	public float Force = 10f;
 
-	float fuseTimer = 1.2f;
+	float fuseTimer = 2f;
 	public bool armed = false;
 
 	float fuelTime = 15f;
@@ -61,25 +61,25 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 
 
 	void OnTriggerEnter(Collider col){
-		if(col.GetComponent<Ship>())
-			InBlastZone.Add(col.GetComponent<Ship>());
+		if(col.GetComponent<ICAPTarget>() != null)
+			InBlastZone.Add(col.GetComponent<ICAPTarget>());
 	}
 
 	void OnTriggerExit(Collider col){
-		if(col.GetComponent<Ship>())
-			InBlastZone.Remove(col.GetComponent<Ship>());
+		if(col.GetComponent<ICAPTarget>() != null)
+			InBlastZone.Remove(col.GetComponent<ICAPTarget>());
 	}
 
 	void OnCollisionEnter(Collision col){
 		if (!armed)
 			return;
-		if (col.collider.GetComponent<Ship> () || col.collider.GetComponentInChildren<Ship>() || col.collider.GetComponentInParent<Ship>() || col.collider.GetComponent<Torpedo> () )
+		if (col.collider.GetComponent<ICAPTarget> () != null || col.collider.GetComponentInChildren<ICAPTarget>() != null || col.collider.GetComponentInParent<ICAPTarget>() != null)
 			Detonate ();
 	}
 
 	public void Detonate(){
-		foreach (Ship s in InBlastZone) {
-			s.shipClass.Damage (12f-(2f*Vector3.Distance(s.transform.position,transform.position)), transform.position,transform);
+		foreach (ICAPTarget s in InBlastZone) {
+			s.DealDamage (12f-(2f*Vector3.Distance(s.GetGameObject().transform.position,transform.position)), transform.position,transform);
 		}
 		StartCoroutine ("ExplosionRadius");
 		StartCoroutine ("ExplosionExpansion");

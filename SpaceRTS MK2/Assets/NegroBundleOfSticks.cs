@@ -6,12 +6,12 @@ using UnityEngine;
 using UnityEngine.AI;
 
     //construction request shiup, make sure to add using UnityEngine.AI;
-    public class NegroBundleOfSticks : MonoBehaviour
+public class NegroBundleOfSticks : ShipAbstract
     {
         public ConstructionRequests mission;
         public NavMeshAgent agent;
 
-        void Awake()
+	public override void Start()
         {
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		agent.Warp(new Vector3(transform.position.x, .59f, transform.position.y));

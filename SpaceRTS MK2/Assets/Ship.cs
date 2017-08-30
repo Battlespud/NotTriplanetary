@@ -9,23 +9,19 @@ public class Ship : ShipAbstract {
 
 	//this only handles things specific to this entity, like movement.
 
-	static GameObject Explosion;
-public	static GameObject EscapePod;
 
 
-	public static GameObject Debris; //spawns on death.
-	public static GameObject Torpedo;
+
+
 	//debugging direction
 	public GameObject dirTarget;
 	public GeneralDirection dirTest;
 	public GeneralDirection dirInverse;
 
-	 GameObject stand;
-	public LineRenderer standlr;
+
 
 	bool moveAssigned = false;
 
-	public ShipPrefabTypes BaseType;
 
 	Vector3 mousePos;
 
@@ -51,7 +47,6 @@ public	static GameObject EscapePod;
 
 	//main
 
-	public string ShipName;
 
 	public float mass; //kg
 	public float enginePower; //newtons
@@ -60,20 +55,10 @@ public	static GameObject EscapePod;
 
 	public NavMeshAgent Agent;
 	// Use this for initialization
-	public void Start () {
-		Color c = FactionMatrix.FactionColors [(int)faction];
-		if (Explosion == null) {
-			Explosion = Resources.Load<GameObject> ("Explosion") as GameObject;
-			EscapePod = Resources.Load<GameObject> ("EscapePod") as GameObject;
-		}
-		stand = new GameObject();
-		standlr = stand.AddComponent<LineRenderer> ();
-		stand.transform.position = new Vector3 (this.transform.position.x, 0f, transform.position.z);
-		stand.transform.parent = transform;
-		SetupStand (c);
+	public override void Start () {
+
 		Agent = GetComponent<NavMeshAgent> ();
 		Agent.Warp (new Vector3(transform.position.x, .59f, transform.position.z)); 
-        ShipName = NameManager.AssignName(this);
 		//rens.AddRange( GetComponentsInChildren<Renderer> ());
 		rb = GetComponent<Rigidbody> ();
 			foreach (Renderer r in rens) {
@@ -82,28 +67,18 @@ public	static GameObject EscapePod;
 			r.material.EnableKeyword ("_EMISSION");
 		}
 
-		Debris = Resources.Load<GameObject> ("Debris") as GameObject;
-		Torpedo = Resources.Load<GameObject> ("Torpedo") as GameObject;
+
 		foreach (SpaceGun sg in GetComponentsInChildren<SpaceGun>()) {
 			Guns.Add (sg);
 		}
-		shipClass = gameObject.GetComponent<ShipClass> ();
-		lr = this.gameObject.AddComponent<LineRenderer> ();
+		lr = gameObject.AddComponent<LineRenderer> ();
 		lr.enabled = false;
 		lr.SetWidth (.035f, .035f);
         //	render = GetComponentInChildren<Renderer> ();
         gameObject.name = ShipName;
 	}
 
-	public void SetupStand(Color c){
-		float size = 1f;
-		if (BaseType == ShipPrefabTypes.DD)
-			size = .5f;
-		if (BaseType == ShipPrefabTypes.CS)
-			size = .75f;
-		RenderCircle (standlr, size);
-			standlr.SetColors (c, c);
-	}
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -267,26 +242,7 @@ public	static GameObject EscapePod;
 		Destroy (gameObject);
 	}
 
-	void RenderCircle (LineRenderer l, float r) {
-		int numSegments = 255;
-		float radius = r;
-		l.material = new Material(Shader.Find("Particles/Additive"));
-	//	l.SetColors(Color.yellow, Color.yellow);
-		l.SetWidth(0.025f, 0.025f);
-		l.SetVertexCount(numSegments + 1);
-		l.useWorldSpace = false;
 
-		float deltaTheta = (float) (2.0 * Mathf.PI) / numSegments;
-		float theta = 0f;
-
-		for (int i = 0 ; i < numSegments + 1 ; i++) {
-			float x = radius * Mathf.Cos(theta);
-			float z = radius * Mathf.Sin(theta);
-			Vector3 pos = new Vector3(x, 0, z);
-			l.SetPosition(i, pos);
-			theta += deltaTheta;
-		}
-	}
 	#endregion
 
 	public IEnumerator TorpedoArm(){

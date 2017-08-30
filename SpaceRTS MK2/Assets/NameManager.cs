@@ -23,7 +23,7 @@ public class NameManager// : MonoBehaviour
  public   static List<string> names;
     static List<string> usedNames;
 	static Dictionary <string,int> Frequency = new Dictionary<string,int>();
-	public static Dictionary <Ship,string> usedNamesShip = new Dictionary<Ship, string>();
+	public static Dictionary <ShipAbstract,string> usedNamesShip = new Dictionary<ShipAbstract, string>();
 
     //private void Start()
     static NameManager()
@@ -47,7 +47,7 @@ public class NameManager// : MonoBehaviour
 		}
     }
 
-	static public string AssignName(Ship ship)
+	static public string AssignName(ShipAbstract ship)
     {
 		System.Random rand = new System.Random();
 		int index = rand.Next (0, names.Count);
@@ -62,7 +62,7 @@ public class NameManager// : MonoBehaviour
 	static void CheckDic(string name){
 	}
 
-	static public void RecycleName(Ship s)
+	static public void RecycleName(ShipAbstract s)
     {
 		string n = usedNamesShip[s];
 		usedNames.Remove (n);

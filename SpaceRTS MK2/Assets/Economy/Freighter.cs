@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 
-public class Freighter : MonoBehaviour {
+public class Freighter : ShipAbstract{
 	GameObject controller;
 
 	NavMeshAgent agent;
@@ -22,7 +22,7 @@ public class Freighter : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
 		try{
 		gameObject.name = NameGen.GenerateName ("L4N2");
 		}
@@ -30,6 +30,7 @@ public class Freighter : MonoBehaviour {
 			Debug.Log ("NameGen failed");
 			gameObject.name = "NAMEGEN_ERROR";
 		}
+		shipClass = GetComponent<ShipClass> ();
 		Collections.Freighters.Add (this);
 		Collections.Available.Add (this);
 		agent = GetComponent<NavMeshAgent> ();

@@ -6,7 +6,7 @@ public class Berth : MonoBehaviour {
 
 	public bool Full = false;
 
-	public List<Ship> ShipList = new List<Ship>();
+	public List<ShipAbstract> ShipList = new List<ShipAbstract>();
 	public int Designation;
 
 	// Use this for initialization
@@ -22,14 +22,14 @@ public class Berth : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		if (col.gameObject.GetComponent<Ship> ()) {
-			ShipList.Add (col.GetComponent<Ship> ());
+		if (col.gameObject.GetComponent<ShipAbstract> ()) {
+			ShipList.Add (col.GetComponent<ShipAbstract> ());
 		}
 	}
 
 	void OnTriggerExit(Collider col){
-		if (col.gameObject.GetComponent<Ship> ()) {
-			ShipList.Remove (col.GetComponent<Ship> ());
+		if (col.gameObject.GetComponent<ShipAbstract> ()) {
+			ShipList.Remove (col.GetComponent<ShipAbstract> ());
 		}
 	}
 
