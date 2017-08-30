@@ -5,13 +5,7 @@ using UnityEngine.AI;
 
 
 
-public enum ShipPrefabTypes{
-	DEF, //defensive wall ship
-	DD, //destroyer 
-	CS, //strike cruiser
-	DN, //dreadnought
-	CV, //carrier
-}
+
 
 
 
@@ -58,7 +52,7 @@ public class ShipClass : MonoBehaviour {
 	public List<float> ScreenStrengthsUI = new List<float>();
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 	//	BaseClass = ship.BaseType;
 		screens  = new Screens(this);
 		ship = GetComponent<Ship> ();
