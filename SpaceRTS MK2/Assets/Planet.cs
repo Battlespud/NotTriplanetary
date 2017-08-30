@@ -118,18 +118,7 @@ public class Planet : MonoBehaviour, IMineable
     private void SetPlanetType(int planetType)
     {
         composition = CheckAndGenerateComposition((PlanetType)planetType);
-        string pt;
-        string at;
-        CreatePlanetCompositionName(composition[0], composition[1], out pt, out at);
-		//Debug.Log ("New " + composition[1]);
-        Debug.Log(string.Format("Planet type set to {0} {1}", pt, at));
-    }
-    private void CreatePlanetCompositionName(int pt, int at, out string ptName, out string atName)
-    {
-		PlanetType backingP = (PlanetType)pt;
-		ptName = backingP.ToString ();
-		AtmosphereType backingA = (AtmosphereType)at;
-		atName = backingA.ToString();
+        Debug.Log(string.Format("Planet type set to {0} {1}", ((PlanetType)composition[0]).ToString(), ((AtmosphereType)composition[1]).ToString()));
     }
     private static int[] CheckAndGenerateComposition(PlanetType type)
     {
@@ -144,9 +133,9 @@ public class Planet : MonoBehaviour, IMineable
                 pt = (int)type;
                 at = Random.Range(1, 4);
                 break;
-		case PlanetType.Ocean:
-			pt = (int)type;
-				at = Random.Range (0f, 1f) >= .5f ? 1 : 3;
+            case PlanetType.Ocean:
+                pt = (int)type;
+                at = Random.Range(0f, 1f) >= .5f ? 1 : 3;
                 break;
             case PlanetType.Jungle:
                 pt = (int)type;
@@ -156,10 +145,10 @@ public class Planet : MonoBehaviour, IMineable
                 else
                     at = swap;
                 break;
-		case PlanetType.Lava:
-			pt = (int)type;
-			at = Random.Range (0, 2) == 1 ? 2 : 3;
-			break;
+            case PlanetType.Lava:
+                pt = (int)type;
+                at = Random.Range(0, 2) == 1 ? 2 : 3;
+                break;
             case PlanetType.Barren:
                 pt = (int)type;
                 swap = Random.Range(1, 4);
@@ -179,6 +168,7 @@ public class Planet : MonoBehaviour, IMineable
             default:
                 break;
         }
-        return new int[] { pt, at };
+
+        return new int[2] { pt, at };
     }
 }
