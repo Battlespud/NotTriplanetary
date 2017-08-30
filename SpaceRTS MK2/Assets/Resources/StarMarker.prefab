@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114283664447002720}
   - component: {fileID: 120538273723926338}
   - component: {fileID: 114172914199743044}
+  - component: {fileID: 114863915377146906}
   m_Layer: 0
   m_Name: StarMarker
   m_TagString: Untagged
@@ -110,6 +111,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Connections: []
+--- !u!114 &114863915377146906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1770010725166252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c98876c3fddcb7418100257930f17e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!120 &120538273723926338
 LineRenderer:
   m_ObjectHideFlags: 1

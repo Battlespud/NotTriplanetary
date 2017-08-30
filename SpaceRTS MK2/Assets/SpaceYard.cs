@@ -133,7 +133,7 @@ public class SpaceYard : MonoBehaviour, IContext {
 			foreach (ShipPrefabTypes val in System.Enum.GetValues(typeof(ShipPrefabTypes))) {
 				ShipPrefabs.Add (Resources.Load<GameObject> (val.ToString()) as GameObject);
 				ShipTypeDict.Add (val, ShipPrefabs[ShipPrefabs.Count-1] );
-				Debug.Log ("Loaded " + val.ToString ());
+//				Debug.Log ("Loaded " + val.ToString ());
 			}
 			drop = SpaceYardUI.GetComponentInChildren<Dropdown> ();
 			List<string> shipStringTypes = new List<string> ();

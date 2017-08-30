@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Text;
 using UnityEngine.Events;
 
 //valid planet compositions
@@ -106,13 +103,16 @@ public class Planet : MonoBehaviour, IMineable
 
     void Start()
     {
+		
         SetPlanetType(UnityEngine.Random.Range(0, 7));
     }
 
     // Update is called once per frame
     void Update()
     {
-
+		if (Input.GetKeyDown (KeyCode.Backspace)) {
+			InvokeRepeating("Start",0f,.05f);
+		}
     }
 
     private void SetPlanetType(int planetType)
@@ -121,14 +121,17 @@ public class Planet : MonoBehaviour, IMineable
         string pt;
         string at;
         CreatePlanetCompositionName(composition[0], composition[1], out pt, out at);
+		//Debug.Log ("New " + composition[1]);
         Debug.Log(string.Format("Planet type set to {0} {1}", pt, at));
     }
     private void CreatePlanetCompositionName(int pt, int at, out string ptName, out string atName)
     {
-        ptName = Enum.GetName(typeof(PlanetType), pt);
-        atName = Enum.GetName(typeof(AtmosphereType), at);
+		PlanetType backingP = (PlanetType)pt;
+		ptName = backingP.ToString ();
+		AtmosphereType backingA = (AtmosphereType)at;
+		atName = backingA.ToString();
     }
-    private int[] CheckAndGenerateComposition(PlanetType type)
+    private static int[] CheckAndGenerateComposition(PlanetType type)
     {
         int pt = -1;
         int at = -1;
@@ -139,27 +142,27 @@ public class Planet : MonoBehaviour, IMineable
             case PlanetType.Gas:
             case PlanetType.Terran:
                 pt = (int)type;
-                at = UnityEngine.Random.Range(1, 4);
+                at = Random.Range(1, 4);
                 break;
-            case PlanetType.Ocean:
-                pt = (int)type;
-                at = UnityEngine.Random.Range(0f, 1f) >= .5f ? 1 : 3;
+		case PlanetType.Ocean:
+			pt = (int)type;
+				at = Random.Range (0f, 1f) >= .5f ? 1 : 3;
                 break;
             case PlanetType.Jungle:
                 pt = (int)type;
-                swap = UnityEngine.Random.Range(2, 5);
+                swap = Random.Range(2, 5);
                 if (swap == 2)
                     at = 1;
                 else
                     at = swap;
                 break;
-            case PlanetType.Lava:
-                pt = (int)type;
-                at = UnityEngine.Random.Range(0f, 1f) >= .5f ? 2 : 3;
-                break;
+		case PlanetType.Lava:
+			pt = (int)type;
+			at = Random.Range (0, 2) == 1 ? 2 : 3;
+			break;
             case PlanetType.Barren:
                 pt = (int)type;
-                swap = UnityEngine.Random.Range(1, 4);
+                swap = Random.Range(1, 4);
                 if (swap == 1)
                     at = 0;
                 else
@@ -167,7 +170,7 @@ public class Planet : MonoBehaviour, IMineable
                 break;
             case PlanetType.Silicon:
                 pt = (int)type;
-                swap = UnityEngine.Random.Range(2, 5);
+                swap = Random.Range(2, 5);
                 if (swap == 2)
                     at = 0;
                 else
@@ -176,7 +179,6 @@ public class Planet : MonoBehaviour, IMineable
             default:
                 break;
         }
-
-        return new int[] { at, pt };
+        return new int[] { pt, at };
     }
 }

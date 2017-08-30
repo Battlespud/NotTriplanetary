@@ -5,14 +5,13 @@ using UnityEngine.AI;
 
 
 
-public class Ship : MonoBehaviour {
+public class Ship : ShipAbstract {
 
 	//this only handles things specific to this entity, like movement.
 
 	static GameObject Explosion;
 public	static GameObject EscapePod;
 
-	public static ShipEvent OnDeath = new ShipEvent();
 
 	public static GameObject Debris; //spawns on death.
 	public static GameObject Torpedo;
@@ -26,7 +25,6 @@ public	static GameObject EscapePod;
 
 	bool moveAssigned = false;
 
-	public ShipClass shipClass;
 	public ShipPrefabTypes BaseType;
 
 	Vector3 mousePos;
@@ -34,7 +32,6 @@ public	static GameObject EscapePod;
 	bool dead = false;
 
 	//combat
-	public int faction;
 	public List<SpaceGun> Guns = new List<SpaceGun> ();
 
 	//movement
@@ -63,7 +60,8 @@ public	static GameObject EscapePod;
 
 	public NavMeshAgent Agent;
 	// Use this for initialization
-	void Start () {
+	public void Start () {
+		Color c = FactionMatrix.FactionColors [(int)faction];
 		if (Explosion == null) {
 			Explosion = Resources.Load<GameObject> ("Explosion") as GameObject;
 			EscapePod = Resources.Load<GameObject> ("EscapePod") as GameObject;
@@ -72,26 +70,16 @@ public	static GameObject EscapePod;
 		standlr = stand.AddComponent<LineRenderer> ();
 		stand.transform.position = new Vector3 (this.transform.position.x, 0f, transform.position.z);
 		stand.transform.parent = transform;
-		SetupStand ();
+		SetupStand (c);
 		Agent = GetComponent<NavMeshAgent> ();
 		Agent.Warp (new Vector3(transform.position.x, .59f, transform.position.z)); 
         ShipName = NameManager.AssignName(this);
 		//rens.AddRange( GetComponentsInChildren<Renderer> ());
 		rb = GetComponent<Rigidbody> ();
-		if (faction == 0) {
 			foreach (Renderer r in rens) {
-				r.material.color = Color.blue;
-				r.material.SetColor ("_EmissionColor", new Color(0f,0f,255f,.5f));
-				r.material.EnableKeyword ("_EMISSION");
-			}
-
-		}
-		else {
-			foreach (Renderer r in rens) {
-				r.material.color = Color.red;
-				r.material.SetColor ("_EmissionColor", Color.red);
-				r.material.EnableKeyword ("_EMISSION");
-			}
+				r.material.color = c;
+			r.material.SetColor ("_EmissionColor", new Color(c.r,c.g,c.b,.35f));
+			r.material.EnableKeyword ("_EMISSION");
 		}
 
 		Debris = Resources.Load<GameObject> ("Debris") as GameObject;
@@ -107,18 +95,14 @@ public	static GameObject EscapePod;
         gameObject.name = ShipName;
 	}
 
-	void SetupStand(){
+	public void SetupStand(Color c){
 		float size = 1f;
 		if (BaseType == ShipPrefabTypes.DD)
 			size = .5f;
 		if (BaseType == ShipPrefabTypes.CS)
 			size = .75f;
 		RenderCircle (standlr, size);
-		if (faction == 0) {
-			standlr.SetColors (Color.blue, Color.blue);
-		} else {
-			standlr.SetColors (Color.red, Color.red);
-		}
+			standlr.SetColors (c, c);
 	}
 	
 	// Update is called once per frame
@@ -175,7 +159,6 @@ public	static GameObject EscapePod;
 	}
 
 	public void Die(){
-		Debug.Log (name + " is lost!");
 		DisableWeapons ();
 		OnDeath.Invoke (this);
 	}
@@ -254,7 +237,7 @@ public	static GameObject EscapePod;
 		}
 //		l.material = new Material (Shader.Find ("Particles/Additive"));
 		l.startColor = Color.green;
-		if(faction != 0)
+		if(faction != FAC.PLAYER)
 		l.startColor = Color.red;
 		Color c = new Color (l.startColor.r, l.startColor.g, l.startColor.b);
 		float f = .1f;
@@ -396,4 +379,12 @@ public	static GameObject EscapePod;
 	public void ShowStrongestSide(GameObject target){
 
 	}
+
+
+
+	//Interface
+
+
+
+
 }

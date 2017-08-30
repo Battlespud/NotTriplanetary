@@ -3,5 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ShipEvent : UnityEvent<Ship> {
+public class ShipEvent : UnityEvent<ICAPTarget> {
 }

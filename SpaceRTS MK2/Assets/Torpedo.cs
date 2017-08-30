@@ -11,7 +11,7 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 
 	public int hp = 1;
 
-	public int faction;
+	public FAC faction;
 
 	 float LaunchForce = 40f; //50
 	public float Force = 10f;
@@ -51,8 +51,12 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 		return null;
 	}
 
-	public int GetFaction(){
+	public FAC GetFaction(){
 		return faction;
+	}
+
+	public bool isHostile(FAC caller){
+		return FactionMatrix.IsHostile (caller, faction);
 	}
 
 

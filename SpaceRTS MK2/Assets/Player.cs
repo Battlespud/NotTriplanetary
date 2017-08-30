@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum CameraMode{
+	PERSP,
+	ORTHO
+};
+
 public class Player : MonoBehaviour {
+
+	public static CameraMode camMode = CameraMode.ORTHO;
+
 	public string PlayerName = "Player";
 	public bool human = true;
 	Camera cam;
-	public int faction = 0;
+	public FAC faction = FAC.PLAYER;
 	GameObject SelectionUI;
 	Text selectText;
 	public List<Ship> SelectedShips = new List<Ship>();
@@ -15,23 +23,32 @@ public class Player : MonoBehaviour {
 
 	public bool InMenu = true;
 
+	delegate Vector3 MousePositioner();
+	MousePositioner mousePositioner;
+
 	// Use this for initialization
+	void Awake(){
+		cam = Camera.main;
+
+	}
+
 	void Start () {
+		
+		SetMousePositioner ();
 		if (!ConstructionManager.ConstructablePrefab) {
 			ConstructionManager.ConstructablePrefab = Resources.Load<GameObject> ("Constructable") as GameObject;
 		}
 		Debug.Log (NameManager.names.Count + " names have been loaded");
 		SpaceYard.player = this;
 		Screens.ScreenPrefab = Resources.Load <GameObject>("ScreenPrefab") as GameObject;
-		cam = Camera.main;
 		SelectionUI = GameObject.FindGameObjectWithTag ("SelectionUI");
 		selectText = SelectionUI.GetComponentInChildren<Text> ();
-		Ship.OnDeath.AddListener (RemoveShip);
+		//ShipAbstract.OnDeath.AddListener (RemoveShip);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		mousePos = cam.ScreenToWorldPoint (Input.mousePosition);
+		mousePos = SetMousePosition();
 		Ray clickRay = new Ray (mousePos, Vector3.down);
 		RaycastHit hit;
 		Ship hitS = null;
@@ -47,9 +64,6 @@ public class Player : MonoBehaviour {
 						SpaceYard s = hit.collider.GetComponentInParent<SpaceYard> ();
 						s.Toggle ();
 						SpaceYard.active = s;
-					}
-					if (hit.collider.GetComponent<City> ()) {
-						hit.collider.GetComponent<City> ().ToggleUI ();
 					}
 				}
 			}
@@ -87,6 +101,44 @@ public class Player : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	void SetMousePositioner(){
+		switch (cam.orthographic) {
+		case(true):
+			{
+				mousePositioner = new MousePositioner (OrthographicPosition);
+				break;
+			}
+		case(false):
+			{
+				mousePositioner = new MousePositioner (PerspectivePosition);
+				break;
+			}
+		}
+		return;
+	}
+
+	Vector3 SetMousePosition(){
+		if(cam.orthographic)
+			{
+				return OrthographicPosition();
+			}
+		else
+		{
+				return PerspectivePosition();
+			}
+	}
+
+	Vector3 OrthographicPosition(){
+		return cam.ScreenToWorldPoint (Input.mousePosition);
+	}
+
+	Vector3 PerspectivePosition(){
+		var mousep = Input.mousePosition;
+		mousep.z = cam.transform.position.z - .5f;
+		return cam.ScreenToWorldPoint (mousep);
+
 	}
 
 	IEnumerator SelectionBox(){

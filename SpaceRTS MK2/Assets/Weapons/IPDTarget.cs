@@ -5,7 +5,8 @@ using UnityEngine;
 public interface IPDTarget {
 
 	void HitByPD(int dam);
-	int GetFaction();
+	FAC GetFaction();
+	bool isHostile (FAC attacker);
 	GameObject GetGameObject ();
 
 }

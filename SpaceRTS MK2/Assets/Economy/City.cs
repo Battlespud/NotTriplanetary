@@ -59,7 +59,7 @@ public class City : MonoBehaviour, IResources, IContext {
 	public bool GiveResource(RawResources r, float amount){
 		if (!ResourceStockpile.ContainsKey (r)) {
 			ResourceStockpile.Add (r, new RawResource (r));
-			Debug.Log (r.ToString () + " has been added");
+//			Debug.Log (r.ToString () + " has been added");
 		}
 		ResourceStockpile [r].Add(amount);
 		UpdateText ();
@@ -71,7 +71,7 @@ public class City : MonoBehaviour, IResources, IContext {
 	public void AddProduct(Products r, float amount){
 		if (!ProductStockpile.ContainsKey (r)) {
 			ProductStockpile.Add (r, new Product (r));
-			Debug.Log (r.ToString () + " has been added");
+//			Debug.Log (r.ToString () + " has been added");
 		}
 		ProductStockpile [r].Add(amount);
 		UpdateText ();

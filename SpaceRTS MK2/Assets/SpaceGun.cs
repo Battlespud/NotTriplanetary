@@ -10,8 +10,8 @@ public  class SpaceGun : MonoBehaviour {
 	public Light light;
 
 	public Ship self;
-	public List<Ship> targets = new List<Ship>();
-	public Ship target;
+	public List<ICAPTarget> targets = new List<ICAPTarget>();
+	public ICAPTarget target;
 
 	public List<IPDTarget> pdTargets = new List<IPDTarget>();
 	public IPDTarget pdTarget;
@@ -48,8 +48,8 @@ public  class SpaceGun : MonoBehaviour {
 		if(light)
 		light.enabled = false;
 		self = GetComponentInParent<Ship> ();
-		targets = new List<Ship> ();
-		Ship.OnDeath.AddListener (RemoveTargetS);
+		targets = new List<ICAPTarget> ();
+		ShipAbstract.OnDeath.AddListener (RemoveTargetS);
 		PDTargetAbstract.pdDeath.AddListener (RemoveTargetT);
 		turret = GetComponentInParent<Turret> ();
 		if (!turret) {
@@ -62,7 +62,7 @@ public  class SpaceGun : MonoBehaviour {
 
 	}
 
-	public void RemoveTargetS(Ship s){
+	public void RemoveTargetS(ICAPTarget s){
 		if(targets.Contains(s))
 			targets.Remove (s);
 		if (target == s)
@@ -80,16 +80,16 @@ public  class SpaceGun : MonoBehaviour {
 
 	public virtual void OnTriggerEnter(Collider col){
 		if (tType == TurretType.CAPITAL) {
-			Ship s = col.GetComponent<Ship> ();
-			if (s) {
-				if (s.faction != self.faction) {
+			ICAPTarget s = col.GetComponent<ICAPTarget> ();
+			if (s != null) {
+				if (s.isHostile(self.faction)) {
 					targets.Add (s);
 				}
 			}
 		} else if(tType == TurretType.PD) {
 			IPDTarget s = col.GetComponent<IPDTarget> ();
 			if (s != null) {
-				if (s.GetFaction() != self.faction) {
+				if (s.isHostile(self.faction)) {
 					pdTargets.Add (s);
 				}
 				SortList ();
@@ -100,9 +100,9 @@ public  class SpaceGun : MonoBehaviour {
 	}
 
 	public virtual void OnTriggerExit(Collider col){
-		Ship s = col.GetComponent<Ship> ();
+		ICAPTarget s = col.GetComponent<ICAPTarget> ();
 		IPDTarget t = col.GetComponent<IPDTarget> ();
-		if (s) {
+		if (s != null) {
 			if (targets.Contains (s)) {
 				targets.Remove (s);
 			}
@@ -129,20 +129,20 @@ public  class SpaceGun : MonoBehaviour {
 		ResetTarget ();
 		if (pdTarget != null)
 			pdTargObj = pdTarget.GetGameObject ();
-		if (target || pdTarget != null) {
+		if (target != null || pdTarget != null) {
 			Fire ();
 		}
 	}
 
 	public virtual void Fire(){
 		if (tType == TurretType.CAPITAL) {
-			if (!CanFire || !target || !self.shipClass.Power.UsePower (powerCost))
+			if (!CanFire || target == null || !self.shipClass.Power.UsePower (powerCost))
 				return;
-			Debug.DrawLine (self.transform.position, target.transform.position, lineC, .05f);
+			Debug.DrawLine (self.transform.position, target.GetGameObject().transform.position, lineC, .05f);
 			if (ForceMagnitude > 0f) {
-				target.shipClass.PhysicsDamage (Damage, self.transform.position, ForceMagnitude, self.transform);
+				target.DealPhysicsDamage(Damage, self.transform.position, ForceMagnitude, self.transform);
 			} else {
-				target.shipClass.Damage (Damage, self.transform.position, self.transform);
+				target.DealDamage (Damage, self.transform.position, self.transform);
 			}
 			StartCoroutine ("Reload");
 			CanFire = false;
@@ -171,22 +171,23 @@ public  class SpaceGun : MonoBehaviour {
 
 	public void SortList(){
 		targets.OrderBy(
-			targ => Vector3.Distance(this.transform.position,targ.transform.position)).ToList();
+			targ => Vector3.Distance(this.transform.position,targ.GetGameObject().transform.position)).ToList();
 
 		pdTargets.OrderBy(
 			targ => Vector3.Distance(this.transform.position,targ.GetGameObject().transform.position)).ToList();
+		
 		ResetTarget ();
 	}
 
 	public void ResetTarget(){
-		if ( !target && targets.Count != 0)
+		if ( target == null && targets.Count != 0)
 			target = targets [0];
 
 		if ( pdTargets.Count != 0)
 			pdTarget = pdTargets [0];
 	}
 
-	public void AssignTarget(Ship s){
+	public void AssignTarget(ICAPTarget s){
 		if (targets.Contains (s)) {
 			target = s;
 		}

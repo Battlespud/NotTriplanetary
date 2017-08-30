@@ -5,13 +5,13 @@ using System.Linq;
 
 public class Targeting : MonoBehaviour {
 
-	public List<Ship> targets = new List<Ship> ();
+	public List<ICAPTarget> targets = new List<ICAPTarget> ();
 
 	public List<IPDTarget> pdTargets = new List<IPDTarget> ();
 
-	public Ship target; //current target
+	public ICAPTarget target; //current target
 	public IPDTarget pdtarget;
-	public GameObject ipdTarget; //ui
+	//public GameObject ipdTarget; //ui
 	public int pdTargetsCount;
 
 	public Ship self;
@@ -28,14 +28,14 @@ public class Targeting : MonoBehaviour {
 	public void OnTriggerEnter(Collider col){
 		IPDTarget t = col.GetComponent<IPDTarget> ();
 		if (t != null) {
-			if (t.GetFaction() != self.faction) {
+			if (t.isHostile(self.faction)) {
 				pdTargets.Add (t);
 			//	ResetTarget ();
 			}
 		}
-		Ship s = col.GetComponent<Ship> ();
-		if (s) {
-			if (s.faction != self.faction) {
+		ICAPTarget s = col.GetComponent<ICAPTarget> ();
+		if (s != null) {
+			if (s.isHostile(self.faction)) {
 				targets.Add (s);
 			//	ResetTarget ();
 			}
@@ -43,7 +43,7 @@ public class Targeting : MonoBehaviour {
 
 	}
 
-	public void RemoveTargetS(Ship s){
+	public void RemoveTargetS(ICAPTarget s){
 		if(targets.Contains(s))
 			targets.Remove (s);
 		if (target == s){
@@ -89,7 +89,7 @@ public class Targeting : MonoBehaviour {
 
 
 	public void ResetTarget(){
-		if ( !target && targets.Count != 0)
+		if ( target == null && targets.Count != 0)
 			target = targets [0];
 		foreach (IPDTarget t in pdTargets) {
 			if (t == null || t.GetGameObject() == null) {
@@ -107,13 +107,10 @@ public class Targeting : MonoBehaviour {
 	public  void Update () {
 		ResetTarget ();
 		foreach (Turret t in turrets) {
-			if(target && t.tType == TurretType.CAPITAL)
-			t.Target = target.gameObject;
+			if(target != null&& t.tType == TurretType.CAPITAL)
+				t.Target = target.GetGameObject();
 			if(pdtarget != null && t.tType == TurretType.PD)
 				t.Target = pdtarget.GetGameObject();
-		}
-		if (pdtarget != null) {
-			ipdTarget = pdtarget.GetGameObject();
 		}
 		pdTargetsCount = pdTargets.Count;
 

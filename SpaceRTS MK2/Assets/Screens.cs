@@ -67,7 +67,8 @@ public class Screens{
 					WallScreen.strength = 0f;
 			 if(dam > 0f) {
 				parent.integrity -= Random.Range (10f, 25f) * dam;		
-				if (parent.integrity <= 0f) {
+				if (parent.integrity <= 0f && !dead) {
+					dead = true;
 					parent.ship.Die ();
 					parent.ship.SpawnDebris (source);
 				}
