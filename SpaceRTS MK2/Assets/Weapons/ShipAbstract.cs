@@ -9,8 +9,8 @@ public enum ShipPrefabTypes{
 	DEF=0, //defensive wall ship
 	DD=1, //destroyer 
 	CS=2, //strike cruiser
-	DN=3, //dreadnought
-	CV=4, //carrier
+	DN=4, //dreadnought
+	CV=3, //carrier
 	FR=21,
 	CT=22
 
@@ -70,7 +70,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 
 	void Awake(){
 		ArmorText = gameObject.AddComponent<Text> ();
-		SetupArmor (12, 8);
+		SetupArmor (4*(int)BaseType,2*(int)BaseType );
 		if (Explosion == null)
 			LoadResources ();
 		c = FactionMatrix.FactionColors [(int)faction];

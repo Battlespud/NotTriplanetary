@@ -1427,13 +1427,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6892c7b8d6467f7429638bb317373560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShipName: 
+  shipClass: {fileID: 0}
+  faction: 1
+  stand: {fileID: 0}
+  standlr: {fileID: 0}
+  c: {r: 0, g: 0, b: 0, a: 0}
+  ArmorText: {fileID: 0}
+  BaseType: 4
+  integrity: 100
   dirTarget: {fileID: 0}
   dirTest: 0
   dirInverse: 0
-  standlr: {fileID: 0}
-  shipClass: {fileID: 0}
-  BaseType: 3
-  faction: 1
+  TestArmorDamage: 0
   Guns: []
   immobile: 0
   underTractor: 0
@@ -1452,7 +1458,6 @@ MonoBehaviour:
   - {fileID: 23584577791024082}
   - {fileID: 23734185828689622}
   dir: 0
-  ShipName: 
   mass: 100
   enginePower: 25
   VelocityUI: {x: 0, y: 0, z: 0}
@@ -1485,10 +1490,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac4cde2523eb3a43b7da5535697dfdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Pattern:
+  - {x: 0, y: 0}
+  - {x: 0, y: -1}
+  - {x: 0, y: -2}
   light: {fileID: 0}
   self: {fileID: 0}
-  targets: []
-  target: {fileID: 0}
   pdTargObj: {fileID: 0}
   shooting: 1
   CanFire: 1
@@ -1497,6 +1504,7 @@ MonoBehaviour:
   Damage: 1
   ForceMagnitude: 0
   lineC: {r: 0, g: 0, b: 0, a: 0}
+  mRange: 0
   tType: 0
   turret: {fileID: 0}
 --- !u!114 &114594400084653146
@@ -1510,9 +1518,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88a7a468f4447e443b02308e0df185be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
-  target: {fileID: 0}
-  ipdTarget: {fileID: 0}
   pdTargetsCount: 0
   self: {fileID: 0}
   turrets: []
@@ -1527,7 +1532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6785a250cfe743b4c8ed90012c903f06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  integrity: 100
   ship: {fileID: 0}
   Fore: 0
   Aft: 0
@@ -1580,10 +1584,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2083c5470d76b7e44a749efd332e4338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Pattern:
+  - {x: 0, y: 0}
+  - {x: 0, y: -1}
+  - {x: 0, y: -2}
   light: {fileID: 0}
   self: {fileID: 0}
-  targets: []
-  target: {fileID: 0}
   pdTargObj: {fileID: 0}
   shooting: 0
   CanFire: 0
@@ -1592,6 +1598,7 @@ MonoBehaviour:
   Damage: 0
   ForceMagnitude: 0
   lineC: {r: 0, g: 0, b: 0, a: 0}
+  mRange: 0
   tType: 1
   turret: {fileID: 0}
 --- !u!114 &114817628691395154
@@ -1605,10 +1612,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac4cde2523eb3a43b7da5535697dfdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Pattern:
+  - {x: 0, y: 0}
+  - {x: 0, y: -1}
+  - {x: 0, y: -2}
   light: {fileID: 0}
   self: {fileID: 0}
-  targets: []
-  target: {fileID: 0}
   pdTargObj: {fileID: 0}
   shooting: 1
   CanFire: 1
@@ -1617,6 +1626,7 @@ MonoBehaviour:
   Damage: 1
   ForceMagnitude: 0
   lineC: {r: 0, g: 0, b: 0, a: 0}
+  mRange: 0
   tType: 0
   turret: {fileID: 0}
 --- !u!114 &114910516173423622
