@@ -7,6 +7,8 @@ public  class SpaceGun : MonoBehaviour {
 
 	//TODO make guns go in barrels instead of on the turret object.
 
+	public static List<Vector2> Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (0, -1), new Vector2 (1, 0), new Vector2 (-1, 0)};
+
 	public Light light;
 
 	public Ship self;
@@ -28,6 +30,8 @@ public  class SpaceGun : MonoBehaviour {
 	public float ForceMagnitude = 0f;
 	public Color lineC;
 
+	public float mRange;
+
 	public TurretType tType = TurretType.CAPITAL;
 
 	public Turret turret;
@@ -40,7 +44,7 @@ public  class SpaceGun : MonoBehaviour {
 		Initialize ();
 		shooting = true;
 		CanFire = true;
-
+	//	Pattern = new List<Vector2> (){ new Vector2 (0, 0), new Vector2 (0, -1), new Vector2 (1, 0), new Vector2 (-1, 0) };
 	}
 
 	public void Initialize(){

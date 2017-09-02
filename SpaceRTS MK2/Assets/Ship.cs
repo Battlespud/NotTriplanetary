@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 
-
-public class Ship : ShipAbstract {
+public class Ship : ShipAbstract, IContext {
 
 	//this only handles things specific to this entity, like movement.
 
+	public List<UnityAction> ContextActions(){
+		return new List<UnityAction>{new UnityAction(OpenShipMenu)};
+	}
+
+	public GameObject getGameObject(){
+		return gameObject;
+	}
 
 
+	void OpenShipMenu(){
+
+	}
 
 
 	//debugging direction
@@ -19,6 +29,7 @@ public class Ship : ShipAbstract {
 	public GeneralDirection dirInverse;
 
 
+	[SerializeField] bool TestArmorDamage = false;
 
 	bool moveAssigned = false;
 
@@ -82,6 +93,10 @@ public class Ship : ShipAbstract {
 	
 	// Update is called once per frame
 	void Update () {
+		if (TestArmorDamage) {
+			TestArmorDamage = false;
+			TestArmor ();
+		}
 		if (dirTarget) {
 			dirTest = Direction.GetDirection (dirTarget.transform.position, dirTarget.transform, transform.position, transform);
 		}

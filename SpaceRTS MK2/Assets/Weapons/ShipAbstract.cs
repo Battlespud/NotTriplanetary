@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Text;
 
 
 public enum ShipPrefabTypes{
@@ -33,7 +33,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 	public static List<GameObject> ShipPrefabs = new List<GameObject>();
 	public static Dictionary<ShipPrefabTypes, GameObject> ShipTypeDict = new Dictionary<ShipPrefabTypes, GameObject>();
 
-
+	public bool[,] Armor;
 
 	public string ShipName;
 
@@ -66,6 +66,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 	}
 
 	void Awake(){
+		SetupArmor (12, 8);
 		if (Explosion == null)
 			LoadResources ();
 		c = FactionMatrix.FactionColors [(int)faction];
@@ -78,6 +79,71 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 		SetupStand (c);
 	}
 	public ShipPrefabTypes BaseType;
+
+	public void SetupArmor(int c, int r){
+		Armor = new bool[c, r];
+		for (int x = 0; x < Armor.GetLength(0); x += 1) {
+			for (int y = 0; y < Armor.GetLength(1); y += 1) {
+				Armor [x, y] = true;
+			}
+		}
+		Debug.Log("Initial: \n" + BuildArmorString());
+	}
+
+	public void TestArmor(){
+		DamageArmor (SpaceGun.Pattern);
+	}
+
+	public void DamageArmor(List<Vector2> pattern){
+		int startX = Random.Range (0, Armor.GetLength (0) - 1);
+		int startY = 0;
+		for(startY = Armor.GetLength(1)-1; startY >= 0; startY--){
+			if (Armor [startX, startY] == true) {
+				break;
+			}
+		}
+		foreach (var v in pattern) {
+			if (Armor [startX + (int)v.x, startY + (int)v.y] != null) {
+				try {
+					Armor [startX + (int)v.x, startY + (int)v.y] = false;
+				} catch {
+
+				}
+			}
+		}
+		Debug.Log("Damaged: \n" + BuildArmorString());
+	}
+
+	/*string BuildArmorString(){
+		string a = System.String.Empty;
+		for (int y = 0; y < Armor.GetLength (1); y++) {
+			for (int x = 0; x < Armor.GetLength (0); x++) {
+				if (Armor [x, y]) {
+					a += " O ";
+				} else {
+					a += " X ";
+				}
+			}
+			a += "\n";
+		}
+		Debug.Log (a);
+		return a;
+	}
+*/
+	string BuildArmorString(){
+			StringBuilder a = new StringBuilder();
+			for (int y = 0; y < Armor.GetLength (1); y++) {
+				for (int x = 0; x < Armor.GetLength (0); x++) {
+					if (Armor [x, y]) {
+						a.Append('O');
+					} else {
+						a.Append('X');
+					}
+				}
+				a.AppendLine();
+			}
+			return a.ToString();
+	}
 
 	public void SetupStand(Color c){
 		float size = 1f;
@@ -121,6 +187,8 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 			theta += deltaTheta;
 		}
 	}
+
+
 	// Use this for initialization
 	public virtual void Start(){
 
@@ -129,5 +197,10 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void DieAbstract(){
+		transform.position = new Vector3 (10f, 10000f, 0f);
+		Destroy (gameObject);
 	}
 }
