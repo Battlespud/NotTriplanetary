@@ -6,8 +6,9 @@ using System.Linq;
 public  class SpaceGun : MonoBehaviour {
 
 	//TODO make guns go in barrels instead of on the turret object.
+	public static  List<Vector2> staticPattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (0, -1),new Vector2(0,-2)};
 
-	public static List<Vector2> Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (0, -1), new Vector2 (1, 0), new Vector2 (-1, 0)};
+	public  List<Vector2> Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (0, -1),new Vector2(0,-2)};
 
 	public Light light;
 
@@ -144,9 +145,9 @@ public  class SpaceGun : MonoBehaviour {
 				return;
 			Debug.DrawLine (self.transform.position, target.GetGameObject().transform.position, lineC, .05f);
 			if (ForceMagnitude > 0f) {
-				target.DealPhysicsDamage(Damage, self.transform.position, ForceMagnitude, self.transform);
+				target.DealPhysicsDamage(Damage, self.transform.position, ForceMagnitude, self.transform, Pattern);
 			} else {
-				target.DealDamage (Damage, self.transform.position, self.transform);
+				target.DealDamage (Damage, self.transform.position, self.transform, Pattern);
 			}
 			StartCoroutine ("Reload");
 			CanFire = false;

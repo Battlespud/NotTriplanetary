@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using UnityEngine.UI;
 
 
 public enum ShipPrefabTypes{
@@ -45,12 +46,14 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 	public LineRenderer standlr;
 	public Color c;
 
-	public void DealDamage(float dam, Vector3 origin, Transform en){
-		shipClass.Damage (dam, origin, en);
+	public Text ArmorText;
+
+	public void DealDamage(float dam, Vector3 origin, Transform en, List<Vector2> pattern){
+		shipClass.Damage (dam, origin, en, pattern);
 			}
 
-	public void DealPhysicsDamage(float dam, Vector3 origin, float fMag, Transform s){
-		shipClass.PhysicsDamage (dam,origin,fMag, s);
+	public void DealPhysicsDamage(float dam, Vector3 origin, float fMag, Transform s, List<Vector2> pattern){
+		shipClass.PhysicsDamage (dam,origin,fMag, s, pattern);
 	}
 
 	public bool isHostile(FAC caller){
@@ -66,6 +69,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 	}
 
 	void Awake(){
+		ArmorText = gameObject.AddComponent<Text> ();
 		SetupArmor (12, 8);
 		if (Explosion == null)
 			LoadResources ();
@@ -80,6 +84,10 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 	}
 	public ShipPrefabTypes BaseType;
 
+	public static List<Vector2> Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (-2, 0), new Vector2 (1, 0), new Vector2 (2, 0),  new Vector2 (-1, 0), new Vector2 (0, -1), new Vector2 (-2, -1), new Vector2 (1, -1), new Vector2 (2, -1),  new Vector2 (-1, -1), new Vector2 (0, -2), new Vector2 (-2, -2), new Vector2 (1, -2), new Vector2 (2, -2),  new Vector2 (-1, -2) , new Vector2 (0, -3), new Vector2 (-2, -3), new Vector2 (1, -3), new Vector2 (2, -3),  new Vector2 (-1, -3)};
+	public float integrity = 100f;
+
+
 	public void SetupArmor(int c, int r){
 		Armor = new bool[c, r];
 		for (int x = 0; x < Armor.GetLength(0); x += 1) {
@@ -87,14 +95,15 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 				Armor [x, y] = true;
 			}
 		}
+		ArmorText.text = BuildArmorString ();
 		Debug.Log("Initial: \n" + BuildArmorString());
 	}
 
 	public void TestArmor(){
-		DamageArmor (SpaceGun.Pattern);
+		DamageArmor (SpaceGun.staticPattern, 1);
 	}
 
-	public void DamageArmor(List<Vector2> pattern){
+	public void DamageArmor(List<Vector2> pattern, int dam){
 		int startX = Random.Range (0, Armor.GetLength (0) - 1);
 		int startY = 0;
 		for(startY = Armor.GetLength(1)-1; startY >= 0; startY--){
@@ -102,8 +111,11 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 				break;
 			}
 		}
+		int counter = 0;
 		foreach (var v in pattern) {
-			if (Armor [startX + (int)v.x, startY + (int)v.y] != null) {
+			if (startY + (int)v.y < 0)
+				counter++;
+			if (startX + (int)v.x >= 0 && startX + (int)v.x < Armor.GetLength(0) && startY + (int)v.y >= 0 && startY + (int)v.y < Armor.GetLength(1)) {
 				try {
 					Armor [startX + (int)v.x, startY + (int)v.y] = false;
 				} catch {
@@ -111,7 +123,10 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 				}
 			}
 		}
-		Debug.Log("Damaged: \n" + BuildArmorString());
+		for (int l = counter; l > 0; l--) { 
+			integrity -= Random.Range (2f, 5f) * dam;
+		}
+		ArmorText.text = BuildArmorString ();
 	}
 
 	/*string BuildArmorString(){

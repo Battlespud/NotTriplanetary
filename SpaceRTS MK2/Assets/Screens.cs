@@ -24,10 +24,11 @@ public class Screens{
 
 	public Dictionary<GeneralDirection,Screen> dic = new Dictionary<GeneralDirection,Screen> ();
 	public ShipClass parent;
-	Screen ForeScreen ; 
-	Screen AftScreen ; 
-	Screen PortScreen; 
-	Screen StarboardScreen; 
+	public ShipAbstract abs;
+	public Screen ForeScreen ; 
+	public Screen AftScreen ; 
+	public Screen PortScreen; 
+	public Screen StarboardScreen; 
 	public Screen WallScreen; 
 
 	public Screens(ShipClass p){
@@ -47,7 +48,7 @@ public class Screens{
 		dic.Add (GeneralDirection.Down, WallScreen);
 	}
 
-	public void Damage(float dam, Screen s, Vector3 source){
+	public void Damage(float dam, Screen s, Vector3 source, List<Vector2> pattern){
 		GameObject g = GameObject.Instantiate (ScreenPrefab);
 		LineRenderer l = g.GetComponent<LineRenderer> ();
 		g.transform.position = parent.transform.position;
@@ -66,8 +67,8 @@ public class Screens{
 				if (WallScreen.strength < 0f)
 					WallScreen.strength = 0f;
 			 if(dam > 0f) {
-				parent.integrity -= Random.Range (10f, 25f) * dam;		
-				if (parent.integrity <= 0f && !dead) {
+				parent.ship.DamageArmor (pattern, (int)dam);
+				if (abs.integrity <= 0f && !dead) {
 					dead = true;
 					parent.ship.Die ();
 					parent.ship.SpawnDebris (source);
@@ -77,7 +78,7 @@ public class Screens{
 	}
 
 
-	public void PhysicsDamage(float dam, Screen s, Vector3 source, Vector3 force, Transform en){
+	public void PhysicsDamage(float dam, Screen s, Vector3 source, Vector3 force, Transform en, List<Vector2> pattern){
 		GameObject g = GameObject.Instantiate (ScreenPrefab);
 		LineRenderer l = g.GetComponent<LineRenderer> ();
 		g.transform.position = parent.transform.position;
@@ -100,8 +101,9 @@ public class Screens{
 				if (WallScreen.strength < 0f)
 					WallScreen.strength = 0f;
 			} if(dam > 0f) {
-				parent.integrity -= Random.Range (20f, 110f) * dam;		
-				if (parent.integrity <= 0f && !dead) {
+				parent.ship.DamageArmor (pattern, (int)dam);
+				//parent.integrity -= Random.Range (10f, 25f) * dam;		
+				if (abs.integrity <= 0f && !dead) {
 					parent.ship.Die ();
 					parent.ship.SpawnDebris (source);
 					dead = true;
@@ -114,7 +116,7 @@ public class Screens{
 
 
 	public bool ScreensWillHold(float dam, Vector3 source, Transform s){
-		//if (dic [Direction.GetDirection (parent.transform.position, source)].strength >= dam)
+		if (dic [Direction.GetDirection (source, s, parent.transform.position,parent.transform)].strength >= dam)
 			return true;
 		return false;
 	}

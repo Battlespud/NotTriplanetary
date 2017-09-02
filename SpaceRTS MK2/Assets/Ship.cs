@@ -19,7 +19,7 @@ public class Ship : ShipAbstract, IContext {
 
 
 	void OpenShipMenu(){
-
+		//TODO
 	}
 
 
@@ -67,7 +67,6 @@ public class Ship : ShipAbstract, IContext {
 	public NavMeshAgent Agent;
 	// Use this for initialization
 	public override void Start () {
-
 		Agent = GetComponent<NavMeshAgent> ();
 		Agent.Warp (new Vector3(transform.position.x, .59f, transform.position.z)); 
 		//rens.AddRange( GetComponentsInChildren<Renderer> ());
@@ -181,7 +180,7 @@ public class Ship : ShipAbstract, IContext {
 				if (c) {
 					if (!c.screens.ScreensWillHold (20f * (1f / Vector3.Distance (c.transform.position, transform.position)), transform.position,c.transform))
 						r.AddExplosionForce (Force, transform.position, 5f, 0f);
-					c.Damage (20f * (2f / Vector3.Distance (c.transform.position, transform.position)), transform.position, c.transform);
+					c.Damage (20f * (2f / Vector3.Distance (c.transform.position, transform.position)), transform.position, c.transform, Pattern);
 //					Debug.Log (c.name);
 				} else {
 					r.AddExplosionForce (Force, transform.position, 5f, 0f);

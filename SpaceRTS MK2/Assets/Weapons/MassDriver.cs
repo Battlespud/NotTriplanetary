@@ -11,6 +11,7 @@ public class MassDriver : SpaceGun {
 		powerCost = 1;
 		Initialize ();
 		lineC = Color.grey;
+		Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (0, -1), new Vector2 (1, 0), new Vector2 (-1, 0)};
 	}
 
 }

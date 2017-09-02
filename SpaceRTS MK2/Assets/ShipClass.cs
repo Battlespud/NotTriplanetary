@@ -3,22 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-
-
-
-
-
-
-
-
-
-
 public class ShipClass : MonoBehaviour {
 
 	public static int[]MaxCrews = new int[5]{200, 250, 450, 800, 1200};
 
-	public float integrity = 100f;
 	public Ship ship;
 //	public ShipPrefabTypes BaseClass;
 
@@ -55,6 +43,7 @@ public class ShipClass : MonoBehaviour {
 	void Awake () {
 	//	BaseClass = ship.BaseType;
 		screens  = new Screens(this);
+		screens.abs = GetComponent<ShipAbstract> ();
 		ship = GetComponent<Ship> ();
 	//	mCrew = MaxCrews [(int)BaseClass];
 		mCrew = 200;
@@ -95,12 +84,12 @@ public class ShipClass : MonoBehaviour {
 	public string[] ScreenOrder = new string[5]{"Fore","Aft","Port","Star","Wall"};
 	public float[] StartingScreenStrengths= new float[5];
 
-	public void Damage(float dam, Vector3 origin, Transform en){
-		screens.Damage (dam, screens.dic[Direction.GetDirection (origin,en,transform.position,transform)], origin);
+	public void Damage(float dam, Vector3 origin, Transform en, List<Vector2> pattern){
+		screens.Damage (dam, screens.dic[Direction.GetDirection (origin,en,transform.position,transform)], origin, pattern);
 	}
 
-	public void PhysicsDamage(float f, Vector3 origin, float fMag, Transform s){
-		screens.PhysicsDamage (f, screens.dic[Direction.GetDirection (origin,s,transform.position,transform)], origin,(transform.position - origin)*fMag,s);
+	public void PhysicsDamage(float f, Vector3 origin, float fMag, Transform s, List<Vector2> pattern){
+		screens.PhysicsDamage (f, screens.dic[Direction.GetDirection (origin,s,transform.position,transform)], origin,(transform.position - origin)*fMag,s, pattern);
 	}
 
 

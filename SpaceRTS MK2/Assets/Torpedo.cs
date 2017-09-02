@@ -25,6 +25,9 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 
 	Color orange = new Color(255,140,0);
 
+	public List<Vector2> Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (-2, 0), new Vector2 (1, 0), new Vector2 (2, 0),  new Vector2 (-1, 0), new Vector2 (0, -1), new Vector2 (-2, -1), new Vector2 (1, -1), new Vector2 (2, -1),  new Vector2 (-1, -1), new Vector2 (0, -2), new Vector2 (-2, -2), new Vector2 (1, -2), new Vector2 (2, -2),  new Vector2 (-1, -2) , new Vector2 (0, -3), new Vector2 (-2, -3), new Vector2 (1, -3), new Vector2 (2, -3),  new Vector2 (-1, -3)};
+
+
 	// Use this for initialization
 	void Start () {
 		transform.position = new Vector3 (transform.position.x, .59f, transform.position.z);
@@ -79,7 +82,7 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 
 	public void Detonate(){
 		foreach (ICAPTarget s in InBlastZone) {
-			s.DealDamage (12f-(2f*Vector3.Distance(s.GetGameObject().transform.position,transform.position)), transform.position,transform);
+			s.DealDamage (12f-(2f*Vector3.Distance(s.GetGameObject().transform.position,transform.position)), transform.position,transform, Pattern);
 		}
 		StartCoroutine ("ExplosionRadius");
 		StartCoroutine ("ExplosionExpansion");

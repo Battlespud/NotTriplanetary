@@ -56,7 +56,7 @@ public class SpaceYard : MonoBehaviour, IContext {
 		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (open.transform.position.x, .59f, open.transform.position.z));
 		s.transform.rotation = Quaternion.Inverse(open.transform.rotation);
 		sb.faction = FAC.PLAYER;
-		sb.Start ();
+	//	sb.Start ();
 		Debug.Log ("Ship built");
 	}
 
