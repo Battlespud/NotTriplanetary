@@ -5,8 +5,18 @@ using UnityEngine.UI;
 using System.Text;
 using UnityEngine.Events;
 
-public class Asteroid : MonoBehaviour, IMineable
+public class Asteroid : MonoBehaviour, IMineable, IContext
 {
+	//Context
+	public List<UnityAction> ContextActions(){
+		return new List<UnityAction>{new UnityAction(ConstructMiningFacility)};
+	}
+
+	public GameObject getGameObject(){
+		return gameObject;
+	}
+
+
 
     public ResourceDeposit deposit;
 
@@ -60,7 +70,7 @@ public class Asteroid : MonoBehaviour, IMineable
     [SerializeField]
     public void ConstructMiningFacility()
     {
-        Debug.Log("Constructed a mining Facility");
-        ConstructionRequests r = new ConstructionRequests(new Vector3(transform.position.x + 5f, 0f, transform.position.y));
+        Debug.Log("Queueing a mining Facility");
+		ConstructionRequests r = new ConstructionRequests(new Vector3(transform.position.x + GetComponent<Renderer>().bounds.extents.x, 0f, transform.position.y));
     }
 }

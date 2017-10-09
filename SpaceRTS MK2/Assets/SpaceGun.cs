@@ -8,6 +8,7 @@ public  class SpaceGun : MonoBehaviour {
 	//TODO make guns go in barrels instead of on the turret object.
 	public static  List<Vector2> staticPattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (0, -1),new Vector2(0,-2)};
 
+	[System.NonSerialized]
 	public  List<Vector2> Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (0, -1),new Vector2(0,-2)};
 
 	public Light light;
@@ -26,13 +27,17 @@ public  class SpaceGun : MonoBehaviour {
 
 	public float powerCost = 1f;
 
+	[System.NonSerialized]
 	public float ReloadTime = 1.5f;
+	[System.NonSerialized]
 	public float Damage = 1f;
+	[System.NonSerialized]
 	public float ForceMagnitude = 0f;
+	[System.NonSerialized]
 	public Color lineC;
-
+	[System.NonSerialized]
 	public float mRange;
-
+	[System.NonSerialized]
 	public TurretType tType = TurretType.CAPITAL;
 
 	public Turret turret;

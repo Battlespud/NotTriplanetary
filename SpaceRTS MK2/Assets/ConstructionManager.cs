@@ -32,7 +32,6 @@ public class ConstructionManager
         //to assign open construction request to avaailable conShips
         while (availableConShips.Count > 0 && opened.Count > 0)
         {
-			Debug.Log ("Looping");
             NegroBundleOfSticks conShipZero = availableConShips[0];
             List<ConstructionRequests> reqsts = new List<ConstructionRequests>();
             reqsts.AddRange(opened);

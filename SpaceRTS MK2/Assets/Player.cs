@@ -44,6 +44,7 @@ public class Player : MonoBehaviour {
 		SelectionUI = GameObject.FindGameObjectWithTag ("SelectionUI");
 		selectText = SelectionUI.GetComponentInChildren<Text> ();
 		//ShipAbstract.OnDeath.AddListener (RemoveShip);
+		HullDes Default = new HullDes("","");
 	}
 	
 	// Update is called once per frame
@@ -195,11 +196,11 @@ public class Player : MonoBehaviour {
 			SelectedShips.Remove (s);
 			s.TogglePath ();
 			foreach (Renderer r in s.rens) {
-				r.material.SetColor ("_EmissionColor", Color.blue);
+				r.material.SetColor ("_EmissionColor", FactionMatrix.FactionColors [(int)faction]);
 			}
-			s.standlr.SetColors (Color.blue, Color.blue);
+			s.standlr.SetColors (FactionMatrix.FactionColors [(int)faction], FactionMatrix.FactionColors [(int)faction]);
 			foreach (Renderer render in s.rens) {
-				render.material.color = Color.blue;
+				render.material.color = FactionMatrix.FactionColors [(int)faction];
 			}
 		//	Debug.Log ("Ship " + s.ShipName + " removed.");
 		} else {
@@ -207,7 +208,7 @@ public class Player : MonoBehaviour {
 			s.TogglePath ();
 			s.standlr.SetColors (Color.green, Color.green);
 			foreach (Renderer render in s.rens) {
-				render.material.color = Color.blue;
+				render.material.color = Color.green;
 			}
 			foreach (Renderer r in s.rens) {
 				if(r)

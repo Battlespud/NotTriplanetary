@@ -28,7 +28,8 @@ public class Clock : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+		ClockStatic.clock = this;
 	}
 
 	public string GetDate(){

@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 
-public class Ship : ShipAbstract, IContext {
+public class Ship : ShipAbstract {
 
 	//this only handles things specific to this entity, like movement.
 
-	public List<UnityAction> ContextActions(){
-		return new List<UnityAction>{new UnityAction(OpenShipMenu)};
-	}
-
-	public GameObject getGameObject(){
-		return gameObject;
-	}
 
 
-	void OpenShipMenu(){
-		//TODO
-	}
+
+
+
 
 
 	//debugging direction
@@ -53,7 +47,6 @@ public class Ship : ShipAbstract, IContext {
 	public List<Vector2>Waypoints = new List<Vector2>();
 
 	LineRenderer lr;
-	public List<Renderer> rens; 
 	public GeneralDirection dir;
 
 	//main
@@ -71,13 +64,6 @@ public class Ship : ShipAbstract, IContext {
 		Agent.Warp (new Vector3(transform.position.x, .59f, transform.position.z)); 
 		//rens.AddRange( GetComponentsInChildren<Renderer> ());
 		rb = GetComponent<Rigidbody> ();
-			foreach (Renderer r in rens) {
-				r.material.color = c;
-			r.material.SetColor ("_EmissionColor", new Color(c.r,c.g,c.b,.35f));
-			r.material.EnableKeyword ("_EMISSION");
-		}
-
-
 		foreach (SpaceGun sg in GetComponentsInChildren<SpaceGun>()) {
 			Guns.Add (sg);
 		}

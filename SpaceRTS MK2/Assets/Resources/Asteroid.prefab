@@ -40,7 +40,6 @@ GameObject:
   - component: {fileID: 135823163264911072}
   - component: {fileID: 23080482662053988}
   - component: {fileID: 114736875200719294}
-  - component: {fileID: 114150054745017148}
   m_Layer: 0
   m_Name: Asteroid
   m_TagString: Untagged
@@ -82,7 +81,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1940571256758570
 GameObject:
   m_ObjectHideFlags: 1
@@ -108,7 +107,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1219768596042092}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9746.17, y: 101.6708, z: 9941.955}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 224629513348621860}
@@ -183,19 +182,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114150054745017148
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1219768596042092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3541b562216efeb4688470eeb6b1a7d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resource: 0
-  Stockpile: 0
 --- !u!114 &114255902106725790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -314,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stockpileText: {fileID: 114969161547356428}
+  mines: []
 --- !u!114 &114861263223996560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -476,7 +463,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1940571256758570}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -5.8999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224902340094836694}
@@ -485,6 +472,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: -5.9}
+  m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}

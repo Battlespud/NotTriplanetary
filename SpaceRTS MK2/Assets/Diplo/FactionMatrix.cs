@@ -84,7 +84,7 @@ public static class FactionMatrix {
 	static string faction3 = "KosmoSlavs";
 	public static int[] FactionIDs = new int[MaxFactions];
 	public static string[] FactionNames = new string[MaxFactions]{faction0,faction1,faction2,faction3 };
-	public static Color[] FactionColors = new Color[MaxFactions]{ Color.blue, Color.yellow, Color.magenta, Color.red };
+	public static Color[] FactionColors = new Color[MaxFactions]{ Color.cyan, Color.grey, Color.magenta, Color.red };
 
 }
 

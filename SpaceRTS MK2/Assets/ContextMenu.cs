@@ -59,7 +59,7 @@ public class ContextMenu : MonoBehaviour
                 GameObject gxt = new GameObject();
                 Text txt = gxt.AddComponent<Text>();
                 gxt.transform.parent = c.transform;
-                gxt.transform.position = new Vector3(c.transform.position.x, c.transform.position.y - ySize * i, c.transform.position.z);
+                gxt.transform.position = new Vector3(c.transform.position.x, c.transform.position.y - ySize  * i, c.transform.position.z);
                 txt.text = con.getGameObject().name;
                 int j = 0;
                 foreach (UnityAction action in con.ContextActions())

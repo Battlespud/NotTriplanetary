@@ -11,6 +11,10 @@ using UnityEngine;
         public float TimeToBuild;
         public float currTime;
 
+	void Start(){
+		gameObject.name += " " + prefabType.ToString ();
+		ConstructionManager.UpdateMissionsQuery ();
+	}
 
         void Update()
         {

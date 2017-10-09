@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 
 public enum ShipPrefabTypes{
 	DEF=0, //defensive wall ship
 	DD=1, //destroyer 
-	CS=2, //strike cruiser
-	DN=4, //dreadnought
+	CS=2, //strike cruiser	
 	CV=3, //carrier
+	DN=4, //dreadnought
 	FR=21,
 	CT=22
 
@@ -20,10 +21,23 @@ public enum ShipPrefabTypes{
 
 
 
-public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
+public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 
 	//Static
 	public static ShipEvent OnDeath = new ShipEvent();
+
+
+	public List<UnityAction> ContextActions(){
+		return new List<UnityAction>{new UnityAction(OpenShipMenu)};
+	}
+
+	public GameObject getGameObject(){
+		return gameObject;
+	}
+
+	public void OpenShipMenu(){
+		ShipUI.active = !ShipUI.activeSelf;
+	}
 
 	//Resources
 	public static GameObject Explosion;
@@ -33,6 +47,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 
 	public static List<GameObject> ShipPrefabs = new List<GameObject>();
 	public static Dictionary<ShipPrefabTypes, GameObject> ShipTypeDict = new Dictionary<ShipPrefabTypes, GameObject>();
+	public static GameObject CustomShipPrefab;
 
 	public bool[,] Armor;
 
@@ -40,6 +55,16 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 
 	public ShipClass shipClass;
 
+	public List<Renderer> rens; 
+
+
+	//Ship Window
+	public GameObject ShipUI;
+	public Text UIArmorText;
+	public Text UIName;
+	public Text UIDate;
+
+	public string BuildDate;
 
 	public FAC faction;
 	public GameObject stand;
@@ -69,11 +94,12 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 	}
 
 	void Awake(){
-		ArmorText = gameObject.AddComponent<Text> ();
-		SetupArmor (4*(int)BaseType,2*(int)BaseType );
 		if (Explosion == null)
 			LoadResources ();
-		c = FactionMatrix.FactionColors [(int)faction];
+		ArmorText = gameObject.AddComponent<Text> ();
+//		BuildDate = ClockStatic.clock.GetDate ();
+		SetupArmor (4*(int)BaseType,2*(int)BaseType );
+		//c = FactionMatrix.FactionColors [(int)faction];
 		ShipName = NameManager.AssignName(this);
 		shipClass = gameObject.GetComponent<ShipClass> ();
 		stand = new GameObject();
@@ -81,6 +107,12 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 		stand.transform.position = new Vector3 (this.transform.position.x, 0f, transform.position.z);
 		stand.transform.parent = transform;
 		SetupStand (c);
+
+		if (ShipUI) {
+//			UIDate.text = BuildDate;
+			UIName.text = ShipName;
+			ShipUI.active = false;
+		}
 	}
 	public ShipPrefabTypes BaseType;
 
@@ -150,13 +182,18 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 			for (int y = 0; y < Armor.GetLength (1); y++) {
 				for (int x = 0; x < Armor.GetLength (0); x++) {
 					if (Armor [x, y]) {
-						a.Append('O');
+					a.Append( "<color=green>O</color>");
 					} else {
-						a.Append('X');
+					a.Append( "<color=red>X</color>");
 					}
 				}
 				a.AppendLine();
 			}
+		if (ShipUI) {
+			UIArmorText.text = a.ToString ();
+			UIDate.text = "Integrity: " + Mathf.RoundToInt(integrity).ToString() + "%";
+
+		}
 			return a.ToString();
 	}
 
@@ -170,6 +207,16 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget {
 		standlr.SetColors (c, c);
 	}
 
+
+	public void RegenColors(){
+		c = FactionMatrix.FactionColors [(int)faction];
+		foreach (Renderer r in rens) {
+			r.material.color = c;
+			r.material.SetColor ("_EmissionColor", new Color(c.r,c.g,c.b,.35f));
+			r.material.EnableKeyword ("_EMISSION");
+		}
+		SetupStand (c);
+	}
 	void LoadResources(){
 			Explosion = Resources.Load<GameObject> ("Explosion") as GameObject;
 			EscapePod = Resources.Load<GameObject> ("EscapePod") as GameObject;
