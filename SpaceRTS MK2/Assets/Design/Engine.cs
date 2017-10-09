@@ -5,15 +5,6 @@ using UnityEngine;
 public class Engine : ShipComponents {
 
 	public float Thrust;
-	public float FuelConsumption;
+	public float FuelConsumption; //per tick
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

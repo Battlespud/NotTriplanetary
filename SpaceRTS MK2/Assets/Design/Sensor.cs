@@ -18,7 +18,7 @@ public class Sensor : MonoBehaviour {
 			return false;
 	}
 
-
+	public float Hardening = 0f; //1f is perfect.
 
 	// Use this for initialization
 	void Start () {

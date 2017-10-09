@@ -217,12 +217,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e009e72a14dbd4c8a1bbf0b2ac12fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Evacuate: 0
+  Settle: 0
   rSummary: {fileID: 114402525081482392}
   pSummary: {fileID: 114737155238799640}
   UI: {fileID: 1255476181988750}
   MakeARequestBitch: 0
   neededTest: 0
   Factories: []
+  population: 100
   processTimer: 0
   processInterval: 2
 --- !u!114 &114107223370739460
@@ -290,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90819dd5dffd81e4db688d181eb9d844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  composition: 
 --- !u!114 &114737155238799640
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -98,7 +98,18 @@ public class GenerateGalaxy : MonoBehaviour {
 				lr.SetPosition (0, st.transform.position);
 				lr.SetPosition (1, st.GetComponent<OutlineCircleStarMarker>().Connections[0].transform.position);
 				st.GetComponent<OutlineCircleStarMarker>().Connections[0].GetComponent<OutlineCircleStarMarker> ().Connections.Add (st);
+			
 			}
+			/*
+			GameObject g = new GameObject();
+			for (int i = 0; i < st.transform.childCount; i++) {
+				st.transform.GetChild (i).transform.parent = g.transform;
+			}
+			st.transform.localScale = new Vector3 (35f, 35f, 35f);
+			for (int i = 0; i < g.transform.childCount; i++) {
+				st.transform.GetChild (i).transform.parent = st.transform;
+			}
+			*/
 		}
 	}
 	
