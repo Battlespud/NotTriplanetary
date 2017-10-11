@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-
+using System.Threading;
 
 public class DesignScreenManager : MonoBehaviour {
 
@@ -18,8 +18,9 @@ public class DesignScreenManager : MonoBehaviour {
 	public Text Cost;
 	public InputField DeploymentTime;
 	public Text Requirements;
+	public Text CrewReqText;
 
-
+	public bool HideObsolete = false;
 	public List<ShipComponents> Components = new List<ShipComponents> ();
 	public List<ShipComponents> AddedComponents = new List<ShipComponents>();
 	public List<Engine> Engines = new List<Engine>();
@@ -32,8 +33,23 @@ public class DesignScreenManager : MonoBehaviour {
 
 	//Info
 	public int Armor = 1;
+	public int ReqCrew;
 
 
+
+	public void PopulateComponentList(){
+		Components.Clear();
+		if (HideObsolete) {
+			foreach (ShipComponents c in ShipComponents.DesignedComponents) {
+				if (!c.Obsolete)
+					Components.Add (c);
+			}
+		} else {
+			foreach (ShipComponents c in ShipComponents.DesignedComponents) {
+					Components.Add (c);
+			}
+		}
+	}
 
 	public void AddArmor(){
 		Armor++;
@@ -60,7 +76,7 @@ public class DesignScreenManager : MonoBehaviour {
 		Armor = 1;
 		ArmorText.text = Armor.ToString ();
 		DesignName.text = "";
-
+		OnChange ();
 		RunTest ();
 	}
 	
@@ -83,21 +99,30 @@ public class DesignScreenManager : MonoBehaviour {
 		}
 		if (Armor <= 0) {
 			RequirementsMet = false;
-			OutstandingRequirements += "Error, please increase Armor to a positive value of at least 1.";
+			OutstandingRequirements += "Error, please change Armor to a positive value of at least 1.";
 		}
+		yield return Ninja.JumpToUnity;
 		Requirements.text = OutstandingRequirements;
-		yield return null;
 		}
 
+	IEnumerator CheckCrewRequirements(){
+		int minimum = 0;
+		foreach (ShipComponents c in AddedComponents) {
+			minimum += c.CrewRequired;
+		}
+		ReqCrew = minimum;
+		yield return Ninja.JumpToUnity;
+		CrewReqText.text = string.Format ("Crewmembers Required: {0}", ReqCrew);
+	}
 
 	void OnChange(){
-		StartCoroutine (CheckRequirements());
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CheckRequirements());
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CheckCrewRequirements());
 	}
 
 	void RunTest(){
 		Debug.Log ("Outputting test design " + DesignName.text);
-		Armor = 5;
-		DesignName.text = "Stalingrad";
+		DesignName.text = "Test ship";
 
 		SaveAsDesign ();
 	}
@@ -105,6 +130,7 @@ public class DesignScreenManager : MonoBehaviour {
 	void SaveAsDesign(){
 		OnChange ();
 		if (!RequirementsMet) {
+			Debug.Log ("Requirements not met. DEBUG MODE ENABLED, output will continue anyway.");
 		//	return;
 		}
 		ShipDesign design = new ShipDesign(DesignName.text);

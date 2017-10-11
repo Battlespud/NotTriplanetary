@@ -188,6 +188,7 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 	}
 
 	IEnumerator Destroy(){
+		transform.position =new Vector3(0f,-1000f,0f);
 		float f = 1f;
 		while (f > 0f) {
 			f -= Time.deltaTime;

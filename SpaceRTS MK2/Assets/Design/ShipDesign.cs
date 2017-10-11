@@ -20,6 +20,8 @@ public class ShipDesign {
 	public string DesignName;
 	public HullDes HullDesignation;
 	public float DeploymentTime;
+	public int CrewMin;
+	public int CrewBerths;
 
 
 	public float mass;
@@ -27,8 +29,7 @@ public class ShipDesign {
 	public int mTorpedoes;
 
 	public ShipPrefabTypes BaseType;//visual
-//	public SpaceGun WeaponType;
-//	public TargetingSensors Sensor;
+
 
 	public List<ShipComponents> Components;
 	public List<Engine> Engines;
@@ -42,13 +43,11 @@ public class ShipDesign {
 
 
 	public void Output(){
-		Debug.Log ("Output blueprint of " + DesignName + " to text..");
+		Debug.Log ("Printing blueprint of " + DesignName + " to text file..");
 		string path="Assets/Resources/Designs/" + DesignName + ".txt";
 		using(StreamWriter writer = new StreamWriter(path)){
 		writer.WriteLine ("Design Date: " + ClockStatic.clock.GetDate());
-		writer.WriteLine ( "\n" + HullDesignation.Prefix + " " + DesignName + "-Class "+  HullDesignation.HullType );
-		writer.WriteLine ("\nMass: " + mass + "KT");
-		writer.WriteLine ("\nArmor Thickness: " + ArmorLayers);
+		writer.WriteLine ( "\n" + HullDesignation.Prefix + " " + DesignName + "-Class "+  HullDesignation.HullType + "\nMass: " + mass + "KT\nArmor Thickness: " + ArmorLayers );
 		writer.Close ();
 		}
 		Debug.Log ("Done. Check " + path);

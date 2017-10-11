@@ -1,7 +1,0 @@
-Design Date: 0 Spring 800
-
-CV Stalingrad-Class Carrier
-
-Mass: 0KT
-
-Armor Thickness: 5

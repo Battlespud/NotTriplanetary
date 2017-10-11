@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Missile : MonoBehaviour {
+public class Missile {
 
-	public Engine engine;
+	public static GameObject MissilePrefab;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public Engine MissileEngine;
+	public MissileControl Control;
+	public Warhead MissileWarhead;
+	public FuelTank MissileFuel;
+
+
+
 }
