@@ -22,7 +22,7 @@ public class ShipDesign {
 	public float DeploymentTime;
 	public int CrewMin;
 	public int CrewBerths;
-
+	public int LifeSupport;
 
 	public float mass;
 	public int ArmorLayers;

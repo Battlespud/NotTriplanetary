@@ -1,0 +1,5 @@
+Design Date: 0 Spring 800
+
+CV Test ship-Class Carrier
+Mass: 0KT
+Armor Thickness: 1

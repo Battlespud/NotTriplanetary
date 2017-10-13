@@ -13,15 +13,24 @@ public class ShipComponents {
 	public string name;
 
 	public int Mass; //kilotons
-	public bool Enabled;
+	public bool Enabled = true;
+	public bool toggleable = false;
 	public float PassiveSig;
 
-	public int CrewRequired;
+	public int CrewRequired =25;
 
 	public Dictionary<RawResources, float> Cost = new Dictionary<RawResources, float>();
 
+	public int quarters; //space for crew/guests
+	public int lifeSupport;
+
+	public float powerReq;
+
+	public bool control = false;
+	public bool flagControl = false;
+
 	public string GenerateDesignString(){
-		return string.Format ("{0}            {1}", name, Mass); //todo
+		return string.Format ("{0}    {1}kt  {2} crew", name, Mass, CrewRequired); //todo
 	}
 
 	public float Health = 1f;
