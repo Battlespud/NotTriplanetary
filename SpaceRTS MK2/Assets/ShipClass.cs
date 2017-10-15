@@ -128,7 +128,7 @@ public class ShipClass : MonoBehaviour {
 
 	public void OutputReport(){
 		Debug.Log ("Printing Ship Report of " + ship.ShipName + " to text file..");
-		string path="Assets/Resources/Reports/" + ship.ShipName + ".txt";
+		string path="Assets/Output/Reports/" + ship.ShipName + ".txt";
 		using(StreamWriter writer = new StreamWriter(path)){
 			writer.WriteLine ("Active Ship Report");
 			writer.WriteLine ( "\n" + HullDesignation.Prefix + " " + ShipName + "-Class "+  HullDesignation.HullType + "\nMass: " + DesignTemplate.mass + "KT\nArmor Thickness: " +DesignTemplate.ArmorLayers +"\n" + "Crew: " + DesignTemplate.CrewMin 

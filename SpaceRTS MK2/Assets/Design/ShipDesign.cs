@@ -85,7 +85,7 @@ public class ShipDesign {
 
 	public void Output(){
 		Debug.Log ("Printing blueprint of " + DesignName + " to text file..");
-		string path="Assets/Resources/Designs/" + DesignName + ".txt";
+		string path="Assets/Output/Designs/" + DesignName + ".txt";
 		using(StreamWriter writer = new StreamWriter(path)){
 		writer.WriteLine ("Design Date: " + ClockStatic.clock.GetDate());
 			writer.WriteLine ( "\n" + HullDesignation.Prefix + " " + DesignName + "-Class "+  HullDesignation.HullType + "\nMass: " + mass + "KT\nArmor Thickness: " + ArmorLayers+"\n" + "Crew: " + CrewMin 
