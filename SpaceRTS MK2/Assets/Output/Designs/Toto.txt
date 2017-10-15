@@ -1,0 +1,17 @@
+Design Date: 0 Spring 800
+
+CV Toto-Class Carrier
+Mass: 750KT
+Armor Thickness: 1
+Crew: 240
+Spare Berths: 60
+
+[0-0] Life Support: 
+[1-1] Life Support: 
+[2-2] Life Support: 
+[3-3] Crew Quarters: 
+[4-4] Crew Quarters: 
+[5-5] Crew Quarters: 
+[6-6] Engine E: 
+[7-16] Heavy Test: 
+[17-17] Bridge: 

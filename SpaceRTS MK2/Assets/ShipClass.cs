@@ -88,7 +88,7 @@ public class ShipClass : MonoBehaviour {
 
 	public ShipComponents RollDAC(){
 		int i = Random.Range (0, MaxDAC);
-		Debug.Log ("Rolled #" + i + " " + DAC[i].name);
+		Debug.Log ("Rolled #" + i + " " + DAC[i].name + " HTK: " + DAC[i].GetHTK());
 		return DAC [i];
 	}
 
@@ -122,9 +122,30 @@ public class ShipClass : MonoBehaviour {
 				amount = 0;
 			}
 		}
+		CalculateIntegrity ();
 		OutputReport ();
 	}
 
+	public float Integrity =1f; //flavor only
+
+	void CalculateIntegrity(){
+		if (DamagedComponents.Count < 1) {
+			Integrity = 1f;
+		} else {
+			Debug.Log (DamagedComponents.Count + " components are damaged.");
+			float total = 0f;
+			foreach (ShipComponents c in Components) {
+				total += c.GetHTK ();
+			}
+			float damaged = 0f;
+			foreach (ShipComponents d in DamagedComponents) {
+				damaged += d.GetHTK();
+				Debug.Log ("damaged " + damaged);
+			}
+			Integrity = (total-damaged) / total;
+			Debug.Log (Integrity);
+		}
+	}
 
 	public void OutputReport(){
 		Debug.Log ("Printing Ship Report of " + ship.ShipName + " to text file..");
@@ -136,6 +157,7 @@ public class ShipClass : MonoBehaviour {
 			foreach (ShipComponents c in Components) {
 				writer.WriteLine (DACRanges[c].ToString() + " " + c.name + ": " + c.isDamaged().ToString());
 			}
+			writer.WriteLine ("\nIntegrity: " + Integrity *100f + "%"); 
 			writer.Close ();
 		}
 		Debug.Log ("Done. Check " + path);
@@ -172,7 +194,7 @@ public class ShipClass : MonoBehaviour {
 
 		//DEBUG ONLY
 		if (Input.GetKeyDown (KeyCode.N)) {
-			TakeComponentDamage (15);
+			TakeComponentDamage (4);
 		}
 	}
 

@@ -1,0 +1,16 @@
+Design Date: 0 Spring 800
+
+CV Tantalus-Class Carrier
+Mass: 725KT
+Armor Thickness: 1
+Crew: 240
+Spare Berths: 60
+
+[0-0] Life Support: 
+[1-1] Life Support: 
+[2-2] Crew Quarters: 
+[3-3] Crew Quarters: 
+[4-4] Crew Quarters: 
+[5-5] Engine E: 
+[6-15] Heavy Test: 
+[16-16] Bridge: 
