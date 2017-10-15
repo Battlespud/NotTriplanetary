@@ -1,0 +1,54 @@
+Design Date: 0 Spring 800
+
+CV Eclipse-Class Carrier
+Mass: 1900KT
+Armor Thickness: 7
+Crew: 585
+Spare Berths: 215
+
+[0-0] Life Support: 100%
+
+[1-1] Life Support: 100%
+
+[2-2] Life Support: 100%
+
+[3-3] Life Support: 100%
+
+[4-4] Life Support: 100%
+
+[5-5] Life Support: 100%
+
+[6-6] Life Support: 100%
+
+[7-7] Life Support: 100%
+
+[8-8] Crew Quarters: 100%
+
+[9-9] Crew Quarters: 100%
+
+[10-10] Crew Quarters: 100%
+
+[11-11] Crew Quarters: 100%
+
+[12-12] Crew Quarters: 100%
+
+[13-13] Crew Quarters: 100%
+
+[14-14] Crew Quarters: 100%
+
+[15-15] Crew Quarters: 100%
+
+[16-18] Engine F: 100%
+
+[19-21] Engine F: 100%
+
+[22-24] Engine F: 100%
+
+[25-27] Engine F: 100%
+
+[28-37] Test: 100%
+
+[38-44] Test-B: 100%
+
+[45-45] Bridge: 100%
+

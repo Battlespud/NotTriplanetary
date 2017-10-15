@@ -1,0 +1,14 @@
+Design Date: 0 Spring 800
+
+CV fdsafdsa-Class Carrier
+Mass: 200KT
+Armor Thickness: 1
+Crew: 40
+Spare Berths: 160
+
+[0-0] Life Support: 
+[1-1] Life Support: 
+[2-2] Crew Quarters: 
+[3-3] Crew Quarters: 
+[4-4] Engine E: 
+[5-5] Bridge: 

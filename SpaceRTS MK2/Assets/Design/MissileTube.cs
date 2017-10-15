@@ -11,7 +11,7 @@ public class MissileTube : ShipComponents {
 	public void FireMissile(GameObject source, ICAPTarget cap){
 		GameObject G = GameObject.Instantiate (Missile.MissilePrefab);
 		MissileControl M = G.AddComponent<MissileControl> ();
-		M.MissileEngine = LoadedMissile.MissileEngine;
+	//	M.MissileEngine = LoadedMissile.MissileEngine;
 		M.MissileFuelTank = LoadedMissile.MissileFuel;
 		M.MissileWarhead = LoadedMissile.MissileWarhead;
 		M.Launch (source, cap);

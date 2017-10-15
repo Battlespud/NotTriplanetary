@@ -1,0 +1,46 @@
+Design Date: 0 Spring 800
+
+BB Ohio-Class Battleship
+Mass: 1800KT
+Armor Thickness: 7
+Crew: 585
+Spare Berths: 115
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Life Support: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Life Support: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Life Support: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Life Support: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Life Support: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Crew Quarters: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Crew Quarters: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Crew Quarters: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Crew Quarters: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Crew Quarters: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Crew Quarters: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Crew Quarters: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Engine F: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Engine F: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Engine F: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Engine F: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Test: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Test-B: 100%
+
+System.Collections.Generic.Dictionary`2[ShipComponents,ShipDesign+Range] Bridge: 100%
+

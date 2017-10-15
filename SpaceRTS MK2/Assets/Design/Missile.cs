@@ -6,7 +6,7 @@ public class Missile {
 
 	public static GameObject MissilePrefab;
 
-	public Engine MissileEngine;
+//	public Engine MissileEngine;
 	public MissileControl Control;
 	public Warhead MissileWarhead;
 	public FuelTank MissileFuel;

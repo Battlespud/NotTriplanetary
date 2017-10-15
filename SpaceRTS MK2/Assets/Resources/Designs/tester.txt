@@ -1,0 +1,15 @@
+Design Date: 0 Spring 800
+
+CV tester-Class Carrier
+Mass: 700KT
+Armor Thickness: 1
+Crew: 240
+Spare Berths: 60
+
+[0-0] Life Support: 
+[1-1] Crew Quarters: 
+[2-2] Crew Quarters: 
+[3-3] Crew Quarters: 
+[4-4] Engine E: 
+[5-14] Heavy Test: 
+[15-15] Bridge: 

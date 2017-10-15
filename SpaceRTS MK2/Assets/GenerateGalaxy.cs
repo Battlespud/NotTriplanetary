@@ -112,7 +112,23 @@ public class GenerateGalaxy : MonoBehaviour {
 			*/
 		}
 	}
-	
+
+	GameObject GetClosest(GameObject j){
+		DoCalc = false;
+		float dist = 9999f;
+		GameObject closest = new GameObject ();
+		foreach (GameObject g in starsObj) {
+			if (g != j) {
+				float d = Vector3.Distance (g.transform.position, j.transform.position);
+				if (d < dist) {
+					closest = g;
+					dist = d;
+				}
+			}
+		}
+		return closest;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		count = stars.Count;
@@ -139,19 +155,5 @@ public class GenerateGalaxy : MonoBehaviour {
 		}
 	}
 
-	GameObject GetClosest(GameObject j){
-		DoCalc = false;
-		float dist = 9999f;
-		GameObject closest = new GameObject ();
-		foreach (GameObject g in starsObj) {
-			if (g != j) {
-				float d = Vector3.Distance (g.transform.position, j.transform.position);
-				if (d < dist) {
-					closest = g;
-					dist = d;
-				}
-			}
-		}
-		return closest;
-	}
+
 }

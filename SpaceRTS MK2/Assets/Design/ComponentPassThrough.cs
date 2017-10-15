@@ -10,8 +10,17 @@ public class ComponentPassThrough : MonoBehaviour {
 	public	ShipComponents component;
 	public DesignScreenManager Manager;
 
+	void Start(){
+	}
+
 	public void AddShipComponent(){
-		Manager.AddComponent (component);
+		if (component.isEngine) {
+			Debug.Log ("An Engine");
+			Manager.AddEngine (component);
+		} else {
+			Debug.Log ("Not an engine");
+			Manager.AddComponent (component);
+		}
 	}
 
 }

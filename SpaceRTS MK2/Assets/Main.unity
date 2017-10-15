@@ -1734,9 +1734,12 @@ MonoBehaviour:
   ButtonPrefab: {fileID: 0}
   MassText: {fileID: 1549351683}
   HideObsolete: 0
+  EngineCount: 0
   Tonnage: 0
-  Armor: 1
+  ArmorThickness: 1
+  ArmorLength: 1
   ReqCrew: 0
+  Mass: 0
   LifeSupport: 0
   Quarters: 0
 --- !u!1 &545254758
@@ -1764,7 +1767,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 545254758}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -191, y: 51, z: 19}
+  m_LocalPosition: {x: -175, y: 66, z: 19}
   m_LocalScale: {x: 5.47193, y: 2.448502, z: 1.2075472}
   m_Children:
   - {fileID: 245168535}
@@ -1775,7 +1778,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -191, y: 51}
+  m_AnchoredPosition: {x: -175, y: 66}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &545254760
@@ -2558,7 +2561,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 815405512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 31.75121, z: 0}
+  m_LocalPosition: {x: 0, y: 31.751217, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1000010330}
@@ -3489,7 +3492,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1151742098}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 544722213}
+        m_MethodName: SaveAsDesign
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1151742098
@@ -4490,7 +4504,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 8ce101c64eab4a346987ebcb981d55d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e0268226eb008564fa2fa96a7b8bd206, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4817,7 +4831,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1549351681}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 71, y: 394, z: 0}
+  m_LocalPosition: {x: 71, y: 384, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 1354006375}
@@ -4825,7 +4839,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 71, y: 394}
+  m_AnchoredPosition: {x: 71, y: 384}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1549351683
@@ -4860,7 +4874,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Mass
 --- !u!222 &1549351684
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5390,7 +5404,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 815405513}
   m_Direction: 2
   m_Value: 0.99946845
-  m_Size: 0.60999995
+  m_Size: 0.6099999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

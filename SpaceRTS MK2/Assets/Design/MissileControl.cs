@@ -6,7 +6,7 @@ using System.Threading;
 
 public class MissileControl : MonoBehaviour, IPDTarget {
 
-	public Engine MissileEngine;
+	//public Engine MissileEngine;
 	public Warhead MissileWarhead;
 	public FuelTank MissileFuelTank;
 
@@ -79,11 +79,14 @@ public class MissileControl : MonoBehaviour, IPDTarget {
 	// Update is called once per frame
 	void Update () {
 		if (fueled) {
+		
 			Agent.SetDestination (Target.transform.position);
+			/*
 			if (!MissileFuelTank.UseFuel (MissileEngine.FuelConsumption * Time.deltaTime)) {
 				StartCoroutine("Destroy");
 				fueled = false;
 			}
+			*/
 		}
 
 	}

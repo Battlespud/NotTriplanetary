@@ -12,7 +12,7 @@ public class Ship : ShipAbstract {
 
 
 
-
+	//TODO move shipname to shipClass
 
 
 
