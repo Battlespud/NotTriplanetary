@@ -1,0 +1,38 @@
+Design Date: 0 Spring 800
+
+CV fds-Class Carrier
+Mass: 5675KT
+Armor Thickness: 8
+Crew: 710
+Spare Berths: 290
+
+[0-0] Bridge: 
+[1-1] Bridge: 
+[2-3] Crew Quarters: 
+[4-5] Crew Quarters: 
+[6-7] Crew Quarters: 
+[8-9] Crew Quarters: 
+[10-19] Heavy Test: 
+[20-29] Heavy Test: 
+[30-31] Life Support: 
+[32-33] Life Support: 
+[34-35] Life Support: 
+[36-37] Life Support: 
+[38-39] Life Support: 
+[40-41] Life Support: 
+[42-46] Light Test: 
+[47-51] Light Test: 
+[52-56] Light Test: 
+[57-57] Manuevering Thruster: 
+[58-58] Manuevering Thruster: 
+[59-59] Manuevering Thruster: 
+[60-60] Manuevering Thruster: 
+[61-61] Manuevering Thruster: 
+[62-62] Manuevering Thruster: 
+[63-63] Manuevering Thruster: 
+[64-64] Manuevering Thruster: 
+[65-65] Manuevering Thruster: 
+[66-66] Manuevering Thruster: 
+[67-67] Manuevering Thruster: 
+[68-68] Manuevering Thruster: 
+[69-69] Manuevering Thruster: 

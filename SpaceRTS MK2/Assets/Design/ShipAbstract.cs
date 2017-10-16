@@ -161,7 +161,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 			} else {
 				integrity -= Random.Range (2f, 5f) * dam;
 			}
-			shipClass.TakeComponentDamage(dam);
+			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,shipClass.TakeComponentDamage(dam));
 		}
 		ArmorText.text = BuildArmorString ();
 	}

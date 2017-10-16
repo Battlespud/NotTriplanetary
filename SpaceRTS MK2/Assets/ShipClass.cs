@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.IO;
 
-
 public class ShipClass : MonoBehaviour {
 
 	public const int MaxAttempts = 15; //After this many failed DAC rolls, the ship will be considered destroyed.
 
+	public static System.Random random = new System.Random ();
 
 	public Ship ship;
 //	public ShipPrefabTypes BaseClass;
@@ -135,11 +135,11 @@ public class ShipClass : MonoBehaviour {
 	}
 
 	public ShipComponents RollDAC(){
-		int i = Random.Range (0, MaxDAC);
+		int i = random.Next (0, MaxDAC);
 		Debug.Log ("Rolled #" + i + " " + DAC[i].name + " HTK: " + DAC[i].GetHTK());
 		return DAC [i];
 	}
-
+	/*
 	public void TakeComponentDamage(int amount){
 		if (DesignTemplate == null) {
 			return;
@@ -179,6 +179,49 @@ public class ShipClass : MonoBehaviour {
 				ship.SpawnDebris (transform.position); //TODO make it just go neutral instead of exploding  
 			}
 		}
+		CalculateIntegrity ();
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,ChangeStats());
+		OutputReport ();
+	}
+	*/
+	public IEnumerator TakeComponentDamage(int amount){
+		int attempts = 0;
+		ShipComponents target;
+		while (amount > 0) {
+			target = RollDAC ();
+			while (target.isDamaged ()) {
+				target = RollDAC ();
+				attempts++;
+				if (attempts > MaxAttempts) {
+					Debug.Log ("Ship destroyed from excessive damage");
+					yield return Ninja.JumpToUnity;
+					ship.SpawnDebris (ship.transform.position);
+					break;
+				}
+			}
+			if (amount >= target.GetHTK ()) {
+				target.Damage ();
+				DamagedComponents.Add (target);
+				amount -= target.GetHTK ();
+				crew -= (int)(random.Next (80, 110) / 100 * target.CrewRequired);
+			} else if (amount < target.GetHTK ()) {
+				float chance = amount / target.GetHTK ();
+				if (random.Next (0, 100)/100 < chance) {
+					target.Damage ();
+					crew -= (int)(random.Next (35, 95) / 100 * target.CrewRequired);
+					DamagedComponents.Add (target);
+				} else {
+					crew -= (int)(random.Next (5, 25) / 100 * target.CrewRequired);
+				}
+
+				amount = 0;
+			}
+			if (crew < 0) {
+				crew = 0;
+			//	ship.SpawnDebris (transform.position); //TODO make it just go neutral instead of exploding  
+			}
+		}
+		yield return Ninja.JumpToUnity;
 		CalculateIntegrity ();
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,ChangeStats());
 		OutputReport ();
