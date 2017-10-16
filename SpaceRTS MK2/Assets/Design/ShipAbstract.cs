@@ -198,7 +198,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 			UIArmorText.text = a.ToString ();
 			try{
 			if (shipClass.usingTemplate) {
-				UIDate.text = "Integrity: " + shipClass.Integrity +"%";
+				UIDate.text = "Integrity: " + shipClass.Integrity*100 +"%";
 
 			} else {
 				UIDate.text = "Integrity: " + Mathf.RoundToInt (integrity).ToString () + "%";
