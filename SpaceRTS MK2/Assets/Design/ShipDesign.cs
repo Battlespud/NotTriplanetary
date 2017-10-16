@@ -45,6 +45,7 @@ public class ShipDesign {
 
 	public float mass;
 	public int ArmorLayers;
+	public int ArmorLength;
 	public int mTorpedoes;
 
 	public ShipPrefabTypes BaseType;//visual

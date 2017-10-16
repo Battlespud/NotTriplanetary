@@ -1,0 +1,35 @@
+Design Date: 0 Spring 800
+
+BB Bastion-Class Battleship
+Mass: 10330KT
+Armor Thickness: 12
+Crew: 1235
+Spare Berths: 515
+
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-8] Crew Quarters: 
+[9-10] Crew Quarters: 
+[11-12] Crew Quarters: 
+[13-14] Crew Quarters: 
+[15-19] Flag Bridge: 
+[20-29] Heavy Test: 
+[30-39] Heavy Test: 
+[40-49] Heavy Test: 
+[50-59] Heavy Test: 
+[60-61] Life Support: 
+[62-63] Life Support: 
+[64-65] Life Support: 
+[66-67] Life Support: 
+[68-69] Life Support: 
+[70-71] Life Support: 
+[72-76] Light Test: 
+[77-81] Light Test: 
+[82-86] Light Test: 
+[87-91] Light Test: 
+[92-96] Light Test: 
+[97-101] Light Test: 
+[102-102] Manuevering Thruster: 
+[103-103] Manuevering Thruster: 

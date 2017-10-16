@@ -1,0 +1,41 @@
+Design Date: 0 Spring 800
+
+BB farragut-Class Battleship
+Mass: 9450KT
+Armor Thickness: 6
+Crew: 2305
+Spare Berths: 195
+
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-8] Crew Quarters: 
+[9-10] Crew Quarters: 
+[11-12] Crew Quarters: 
+[13-14] Crew Quarters: 
+[15-16] Crew Quarters: 
+[17-18] Crew Quarters: 
+[19-20] Crew Quarters: 
+[21-23] Engine F: 
+[24-26] Engine F: 
+[27-29] Engine F: 
+[30-32] Engine F: 
+[33-35] Engine F: 
+[36-38] Engine F: 
+[39-41] Engine F: 
+[42-44] Engine F: 
+[45-54] Heavy Test: 
+[55-64] Heavy Test: 
+[65-74] Heavy Test: 
+[75-84] Heavy Test: 
+[85-94] Heavy Test: 
+[95-104] Heavy Test: 
+[105-114] Heavy Test: 
+[115-124] Heavy Test: 
+[125-126] Life Support: 
+[127-128] Life Support: 
+[129-130] Life Support: 
+[131-132] Life Support: 
+[133-134] Life Support: 
+[135-139] Light Test: 

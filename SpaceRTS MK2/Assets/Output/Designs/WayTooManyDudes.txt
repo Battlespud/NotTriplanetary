@@ -1,0 +1,37 @@
+Design Date: 0 Spring 800
+
+CV WayTooManyDudes-Class Carrier
+Mass: 9100KT
+Armor Thickness: 16
+Crew: 925
+Spare Berths: 75
+
+[0-1] Crew Quarters: 
+[2-3] Crew Quarters: 
+[4-5] Crew Quarters: 
+[6-7] Crew Quarters: 
+[8-8] Engine E: 
+[9-13] Flag Bridge: 
+[14-23] Heavy Test: 
+[24-33] Heavy Test: 
+[34-43] Heavy Test: 
+[44-53] Heavy Test: 
+[54-55] Life Support: 
+[56-56] Small Life Support: 
+[57-57] Small Life Support: 
+[58-58] Small Life Support: 
+[59-59] Small Life Support: 
+[60-60] Small Life Support: 
+[61-61] Small Life Support: 
+[62-62] Small Life Support: 
+[63-63] Small Life Support: 
+[64-64] Small Life Support: 
+[65-65] Small Life Support: 
+[66-66] Small Life Support: 
+[67-67] Small Life Support: 
+[68-68] Small Life Support: 
+[69-69] Small Life Support: 
+[70-70] Small Life Support: 
+[71-71] Small Life Support: 
+[72-72] Small Life Support: 
+[73-73] Small Life Support: 

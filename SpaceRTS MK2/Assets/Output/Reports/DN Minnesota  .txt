@@ -1,0 +1,32 @@
+Active Ship Report
+
+CV -Class Carrier
+Mass: 7400KT
+Armor Thickness: 8
+Crew: 1415
+Spare Berths: 585
+
+[0-0] Bridge: False
+[1-2] Crew Quarters: False
+[3-4] Crew Quarters: False
+[5-6] Crew Quarters: False
+[7-8] Crew Quarters: False
+[9-10] Crew Quarters: False
+[11-12] Crew Quarters: False
+[13-14] Crew Quarters: False
+[15-16] Crew Quarters: False
+[17-19] Engine F: False
+[20-22] Engine F: False
+[23-25] Engine F: False
+[26-28] Engine F: True
+[29-31] Engine F: False
+[32-41] Heavy Test: False
+[42-51] Heavy Test: False
+[52-61] Heavy Test: False
+[62-71] Heavy Test: True
+[72-81] Heavy Test: False
+[82-83] Life Support: False
+[84-85] Life Support: False
+[86-87] Life Support: False
+
+Integrity: 87.5%

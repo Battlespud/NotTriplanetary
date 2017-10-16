@@ -1,0 +1,16 @@
+Manuevering Thruster
+0
+25
+False
+0
+10
+0
+0
+0
+False
+False
+1
+True
+0
+25
+0

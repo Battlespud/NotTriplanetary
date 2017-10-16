@@ -6,7 +6,28 @@ using UnityEngine.Events;
 using System.Threading;
 using System.Linq;
 
+
+public enum ArmorTypes{
+	STEEL = 1,
+	SMARTSTEEL = 3,
+	DURANIUM=5,
+	HIGHDENSITYDURANIUM=7,
+	COMPOSITE=8,
+	CERAMICCOMPOSITE=10,
+	LAMINATECOMPOSITE=12,
+	COMPRESSEDCARBON=15,
+	BIPHASECARBIDE=18,
+	CRYSTALLINECOMPOSITE=21,
+	SUPERDENSE=25,
+	BONDEDSUPERDENSE=30
+}
+
 public class DesignScreenManager : MonoBehaviour {
+
+	static Color highlight = new Color (181f,242f,242f);
+	static Color pressed = new Color (36f,212f,205f);
+
+	//armor width = 1.2*(Mass/50)^2/3
 
 	public List<ShipTemplate> ShipDesigns = new List<ShipTemplate>();
 
@@ -23,6 +44,9 @@ public class DesignScreenManager : MonoBehaviour {
 	public Transform ContentParentScrollview;
 	public GameObject ButtonPrefab;
 	public Text MassText;
+	public ScrollRect scrollview;
+
+	public bool LoadAllComponents = false;
 
 	public bool HideObsolete = false;
 	public List<ShipComponents> Components = new List<ShipComponents> ();
@@ -41,6 +65,7 @@ public class DesignScreenManager : MonoBehaviour {
 	public int ArmorLength = 1;
 	public int ReqCrew;
 	public int Mass;
+	ArmorTypes ArmorType = ArmorTypes.DURANIUM;
 
 	public int LifeSupport; //how many crew the current loadout supports;
 	public int Quarters;   //how much space for crew there is with current loadout.
@@ -70,7 +95,12 @@ public class DesignScreenManager : MonoBehaviour {
 			ComponentPassThrough pass = d.AddComponent<ComponentPassThrough> ();
 			pass.component = c;
 			pass.Manager = this;
-			d.GetComponent<Button> ().onClick.AddListener (pass.AddShipComponent);
+			Button b = d.GetComponent<Button> ();
+			b.onClick.AddListener (pass.AddShipComponent);
+			ColorBlock block = b.colors;
+			block.highlightedColor = highlight;
+			block.pressedColor = pressed;
+			b.colors = block;
 			interval++;
 		}
 	}
@@ -133,54 +163,7 @@ public class DesignScreenManager : MonoBehaviour {
 	void SetupScreen(){
 		Debug.Log ("Setting up design screen");
 
-		//Design test component
-		ShipComponents c = new ShipComponents();
-		c.name = "Heavy Test";
-		c.Mass = 500;
-		c.CrewRequired = 200;
-		c.SetHTK (3);
-		ShipComponents b = new ShipComponents();
-		b.name = "Light Test";
-		b.Mass = 250;
-		b.CrewRequired = 50;
-		b.SetHTK (2);
-		ShipComponents a = new ShipComponents();
-		a.name = "Bridge";
-		a.Mass = 50;
-		a.CrewRequired = 15;
-		a.control = true;
-		a.Category = CompCategory.REQUIRED;
-		ShipComponents e = new ShipComponents ();
-		e.name = "Engine E";
-		e.Thrust = 1;
-		e.Mass = 50;
-		e.CrewRequired = 25;
-		e.isEngine = true;
-		e.Category = CompCategory.ENGINE;
-		ShipComponents f = new ShipComponents ();
-		f.name = "Engine F";
-		f.Thrust = 1;
-		f.Mass = 150;
-		f.CrewRequired = 80;
-		f.isEngine = true;
-		f.Category = CompCategory.ENGINE;
-		ShipComponents berths = new ShipComponents();
-		berths.name = "Crew Quarters";
-		berths.Mass = 25;
-		berths.quarters = 100;
-		berths.Category = CompCategory.REQUIRED;
-		ShipComponents ls = new ShipComponents();
-		ls.name = "Life Support";
-		ls.Mass = 25;
-		ls.lifeSupport = 250;
-		ls.Category = CompCategory.REQUIRED;
-		ShipComponents.DesignedComponents.Add (ls);
-		ShipComponents.DesignedComponents.Add(berths);
-		ShipComponents.DesignedComponents.Add (f);
-		ShipComponents.DesignedComponents.Add (e);
-		ShipComponents.DesignedComponents.Add (c);
-		ShipComponents.DesignedComponents.Add (b);
-		ShipComponents.DesignedComponents.Add (a);
+		LoadAllComponents = true;
 		PopulateComponentList ();
 		HullDesignation.ClearOptions ();
 		HullDesignation.AddOptions (HullDes.HullTypes);
@@ -193,7 +176,11 @@ public class DesignScreenManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (LoadAllComponents) {
+			LoadAllComponents = false;
+			ShipComponents.LoadAllComponents ();
+			PopulateComponentList ();
+		}
 	}
 
 	bool RequirementsMet = false;
@@ -251,6 +238,11 @@ public class DesignScreenManager : MonoBehaviour {
 		CrewReqText.text = string.Format ("Crew Required: {0}", ReqCrew);
 	}
 
+
+	int ArmorMass(){
+		return (50 / (int)ArmorType);
+	}
+
 	IEnumerator CalculateMass(){
 		int M = 0;
 		foreach (ShipComponents c in ShipComponents.DesignedComponents) {
@@ -259,6 +251,7 @@ public class DesignScreenManager : MonoBehaviour {
 				M += (c.Mass * number );
 			}
 		}
+		M += ArmorMass () * (ArmorLength * (ArmorThickness + (int)Mathf.Pow(ArmorThickness, .35f)));
 		Mass = M;
 		yield return Ninja.JumpToUnity;
 		MassText.text = "Mass: " + M + "kt";
@@ -266,12 +259,16 @@ public class DesignScreenManager : MonoBehaviour {
 
 	void OnChange(){
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CheckCrewRequirements());
+		CalculateArmorWidth ();
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CalculateMass());
-
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CheckRequirements());
 		ArmorText.text = ArmorLength.ToString() + " x " +  ArmorThickness.ToString ();
+	}
 
-		}
+	void CalculateArmorWidth(){
+		int hs = Mass / 50;
+		ArmorLength =(int)(1 + 1.1*(Mathf.Pow (hs, .66f)));
+	}
 
 	void RunTest(){
 		Debug.Log ("Outputting test design " + DesignName.text);
@@ -289,6 +286,7 @@ public class DesignScreenManager : MonoBehaviour {
 		ShipDesign design = new ShipDesign(DesignName.text);
 		design.HullDesignation = HullDes.DesDictionary[HullDesignation.options [HullDesignation.value].text];
 		design.ArmorLayers = ArmorThickness;
+		design.ArmorLength = ArmorLength;
 		design.CrewMin = ReqCrew;
 		design.CrewBerths = Quarters;
 		design.LifeSupport = LifeSupport;
@@ -307,7 +305,7 @@ public class DesignScreenManager : MonoBehaviour {
 			}
 		design.SetupDAC ();
 		design.Output ();
-		ShipClass.DebugDesignTemplate = design;
-		Debug.Log (design.DesignName + " has been set as default template.");
 	}
+
+
 }

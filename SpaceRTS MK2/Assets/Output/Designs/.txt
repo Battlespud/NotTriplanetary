@@ -1,0 +1,14 @@
+Design Date: 0 Spring 800
+
+CV -Class Carrier
+Mass: 385KT
+Armor Thickness: 1
+Crew: 145
+Spare Berths: 55
+
+[0-0] Bridge: 
+[1-1] Crew Quarters: 
+[2-2] Crew Quarters: 
+[3-3] Life Support: 
+[4-8] Light Test: 
+[9-9] Thruster L: 

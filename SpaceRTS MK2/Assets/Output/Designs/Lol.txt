@@ -1,0 +1,23 @@
+Design Date: 1 Spring 800
+
+BB Lol-Class Battleship
+Mass: 5180KT
+Armor Thickness: 10
+Crew: 745
+Spare Berths: 255
+
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-8] Crew Quarters: 
+[9-11] Engine F: 
+[12-14] Engine F: 
+[15-17] Engine F: 
+[18-20] Engine F: 
+[21-23] Engine F: 
+[24-26] Engine F: 
+[27-36] Heavy Test: 
+[37-38] Life Support: 
+[39-40] Life Support: 
+[41-45] Light Test: 

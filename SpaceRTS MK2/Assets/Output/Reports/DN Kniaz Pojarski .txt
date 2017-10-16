@@ -1,0 +1,43 @@
+Active Ship Report
+
+BB -Class Battleship
+Mass: 9450KT
+Armor Thickness: 6
+Crew: 2305
+Spare Berths: 195
+
+[0-0] Bridge: False
+[1-2] Crew Quarters: True
+[3-4] Crew Quarters: True
+[5-6] Crew Quarters: True
+[7-8] Crew Quarters: True
+[9-10] Crew Quarters: True
+[11-12] Crew Quarters: True
+[13-14] Crew Quarters: False
+[15-16] Crew Quarters: False
+[17-18] Crew Quarters: True
+[19-20] Crew Quarters: True
+[21-23] Engine F: True
+[24-26] Engine F: True
+[27-29] Engine F: True
+[30-32] Engine F: False
+[33-35] Engine F: True
+[36-38] Engine F: True
+[39-41] Engine F: False
+[42-44] Engine F: True
+[45-54] Heavy Test: True
+[55-64] Heavy Test: True
+[65-74] Heavy Test: True
+[75-84] Heavy Test: True
+[85-94] Heavy Test: True
+[95-104] Heavy Test: True
+[105-114] Heavy Test: True
+[115-124] Heavy Test: True
+[125-126] Life Support: True
+[127-128] Life Support: True
+[129-130] Life Support: True
+[131-132] Life Support: True
+[133-134] Life Support: False
+[135-139] Light Test: True
+
+Integrity: 12%

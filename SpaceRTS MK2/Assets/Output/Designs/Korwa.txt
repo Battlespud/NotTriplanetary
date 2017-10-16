@@ -1,0 +1,28 @@
+Design Date: 0 Spring 800
+
+BB Korwa-Class Battleship
+Mass: 1050KT
+Armor Thickness: 4
+Crew: 265
+Spare Berths: 535
+
+[0-0] Life Support: 
+[1-1] Life Support: 
+[2-2] Life Support: 
+[3-3] Life Support: 
+[4-4] Life Support: 
+[5-5] Life Support: 
+[6-6] Life Support: 
+[7-7] Life Support: 
+[8-8] Crew Quarters: 
+[9-9] Crew Quarters: 
+[10-10] Crew Quarters: 
+[11-11] Crew Quarters: 
+[12-12] Crew Quarters: 
+[13-13] Crew Quarters: 
+[14-14] Crew Quarters: 
+[15-15] Crew Quarters: 
+[16-16] Engine E: 
+[17-17] Engine E: 
+[18-27] Heavy Test: 
+[28-28] Bridge: 

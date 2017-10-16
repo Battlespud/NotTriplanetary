@@ -1,0 +1,16 @@
+Light Test
+0
+250
+False
+0
+50
+0
+0
+0
+False
+False
+2
+False
+0
+0
+0

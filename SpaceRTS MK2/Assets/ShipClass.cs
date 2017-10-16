@@ -6,11 +6,9 @@ using System.IO;
 
 
 public class ShipClass : MonoBehaviour {
-	public static ShipDesign DebugDesignTemplate;
 
-	public const int MaxAttempts = 20; //After this many failed DAC rolls, the ship will be considered destroyed.
+	public const int MaxAttempts = 15; //After this many failed DAC rolls, the ship will be considered destroyed.
 
-	public static int[]MaxCrews = new int[5]{200, 250, 450, 800, 1200};
 
 	public Ship ship;
 //	public ShipPrefabTypes BaseClass;
@@ -29,6 +27,8 @@ public class ShipClass : MonoBehaviour {
 	//Resources and parts
 	public int crew;
 	public int mCrew;
+
+	public string CrewString;
 
 	public int survivors = 0;
 
@@ -57,7 +57,51 @@ public class ShipClass : MonoBehaviour {
 
 	public int MaxDAC; //exclusive, actual highest value is 1 less.
 
+
+	//updates ship stats based on component damage
+	IEnumerator ChangeStats(){
+		LifeSupport = 0;
+		Controllable = false;
+		Thrust = 0;
+		TurnThrust = 0;
+		Mass = (int)DesignTemplate.mass;
+		foreach (ShipComponents c in Components) {
+			if (!c.isDamaged()) {
+				LifeSupport += c.lifeSupport;
+				if (c.control || c.flagControl) {
+					Controllable = true;
+				}
+				TurnThrust += c.TurnThrust;
+				Thrust += c.Thrust;
+			}
+		}
+		if (LifeSupport < crew) {
+			crew = LifeSupport;
+		}
+		CrewString = string.Format ("Crew: {0}/{1}", crew, mCrew);
+		yield return Ninja.JumpToUnity;
+	}
+
+	//Current Ship Stats based on components
+	public int LifeSupport; //current functioning lifesupport. Any crew over this limit will be killed on update.
+	public bool Controllable; //Is there a working bridge
+	public float Thrust;  //max thrust from functioning engines
+	public float TurnThrust; //Max turnrate from functioning engines/thrusters
+	public int Mass;
+
+
+
+
+
+	//
+
+
+
+
+
+	public bool usingTemplate = false;
 	public void ImportDesign(ShipDesign template){
+		usingTemplate = true;
 		ShipClassName = template.DesignName;
 		HullDesignation = template.HullDesignation;
 		DesignTemplate = template;
@@ -65,7 +109,11 @@ public class ShipClass : MonoBehaviour {
 			ShipComponents copy = c.CloneProperties ();
 			Components.Add (copy);
 		}
+		ship.SetupArmor (template.ArmorLength,template.ArmorLayers);
+		mCrew = template.CrewMin;
+		crew = mCrew;
 		SetupDAC ();
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,ChangeStats());
 	}
 
 	public void SetupDAC(){
@@ -113,16 +161,26 @@ public class ShipClass : MonoBehaviour {
 				target.Damage ();
 				DamagedComponents.Add (target);
 				amount -= target.GetHTK ();
+				crew -= (int)(Random.Range (.75f, 1.2f) * target.CrewRequired);
 			} else if (amount < target.GetHTK ()) {
 				float chance = amount / target.GetHTK ();
 				if (Random.Range (0f, 1f) < chance) {
 					target.Damage ();
+					crew -= (int)(Random.Range (.25f, .95f) * target.CrewRequired);
 					DamagedComponents.Add (target);
+				} else {
+					crew -= (int)(Random.Range (.15f, .35f) * target.CrewRequired);
 				}
+
 				amount = 0;
+			}
+			if (crew < 0) {
+				crew = 0;
+				ship.SpawnDebris (transform.position); //TODO make it just go neutral instead of exploding  
 			}
 		}
 		CalculateIntegrity ();
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,ChangeStats());
 		OutputReport ();
 	}
 
@@ -140,10 +198,10 @@ public class ShipClass : MonoBehaviour {
 			float damaged = 0f;
 			foreach (ShipComponents d in DamagedComponents) {
 				damaged += d.GetHTK();
-				Debug.Log ("damaged " + damaged);
+//				Debug.Log ("damaged " + damaged);
 			}
 			Integrity = (total-damaged) / total;
-			Debug.Log (Integrity);
+		//	Debug.Log (Integrity);
 		}
 	}
 
@@ -175,12 +233,6 @@ public class ShipClass : MonoBehaviour {
 		screens  = new Screens(this);
 		screens.abs = GetComponent<ShipAbstract> ();
 		ship = GetComponent<Ship> ();
-	//	mCrew = MaxCrews [(int)BaseClass];
-		mCrew = 200;
-		crew = mCrew;
-		if (DebugDesignTemplate != null) {
-			ImportDesign (DebugDesignTemplate); //TODO
-		}
 	}
 
 	// Update is called once per frame

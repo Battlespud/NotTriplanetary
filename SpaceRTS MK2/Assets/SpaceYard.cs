@@ -27,7 +27,9 @@ public class SpaceYard : MonoBehaviour, IContext {
 	//UI
 	public static GameObject SpaceYardUI;
 	public static SpaceYard active;
-	public static Dropdown drop;
+	public static Dropdown visual;
+	public static Dropdown design;
+
 	public static Button buildButton;
 
 
@@ -51,11 +53,12 @@ public class SpaceYard : MonoBehaviour, IContext {
 			open = active.Berths [i];
 		}
 		Debug.Log ("Open Berth is #" + open.Designation);
-		GameObject s = Instantiate (ShipAbstract.ShipPrefabs[drop.value]);
+		GameObject s = Instantiate (ShipAbstract.ShipPrefabs[visual.value]);
 		ShipAbstract sb = s.GetComponent < ShipAbstract> ();
 		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (open.transform.position.x, .59f, open.transform.position.z));
 		s.transform.rotation = Quaternion.Inverse(open.transform.rotation);
 		sb.faction = FAC.PLAYER;
+		sb.shipClass.ImportDesign (ShipDesign.Designs[design.value]);
 	//	sb.Start ();
 		Debug.Log ("Ship built");
 	}
@@ -84,6 +87,7 @@ public class SpaceYard : MonoBehaviour, IContext {
 		s.transform.rotation = Quaternion.Inverse(open.transform.rotation);
 		s.GetComponent<ShipAbstract>().faction = FAC.PLAYER;
 		s.GetComponent<ShipAbstract> ().RegenColors ();
+		s.GetComponent<ShipClass>().ImportDesign (ShipDesign.Designs[design.value]);
 
 		Debug.Log ("Ship built local");
 	}
@@ -112,6 +116,7 @@ public class SpaceYard : MonoBehaviour, IContext {
 
 	public void Toggle(){
 		SpaceYardUI.SetActive (!SpaceYardUI.activeSelf);
+		UpdateDesigns ();
 		player.InMenu = !player.InMenu;
 	}
 
@@ -119,7 +124,10 @@ public class SpaceYard : MonoBehaviour, IContext {
 	// Use this for initialization
 	void Start () {
 			SpaceYardUI = GameObject.FindGameObjectWithTag ("SpaceYardUI");
-			drop = SpaceYardUI.GetComponentInChildren<Dropdown> ();
+		visual = SpaceYardUI.GetComponentInChildren<Dropdown> ();
+		design = SpaceYardUI.GetComponentsInChildren<Dropdown> () [1];
+		design.ClearOptions ();
+		design.AddOptions (ShipDesign.DesignNames);
 			List<string> shipStringTypes = new List<string> ();
 			foreach (var val in System.Enum.GetValues(typeof(ShipPrefabTypes)))	{
 				shipStringTypes.Add (val.ToString ());
@@ -130,8 +138,8 @@ public class SpaceYard : MonoBehaviour, IContext {
 				b.Designation = i;
 				i++;
 			}
-			drop.ClearOptions ();
-			drop.AddOptions (shipStringTypes);
+		visual.ClearOptions ();
+		visual.AddOptions (shipStringTypes);
 			buildButton = SpaceYardUI.GetComponentInChildren<Button> ();
 			buildButton.onClick.AddListener (Build);
 			Toggle ();
@@ -139,7 +147,10 @@ public class SpaceYard : MonoBehaviour, IContext {
 		}
 
 
-
+	public void UpdateDesigns(){
+		design.ClearOptions ();
+		design.AddOptions (ShipDesign.DesignNames);
+	}
 
 
 	

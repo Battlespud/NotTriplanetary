@@ -1,0 +1,19 @@
+Design Date: 0 Spring 800
+
+CV fcdfdf-Class Carrier
+Mass: 985KT
+Armor Thickness: 1
+Crew: 345
+Spare Berths: 55
+
+[0-0] Thruster L: 
+[1-1] Life Support: 
+[2-2] Life Support: 
+[3-3] Life Support: 
+[4-4] Crew Quarters: 
+[5-5] Crew Quarters: 
+[6-6] Crew Quarters: 
+[7-7] Crew Quarters: 
+[8-17] Heavy Test: 
+[18-22] Light Test: 
+[23-23] Bridge: 

@@ -1,29 +1,30 @@
 Active Ship Report
 
-CV -Class Carrier
-Mass: 2150KT
-Armor Thickness: 5
-Crew: 675
-Spare Berths: 125
+BB -Class Battleship
+Mass: 1050KT
+Armor Thickness: 4
+Crew: 265
+Spare Berths: 535
 
 [0-0] Life Support: True
-[1-1] Life Support: False
-[2-2] Life Support: False
-[3-3] Life Support: False
-[4-4] Crew Quarters: True
-[5-5] Crew Quarters: False
-[6-6] Crew Quarters: False
-[7-7] Crew Quarters: False
-[8-8] Crew Quarters: False
-[9-9] Crew Quarters: False
-[10-10] Crew Quarters: False
+[1-1] Life Support: True
+[2-2] Life Support: True
+[3-3] Life Support: True
+[4-4] Life Support: True
+[5-5] Life Support: False
+[6-6] Life Support: True
+[7-7] Life Support: True
+[8-8] Crew Quarters: True
+[9-9] Crew Quarters: True
+[10-10] Crew Quarters: True
 [11-11] Crew Quarters: True
-[12-14] Engine F: False
-[15-17] Engine F: True
+[12-12] Crew Quarters: True
+[13-13] Crew Quarters: True
+[14-14] Crew Quarters: True
+[15-15] Crew Quarters: True
+[16-16] Engine E: True
+[17-17] Engine E: True
 [18-27] Heavy Test: True
-[28-37] Heavy Test: True
-[38-42] Light Test: True
-[43-47] Light Test: True
-[48-48] Bridge: True
+[28-28] Bridge: True
 
-Integrity: 0%
+Integrity: -9.090909%

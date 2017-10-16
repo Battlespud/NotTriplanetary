@@ -1,0 +1,48 @@
+Design Date: 0 Spring 800
+
+CV Idaho-Class Carrier
+Mass: 22960KT
+Armor Thickness: 20
+Crew: 2785
+Spare Berths: 215
+
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-8] Crew Quarters: 
+[9-10] Crew Quarters: 
+[11-12] Crew Quarters: 
+[13-14] Crew Quarters: 
+[15-16] Crew Quarters: 
+[17-18] Crew Quarters: 
+[19-20] Crew Quarters: 
+[21-22] Crew Quarters: 
+[23-24] Crew Quarters: 
+[25-27] Engine F: 
+[28-30] Engine F: 
+[31-33] Engine F: 
+[34-36] Engine F: 
+[37-46] Heavy Test: 
+[47-56] Heavy Test: 
+[57-66] Heavy Test: 
+[67-76] Heavy Test: 
+[77-86] Heavy Test: 
+[87-96] Heavy Test: 
+[97-106] Heavy Test: 
+[107-116] Heavy Test: 
+[117-126] Heavy Test: 
+[127-136] Heavy Test: 
+[137-146] Heavy Test: 
+[147-156] Heavy Test: 
+[157-158] Life Support: 
+[159-160] Life Support: 
+[161-162] Life Support: 
+[163-164] Life Support: 
+[165-166] Life Support: 
+[167-168] Life Support: 
+[169-170] Life Support: 
+[171-172] Life Support: 
+[173-174] Life Support: 
+[175-176] Life Support: 
+[177-181] Light Test: 

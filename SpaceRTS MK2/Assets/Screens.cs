@@ -33,8 +33,6 @@ public class Screens{
 
 	public Screens(ShipClass p){
 		parent = p;
-
-
 			 ForeScreen = new Screen (parent.StartingScreenStrengths[0]); 
 			 AftScreen = new Screen (parent.StartingScreenStrengths[1]); 
 			 PortScreen = new Screen (parent.StartingScreenStrengths[2]); 

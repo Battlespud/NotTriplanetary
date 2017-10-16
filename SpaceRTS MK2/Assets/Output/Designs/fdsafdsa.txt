@@ -1,14 +1,47 @@
 Design Date: 0 Spring 800
 
 CV fdsafdsa-Class Carrier
-Mass: 200KT
-Armor Thickness: 1
-Crew: 40
-Spare Berths: 160
+Mass: 8920KT
+Armor Thickness: 2
+Crew: 2645
+Spare Berths: 105
 
-[0-0] Life Support: 
-[1-1] Life Support: 
-[2-2] Crew Quarters: 
-[3-3] Crew Quarters: 
-[4-4] Engine E: 
-[5-5] Bridge: 
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-8] Crew Quarters: 
+[9-10] Crew Quarters: 
+[11-12] Crew Quarters: 
+[13-14] Crew Quarters: 
+[15-16] Crew Quarters: 
+[17-18] Crew Quarters: 
+[19-20] Crew Quarters: 
+[21-22] Crew Quarters: 
+[23-25] Engine F: 
+[26-28] Engine F: 
+[29-31] Engine F: 
+[32-34] Engine F: 
+[35-37] Engine F: 
+[38-40] Engine F: 
+[41-43] Engine F: 
+[44-46] Engine F: 
+[47-49] Engine F: 
+[50-52] Engine F: 
+[53-55] Engine F: 
+[56-60] Flag Bridge: 
+[61-70] Heavy Test: 
+[71-80] Heavy Test: 
+[81-90] Heavy Test: 
+[91-100] Heavy Test: 
+[101-110] Heavy Test: 
+[111-120] Heavy Test: 
+[121-130] Heavy Test: 
+[131-140] Heavy Test: 
+[141-142] Life Support: 
+[143-144] Life Support: 
+[145-146] Life Support: 
+[147-148] Life Support: 
+[149-150] Life Support: 
+[151-152] Life Support: 
+[153-157] Light Test: 
