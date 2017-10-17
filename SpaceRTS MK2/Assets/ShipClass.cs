@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.IO;
 
-public class ShipClass : MonoBehaviour {
+public class ShipClass : MonoBehaviour, ICharSlot {
 
 	public const int MaxAttempts = 15; //After this many failed DAC rolls, the ship will be considered destroyed.
 
@@ -25,6 +25,29 @@ public class ShipClass : MonoBehaviour {
 
 
 	//Resources and parts
+	public List<Character>Characters = new List<Character>();
+	public Character Captain;
+
+	public List<Character> GetCharacters(){
+		return Characters;
+	}
+
+	public bool TransferCharacterTo(Character c){
+		try{Characters.Add(c);
+			return true;
+		}
+		catch{
+			return false;
+		}
+	}
+
+	public void TransferCharacter(Character c, ICharSlot targ){
+		if (targ.TransferCharacterTo (c)) {
+			Characters.Remove (c);
+		}
+	}
+
+
 	public int crew;
 	public int mCrew;
 
