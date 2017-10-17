@@ -25,7 +25,7 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 
 	Color orange = new Color(255,140,0);
 
-	public List<Vector2> Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (-2, 0), new Vector2 (1, 0), new Vector2 (2, 0),  new Vector2 (-1, 0), new Vector2 (0, -1), new Vector2 (-2, -1), new Vector2 (1, -1), new Vector2 (2, -1),  new Vector2 (-1, -1), new Vector2 (0, -2), new Vector2 (-2, -2), new Vector2 (1, -2), new Vector2 (2, -2),  new Vector2 (-1, -2) , new Vector2 (0, -3), new Vector2 (-2, -3), new Vector2 (1, -3), new Vector2 (2, -3),  new Vector2 (-1, -3)};
+	public List<Int2> Pattern = new List<Int2> (){new Int2 (0, 0), new Int2 (-2, 0), new Int2 (1, 0), new Int2 (2, 0),  new Int2 (-1, 0), new Int2 (0, -1), new Int2 (-2, -1), new Int2 (1, -1), new Int2 (2, -1),  new Int2 (-1, -1), new Int2 (0, -2), new Int2 (-2, -2), new Int2 (1, -2), new Int2 (2, -2),  new Int2 (-1, -2) , new Int2 (0, -3), new Int2 (-2, -3), new Int2 (1, -3), new Int2 (2, -3),  new Int2 (-1, -3)};
 
 
 	// Use this for initialization

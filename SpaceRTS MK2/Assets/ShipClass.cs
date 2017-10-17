@@ -79,7 +79,7 @@ public class ShipClass : MonoBehaviour {
 			crew = LifeSupport;
 		}
 		CrewString = string.Format ("Crew: {0}/{1}", crew, mCrew);
-		yield return Ninja.JumpToUnity;
+		yield return null;
 	}
 
 	//Current Ship Stats based on components
@@ -113,7 +113,7 @@ public class ShipClass : MonoBehaviour {
 		mCrew = template.CrewMin;
 		crew = mCrew;
 		SetupDAC ();
-		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,ChangeStats());
+		StartCoroutine(ChangeStats());
 	}
 
 	public void SetupDAC(){
@@ -185,6 +185,7 @@ public class ShipClass : MonoBehaviour {
 	}
 	*/
 	public IEnumerator TakeComponentDamage(int amount){
+		Debug.Log ("Component Damage");
 		int attempts = 0;
 		ShipComponents target;
 		while (amount > 0) {
@@ -224,7 +225,7 @@ public class ShipClass : MonoBehaviour {
 		yield return Ninja.JumpToUnity;
 		CalculateIntegrity ();
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,ChangeStats());
-		OutputReport ();
+	//	OutputReport ();
 	}
 
 	public float Integrity =1f; //flavor only
@@ -318,11 +319,11 @@ public class ShipClass : MonoBehaviour {
 	public string[] ScreenOrder = new string[5]{"Fore","Aft","Port","Star","Wall"};
 	public float[] StartingScreenStrengths= new float[5];
 
-	public void Damage(float dam, Vector3 origin, Transform en, List<Vector2> pattern){
+	public void Damage(float dam, Vector3 origin, Transform en, List<Int2> pattern){
 		screens.Damage (dam, screens.dic[Direction.GetDirection (origin,en,transform.position,transform)], origin, pattern);
 	}
 
-	public void PhysicsDamage(float f, Vector3 origin, float fMag, Transform s, List<Vector2> pattern){
+	public void PhysicsDamage(float f, Vector3 origin, float fMag, Transform s, List<Int2> pattern){
 		screens.PhysicsDamage (f, screens.dic[Direction.GetDirection (origin,s,transform.position,transform)], origin,(transform.position - origin)*fMag,s, pattern);
 	}
 

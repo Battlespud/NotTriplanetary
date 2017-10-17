@@ -1,0 +1,12 @@
+Design Date: 0 Spring 800
+
+CV ess-Class Carrier
+Mass: 1300KT
+Armor Thickness: 8
+Crew: 95
+Spare Berths: 155
+
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-5] Engine F: 
+[6-7] Life Support: 

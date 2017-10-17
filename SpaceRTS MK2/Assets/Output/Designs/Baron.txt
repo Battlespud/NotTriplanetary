@@ -1,0 +1,23 @@
+Design Date: 0 Spring 800
+
+CV Baron-Class Carrier
+Mass: 3120KT
+Armor Thickness: 12
+Crew: 215
+Spare Berths: 535
+
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-9] Engine F: 
+[10-10] Lender: 
+[11-11] Lender: 
+[12-12] Lender: 
+[13-13] Lender: 
+[14-14] Lender: 
+[15-15] Lender: 
+[16-16] Lender: 
+[17-17] Lender: 
+[18-19] Life Support: 
+[20-21] Life Support: 

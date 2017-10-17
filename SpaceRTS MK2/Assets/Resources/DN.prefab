@@ -1580,12 +1580,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShipName: 
   shipClass: {fileID: 0}
+  rens:
+  - {fileID: 23443450960421274}
+  - {fileID: 23171515311284604}
+  - {fileID: 23777245627809710}
+  - {fileID: 23022768486289872}
+  - {fileID: 23035549221317068}
+  - {fileID: 23013358662192300}
+  - {fileID: 23035549221317068}
+  - {fileID: 23558831988380826}
+  - {fileID: 23584577791024082}
+  - {fileID: 23734185828689622}
   ShipUI: {fileID: 1840864588518354}
   UIArmorText: {fileID: 114848762579338962}
   UIName: {fileID: 114410537086483820}
   UIDate: {fileID: 114218768598438586}
   BuildDate: 
-  faction: 2
+  faction: 1
   stand: {fileID: 0}
   standlr: {fileID: 0}
   c: {r: 0, g: 0, b: 0, a: 0}
@@ -1602,17 +1613,6 @@ MonoBehaviour:
   usingTractor: 0
   rb: {fileID: 0}
   Waypoints: []
-  rens:
-  - {fileID: 23443450960421274}
-  - {fileID: 23171515311284604}
-  - {fileID: 23777245627809710}
-  - {fileID: 23022768486289872}
-  - {fileID: 23035549221317068}
-  - {fileID: 23013358662192300}
-  - {fileID: 23035549221317068}
-  - {fileID: 23558831988380826}
-  - {fileID: 23584577791024082}
-  - {fileID: 23734185828689622}
   dir: 0
   mass: 100
   enginePower: 25
@@ -1646,22 +1646,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac4cde2523eb3a43b7da5535697dfdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pattern:
-  - {x: 0, y: 0}
-  - {x: 0, y: -1}
-  - {x: 0, y: -2}
   light: {fileID: 0}
   self: {fileID: 0}
   pdTargObj: {fileID: 0}
   shooting: 1
   CanFire: 1
   powerCost: 1
-  ReloadTime: 1.5
-  Damage: 1
-  ForceMagnitude: 0
-  lineC: {r: 0, g: 0, b: 0, a: 0}
-  mRange: 0
-  tType: 0
   turret: {fileID: 0}
 --- !u!114 &114410537086483820
 MonoBehaviour:
@@ -1759,10 +1749,21 @@ MonoBehaviour:
   BatteryPower: 0
   crew: 0
   mCrew: 0
+  CrewString: 
   survivors: 0
   marines: 0
   mMarines: 0
   Torpedos: 8
+  ShipName: 
+  ShipClassName: 
+  MaxDAC: 0
+  LifeSupport: 0
+  Controllable: 0
+  Thrust: 0
+  TurnThrust: 0
+  Mass: 0
+  usingTemplate: 0
+  Integrity: 1
   ScreenStrengthsUI: []
   ScreenOrder:
   - Fore
@@ -1802,22 +1803,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2083c5470d76b7e44a749efd332e4338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pattern:
-  - {x: 0, y: 0}
-  - {x: 0, y: -1}
-  - {x: 0, y: -2}
   light: {fileID: 0}
   self: {fileID: 0}
   pdTargObj: {fileID: 0}
   shooting: 0
   CanFire: 0
   powerCost: 0
-  ReloadTime: 0
-  Damage: 0
-  ForceMagnitude: 0
-  lineC: {r: 0, g: 0, b: 0, a: 0}
-  mRange: 0
-  tType: 1
   turret: {fileID: 0}
 --- !u!114 &114817628691395154
 MonoBehaviour:
@@ -1830,22 +1821,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac4cde2523eb3a43b7da5535697dfdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pattern:
-  - {x: 0, y: 0}
-  - {x: 0, y: -1}
-  - {x: 0, y: -2}
   light: {fileID: 0}
   self: {fileID: 0}
   pdTargObj: {fileID: 0}
   shooting: 1
   CanFire: 1
   powerCost: 1
-  ReloadTime: 1.5
-  Damage: 1
-  ForceMagnitude: 0
-  lineC: {r: 0, g: 0, b: 0, a: 0}
-  mRange: 0
-  tType: 0
   turret: {fileID: 0}
 --- !u!114 &114848762579338962
 MonoBehaviour:
@@ -1867,7 +1848,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3bb0fd7e495aebe45b34edb5d59891be, type: 3}
     m_FontSize: 3
     m_FontStyle: 1
     m_BestFit: 0

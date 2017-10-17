@@ -1,0 +1,16 @@
+Design Date: 1 Spring 800
+
+BB Witkovsky-Class Battleship
+Mass: 4840KT
+Armor Thickness: 15
+Crew: 240
+Spare Berths: 760
+
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-8] Crew Quarters: 
+[9-9] Engine E: 
+[10-19] Heavy Test: 
+[20-21] Life Support: 

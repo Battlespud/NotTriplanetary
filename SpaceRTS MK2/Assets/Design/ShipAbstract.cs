@@ -73,11 +73,11 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 
 	public Text ArmorText;
 
-	public void DealDamage(float dam, Vector3 origin, Transform en, List<Vector2> pattern){
+	public void DealDamage(float dam, Vector3 origin, Transform en, List<Int2> pattern){
 		shipClass.Damage (dam, origin, en, pattern);
 			}
 
-	public void DealPhysicsDamage(float dam, Vector3 origin, float fMag, Transform s, List<Vector2> pattern){
+	public void DealPhysicsDamage(float dam, Vector3 origin, float fMag, Transform s, List<Int2> pattern){
 		shipClass.PhysicsDamage (dam,origin,fMag, s, pattern);
 	}
 
@@ -116,7 +116,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 	}
 	public ShipPrefabTypes BaseType;
 
-	public static List<Vector2> Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (-2, 0), new Vector2 (1, 0), new Vector2 (2, 0),  new Vector2 (-1, 0), new Vector2 (0, -1), new Vector2 (-2, -1), new Vector2 (1, -1), new Vector2 (2, -1),  new Vector2 (-1, -1), new Vector2 (0, -2), new Vector2 (-2, -2), new Vector2 (1, -2), new Vector2 (2, -2),  new Vector2 (-1, -2) , new Vector2 (0, -3), new Vector2 (-2, -3), new Vector2 (1, -3), new Vector2 (2, -3),  new Vector2 (-1, -3)};
+	public static List<Int2> Pattern = new List<Int2> (){new Int2 (0, 0), new Int2 (-2, 0), new Int2 (1, 0), new Int2 (2, 0),  new Int2 (-1, 0), new Int2 (0, -1), new Int2 (-2, -1), new Int2 (1, -1), new Int2 (2, -1),  new Int2 (-1, -1), new Int2 (0, -2), new Int2 (-2, -2), new Int2 (1, -2), new Int2 (2, -2),  new Int2 (-1, -2) , new Int2 (0, -3), new Int2 (-2, -3), new Int2 (1, -3), new Int2 (2, -3),  new Int2 (-1, -3)};
 	public float integrity = 100f;
 
 
@@ -132,10 +132,13 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 	}
 
 	public void TestArmor(){
-		DamageArmor (SpaceGun.staticPattern, 1);
+	//	DamageArmor (SpaceGun.staticPattern, 1);
+		Debug.Log("Function is deprecated");
 	}
 
-	public void DamageArmor(List<Vector2> pattern, int dam){
+
+
+	public void DamageArmor(List<Int2> pattern, int dam){
 		int startX = Random.Range (0, Armor.GetLength (0) - 1);
 		int startY = 0;
 		for(startY = Armor.GetLength(1)-1; startY >= 0; startY--){
@@ -143,53 +146,47 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 				break;
 			}
 		}
+		int HullBound = 0;
 		int counter = 0;
-		foreach (var v in pattern) {
-			if (startY + (int)v.y < 0)
-				counter++;
-			if (startX + (int)v.x >= 0 && startX + (int)v.x < Armor.GetLength(0) && startY + (int)v.y >= 0 && startY + (int)v.y < Armor.GetLength(1)) {
-				try {
-					Armor [startX + (int)v.x, startY + (int)v.y] = false;
-				} catch {
-
+		//adjust penetration profile by damage
+		for(int i = 0; dam > 0; i++) { //TODO REFACTOR PLS PLS PLS ITS SO BAD
+			dam--;
+			Int2 v = pattern[i];
+			if (startY + v.y < HullBound)
+					counter++;   //Hit has penetrated the armor and impacted the hull.
+			if (startX + v.x < 0) {
+				v.x += Armor.GetLength (0)-1; 
+			}
+			if (startX + v.x > Armor.GetLength(0)-1) {
+				v.x -= Armor.GetLength (0)-1; 
+			}
+				if (startX + v.x >= 0 && startX + v.x < Armor.GetLength (0) && startY + v.y >= 0 && startY + v.y < Armor.GetLength (1)) {
+					try {
+						Armor [startX + v.x, startY + v.y] = false;
+					Debug.Log((startX + v.x) + "," + (startY + v.y));
+					} catch {
+					Debug.Log ("Invalid armor coords");
+					}
 				}
-			}
 		}
-		for (int l = counter; l > 0; l--) { 
+		Debug.Log ("Penetrating hits: " + counter);
 			if (shipClass.usingTemplate) {
-				shipClass.TakeComponentDamage(dam);
+			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,shipClass.TakeComponentDamage(counter));
 			} else {
-				integrity -= Random.Range (2f, 5f) * dam;
+			integrity -= Random.Range (2f, 5f) * counter;
 			}
-			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,shipClass.TakeComponentDamage(dam));
-		}
 		ArmorText.text = BuildArmorString ();
 	}
 
-	/*string BuildArmorString(){
-		string a = System.String.Empty;
-		for (int y = 0; y < Armor.GetLength (1); y++) {
-			for (int x = 0; x < Armor.GetLength (0); x++) {
-				if (Armor [x, y]) {
-					a += " O ";
-				} else {
-					a += " X ";
-				}
-			}
-			a += "\n";
-		}
-		Debug.Log (a);
-		return a;
-	}
-*/
+
 	string BuildArmorString(){
 			StringBuilder a = new StringBuilder();
 			for (int y = 0; y < Armor.GetLength (1); y++) {
 				for (int x = 0; x < Armor.GetLength (0); x++) {
 					if (Armor [x, y]) {
-					a.Append( "<color=green>O</color>");
+					a.Append( "<color=green>□</color>");
 					} else {
-					a.Append( "<color=red>X</color>");
+					a.Append( "<color=red>□</color>");
 					}
 				}
 				a.AppendLine();

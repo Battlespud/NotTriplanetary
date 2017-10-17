@@ -5,6 +5,6 @@ using UnityEngine;
 public class Warhead : ShipComponents {
 
 	public bool armed; 
-	public List<Vector2> Pattern;
+	public List<Int2> Pattern;
 
 }

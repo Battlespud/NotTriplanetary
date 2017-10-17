@@ -46,7 +46,7 @@ public class Screens{
 		dic.Add (GeneralDirection.Down, WallScreen);
 	}
 
-	public void Damage(float dam, Screen s, Vector3 source, List<Vector2> pattern){
+	public void Damage(float dam, Screen s, Vector3 source, List<Int2> pattern){
 		GameObject g = GameObject.Instantiate (ScreenPrefab);
 		LineRenderer l = g.GetComponent<LineRenderer> ();
 		g.transform.position = parent.transform.position;
@@ -76,7 +76,7 @@ public class Screens{
 	}
 
 
-	public void PhysicsDamage(float dam, Screen s, Vector3 source, Vector3 force, Transform en, List<Vector2> pattern){
+	public void PhysicsDamage(float dam, Screen s, Vector3 source, Vector3 force, Transform en, List<Int2> pattern){
 		GameObject g = GameObject.Instantiate (ScreenPrefab);
 		LineRenderer l = g.GetComponent<LineRenderer> ();
 		g.transform.position = parent.transform.position;

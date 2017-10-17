@@ -9,8 +9,7 @@ public  class SpaceGun : MonoBehaviour {
 	public static  List<Vector2> staticPattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (0, -1),new Vector2(0,-2)};
 
 	[System.NonSerialized]
-	public  List<Vector2> Pattern = new List<Vector2> (){new Vector2 (0, 0), new Vector2 (0, -1),new Vector2(0,-2)};
-
+    public List<Int2> Pattern = new List<Int2>(){new Int2 (0, 0), new Int2 (0, -1), new Int2 (0, -2), new Int2 (-1, 0), new Int2 (1, 0), new Int2 (0, -3), new Int2 (-1, -1), new Int2 (1, -1), new Int2 (0, -4), new Int2 (-1, -2), new Int2 (1, -2), new Int2 (0, -5), new Int2 (-2, 0), new Int2 (2, 0), new Int2 (-1, -3), new Int2 (1, -3), new Int2 (0, -6), new Int2 (-2, -1), new Int2 (2, -1), new Int2 (-1, -4), new Int2 (1, -4), new Int2 (0, -7), new Int2 (-2, -2), new Int2 (2, -2), new Int2 (-1, -5), new Int2 (1, -5), new Int2 (0, -8), };
 	public Light light;
 
 	public Ship self;

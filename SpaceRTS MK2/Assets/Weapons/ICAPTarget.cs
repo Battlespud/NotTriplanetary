@@ -7,6 +7,6 @@ public interface ICAPTarget  {
 	bool isHostile (FAC attacker);
 	GameObject GetGameObject ();
 
-	void DealDamage(float dam, Vector3 origin, Transform en, List<Vector2> pattern);
-	void DealPhysicsDamage(float f, Vector3 origin, float fMag, Transform s, List<Vector2> pattern);
+	void DealDamage(float dam, Vector3 origin, Transform en, List<Int2> pattern);
+	void DealPhysicsDamage(float f, Vector3 origin, float fMag, Transform s, List<Int2> pattern);
 }

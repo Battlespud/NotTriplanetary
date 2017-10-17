@@ -1,20 +1,16 @@
 Design Date: 0 Spring 800
 
-CV fdsfds-Class Carrier
-Mass: 1050KT
-Armor Thickness: 4
-Crew: 290
-Spare Berths: 110
+BB fdsfds-Class Battleship
+Mass: 6400KT
+Armor Thickness: 18
+Crew: 270
+Spare Berths: 230
 
-[0-0] Life Support: 
-[1-1] Life Support: 
-[2-2] Life Support: 
-[3-3] Life Support: 
-[4-4] Crew Quarters: 
-[5-5] Crew Quarters: 
-[6-6] Crew Quarters: 
-[7-7] Crew Quarters: 
-[8-8] Engine E: 
-[9-18] Heavy Test: 
-[19-23] Light Test: 
-[24-24] Bridge: 
+[0-0] Bridge: 
+[1-1] Bridge: 
+[2-2] Bridge: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-7] Engine E: 
+[8-17] Heavy Test: 
+[18-19] Life Support: 

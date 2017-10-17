@@ -238,11 +238,15 @@ public class Ship : ShipAbstract {
 		}
 		NameManager.RecycleName (this);
 		Destroy (g);
-
-		Destroy (gameObject);
+		Agent.Warp(new Vector3(0f,4000f,0f));
+		Agent.enabled = false;
+		Invoke ("FinalDestroy", 2f);
 	}
 
-
+	void FinalDestroy(GameObject g)
+	{		
+		Destroy (gameObject);
+	}
 	#endregion
 
 	public IEnumerator TorpedoArm(){
