@@ -81,6 +81,9 @@ public class ShipClass : MonoBehaviour, ICharSlot {
 	public int MaxDAC; //exclusive, actual highest value is 1 less.
 
 
+
+
+
 	//updates ship stats based on component damage
 	IEnumerator ChangeStats(){
 		LifeSupport = 0;
@@ -142,7 +145,7 @@ public class ShipClass : MonoBehaviour, ICharSlot {
 	public void SetupDAC(){
 		int curr = 0;
 		foreach (ShipComponents c in Components) {
-			Debug.Log ("Registering for DAC: " + c.name);
+			Debug.Log ("Registering for DAC: " + c.Name);
 			int pCounter = 0;
 			int start = curr;
 			for (int i = 0; c.Mass > i; i += ShipDesign.Slot) {
@@ -152,14 +155,14 @@ public class ShipClass : MonoBehaviour, ICharSlot {
 			}
 			int end = curr-1;
 			DACRanges.Add(c,new Range(start,end));
-			Debug.Log (c.name + " given " + pCounter + " slots. " + DACRanges[c].ToString());
+			Debug.Log (c.Name + " given " + pCounter + " slots. " + DACRanges[c].ToString());
 		}
 		MaxDAC = curr; //exclusive
 	}
 
 	public ShipComponents RollDAC(){
 		int i = random.Next (0, MaxDAC);
-		Debug.Log ("Rolled #" + i + " " + DAC[i].name + " HTK: " + DAC[i].GetHTK());
+		Debug.Log ("Rolled #" + i + " " + DAC[i].Name + " HTK: " + DAC[i].GetHTK());
 		return DAC [i];
 	}
 	/*
@@ -280,7 +283,7 @@ public class ShipClass : MonoBehaviour, ICharSlot {
 			writer.WriteLine ( "\n" + HullDesignation.Prefix + " " + ShipName + "-Class "+  HullDesignation.HullType + "\nMass: " + DesignTemplate.mass + "KT\nArmor Thickness: " +DesignTemplate.ArmorLayers +"\n" + "Crew: " + DesignTemplate.CrewMin 
 				+ "\nSpare Berths: " + (DesignTemplate.CrewBerths - DesignTemplate.CrewMin) + "\n");
 			foreach (ShipComponents c in Components) {
-				writer.WriteLine (DACRanges[c].ToString() + " " + c.name + ": " + c.isDamaged().ToString());
+				writer.WriteLine (DACRanges[c].ToString() + " " + c.Name + ": " + c.isDamaged().ToString());
 			}
 			writer.WriteLine ("\nIntegrity: " + Integrity *100f + "%"); 
 			writer.Close ();

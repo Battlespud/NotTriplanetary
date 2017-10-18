@@ -22,6 +22,18 @@ public enum ArmorTypes{
 	BONDEDSUPERDENSE=30
 }
 
+public enum EngineTypes{
+	CONVENTIONAL = 1,
+	NUCLEAR = 3,
+	ION = 5,
+	MAGNETO = 6,
+	FUSION = 9,
+	MAGNETICFUSION = 12,
+	INERTIALFUSION = 14,
+	ANTIMATTER = 18,
+	PHOTONIC = 25
+};
+
 public class DesignScreenManager : MonoBehaviour {
 
 	static Color highlight = new Color (181f,242f,242f);
@@ -45,6 +57,8 @@ public class DesignScreenManager : MonoBehaviour {
 	public GameObject ButtonPrefab;
 	public Text MassText;
 	public ScrollRect scrollview;
+
+	public Text Description;
 
 	public bool LoadAllComponents = false;
 
@@ -106,7 +120,7 @@ public class DesignScreenManager : MonoBehaviour {
 	}
 
 	public void AddComponent(ShipComponents comp){
-		Debug.Log("Adding " + comp.name);
+		Debug.Log("Adding " + comp.Name);
 		if(AddedComponents.ContainsKey(comp)){
 			AddedComponents[comp] += 1;
 		}
@@ -117,7 +131,7 @@ public class DesignScreenManager : MonoBehaviour {
 	}
 
 	public void AddEngine(ShipComponents engine){
-		Debug.Log("Adding " + engine.name);
+		Debug.Log("Adding " + engine.Name);
 		if (EngineDesign == null) {
 			EngineDesign = engine;
 		}
@@ -262,7 +276,10 @@ public class DesignScreenManager : MonoBehaviour {
 		CalculateArmorWidth ();
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CalculateMass());
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CheckRequirements());
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CalcMaxSpeed());
 		ArmorText.text = ArmorLength.ToString() + " x " +  ArmorThickness.ToString ();
+		Description.text = BuildDescription();
+
 	}
 
 	void CalculateArmorWidth(){
@@ -297,8 +314,8 @@ public class DesignScreenManager : MonoBehaviour {
 				for (int i = 0; i < number; i++) {
 					ShipComponents comp = new ShipComponents();
 					comp = c.CloneProperties ();
-					Debug.Log ("Original " + c.name);
-					Debug.Log ("Clone " + comp.name);
+					Debug.Log ("Original " + c.Name);
+					Debug.Log ("Clone " + comp.Name);
 					design.Components.Add (comp);
 					}
 				}
@@ -307,5 +324,36 @@ public class DesignScreenManager : MonoBehaviour {
 		design.Output ();
 	}
 
+	float MaxSpeed;
+
+	IEnumerator CalcMaxSpeed(){
+		float thrust = 0;
+		//Speed = (Total Thrust / Total Class Size in HS) * 1000 km/s
+		foreach (ShipComponents c in ShipComponents.DesignedComponents) {
+			int number;
+			if(c.isEngine){
+				if (AddedComponents.TryGetValue (c, out number)) {
+					for (int i = 0; i < number; i++) {
+						thrust += c.Thrust;
+					}
+				}
+			}
+		}
+		Debug.Log ("Max thrust " + thrust);
+		MaxSpeed = thrust / ((float)Mass/50f)*1000f;
+		yield return Ninja.JumpToUnity;
+	}
+
+	string BuildDescription(){
+		string description = string.Format ("{0} Class {1}\t{2} Tons\t{3} Crew\t{4} BuildCost\n{5} km/s",DesignName.text,HullDesignation.options [HullDesignation.value].text,Mass,ReqCrew, "#",MaxSpeed);
+		return description;
+	}
 
 }
+/*
+ 											 Sample
+Alaska class Escort Cruiser    17 300 tons     319 Crew     2939.2 BP      TCS 346  TH 648  EM 0
+1872 km/s     Armour 14-59     Shields 0-0     Sensors 8/1/0/0     Damage Control Rating 6     PPV 31
+Maint Life 2.18 Years     MSP 637    AFR 399%    IFR 5.5%    1YR 179    5YR 2691    Max Repair 168 MSP
+Intended Deployment Time: 6 months    Spare Berths 0    
+*/

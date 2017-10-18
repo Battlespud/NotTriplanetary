@@ -52,7 +52,6 @@ public class ShipDesign {
 
 
 
-
 	public List<ShipComponents> Components = new List<ShipComponents>();
 	public Dictionary<int,ShipComponents> DAC = new Dictionary<int, ShipComponents> ();
 	public Dictionary<ShipComponents,Range>DACRanges = new Dictionary<ShipComponents, Range>();
@@ -70,7 +69,7 @@ public class ShipDesign {
 			}
 			int end = curr-1;
 			DACRanges.Add(c,new Range(start,end));
-			Debug.Log (c.name + " given " + pCounter + " slots. " + DACRanges[c].ToString());
+			Debug.Log (c.Name + " given " + pCounter + " slots. " + DACRanges[c].ToString());
 		}
 		MaxRoll = curr; //exclusive
 	}
@@ -92,7 +91,7 @@ public class ShipDesign {
 			writer.WriteLine ( "\n" + HullDesignation.Prefix + " " + DesignName + "-Class "+  HullDesignation.HullType + "\nMass: " + mass + "KT\nArmor Thickness: " + ArmorLayers+"\n" + "Crew: " + CrewMin 
 				+ "\nSpare Berths: " + (CrewBerths - CrewMin) + "\n");
 			foreach (ShipComponents c in Components) {
-				writer.WriteLine (DACRanges[c].ToString() + " " + c.name + ": ");
+				writer.WriteLine (DACRanges[c].ToString() + " " + c.Name + ": ");
 			}
 		writer.Close ();
 		}

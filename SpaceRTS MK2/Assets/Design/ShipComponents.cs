@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+using System.Reflection;
 
 public enum CompCategory{
 	DEFAULT,
@@ -13,15 +13,17 @@ public enum CompCategory{
 
 public class ShipComponents {
 
+	public string Name;
+
 	public CompCategory Category = CompCategory.DEFAULT;
 
 	public static List<ShipComponents> DesignedComponents = new List<ShipComponents> ();
-
+	public static List<int>UsedID = new List<int>();
+	public static Dictionary<int,ShipComponents> IDComp = new Dictionary<int, ShipComponents> ();
 	//probably wont be used if we stick with aurora damage system
 
 	public bool Obsolete = false;
 
-	public string name;
 
 	public int Mass; //kilotons
 	public bool Enabled = true;
@@ -41,10 +43,14 @@ public class ShipComponents {
 	public bool flagControl = false;
 
 	public string GenerateDesignString(){
-		return string.Format ("{0}    {1}kt  {2}C", name, Mass, CrewRequired); //todo
+		if(isEngine)
+			return string.Format ("{0} {1}kt  {2}Thrust", Name, Mass, Thrust); //todo
+		
+
+		return string.Format ("{0} {1}kt  {2}C", Name, Mass, CrewRequired); //todo
 	}
 
-	int HTK = 1;
+	public int HTK = 1;
 	public int GetHTK(){
 		return HTK;
 	}
@@ -56,8 +62,6 @@ public class ShipComponents {
 		return Damaged;
 	}
 
-	public bool[,] Armor;
-
 	public bool isEngine = false;
 
 
@@ -67,11 +71,26 @@ public class ShipComponents {
 	public float FuelConsumption; //per tick
 
 	public void Damage(){
-		Debug.Log(name + " has been damaged.");
+		Debug.Log(Name + " has been damaged.");
 		Damaged = true;
 	}
 
+	public EngineTypes EngineType;
+	float PowerModifier;
 
+	static float BaseFuelConsumption = 1;
+
+	public static ShipComponents DesignEngine(EngineTypes type, int m, float power = 1f){
+		ShipComponents D = new ShipComponents ();
+		D.isEngine = true;
+		D.Category = CompCategory.ENGINE;
+		D.EngineType = type;
+		D.Mass = m;
+		D.PowerModifier = power;
+		D.HTK = m / 100;
+		D.Thrust = (D.Mass / 50) * (power * (int)D.EngineType);
+		return D;
+	}
 
 	public ShipComponents CloneProperties(){
 		ShipComponents dest = new ShipComponents ();
@@ -81,7 +100,7 @@ public class ShipComponents {
 		dest.quarters = quarters;
 		dest.lifeSupport = lifeSupport;
 		dest.HTK = HTK;
-		dest.name = name;
+		dest.Name = Name;
 		dest.isEngine = isEngine;
 		dest.Thrust = Thrust;
 		dest.TurnThrust = TurnThrust;
@@ -94,9 +113,9 @@ public class ShipComponents {
 	}
 
 	public static void Save(ShipComponents c){
-		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + c.name + ".txt"); 
+		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + c.Name + ".txt"); 
 		using (StreamWriter writer = new StreamWriter (path)) {
-			writer.WriteLine (c.name ); //0
+			writer.WriteLine (c.Name ); //0
 			writer.WriteLine (((int)c.Category).ToString ());
 			writer.WriteLine (c.Mass);  //2
 			writer.WriteLine (c.toggleable);
@@ -121,10 +140,12 @@ public class ShipComponents {
 		return false;
 	}
 
+	//TODO add component ID, enginetype, power modifier 
+
 	public static ShipComponents LoadPath(string path, bool addToList){
 		ShipComponents c = new ShipComponents ();
 		string[] data = File.ReadAllLines (path);
-		c.name = data [0];
+		c.Name = data [0];
 		c.Category = (CompCategory)(int.Parse(data [1] ));
 		c.Mass = int.Parse(data [2]);
 		c.toggleable = ToBool (data[3]);
@@ -157,7 +178,7 @@ public class ShipComponents {
 		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + name + ".txt"); 
 		ShipComponents c = new ShipComponents ();
 		string[] data = File.ReadAllLines (path);
-		c.name = data [0];
+		c.Name = data [0];
 		c.Category = (CompCategory)(int.Parse(data [1] ));
 		c.Mass = int.Parse(data [2]);
 		c.toggleable = ToBool (data[3]);
@@ -179,5 +200,38 @@ public class ShipComponents {
 		return c;
 	}
 
+	public static void LoadAllComponentsReflection(){
+		string[] filePaths = Directory.GetFiles (System.IO.Path.Combine (Application.streamingAssetsPath, "Components/"), "*.txt");
+		foreach (string s in filePaths) {
+			LoadFields (s);
+		}
+	}
 
+	public void GetFields(){
+		List<FieldInfo> Fields = new List<FieldInfo> ();
+		Fields.AddRange (GetType ().GetFields ());
+		Debug.Log ("Fields found: " + Fields.Count);
+		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + Name + "REFLECTED.txt"); 
+		using (StreamWriter writer = new StreamWriter (path)) {
+			foreach (FieldInfo f in Fields) {
+				Debug.Log (f.GetValue(this));
+				writer.WriteLine(
+					f.Name + ":\t" +
+					f.GetValue (this).ToString());
+			}
+		}
+	}
+
+	public static void LoadFields(string name){
+		List<FieldInfo> Fields = new List<FieldInfo> ();
+		ShipComponents c = new ShipComponents();
+		Fields.AddRange (c.GetType ().GetFields ());
+		Debug.Log ("Fields found: " + Fields.Count);
+		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + name + "REFLECTED.txt"); 
+		string[] data = File.ReadAllLines (path);
+		foreach (string s in data) {
+
+		}
+
+	}
 }
