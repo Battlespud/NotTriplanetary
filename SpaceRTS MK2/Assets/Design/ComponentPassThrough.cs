@@ -14,7 +14,7 @@ public class ComponentPassThrough : MonoBehaviour {
 	}
 
 	public void AddShipComponent(){
-		if (component.isEngine) {
+		if (component.Category == CompCategory.ENGINE) {
 			Debug.Log ("An Engine");
 			Manager.AddEngine (component);
 		} else {

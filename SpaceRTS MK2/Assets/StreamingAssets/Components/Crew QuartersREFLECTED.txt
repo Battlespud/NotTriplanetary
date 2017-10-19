@@ -1,23 +1,20 @@
-Name:	Crew Quarters
-Category:	REQUIRED
 DesignedComponents:	System.Collections.Generic.List`1[ShipComponents]
 UsedID:	System.Collections.Generic.List`1[System.Int32]
 IDComp:	System.Collections.Generic.Dictionary`2[System.Int32,ShipComponents]
 Obsolete:	False
+Name:	Crew Quarters
+ID:	0
+Category:	REQUIRED
+Abilities:	System.Collections.Generic.List`1[Ability]
 Mass:	100
+CrewRequired:	0
+powerReq:	0
+PassiveSig:	0
 Enabled:	True
 toggleable:	False
-PassiveSig:	0
-CrewRequired:	0
-Cost:	System.Collections.Generic.Dictionary`2[RawResources,System.Single]
-quarters:	250
-lifeSupport:	0
-powerReq:	0
-control:	False
-flagControl:	False
-HTK:	1
-isEngine:	False
-Thrust:	0
-TurnThrust:	0
-FuelConsumption:	0
-EngineType:	0
+
+AbilityType:	CREW
+Rating:	100
+Rating2:	0
+Rating3:	0
+thrust:	0

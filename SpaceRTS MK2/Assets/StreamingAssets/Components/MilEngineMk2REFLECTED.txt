@@ -1,0 +1,20 @@
+DesignedComponents:	System.Collections.Generic.List`1[ShipComponents]
+UsedID:	System.Collections.Generic.List`1[System.Int32]
+IDComp:	System.Collections.Generic.Dictionary`2[System.Int32,ShipComponents]
+Obsolete:	False
+Name:	MilEngineMk2
+ID:	0
+Category:	ENGINE
+Abilities:	System.Collections.Generic.List`1[Ability]
+Mass:	200
+CrewRequired:	50
+powerReq:	0
+PassiveSig:	0
+Enabled:	True
+toggleable:	False
+
+AbilityType:	THRUST
+Rating:	6
+Rating2:	1
+Rating3:	1
+thrust:	28

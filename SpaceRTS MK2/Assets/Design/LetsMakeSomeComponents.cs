@@ -25,57 +25,36 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 		bridge.Name = "Bridge";
 		bridge.Mass = 50;
 		bridge.CrewRequired = 15;
-		bridge.control = true;
+		bridge.AddAbility(AbilityCats.CONTROL);
 		bridge.Category = CompCategory.REQUIRED;
 
-		ShipComponents flagBridge = new ShipComponents();
-		flagBridge.Name = "Flag Bridge";
-		flagBridge.Mass = 250;
-		flagBridge.CrewRequired = 100;
-		flagBridge.control = true;
-		flagBridge.flagControl = true;
-		flagBridge.Category = CompCategory.REQUIRED;
-
-		ShipComponents MilEngine = ShipComponents.DesignEngine (EngineTypes.MAGNETO, 300, 1f);
-		MilEngine.Name = "MilEngine2";
+		ShipComponents MilEngine = new ShipComponents ();
+		MilEngine.Name = "MilEngineMk2";
 		MilEngine.CrewRequired = 50;
+		MilEngine.Mass = 200;
+		MilEngine.AddAbility(AbilityCats.THRUST,(float)EngineTypes.MAGNETO,1f,1f);
 
 		ShipComponents turnThruster = new ShipComponents ();
 		turnThruster.Name = "Manuevering Thruster";
-		turnThruster.TurnThrust = 25;
+		turnThruster.AddAbility (AbilityCats.TURN, 35f);
 		turnThruster.Mass = 25;
 		turnThruster.CrewRequired = 10;
-		turnThruster.isEngine = true;
 		turnThruster.Category = CompCategory.DEFAULT;
 
 		ShipComponents berths = new ShipComponents();
 		berths.Name = "Crew Quarters";
 		berths.Mass = 100;
-		berths.quarters = 250;
+		berths.AddAbility (AbilityCats.CREW, 100);
 		berths.Category = CompCategory.REQUIRED;
 
 		ShipComponents smBerths = new ShipComponents();
 		smBerths.Name = "Crew Quarters";
 		smBerths.Mass = 10;
-		smBerths.quarters = 25;
+		smBerths.AddAbility (AbilityCats.CREW, 10);
 		smBerths.Category = CompCategory.REQUIRED;
 
-		ShipComponents lifeSupport = new ShipComponents();
-		lifeSupport.Name = "Life Support";
-		lifeSupport.Mass = 100;
-		lifeSupport.lifeSupport = 500;
-		lifeSupport.Category = CompCategory.REQUIRED;
 
-		ShipComponents smLifeSupport = new ShipComponents();
-		smLifeSupport.Name = "Small Life Support";
-		smLifeSupport.Mass = 10;
-		smLifeSupport.lifeSupport = 50;
-		smLifeSupport.Category = CompCategory.REQUIRED;
-
-		ShipComponents.DesignedComponents.Add (flagBridge);
 		ShipComponents.DesignedComponents.Add (bridge);
-		ShipComponents.DesignedComponents.Add (smLifeSupport);
-		ShipComponents.DesignedComponents.Add (lifeSupport);
 		ShipComponents.DesignedComponents.Add(smBerths);
 		ShipComponents.DesignedComponents.Add(berths);
 		ShipComponents.DesignedComponents.Add (turnThruster);
@@ -85,6 +64,7 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 		ShipComponents.DesignedComponents.Add (c);
 		ShipComponents.DesignedComponents.Add (b);
 
+		DesignScreenManager.LoadAllComponents = true;
 		foreach(ShipComponents ce in ShipComponents.DesignedComponents){
 			ce.GetFields();
 		}

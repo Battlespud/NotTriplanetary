@@ -1,23 +1,20 @@
-Name:	Manuevering Thruster
-Category:	DEFAULT
 DesignedComponents:	System.Collections.Generic.List`1[ShipComponents]
 UsedID:	System.Collections.Generic.List`1[System.Int32]
 IDComp:	System.Collections.Generic.Dictionary`2[System.Int32,ShipComponents]
 Obsolete:	False
+Name:	Manuevering Thruster
+ID:	0
+Category:	DEFAULT
+Abilities:	System.Collections.Generic.List`1[Ability]
 Mass:	25
+CrewRequired:	10
+powerReq:	0
+PassiveSig:	0
 Enabled:	True
 toggleable:	False
-PassiveSig:	0
-CrewRequired:	10
-Cost:	System.Collections.Generic.Dictionary`2[RawResources,System.Single]
-quarters:	0
-lifeSupport:	0
-powerReq:	0
-control:	False
-flagControl:	False
-HTK:	1
-isEngine:	True
-Thrust:	0
-TurnThrust:	25
-FuelConsumption:	0
-EngineType:	0
+
+AbilityType:	TURN
+Rating:	35
+Rating2:	0
+Rating3:	0
+thrust:	0

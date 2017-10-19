@@ -60,7 +60,7 @@ public class DesignScreenManager : MonoBehaviour {
 
 	public Text Description;
 
-	public bool LoadAllComponents = false;
+	public static bool LoadAllComponents = false;
 
 	public bool HideObsolete = false;
 	public List<ShipComponents> Components = new List<ShipComponents> ();
@@ -81,7 +81,6 @@ public class DesignScreenManager : MonoBehaviour {
 	public int Mass;
 	ArmorTypes ArmorType = ArmorTypes.DURANIUM;
 
-	public int LifeSupport; //how many crew the current loadout supports;
 	public int Quarters;   //how much space for crew there is with current loadout.
 
 
@@ -192,7 +191,7 @@ public class DesignScreenManager : MonoBehaviour {
 	void Update () {
 		if (LoadAllComponents) {
 			LoadAllComponents = false;
-			ShipComponents.LoadAllComponents ();
+		//	ShipComponents.LoadAllComponents ();
 			PopulateComponentList ();
 		}
 	}
@@ -201,10 +200,14 @@ public class DesignScreenManager : MonoBehaviour {
 	IEnumerator CheckRequirements(){
 		string OutstandingRequirements = "";
 		RequirementsMet = false;
-		foreach(ShipComponents c in AddedComponents.Keys.ToList()){
-			if (c.control || c.flagControl) {
-				RequirementsMet = true;
-				break;
+		foreach (ShipComponents c in AddedComponents.Keys.ToList()) {
+			foreach (Ability a in c.Abilities) {
+				if (a.AbilityType == AbilityCats.CONTROL) {
+					RequirementsMet = true;
+					break;
+				}
+				if (RequirementsMet)
+					break;
 			}
 		}
 		if(!RequirementsMet)
@@ -225,27 +228,25 @@ public class DesignScreenManager : MonoBehaviour {
 			RequirementsMet = false;
 			OutstandingRequirements += string.Format("Quarters for only {0} of the {1} required crewmembers is present.\n",Quarters,ReqCrew);
 		}
-		if (LifeSupport < ReqCrew) {
-			RequirementsMet = false;
-			OutstandingRequirements += string.Format("Life Support for only {0} of the {1} required crewmembers is present.\n",LifeSupport,ReqCrew);
-		}
 		yield return Ninja.JumpToUnity;
 		Requirements.text = OutstandingRequirements;
 	}
 
 	IEnumerator CheckCrewRequirements(){
 		int quarter = 0;
-		int lifesupport = 0;
 		int minimum = 0;
 		foreach (ShipComponents c in ShipComponents.DesignedComponents) {
 			int number;
 			if (AddedComponents.TryGetValue (c, out number)) {
 				minimum += (c.CrewRequired * number );
-				quarter += (c.quarters * number);
-				lifesupport += (c.lifeSupport * number);
+				foreach (Ability a in c.Abilities) {
+					if (a.AbilityType == AbilityCats.CREW) {
+						quarter += ((int)a.Rating * number);
+
+					}
+				}
 			}
 		}
-		LifeSupport = lifesupport;
 		Quarters = quarter;
 		ReqCrew = minimum;
 		yield return Ninja.JumpToUnity;
@@ -284,7 +285,7 @@ public class DesignScreenManager : MonoBehaviour {
 
 	void CalculateArmorWidth(){
 		int hs = Mass / 50;
-		ArmorLength =(int)(1 + 1.1*(Mathf.Pow (hs, .66f)));
+		ArmorLength =(int)(1 + 1.1*(Mathf.Pow (hs, .77f))); //.66 works well
 	}
 
 	void RunTest(){
@@ -306,7 +307,6 @@ public class DesignScreenManager : MonoBehaviour {
 		design.ArmorLength = ArmorLength;
 		design.CrewMin = ReqCrew;
 		design.CrewBerths = Quarters;
-		design.LifeSupport = LifeSupport;
 		design.mass = Mass;
 			foreach (ShipComponents c in ShipComponents.DesignedComponents) {
 				int number;
@@ -331,11 +331,9 @@ public class DesignScreenManager : MonoBehaviour {
 		//Speed = (Total Thrust / Total Class Size in HS) * 1000 km/s
 		foreach (ShipComponents c in ShipComponents.DesignedComponents) {
 			int number;
-			if(c.isEngine){
+			if(c.Category == CompCategory.ENGINE){
 				if (AddedComponents.TryGetValue (c, out number)) {
-					for (int i = 0; i < number; i++) {
-						thrust += c.Thrust;
-					}
+					thrust += c.GetThrust()*number;
 				}
 			}
 		}

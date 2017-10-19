@@ -86,30 +86,27 @@ public class ShipClass : MonoBehaviour, ICharSlot {
 
 	//updates ship stats based on component damage
 	IEnumerator ChangeStats(){
-		LifeSupport = 0;
+		Quarters = 0;
 		Controllable = false;
 		Thrust = 0;
 		TurnThrust = 0;
 		Mass = (int)DesignTemplate.mass;
 		foreach (ShipComponents c in Components) {
 			if (!c.isDamaged()) {
-				LifeSupport += c.lifeSupport;
-				if (c.control || c.flagControl) {
+				Quarters += (int)c.GetQuarters();
+				if (c.isControl()) {
 					Controllable = true;
 				}
-				TurnThrust += c.TurnThrust;
-				Thrust += c.Thrust;
+				TurnThrust += c.GetTurnThrust();
+				Thrust += c.GetThrust();
 			}
-		}
-		if (LifeSupport < crew) {
-			crew = LifeSupport;
 		}
 		CrewString = string.Format ("Crew: {0}/{1}", crew, mCrew);
 		yield return null;
 	}
 
 	//Current Ship Stats based on components
-	public int LifeSupport; //current functioning lifesupport. Any crew over this limit will be killed on update.
+	public int Quarters; //current functioning Quarters + lifesupport.
 	public bool Controllable; //Is there a working bridge
 	public float Thrust;  //max thrust from functioning engines
 	public float TurnThrust; //Max turnrate from functioning engines/thrusters
