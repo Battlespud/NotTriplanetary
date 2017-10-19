@@ -4,17 +4,3 @@ IDComp:	System.Collections.Generic.Dictionary`2[System.Int32,ShipComponents]
 Obsolete:	False
 Name:	Bridge
 ID:	0
-Category:	REQUIRED
-Abilities:	System.Collections.Generic.List`1[Ability]
-Mass:	50
-CrewRequired:	15
-powerReq:	0
-PassiveSig:	0
-Enabled:	True
-toggleable:	False
-
-AbilityType:	CONTROL
-Rating:	0
-Rating2:	0
-Rating3:	0
-thrust:	0

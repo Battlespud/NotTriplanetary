@@ -38,6 +38,12 @@ public struct Ability{
 	public float thrust; //onlyused by engines
 }
 
+public struct Emissions{
+	public float EM;
+	public float TH;
+	public float TCS;
+}
+
 public class ShipComponents {
 	public static List<ShipComponents> DesignedComponents = new List<ShipComponents> ();
 	public static List<int>UsedID = new List<int>();
@@ -48,6 +54,8 @@ public class ShipComponents {
 	public string Name;
 	public int ID; //unique identifier
 
+	public string Description;
+
 	public CompCategory Category = CompCategory.DEFAULT;
 
 	public List<Ability> Abilities = new List<Ability> ();
@@ -56,7 +64,8 @@ public class ShipComponents {
 	public int Mass; //tons
 	public int CrewRequired = 0;
 	public float powerReq;
-	public float PassiveSig;
+	public float ThermalSig;
+	public float EMSig;
 
 
 	public bool Enabled = true;
@@ -164,7 +173,8 @@ public class ShipComponents {
 			d = a;
 			dest.Abilities.Add (d);
 		}
-		dest.PassiveSig = PassiveSig;
+		dest.ThermalSig = ThermalSig;
+		dest.EMSig = EMSig;
 		dest.CrewRequired = CrewRequired;
 
 		dest.HTK = HTK;
@@ -182,7 +192,7 @@ public class ShipComponents {
 		Fields.AddRange (GetType ().GetFields ());
 		List<FieldInfo> AbilityFields = new List<FieldInfo> ();
 
-		Debug.Log ("Fields found: " + Fields.Count);
+	//	Debug.Log ("Fields found: " + Fields.Count);
 		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + Name + "REFLECTED.txt"); 
 		using (StreamWriter writer = new StreamWriter (path)) {
 			foreach (FieldInfo f in Fields) {

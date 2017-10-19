@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.IO;
 
-public class ShipClass : MonoBehaviour, ICharSlot {
+public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 
 	public const int MaxAttempts = 15; //After this many failed DAC rolls, the ship will be considered destroyed.
 
@@ -60,6 +60,7 @@ public class ShipClass : MonoBehaviour, ICharSlot {
 
 	public int Torpedos = 12;
 
+	public Emissions emissions;
 
 	public PowerSystem Power = new PowerSystem();
 	public Tractor tractor = new Tractor();
@@ -81,7 +82,9 @@ public class ShipClass : MonoBehaviour, ICharSlot {
 	public int MaxDAC; //exclusive, actual highest value is 1 less.
 
 
-
+	public Emissions GetEmissions(){
+		return emissions;
+	}
 
 
 	//updates ship stats based on component damage
@@ -137,6 +140,11 @@ public class ShipClass : MonoBehaviour, ICharSlot {
 		crew = mCrew;
 		SetupDAC ();
 		StartCoroutine(ChangeStats());
+		emissions = new Emissions();
+		float therms;
+		foreach (ShipComponents c in Components) {
+
+		}
 	}
 
 	public void SetupDAC(){
