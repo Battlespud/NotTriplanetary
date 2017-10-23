@@ -1,6 +1,21 @@
-DesignedComponents:	System.Collections.Generic.List`1[ShipComponents]
-UsedID:	System.Collections.Generic.List`1[System.Int32]
-IDComp:	System.Collections.Generic.Dictionary`2[System.Int32,ShipComponents]
-Obsolete:	False
-Name:	Bridge
-ID:	0
+Name: DesignedComponents:	System.Collections.Generic.List`1[ShipComponents]
+Name: UsedID:	System.Collections.Generic.List`1[System.Int32]
+Name: IDComp:	System.Collections.Generic.Dictionary`2[System.Int32,ShipComponents]
+Name: Obsolete:	False
+Name: Name:	Bridge
+Name: ID:	0
+Name: Category:	REQUIRED
+Name: Abilities:	System.Collections.Generic.List`1[Ability]
+Name: Mass:	50
+Name: CrewRequired:	15
+Name: powerReq:	0
+Name: ThermalSig:	0
+Name: EMSig:	0
+Name: Enabled:	True
+Name: toggleable:	False
+
+AbilityType:	CONTROL
+Rating:	0
+Rating2:	0
+Rating3:	0
+thrust:	0

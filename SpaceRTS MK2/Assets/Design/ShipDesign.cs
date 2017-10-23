@@ -46,6 +46,8 @@ public class ShipDesign {
 	public int ArmorLayers;
 	public int ArmorLength;
 	public int mTorpedoes;
+	public ArmorTypes ArmorType;
+
 
 	public ShipPrefabTypes BaseType;//visual
 

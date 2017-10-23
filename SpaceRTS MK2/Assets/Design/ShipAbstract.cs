@@ -37,6 +37,8 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 
 	public void OpenShipMenu(){
 		ShipUI.active = !ShipUI.activeSelf;
+		if(ShipUI)
+			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,BuildArmorString());
 	}
 
 	//Resources
@@ -49,7 +51,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 	public static Dictionary<ShipPrefabTypes, GameObject> ShipTypeDict = new Dictionary<ShipPrefabTypes, GameObject>();
 	public static GameObject CustomShipPrefab;
 
-	public bool[,] Armor;
+	public float[,] Armor;
 
 	public string ShipName;
 
@@ -98,7 +100,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 			LoadResources ();
 		ArmorText = gameObject.AddComponent<Text> ();
 //		BuildDate = ClockStatic.clock.GetDate ();
-		SetupArmor (4*(int)BaseType,2*(int)BaseType );
+		SetupArmor (4*(int)BaseType,2*(int)BaseType, 2.5f );
 		//c = FactionMatrix.FactionColors [(int)faction];
 		ShipName = NameManager.AssignName(this);
 		shipClass = gameObject.GetComponent<ShipClass> ();
@@ -120,15 +122,15 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 	public float integrity = 100f;
 
 
-	public void SetupArmor(int c, int r){
-		Armor = new bool[c, r];
+	public void SetupArmor(int c, int r, float armorStrength){
+		Armor = new float[c, r];
 		for (int x = 0; x < Armor.GetLength(0); x += 1) {
 			for (int y = 0; y < Armor.GetLength(1); y += 1) {
-				Armor [x, y] = true;
+				Armor [x, y] = armorStrength;
 			}
 		}
-		ArmorText.text = BuildArmorString ();
-		Debug.Log("Initial: \n" + BuildArmorString());
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,BuildArmorString());
+		MaxArmor = armorStrength;
 	}
 
 	public void TestArmor(){
@@ -136,24 +138,33 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 		Debug.Log("Function is deprecated");
 	}
 
+	public float MaxArmor;
 
-
-	public void DamageArmor(List<Int2> pattern, int dam){
+	//lowest layer to hull is always 0, negatives have penetrated armor entirely.
+	public void DamageArmor(List<Int2> pattern, float dam){
 		int startX = Random.Range (0, Armor.GetLength (0) - 1);
 		int startY = 0;
 		for(startY = Armor.GetLength(1)-1; startY >= 0; startY--){
-			if (Armor [startX, startY] == true) {
+			if (Armor [startX, startY] > 0f) {
 				break;
 			}
 		}
 		int HullBound = 0;
-		int counter = 0;
+		float counter = 0;
 		//adjust penetration profile by damage
 		for(int i = 0; dam > 0; i++) { //TODO REFACTOR PLS PLS PLS ITS SO BAD
-			dam--;
-			Int2 v = pattern[i];
-			if (startY + v.y < HullBound)
-					counter++;   //Hit has penetrated the armor and impacted the hull.
+			if (i >= pattern.Count)
+				i = 0;
+			Int2 v = pattern[i]; 
+			if (startY + v.y < HullBound) {
+				if (dam >= 1f) {
+					counter++;
+					dam -= 1;
+				} else {
+					counter += dam;
+					dam = 0f;
+				}
+			}
 			if (startX + v.x < 0) {
 				v.x += Armor.GetLength (0)-1; 
 			}
@@ -162,9 +173,15 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 			}
 				if (startX + v.x >= 0 && startX + v.x < Armor.GetLength (0) && startY + v.y >= 0 && startY + v.y < Armor.GetLength (1)) {
 					try {
-						Armor [startX + v.x, startY + v.y] = false;
-					Debug.Log((startX + v.x) + "," + (startY + v.y));
-					} catch {
+					if(dam > Armor [startX + v.x, startY + v.y]){
+						dam -= Armor [startX + v.x, startY + v.y];
+						Armor [startX + v.x, startY + v.y] = 0f;
+					}
+					else{
+						Armor [startX + v.x, startY + v.y] -= dam;
+						dam = 0f;
+					}
+				} catch {
 					Debug.Log ("Invalid armor coords");
 					}
 				}
@@ -175,37 +192,37 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 			} else {
 			integrity -= Random.Range (2f, 5f) * counter;
 			}
-		ArmorText.text = BuildArmorString ();
+		if(ShipUI)
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,BuildArmorString());
 	}
 
 
-	string BuildArmorString(){
+	IEnumerator BuildArmorString(){
 			StringBuilder a = new StringBuilder();
 			for (int y = 0; y < Armor.GetLength (1); y++) {
 				for (int x = 0; x < Armor.GetLength (0); x++) {
-					if (Armor [x, y]) {
+				if (Armor [x, y] == MaxArmor) {
 					a.Append( "<color=green>□</color>");
-					} else {
-					a.Append( "<color=red>□</color>");
+				}
+				else if (Armor[x,y] > 0f && Armor[x,y] < MaxArmor) {
+					a.Append( "<color=yellow>□</color>");
 					}
+				else if (Armor[x,y] <= 0f) {
+					a.Append( "<color=red>□</color>");
+				}
 				}
 				a.AppendLine();
 			}
-		if (ShipUI) {
+		yield return Ninja.JumpToUnity;
 			UIArmorText.text = a.ToString ();
-			try{
 			if (shipClass.usingTemplate) {
 				UIDate.text = "Integrity: " + shipClass.Integrity*100 +"%";
 
 			} else {
 				UIDate.text = "Integrity: " + Mathf.RoundToInt (integrity).ToString () + "%";
 			}
-			}
-			catch{
-				UIDate.text = "Integrity: " + Mathf.RoundToInt (integrity).ToString () + "%";
-			}
-		}
-			return a.ToString();
+
+		ArmorText.text = a.ToString();
 	}
 
 	public void SetupStand(Color c){

@@ -1,0 +1,15 @@
+Design Date: 0 Spring 800
+
+BB Keeth-Class Battleship
+Mass: 2010KT
+Armor Thickness: 4
+Crew: 265
+Spare Berths: 45
+
+[0-0] Bridge: 
+[1-1] Crew Quarters: 
+[2-3] Crew Quarters: 
+[4-5] Crew Quarters: 
+[6-7] Crew Quarters: 
+[8-11] MilEngineMk2: 
+[12-21] Heavy Test: 

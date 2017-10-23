@@ -1,17 +1,18 @@
-DesignedComponents:	System.Collections.Generic.List`1[ShipComponents]
-UsedID:	System.Collections.Generic.List`1[System.Int32]
-IDComp:	System.Collections.Generic.Dictionary`2[System.Int32,ShipComponents]
-Obsolete:	False
-Name:	Manuevering Thruster
-ID:	0
-Category:	DEFAULT
-Abilities:	System.Collections.Generic.List`1[Ability]
-Mass:	25
-CrewRequired:	10
-powerReq:	0
-PassiveSig:	0
-Enabled:	True
-toggleable:	False
+Name: DesignedComponents:	System.Collections.Generic.List`1[ShipComponents]
+Name: UsedID:	System.Collections.Generic.List`1[System.Int32]
+Name: IDComp:	System.Collections.Generic.Dictionary`2[System.Int32,ShipComponents]
+Name: Obsolete:	False
+Name: Name:	Manuevering Thruster
+Name: ID:	0
+Name: Category:	DEFAULT
+Name: Abilities:	System.Collections.Generic.List`1[Ability]
+Name: Mass:	25
+Name: CrewRequired:	10
+Name: powerReq:	0
+Name: ThermalSig:	0
+Name: EMSig:	0
+Name: Enabled:	True
+Name: toggleable:	False
 
 AbilityType:	TURN
 Rating:	35

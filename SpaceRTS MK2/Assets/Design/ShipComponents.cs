@@ -196,9 +196,11 @@ public class ShipComponents {
 		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + Name + "REFLECTED.txt"); 
 		using (StreamWriter writer = new StreamWriter (path)) {
 			foreach (FieldInfo f in Fields) {
-				//Debug.Log (f.GetValue(this));
-				writer.WriteLine(
-					f.Name + ":\t" + f.GetValue (this).ToString());
+				//Debug.Log (f.GetValue(this));\
+				if (f.GetValue (this) != null) {
+					writer.WriteLine (
+						"Name: " + f.Name + ":\t" + f.GetValue (this).ToString ());
+				}
 			}
 			foreach (Ability a in Abilities) {
 				writer.Write ("\n");

@@ -308,6 +308,7 @@ public class DesignScreenManager : MonoBehaviour {
 		design.CrewMin = ReqCrew;
 		design.CrewBerths = Quarters;
 		design.mass = Mass;
+		design.ArmorType = ArmorType;
 			foreach (ShipComponents c in ShipComponents.DesignedComponents) {
 				int number;
 				if (AddedComponents.TryGetValue (c, out number)) {

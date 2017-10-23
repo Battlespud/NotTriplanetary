@@ -98,13 +98,15 @@ public class Ship : ShipAbstract {
 				IssueMovementCommand(Waypoints[0]);
 			}
 		}
-		if( Agent.remainingDistance <= float.Epsilon && Waypoints.Count != 0) {
-			Waypoints.Remove (Waypoints [0]);
-			Agent.Stop (); // TODO
-			moveAssigned = false;
-			SetPaths ();
-			if (Waypoints.Count != 0) {
-				IssueMovementCommand(Waypoints[0]);
+		if (Agent.isActiveAndEnabled) {
+			if (Agent.remainingDistance <= float.Epsilon && Waypoints.Count != 0) {
+				Waypoints.Remove (Waypoints [0]);
+				Agent.Stop (); // TODO
+				moveAssigned = false;
+				SetPaths ();
+				if (Waypoints.Count != 0) {
+					IssueMovementCommand (Waypoints [0]);
+				}
 			}
 		}
 	}
@@ -243,7 +245,7 @@ public class Ship : ShipAbstract {
 		Invoke ("FinalDestroy", 2f);
 	}
 
-	void FinalDestroy(GameObject g)
+	void FinalDestroy()
 	{		
 		Destroy (gameObject);
 	}

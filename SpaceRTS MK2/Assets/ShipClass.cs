@@ -135,7 +135,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 			ShipComponents copy = c.CloneProperties ();
 			Components.Add (copy);
 		}
-		ship.SetupArmor (template.ArmorLength,template.ArmorLayers);
+		ship.SetupArmor (template.ArmorLength,template.ArmorLayers, (float)template.ArmorType);
 		mCrew = template.CrewMin;
 		crew = mCrew;
 		SetupDAC ();
@@ -215,7 +215,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 		OutputReport ();
 	}
 	*/
-	public IEnumerator TakeComponentDamage(int amount){
+	public IEnumerator TakeComponentDamage(float amount){
 		Debug.Log ("Component Damage");
 		int attempts = 0;
 		ShipComponents target;
