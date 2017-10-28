@@ -1,0 +1,15 @@
+Design Date: 4 Spring 800
+
+CV asdfafdas-Class Carrier
+Mass: 3525KT
+Armor Thickness: 10
+Crew: 75
+Spare Berths: 55
+
+[0-0] Bridge: 
+[1-1] Crew Quarters: 
+[2-2] Crew Quarters: 
+[3-3] Crew Quarters: 
+[4-5] Crew Quarters: 
+[6-6] Manuevering Thruster: 
+[7-10] MilEngineMk2: 

@@ -1,0 +1,14 @@
+Name: Erhard Merinder	 Age: 25
+0 Spring 800: Erhard Merinder enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Erhard Merinder is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Insightful
+Flexible
+Stubborn
+Religious

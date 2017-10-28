@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public enum Seasons{
 	Spring,
@@ -14,8 +15,9 @@ public enum Seasons{
 public class Clock : MonoBehaviour {
 
 
+	public string Date;
 
-	public const float TurnLength =5f; //time in seconds
+	public const float TurnLength =2f; //time in seconds
 	float timer = 0f;
 	public int TurnCounter = 0;
 	int subCounter = 0;
@@ -33,7 +35,7 @@ public class Clock : MonoBehaviour {
 	}
 
 	public string GetDate(){
-		return week + " " + season.ToString() + " " + Year;
+		return  week + " " + season.ToString() + " " + Year;
 	}
 	
 	// Update is called once per frame
@@ -44,10 +46,10 @@ public class Clock : MonoBehaviour {
 			TurnEvent.Invoke ();
 			TurnCounter++;
 			subCounter++;
-			if (subCounter >= 10) {
+			if (subCounter >= 2) {
 				week++;
 				subCounter = 0;
-				if (week >= 4) {
+				if (week >= 20) {
 					week = 0;
 					if (season == Seasons.Winter) {
 						season = Seasons.Spring;
@@ -58,6 +60,7 @@ public class Clock : MonoBehaviour {
 					}
 				}
 			}
+			Date = GetDate ();
 		}
 	}
 }

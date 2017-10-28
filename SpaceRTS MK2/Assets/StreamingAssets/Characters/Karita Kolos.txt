@@ -1,0 +1,13 @@
+Name: Karita Kolos	 Age: 24
+0 Spring 800: Karita Kolos enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Karita Kolos is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Impoverished
+Religious
+Cowardly

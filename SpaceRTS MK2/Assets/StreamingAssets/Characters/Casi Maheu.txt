@@ -1,0 +1,12 @@
+Name: Casi Maheu	 Age: 24
+0 Spring 800: Casi Maheu enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Casi Maheu is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer
+Friendly

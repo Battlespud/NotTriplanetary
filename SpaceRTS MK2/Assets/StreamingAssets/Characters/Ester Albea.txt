@@ -1,0 +1,13 @@
+Name: Ester Albea	 Age: 24
+0 Spring 800: Ester Albea enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Ester Albea is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Modest
+Aggressive
+Courteous

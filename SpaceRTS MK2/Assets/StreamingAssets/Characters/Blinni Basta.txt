@@ -1,0 +1,14 @@
+Name: Blinni Basta	 Age: 27
+0 Spring 800: Blinni Basta enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Blinni Basta is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Friendly
+Religious
+Nepotistic
+Innovative

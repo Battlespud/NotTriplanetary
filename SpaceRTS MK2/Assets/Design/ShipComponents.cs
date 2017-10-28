@@ -12,6 +12,11 @@ public enum CompCategory{
 
 };
 
+public enum CompClass{
+	SHIP = 0,
+	FIGHTER
+}
+
 public enum AbilityCats{
 	THRUST,  //rating is enginetype as int, rating 2 is power modifier, .25 = 1.25, -.25 = .75 etc, Thermal reduction, 0-.95
 	TURN,    //*/s
@@ -21,7 +26,8 @@ public enum AbilityCats{
 	USEFUEL,  //uses this amount of fuel when active
 	FUEL,	  //fuel storage
 	HANGAR,   //fighter/fac storage
-	MAINT  //
+	MAINT,  //
+
 }
 
 public enum SENSORTYPES{
@@ -35,7 +41,7 @@ public struct Ability{
 	public float Rating;
 	public float Rating2;
 	public float Rating3;
-	public float thrust; //onlyused by engines
+	public float thrust; //only used by engines
 }
 
 public struct Emissions{
@@ -46,6 +52,7 @@ public struct Emissions{
 
 public class ShipComponents {
 	public static List<ShipComponents> DesignedComponents = new List<ShipComponents> ();
+	public static List<ShipComponents> DesignedFighterComponents = new List<ShipComponents> ();
 	public static List<int>UsedID = new List<int>();
 	public static Dictionary<int,ShipComponents> IDComp = new Dictionary<int, ShipComponents> ();
 
@@ -57,6 +64,7 @@ public class ShipComponents {
 	public string Description;
 
 	public CompCategory Category = CompCategory.DEFAULT;
+	public CompClass compClass = CompClass.SHIP;
 
 	public List<Ability> Abilities = new List<Ability> ();
 
@@ -71,6 +79,7 @@ public class ShipComponents {
 	public bool Enabled = true;
 	public bool toggleable = false;
 
+	public bool Interior = true; //inside the ship, cant be targeted
 
 	Dictionary<RawResources, float> Cost = new Dictionary<RawResources, float>();  //what it costs to buidl this
 
@@ -148,9 +157,9 @@ public class ShipComponents {
 	/// Adds the ability.
 	/// </summary>
 	/// <param name="ability">Ability.</param>
-	/// <param name="rate">(float)EngineType for engines. Otherwise just amount.</param>
-	/// <param name="rate2">Powermodifier as decimal. Only required for engines.</param>
-	/// <param name="rate3">If engine, thermal reduction, 0-.95, higher is stealthier.</param>
+	/// <param name="rate">(float)EngineType for engines. Otherwise just amount. For shields: 1 is directional, 0 is wall</param>
+	/// <param name="rate2">Powermodifier as decimal. Only required for engines. For shields, x coord, only if directional</param>
+	/// <param name="rate3">If engine, thermal reduction, 0-.95, higher is stealthier. For shields, y coord, only if directional</param>
 	public void AddAbility(AbilityCats ability, float rate = 0, float rate2 = 0f, float rate3 = 0f){
 		Ability a = new Ability ();
 		a.AbilityType = ability;

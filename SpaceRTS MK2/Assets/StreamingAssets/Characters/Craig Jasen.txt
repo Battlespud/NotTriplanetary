@@ -1,0 +1,11 @@
+Name: Craig Jasen	 Age: 25
+0 Spring 800: Craig Jasen enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Craig Jasen is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower

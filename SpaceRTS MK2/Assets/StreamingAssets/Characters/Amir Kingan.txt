@@ -1,0 +1,13 @@
+Name: Amir Kingan	 Age: 28
+0 Spring 800: Amir Kingan enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Amir Kingan is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cowardly
+Trusting
+Adventurous

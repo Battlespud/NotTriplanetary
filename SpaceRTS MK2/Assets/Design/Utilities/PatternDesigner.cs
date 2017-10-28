@@ -13,6 +13,8 @@ public class PatternDesigner : MonoBehaviour {
 	public List<GameObject>Cubes = new List<GameObject>(); //all
 	public List<ToggleBlock> Blocks = new List<ToggleBlock> (); //only selected
 
+	public bool UseInt2List = true;
+
 	public InputField Name;
 
 	const int Columns = 15;  //MUST BE ODD
@@ -63,6 +65,20 @@ public class PatternDesigner : MonoBehaviour {
 
 
 	public void Save(){
+		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Patterns/" + Name.text + ".txt"); 
+		using (StreamWriter writer = new StreamWriter (path)) {
+			writer.Write ("public List<Int2> " + Name.text + "Pattern = new List<Int2>(){");
+			foreach (ToggleBlock b in Blocks) {
+				writer.Write(string.Format("new Int2 ({0}, {1}), ",b.x,b.y));
+			}
+			writer.Write ("};");
+		}
+	}
+
+	public void SaveAlter(){
+		List<float> percents = new List<float> ();
+		List <int> count = new List<int> ();
+		//TODO
 		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Patterns/" + Name.text + ".txt"); 
 		using (StreamWriter writer = new StreamWriter (path)) {
 			writer.Write ("public List<Int2> " + Name.text + "Pattern = new List<Int2>(){");

@@ -1,0 +1,14 @@
+Name: Trees Oshiro	 Age: 24
+0 Spring 800: Trees Oshiro enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Trees Oshiro is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Enterprising
+Defector
+Cautious
+Inflexible

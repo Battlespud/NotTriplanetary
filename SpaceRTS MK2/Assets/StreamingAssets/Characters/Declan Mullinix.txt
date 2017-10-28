@@ -1,0 +1,11 @@
+Name: Declan Mullinix	 Age: 25
+0 Spring 800: Declan Mullinix enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Declan Mullinix is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Religious

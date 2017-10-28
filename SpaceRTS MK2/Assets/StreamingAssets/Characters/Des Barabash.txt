@@ -1,0 +1,11 @@
+Name: Des Barabash	 Age: 30
+0 Spring 800: Des Barabash enlists at the rank of Commander.
+0 Spring 800: Commander Des Barabash is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Authoritarian

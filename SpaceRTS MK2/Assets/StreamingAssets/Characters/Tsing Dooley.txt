@@ -1,0 +1,11 @@
+Name: Tsing Dooley	 Age: 25
+0 Spring 800: Tsing Dooley enlists at the rank of Commander.
+0 Spring 800: Commander Tsing Dooley is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Resentful

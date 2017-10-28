@@ -1,0 +1,18 @@
+Design Date: 6 Spring 800
+
+BB Harrier-Class Battleship
+Mass: 5275KT
+Armor Thickness: 8
+Crew: 275
+Spare Berths: 25
+
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-7] Manuevering Thruster: 
+[8-11] MilEngineMk2: 
+[12-16] Light Test: 
+[17-21] Light Test: 
+[22-26] Light Test: 
+[27-31] Light Test: 

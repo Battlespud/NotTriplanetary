@@ -1,0 +1,14 @@
+Name: Merl Phifer	 Age: 26
+0 Spring 800: Merl Phifer enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Merl Phifer is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Disorganized
+Impatient
+Resourceful
+Cowardly

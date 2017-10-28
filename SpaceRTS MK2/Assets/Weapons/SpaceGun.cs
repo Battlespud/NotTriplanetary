@@ -20,6 +20,8 @@ public  class SpaceGun : MonoBehaviour {
 	public IPDTarget pdTarget;
 	public GameObject pdTargObj;
 
+	public LineRenderer lr;
+	public GameObject lrObj;
 
 	public bool shooting = true;
 	public bool CanFire = true;
@@ -65,6 +67,18 @@ public  class SpaceGun : MonoBehaviour {
 			turret = GetComponent<Turret> ();
 		}
 		turret.tType = tType;
+		lrObj = new GameObject();
+		lrObj.transform.parent = transform;
+		lrObj.transform.localPosition = new Vector3 (0f, 0f, 0f);
+		lr = lrObj.AddComponent<LineRenderer> ();
+		lr.SetWidth (.025f, .025f);
+		lr.material = new Material (Shader.Find("Particles/Additive"));
+		if(self.GetFaction() == FAC.PLAYER){
+			lr.SetColors (Color.red, Color.red);
+				}
+				else{
+			lr.SetColors (Color.blue, Color.blue);
+				}
 	}
 
 	public virtual void CustomInitialize(){
@@ -147,7 +161,8 @@ public  class SpaceGun : MonoBehaviour {
 		if (tType == TurretType.CAPITAL) {
 			if (!CanFire || target == null || !self.shipClass.Power.UsePower (powerCost))
 				return;
-			Debug.DrawLine (self.transform.position, target.GetGameObject().transform.position, lineC, .05f);
+		//	Debug.DrawLine (self.transform.position, target.GetGameObject().transform.position, lineC, .05f);
+			lr.SetPositions (new Vector3[]{self.transform.position,target.GetGameObject().transform.position});
 			if (ForceMagnitude > 0f) {
 				target.DealPhysicsDamage(Damage, self.transform.position, ForceMagnitude, self.transform, Pattern);
 			} else {
@@ -161,20 +176,23 @@ public  class SpaceGun : MonoBehaviour {
 		if (tType == TurretType.PD) {
 			if (!CanFire || pdTarget == null || !self.shipClass.Power.UsePower (powerCost))
 				return;
-			Debug.DrawLine (self.transform.position, pdTarget.GetGameObject().transform.position, lineC, .05f);
+		//	Debug.DrawLine (self.transform.position, pdTarget.GetGameObject().transform.position, lineC, .05f);
 			pdTarget.HitByPD((int)Damage);
 			StartCoroutine ("Reload");
 			CanFire = false;
 		}
 	}
+		
 
 	IEnumerator MuzzleFlash(){
 		light.enabled = true;
-		float time = .1f;
+		lrObj.active = true;
+		float time = .075f;
 		while (time > 0f) {
 			time -= Time.deltaTime;
 			yield return null;
 		}
+		lrObj.active = false;
 		light.enabled = false;
 	}
 

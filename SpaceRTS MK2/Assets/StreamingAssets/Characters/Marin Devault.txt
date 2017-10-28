@@ -1,0 +1,13 @@
+Name: Marin Devault	 Age: 25
+0 Spring 800: Marin Devault enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Marin Devault is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Hunter
+Combatative
+Imaginative

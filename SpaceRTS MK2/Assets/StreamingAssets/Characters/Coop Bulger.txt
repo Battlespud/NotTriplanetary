@@ -1,0 +1,13 @@
+Name: Coop Bulger	 Age: 34
+0 Spring 800: Coop Bulger enlists at the rank of List Captain.
+0 Spring 800: List Captain Coop Bulger is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Imaginative
+Sincere
+Cold

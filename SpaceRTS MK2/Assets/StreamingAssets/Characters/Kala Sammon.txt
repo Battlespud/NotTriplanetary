@@ -1,0 +1,11 @@
+Name: Kala Sammon	 Age: 28
+0 Spring 800: Kala Sammon enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Kala Sammon is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower

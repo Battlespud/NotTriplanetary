@@ -6,7 +6,7 @@ public class EscapePod : MonoBehaviour {
 
 
 	public int Survivors;
-
+	public List<Character>SurvivorCharacters = new List<Character>();
 	float lifespan = 240f;
 
 	// Use this for initialization
@@ -17,6 +17,11 @@ public class EscapePod : MonoBehaviour {
 	void OnTriggerEnter(Collider col){
 		if (col.gameObject.GetComponent<Ship> ()) {
 			col.GetComponent<Ship> ().RescueSurvivors (this);
+			foreach (Character c in SurvivorCharacters) {
+				col.GetComponent<ShipClass> ().TransferCharacterTo (c);
+			}
+			SurvivorCharacters.Clear ();
+
 		}
 	}
 	
@@ -24,6 +29,9 @@ public class EscapePod : MonoBehaviour {
 	void Update () {
 		lifespan -= Time.deltaTime;
 		if (lifespan <= 0f)
+			foreach(Character m in SurvivorCharacters){
+				m.Die();
+			}
 			Destroy (gameObject);
 	}
 }

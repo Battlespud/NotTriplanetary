@@ -91,10 +91,16 @@ public class Targeting : MonoBehaviour {
 	public void ResetTarget(){
 		if ( target == null && targets.Count != 0)
 			target = targets [0];
+		try{
 		foreach (IPDTarget t in pdTargets) {
 			if (t == null || t.GetGameObject() == null) {
 				RemoveTargetT (t);
 			}
+		}
+		}
+		catch{
+			pdTargets.Remove (pdTargets [0]);
+			Debug.Log ("<color=red>Avoiding Target Lockup Error</color> This warning can be safely ignored.");
 		}
 		if (pdTargets.Count != 0) {
 			pdTargets.OrderBy(
@@ -109,11 +115,17 @@ public class Targeting : MonoBehaviour {
 		foreach (Turret t in turrets) {
 			if(target != null&& t.tType == TurretType.CAPITAL)
 				t.Target = target.GetGameObject();
+			try{
 			if(pdtarget != null && t.tType == TurretType.PD)
 				t.Target = pdtarget.GetGameObject();
+		}
+		catch{
+				Debug.Log ("<color=red>Avoiding Target Lockup Error: Turret</color> This warning can be safely ignored.");
+				t.Target = null;
 		}
 		pdTargetsCount = pdTargets.Count;
 
 	}
 
+}
 }

@@ -1,0 +1,12 @@
+Name: Petr Jasen	 Age: 28
+0 Spring 800: Petr Jasen enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Petr Jasen is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Adventurous
+Focused

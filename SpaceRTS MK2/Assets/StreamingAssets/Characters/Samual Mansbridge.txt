@@ -1,0 +1,13 @@
+Name: Samual Mansbridge	 Age: 26
+0 Spring 800: Samual Mansbridge enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Samual Mansbridge is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Modest
+Impatient
+Follower

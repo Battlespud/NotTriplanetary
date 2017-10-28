@@ -1,0 +1,14 @@
+Name: Sir Dilkie	 Age: 24
+0 Spring 800: Sir Dilkie enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Sir Dilkie is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Philosopher
+Decisive
+Egomaniac
+Defector

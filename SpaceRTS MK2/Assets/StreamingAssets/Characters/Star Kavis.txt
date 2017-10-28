@@ -1,0 +1,12 @@
+Name: Star Kavis	 Age: 27
+0 Spring 800: Star Kavis enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Star Kavis is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Optimistic
+Gloomy

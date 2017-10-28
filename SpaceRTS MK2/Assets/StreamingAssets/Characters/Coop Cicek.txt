@@ -1,0 +1,11 @@
+Name: Coop Cicek	 Age: 25
+0 Spring 800: Coop Cicek enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Coop Cicek is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Capricious

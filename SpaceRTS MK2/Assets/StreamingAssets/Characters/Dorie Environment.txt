@@ -1,0 +1,14 @@
+Name: Dorie Environment	 Age: 25
+0 Spring 800: Dorie Environment enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Dorie Environment is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Pessimistic
+Authoritarian
+Survivalist
+Cowardly

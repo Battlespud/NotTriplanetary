@@ -1,0 +1,13 @@
+Name: Pavla Geoffrion	 Age: 25
+0 Spring 800: Pavla Geoffrion enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Pavla Geoffrion is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Capricious
+Egomaniac
+Cautious

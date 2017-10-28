@@ -1,0 +1,14 @@
+Name: Derrik Dupras	 Age: 28
+0 Spring 800: Derrik Dupras enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Derrik Dupras is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Apolitical
+Cautious
+Defector
+Follower

@@ -27,6 +27,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 	//Resources and parts
 	public List<Character>Characters = new List<Character>();
 	public Character Captain;
+	public string CaptainString;
 
 	public List<Character> GetCharacters(){
 		return Characters;
@@ -68,16 +69,20 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 	//REWORK
 	//COMPONENT BASED DESIGN OVERHAUL
 	#region Components
-	ShipDesign DesignTemplate;
+	public ShipDesign DesignTemplate;
 	public List<ShipComponents> Components = new List<ShipComponents>();
 	public List<ShipComponents> DamagedComponents = new List<ShipComponents>();
 
 	public Dictionary<int,ShipComponents> DAC = new Dictionary<int, ShipComponents> ();
 	public Dictionary<ShipComponents,Range>DACRanges = new Dictionary<ShipComponents, Range>();
+	public List<string>ComponentStatus = new List<string>();
+
 
 	public string ShipName;
 	public string ShipClassName;
 	public HullDes HullDesignation;
+
+	public int MinRank = 0; //minimum rank required for command.
 
 	public int MaxDAC; //exclusive, actual highest value is 1 less.
 
@@ -86,6 +91,13 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 		return emissions;
 	}
 
+	void UpdateComponentStatusStrings(){
+		ComponentStatus.Clear();
+		foreach(ShipComponents c in Components){
+			string s = string.Format("{0} Functional: {1}",c.Name, c.isDamaged());
+			ComponentStatus.Add(s);
+		}
+	}
 
 	//updates ship stats based on component damage
 	IEnumerator ChangeStats(){
@@ -105,6 +117,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 			}
 		}
 		CrewString = string.Format ("Crew: {0}/{1}", crew, mCrew);
+		UpdateComponentStatusStrings ();
 		yield return null;
 	}
 
@@ -120,7 +133,6 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 
 
 	//
-
 
 
 
@@ -141,7 +153,6 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 		SetupDAC ();
 		StartCoroutine(ChangeStats());
 		emissions = new Emissions();
-		float therms;
 		foreach (ShipComponents c in Components) {
 
 		}
@@ -280,8 +291,8 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 		}
 	}
 
-	public void OutputReport(){
-		Debug.Log ("Printing Ship Report of " + ship.ShipName + " to text file..");
+	IEnumerator OutputReport(){
+	//	Debug.Log ("Printing Ship Report of " + ship.ShipName + " to text file..");
 		string path="Assets/Output/Reports/" + ship.ShipName + ".txt";
 		using(StreamWriter writer = new StreamWriter(path)){
 			writer.WriteLine ("Active Ship Report");
@@ -293,7 +304,8 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 			writer.WriteLine ("\nIntegrity: " + Integrity *100f + "%"); 
 			writer.Close ();
 		}
-		Debug.Log ("Done. Check " + path);
+		yield return Ninja.JumpToUnity;
+	//	Debug.Log ("Done. Check " + path);
 	}
 	//
 
@@ -345,7 +357,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 		Aft = screens.dic [GeneralDirection.Back].strength;
 		Star = screens.dic [GeneralDirection.Right].strength;
 		Port = screens.dic [GeneralDirection.Left].strength;
-		Wall = screens.WallScreen.strength;
+		Wall = screens.WallShield.strength;
 	}
 	public string[] ScreenOrder = new string[5]{"Fore","Aft","Port","Star","Wall"};
 	public float[] StartingScreenStrengths= new float[5];
@@ -364,6 +376,9 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 
 	//Tractorbeams
 	void TractorLoop(){
+		if ((tractor.target == null )&& tractor.active) {   //TODO doesnt actually work
+			DeactivateTractor ();
+		}
 		Debug.DrawLine (transform.position, tractor.target.transform.position, Color.green);
 		if (tractor.active && !Power.UsePower (11f * Time.deltaTime)) {
 			DeactivateTractor();

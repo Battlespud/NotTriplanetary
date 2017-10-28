@@ -166,7 +166,7 @@ public class Ship : ShipAbstract {
 			if (r) {
 				ShipClass c = rb.GetComponent<ShipClass> ();
 				if (c) {
-					if (!c.screens.ScreensWillHold (20f * (1f / Vector3.Distance (c.transform.position, transform.position)), transform.position,c.transform))
+					if (!c.screens.ShieldsWillHold (20f * (1f / Vector3.Distance (c.transform.position, transform.position)), transform.position,c.transform))
 						r.AddExplosionForce (Force, transform.position, 5f, 0f);
 					c.Damage (20f * (2f / Vector3.Distance (c.transform.position, transform.position)), transform.position, c.transform, Pattern);
 //					Debug.Log (c.name);
@@ -185,6 +185,7 @@ public class Ship : ShipAbstract {
 		g.name = "Explosion Radius";
 		g.transform.position = this.transform.position;
 		g.transform.parent = null;
+		g.AddComponent<KillMe> ();
 		LineRenderer l = g.AddComponent<LineRenderer>();
 		l.startColor = Color.red;
 		RenderCircle (l, 5f);
@@ -205,7 +206,9 @@ public class Ship : ShipAbstract {
 		g.name = "Shockwave";
 		g.transform.position = this.transform.position;
 		g.transform.parent = null;
+		g.AddComponent<KillMe> ();
 		GameObject h = Instantiate (Explosion);
+		h.AddComponent<KillMe> ();
 		h.transform.position = transform.position;
 		LineRenderer l = g.AddComponent<LineRenderer>();
 		Renderer[] re = GetComponentsInChildren<Renderer> ();
@@ -232,11 +235,15 @@ public class Ship : ShipAbstract {
 			yield return null;
 		}
 
-		if(Random.Range(0,2) != 0){
-		GameObject life = Instantiate (EscapePod);
-		life.transform.position = transform.position;
-		life.GetComponent<EscapePod> ().Survivors = shipClass.crew /5;
+		if (Random.Range (0, 5) != 0) {
+			GameObject life = Instantiate (EscapePod);
+			life.transform.position = transform.position;
+			life.GetComponent<EscapePod> ().Survivors = shipClass.crew / 5;
 			life.name = gameObject.name + " Life Boat";
+		} else {
+			foreach(Character m in shipClass.Characters){
+				m.Die();
+			}
 		}
 		NameManager.RecycleName (this);
 		Destroy (g);
@@ -309,8 +316,8 @@ public class Ship : ShipAbstract {
 	public void IssueMovementCommand(Vector2 vec){
 		moveAssigned = true;
 		StopCoroutine("Movement");
-		Agent.velocity = new Vector3();
-		Agent.isStopped = false;
+		//Agent.velocity = new Vector3();
+	//	Agent.isStopped = false;
 		StartCoroutine("Movement", (new Vector3(vec.x,transform.position.y, vec.y)));
 	}
 
@@ -328,6 +335,7 @@ public class Ship : ShipAbstract {
 
 	public void RescueSurvivors(EscapePod e){
 		shipClass.survivors += e.Survivors;
+		shipClass.Characters.AddRange (e.SurvivorCharacters);
 		Debug.Log ("Rescuing from " + e.name);
 		Destroy (e.gameObject);
 	}

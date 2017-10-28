@@ -1,0 +1,11 @@
+Name: Skipper Lumley	 Age: 26
+0 Spring 800: Skipper Lumley enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Skipper Lumley is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Stubborn

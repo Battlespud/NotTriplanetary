@@ -1,0 +1,10 @@
+Name: Fastowl Eagles	 Age: 32
+0 Spring 800: Fastowl Eagles enlists at the rank of Captain.
+0 Spring 800: Captain Fastowl Eagles is awarded the Pioneer's Medallion.
+
+
+Awards:Pioneer's Medallion
+
+
+Traits:Imaginative
+Impatient

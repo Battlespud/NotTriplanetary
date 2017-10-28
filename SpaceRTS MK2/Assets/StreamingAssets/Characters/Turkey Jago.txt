@@ -1,0 +1,11 @@
+Name: Turkey Jago	 Age: 27
+0 Spring 800: Turkey Jago enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Turkey Jago is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Inflexible

@@ -1,0 +1,12 @@
+Name: Hadi Welker	 Age: 27
+0 Spring 800: Hadi Welker enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Hadi Welker is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer
+Cowardly

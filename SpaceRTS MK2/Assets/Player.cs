@@ -9,7 +9,7 @@ public enum CameraMode{
 };
 
 public class Player : MonoBehaviour {
-
+	public static Player Human;
 	public static CameraMode camMode = CameraMode.ORTHO;
 
 	public string PlayerName = "Player";
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
 	Text selectText;
 	public List<Ship> SelectedShips = new List<Ship>();
 	Vector3 mousePos;
-
+	public Empire empire;
 	public bool InMenu = true;
 
 	delegate Vector3 MousePositioner();
@@ -33,14 +33,20 @@ public class Player : MonoBehaviour {
 	}
 
 	void Start () {
-		
+		Human = this;
+		empire = gameObject.AddComponent<Empire> ();
+		empire.Name = "Federal Star Republic";
+		empire.Faction = FAC.PLAYER;
+		empire.GenerateStartingOfficerCorps (35);
+		Trait.Load ();
+		Debug.Log(Trait.Traits.Count);
 		SetMousePositioner ();
 		if (!ConstructionManager.ConstructablePrefab) {
 			ConstructionManager.ConstructablePrefab = Resources.Load<GameObject> ("Constructable") as GameObject;
 		}
-		Debug.Log (NameManager.names.Count + " names have been loaded");
+		Debug.Log (NameManager.names.Count + " ship names have been loaded");
 		SpaceYard.player = this;
-		Screens.ScreenPrefab = Resources.Load <GameObject>("ScreenPrefab") as GameObject;
+		Screens.ShieldPrefab = Resources.Load <GameObject>("ScreenPrefab") as GameObject;
 		SelectionUI = GameObject.FindGameObjectWithTag ("SelectionUI");
 		selectText = SelectionUI.GetComponentInChildren<Text> ();
 		//ShipAbstract.OnDeath.AddListener (RemoveShip);

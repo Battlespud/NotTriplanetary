@@ -1,0 +1,13 @@
+Name: Jak Goin	 Age: 24
+0 Spring 800: Jak Goin enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Jak Goin is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Lazy
+Dishonest
+Callous

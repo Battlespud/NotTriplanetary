@@ -1,10 +1,12 @@
 Name: DesignedComponents:	System.Collections.Generic.List`1[ShipComponents]
+Name: DesignedFighterComponents:	System.Collections.Generic.List`1[ShipComponents]
 Name: UsedID:	System.Collections.Generic.List`1[System.Int32]
 Name: IDComp:	System.Collections.Generic.Dictionary`2[System.Int32,ShipComponents]
 Name: Obsolete:	False
 Name: Name:	Manuevering Thruster
 Name: ID:	0
 Name: Category:	DEFAULT
+Name: compClass:	SHIP
 Name: Abilities:	System.Collections.Generic.List`1[Ability]
 Name: Mass:	25
 Name: CrewRequired:	10
@@ -13,6 +15,7 @@ Name: ThermalSig:	0
 Name: EMSig:	0
 Name: Enabled:	True
 Name: toggleable:	False
+Name: Interior:	True
 
 AbilityType:	TURN
 Rating:	35

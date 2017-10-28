@@ -1,0 +1,13 @@
+Name: Thierry Borosh	 Age: 28
+0 Spring 800: Thierry Borosh enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Thierry Borosh is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Ignorant
+Enterprising
+Patient

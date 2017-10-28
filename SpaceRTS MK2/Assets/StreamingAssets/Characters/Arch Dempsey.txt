@@ -1,0 +1,13 @@
+Name: Arch Dempsey	 Age: 28
+0 Spring 800: Arch Dempsey enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Arch Dempsey is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cautious
+Delegator
+Suspicious

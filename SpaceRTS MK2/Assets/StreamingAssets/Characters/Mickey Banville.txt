@@ -1,0 +1,14 @@
+Name: Mickey Banville	 Age: 25
+0 Spring 800: Mickey Banville enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Mickey Banville is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Friendly
+Hunter
+Uncaring
+Arrogant

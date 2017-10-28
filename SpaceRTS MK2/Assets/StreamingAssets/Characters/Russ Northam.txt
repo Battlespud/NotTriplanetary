@@ -1,0 +1,13 @@
+Name: Russ Northam	 Age: 26
+0 Spring 800: Russ Northam enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Russ Northam is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cheerful
+Ignorant
+Narcissist

@@ -1,0 +1,13 @@
+Name: Felicle Recycling	 Age: 24
+0 Spring 800: Felicle Recycling enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Felicle Recycling is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Enthusiastic
+Born Leader
+Tolerant

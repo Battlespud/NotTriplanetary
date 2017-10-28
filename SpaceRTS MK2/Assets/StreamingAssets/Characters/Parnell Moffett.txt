@@ -1,0 +1,13 @@
+Name: Parnell Moffett	 Age: 24
+0 Spring 800: Parnell Moffett enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Parnell Moffett is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Flexible
+Humble
+Arrogant

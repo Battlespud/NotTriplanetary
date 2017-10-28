@@ -1,0 +1,13 @@
+Name: Bibi Hinkel	 Age: 28
+0 Spring 800: Bibi Hinkel enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Bibi Hinkel is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Suspicious
+Dishonest
+Ignorant

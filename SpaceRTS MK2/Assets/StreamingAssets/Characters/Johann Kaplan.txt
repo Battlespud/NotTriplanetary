@@ -1,0 +1,12 @@
+Name: Johann Kaplan	 Age: 35
+0 Spring 800: Johann Kaplan enlists at the rank of Commodore.
+0 Spring 800: Commodore Johann Kaplan is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Gloomy
+Enthusiastic

@@ -1,0 +1,13 @@
+Name: Message Orr	 Age: 32
+0 Spring 800: Message Orr enlists at the rank of Captain.
+0 Spring 800: Captain Message Orr is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower
+Impatient
+Friendly

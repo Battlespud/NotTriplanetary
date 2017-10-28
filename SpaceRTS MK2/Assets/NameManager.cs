@@ -19,6 +19,8 @@ using UnityEngine;
 public class NameManager
 {	//TODO Use the streaming assets directory please, anything outside the asset management system wont be included in builds.
 
+	static System.Random rand = new System.Random();
+
     static readonly string[] RomanNumerals = { "", "", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
     static string dir = Directory.GetCurrentDirectory() + "\\Text Files";
     static string file = dir + "\\Ship Names.txt";
@@ -26,6 +28,7 @@ public class NameManager
     static List<string> usedNames;
 	static Dictionary <string,int> Frequency = new Dictionary<string,int>();
 	public static Dictionary <ShipAbstract,string> usedNamesShip = new Dictionary<ShipAbstract, string>();
+	public static Dictionary <StrategicShip,string> usedNamesStrategicShip = new Dictionary<StrategicShip, string>();
 
 	//Characters
 
@@ -71,7 +74,6 @@ public class NameManager
 
 	static public string AssignName(ShipAbstract ship)
     {
-		System.Random rand = new System.Random();
 		int index = rand.Next (0, names.Count);
 		string name = names[index];   //AssignNumeral(names[]) ?? names[rand.Next(0, names.Count)];
         names.Remove(name);
@@ -81,9 +83,19 @@ public class NameManager
 		return ship.BaseType.ToString() + " " + name + AssignNumeral(name);
     }
 
+	static public string AssignName(StrategicShip ship)
+	{
+		int index = rand.Next (0, names.Count);
+		string name = names[index];   //AssignNumeral(names[]) ?? names[rand.Next(0, names.Count)];
+		names.Remove(name);
+		usedNames.Add(name);
+		Frequency [name]++;
+		usedNamesStrategicShip.Add (ship, name);
+		return name + AssignNumeral(name);
+	}
 
 	static public string GenerateCharName(){
-		return firstName [Random.Range (0, firstName.Count - 1)] + " " + lastName [Random.Range (0, lastName.Count - 1)];
+		return firstName [rand.Next(0, firstName.Count - 1)] + " " + lastName [rand.Next (0, lastName.Count - 1)];
 	}
 
 	static void CheckDic(string name){
@@ -96,8 +108,21 @@ public class NameManager
 		names.Add (n);
 	}
 
+	static public void RecycleName(StrategicShip s)
+	{
+		string n = usedNamesStrategicShip[s];
+		usedNames.Remove (n);
+		names.Add (n);
+	}
+
     static public string AssignNumeral(string name)
     {
         return   Frequency[name] == 0 ? null : " " + RomanNumerals[Frequency[name]];
     }
+
+	public static string GrabShipName(){
+		int index = rand.Next (0, names.Count);
+		string name = names[index]; 	
+		return name;
+	}
 }

@@ -1,0 +1,13 @@
+Name: Johna Baab	 Age: 28
+0 Spring 800: Johna Baab enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Johna Baab is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Disciplined
+Resourceful
+Born Leader

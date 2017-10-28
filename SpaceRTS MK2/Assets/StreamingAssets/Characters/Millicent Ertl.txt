@@ -1,0 +1,12 @@
+Name: Millicent Ertl	 Age: 25
+0 Spring 800: Millicent Ertl enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Millicent Ertl is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Ambitious
+Flexible

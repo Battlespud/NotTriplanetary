@@ -1,0 +1,11 @@
+Name: Camey Roob	 Age: 24
+0 Spring 800: Camey Roob enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Camey Roob is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Motivated

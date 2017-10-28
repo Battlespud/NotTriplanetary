@@ -1,0 +1,15 @@
+Design Date: 6 Spring 800
+
+BB Hector-Class Battleship
+Mass: 6465KT
+Armor Thickness: 9
+Crew: 275
+Spare Berths: 25
+
+[0-0] Bridge: 
+[1-2] Crew Quarters: 
+[3-4] Crew Quarters: 
+[5-6] Crew Quarters: 
+[7-7] Manuevering Thruster: 
+[8-11] MilEngineMk2: 
+[12-21] Heavy Test: 

@@ -1,0 +1,11 @@
+Name: Panch Maier	 Age: 28
+0 Spring 800: Panch Maier enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Panch Maier is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Insubordinate

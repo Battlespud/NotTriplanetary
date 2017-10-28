@@ -1,0 +1,13 @@
+Name: Glass Morocz	 Age: 25
+0 Spring 800: Glass Morocz enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Glass Morocz is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Attractive
+Cowardly
+Trusting

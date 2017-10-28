@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
  
 
-public class Screen{
+public class Shield{
 	public float strength;
 	public float mStrength;
 	Color color;
-	public Screen(float m ){
+	public Shield(float m ){
 		mStrength = m;
 		strength = mStrength;
 		color = Color.white;
@@ -18,36 +18,36 @@ public class Screens{
 	//linear transformation formula
 	//NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
 
-	public static GameObject ScreenPrefab;
+	public static GameObject ShieldPrefab;
 
 	bool dead = false;
 
-	public Dictionary<GeneralDirection,Screen> dic = new Dictionary<GeneralDirection,Screen> ();
+	public Dictionary<GeneralDirection,Shield> dic = new Dictionary<GeneralDirection,Shield> ();
 	public ShipClass parent;
 	public ShipAbstract abs;
-	public Screen ForeScreen ; 
-	public Screen AftScreen ; 
-	public Screen PortScreen; 
-	public Screen StarboardScreen; 
-	public Screen WallScreen; 
+	public Shield ForeShield ; 
+	public Shield AftShield ; 
+	public Shield PortShield; 
+	public Shield StarboardShield; 
+	public Shield WallShield; 
 
 	public Screens(ShipClass p){
 		parent = p;
-			 ForeScreen = new Screen (parent.StartingScreenStrengths[0]); 
-			 AftScreen = new Screen (parent.StartingScreenStrengths[1]); 
-			 PortScreen = new Screen (parent.StartingScreenStrengths[2]); 
-			 StarboardScreen = new Screen (parent.StartingScreenStrengths[3]); 
-			 WallScreen = new Screen (parent.StartingScreenStrengths[4]); 
-		dic.Add (GeneralDirection.Forwards, ForeScreen);
-		dic.Add (GeneralDirection.Back, AftScreen);
-		dic.Add (GeneralDirection.Left, PortScreen);
-		dic.Add (GeneralDirection.Right, StarboardScreen);
-		dic.Add (GeneralDirection.Up, WallScreen);
-		dic.Add (GeneralDirection.Down, WallScreen);
+			 ForeShield = new Shield (parent.StartingScreenStrengths[0]); 
+		AftShield = new Shield (parent.StartingScreenStrengths[1]); 
+		PortShield = new Shield (parent.StartingScreenStrengths[2]); 
+		StarboardShield = new Shield (parent.StartingScreenStrengths[3]); 
+		WallShield = new Shield (parent.StartingScreenStrengths[4]); 
+		dic.Add (GeneralDirection.Forwards, ForeShield);
+		dic.Add (GeneralDirection.Back, AftShield);
+		dic.Add (GeneralDirection.Left, PortShield);
+		dic.Add (GeneralDirection.Right, StarboardShield);
+		dic.Add (GeneralDirection.Up, WallShield);
+		dic.Add (GeneralDirection.Down, WallShield);
 	}
 
-	public void Damage(float dam, Screen s, Vector3 source, List<Int2> pattern){
-		GameObject g = GameObject.Instantiate (ScreenPrefab);
+	public void Damage(float dam, Shield s, Vector3 source, List<Int2> pattern){
+		GameObject g = GameObject.Instantiate (ShieldPrefab);
 		LineRenderer l = g.GetComponent<LineRenderer> ();
 		g.transform.position = parent.transform.position;
 		g.transform.position = Vector3.MoveTowards (g.transform.position, source, .2f);
@@ -60,12 +60,12 @@ public class Screens{
 				s.strength = 0f;
 		} if(dam >0f) {
 				float applyDam = dam;
-				dam -= WallScreen.strength;
-				WallScreen.strength -= applyDam;
-				if (WallScreen.strength < 0f)
-					WallScreen.strength = 0f;
+				dam -= WallShield.strength;
+				WallShield.strength -= applyDam;
+				if (WallShield.strength < 0f)
+					WallShield.strength = 0f;
 			 if(dam > 0f) {
-				parent.ship.DamageArmor (pattern, (int)dam);
+				ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(parent,parent.ship.DamageArmor (pattern, (int)dam));
 				if (abs.integrity <= 0f && !dead) {
 					dead = true;
 					parent.ship.Die ();
@@ -76,13 +76,13 @@ public class Screens{
 	}
 
 
-	public void PhysicsDamage(float dam, Screen s, Vector3 source, Vector3 force, Transform en, List<Int2> pattern){
-		GameObject g = GameObject.Instantiate (ScreenPrefab);
+	public void PhysicsDamage(float dam, Shield s, Vector3 source, Vector3 force, Transform en, List<Int2> pattern){
+		GameObject g = GameObject.Instantiate (ShieldPrefab);
 		LineRenderer l = g.GetComponent<LineRenderer> ();
 		g.transform.position = parent.transform.position;
 		g.transform.position = Vector3.MoveTowards (g.transform.position, source, .2f);
 		parent.ScreenProxyDelete (g);
-		if (!ScreensWillHold(dam,source, en)) {
+		if (!ShieldsWillHold(dam,source, en)) {
 			parent.ship.rb.AddForce (force);
 		}
 		if (s.strength > 0f) {
@@ -92,14 +92,14 @@ public class Screens{
 			if (s.strength < 0f)
 				s.strength = 0f;
 		} if(dam >0f) {
-			if (WallScreen.strength > 0f) {
+			if (WallShield.strength > 0f) {
 				float applyDam = dam;
-				dam -= WallScreen.strength;
-				WallScreen.strength -= applyDam;
-				if (WallScreen.strength < 0f)
-					WallScreen.strength = 0f;
+				dam -= WallShield.strength;
+				WallShield.strength -= applyDam;
+				if (WallShield.strength < 0f)
+					WallShield.strength = 0f;
 			} if(dam > 0f) {
-				parent.ship.DamageArmor (pattern, (int)dam);
+				ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(parent,parent.ship.DamageArmor (pattern, (int)dam));
 				//parent.integrity -= Random.Range (10f, 25f) * dam;		
 				if (abs.integrity <= 0f && !dead) {
 					parent.ship.Die ();
@@ -113,7 +113,7 @@ public class Screens{
 
 
 
-	public bool ScreensWillHold(float dam, Vector3 source, Transform s){
+	public bool ShieldsWillHold(float dam, Vector3 source, Transform s){
 		if (dic [Direction.GetDirection (source, s, parent.transform.position,parent.transform)].strength >= dam)
 			return true;
 		return false;

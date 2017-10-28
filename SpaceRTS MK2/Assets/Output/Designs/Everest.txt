@@ -1,0 +1,24 @@
+Design Date: 8 Spring 800
+
+BB Everest-Class Battleship
+Mass: 13485KT
+Armor Thickness: 12
+Crew: 495
+Spare Berths: 15
+
+[0-0] Bridge: 
+[1-1] Crew Quarters: 
+[2-3] Crew Quarters: 
+[4-5] Crew Quarters: 
+[6-7] Crew Quarters: 
+[8-9] Crew Quarters: 
+[10-11] Crew Quarters: 
+[12-12] Manuevering Thruster: 
+[13-13] Manuevering Thruster: 
+[14-14] Manuevering Thruster: 
+[15-18] MilEngineMk2: 
+[19-22] MilEngineMk2: 
+[23-32] Heavy Test: 
+[33-37] Light Test: 
+[38-42] Light Test: 
+[43-47] Light Test: 

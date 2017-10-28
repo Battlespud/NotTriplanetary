@@ -1,0 +1,14 @@
+Name: Pars Talbott	 Age: 24
+0 Spring 800: Pars Talbott enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Pars Talbott is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Callous
+Religious
+Patient
+Authoritarian

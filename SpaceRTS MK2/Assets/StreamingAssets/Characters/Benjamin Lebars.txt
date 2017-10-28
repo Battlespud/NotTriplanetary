@@ -1,0 +1,14 @@
+Name: Benjamin Lebars	 Age: 25
+0 Spring 800: Benjamin Lebars enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Benjamin Lebars is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Aggressive
+Intolerant
+Ambitious
+Follower

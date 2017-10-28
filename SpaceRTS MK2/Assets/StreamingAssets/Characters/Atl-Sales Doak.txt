@@ -1,0 +1,11 @@
+Name: Atl-Sales Doak	 Age: 29
+0 Spring 800: Atl-Sales Doak enlists at the rank of Captain.
+0 Spring 800: Captain Atl-Sales Doak is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Motivated

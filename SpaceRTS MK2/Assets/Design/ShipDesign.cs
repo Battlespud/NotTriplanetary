@@ -27,9 +27,12 @@ public class ShipDesign {
 
 	//1 space = 50KT
 
+	public float BuildCost;
+
 	public const int Slot = 50;
 	public int MaxRoll;
 
+	public float Sturdiness = .2f;    //[0-1]
 
 	public static List<ShipDesign> Designs = new List<ShipDesign>();
 	public static List<string> DesignNames = new List<string> ();
@@ -50,7 +53,6 @@ public class ShipDesign {
 
 
 	public ShipPrefabTypes BaseType;//visual
-
 
 
 	public List<ShipComponents> Components = new List<ShipComponents>();

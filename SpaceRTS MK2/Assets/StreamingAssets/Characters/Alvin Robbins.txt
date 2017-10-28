@@ -1,0 +1,13 @@
+Name: Alvin Robbins	 Age: 25
+0 Spring 800: Alvin Robbins enlists at the rank of Commander.
+0 Spring 800: Commander Alvin Robbins is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Resentful
+Suspicious
+Follower

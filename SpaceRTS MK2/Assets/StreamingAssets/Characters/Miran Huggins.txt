@@ -1,0 +1,14 @@
+Name: Miran Huggins	 Age: 28
+0 Spring 800: Miran Huggins enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Miran Huggins is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Capricious
+Modest
+Friendly
+Paranoid

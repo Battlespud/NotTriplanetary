@@ -1,0 +1,14 @@
+Name: Rashid Collier	 Age: 27
+0 Spring 800: Rashid Collier enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Rashid Collier is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Honest
+Philosopher
+Courteous
+Impatient

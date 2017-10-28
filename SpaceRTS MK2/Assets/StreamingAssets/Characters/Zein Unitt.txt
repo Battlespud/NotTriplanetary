@@ -1,0 +1,12 @@
+Name: Zein Unitt	 Age: 26
+0 Spring 800: Zein Unitt enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Zein Unitt is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Ignorant
+Indecisive

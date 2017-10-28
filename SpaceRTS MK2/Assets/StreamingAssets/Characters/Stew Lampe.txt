@@ -1,0 +1,13 @@
+Name: Stew Lampe	 Age: 27
+0 Spring 800: Stew Lampe enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Stew Lampe is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Enthusiastic
+Embraces Change
+Defector

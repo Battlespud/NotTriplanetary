@@ -1,0 +1,11 @@
+Name: Ilya Bourgault	 Age: 29
+0 Spring 800: Ilya Bourgault enlists at the rank of Captain.
+0 Spring 800: Captain Ilya Bourgault is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Historian

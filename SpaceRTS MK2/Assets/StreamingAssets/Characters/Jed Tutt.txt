@@ -1,0 +1,14 @@
+Name: Jed Tutt	 Age: 28
+0 Spring 800: Jed Tutt enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Jed Tutt is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Disciplined
+Jealous
+Born Leader
+Neurotic

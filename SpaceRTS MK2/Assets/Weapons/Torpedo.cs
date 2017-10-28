@@ -9,8 +9,8 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 	public List<ICAPTarget> InBlastZone = new List<ICAPTarget>();
 	Collider col;
 
-	int hp = 1;
-
+	int hp = 2;
+	bool isDead = false;
 	public FAC faction;
 
 	 float LaunchForce = 40f; //50
@@ -20,6 +20,8 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 	public bool armed = false;
 
 	float fuelTime = 15f;
+
+	float BaseDamage = 15f;
 
 	Renderer r;
 
@@ -46,6 +48,14 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 	//PD I
 	public void HitByPD(int dam){
 		hp -= dam;
+		if (hp <= 0) {
+			GameObject g = Instantiate(Ship.Explosion);
+			g.GetComponent<ParticleSystemMultiplier> ().multiplier = .0001f;
+			g.name = "TorpedoEarlyDetonation";
+			g.transform.position = this.transform.position;
+			g.transform.parent = null;
+			g.AddComponent<KillMe> ();
+		}
 	}
 
 	public GameObject GetGameObject(){
@@ -81,8 +91,13 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 	}
 
 	public void Detonate(){
+		GameObject h = Instantiate (Ship.Explosion);
+		h.transform.position = transform.position;
+		h.GetComponent<ParticleSystemMultiplier> ().multiplier = .005f;
+		h.AddComponent<KillMe> ();
+
 		foreach (ICAPTarget s in InBlastZone) {
-			s.DealDamage (8f-(2f*Vector3.Distance(s.GetGameObject().transform.position,transform.position)), transform.position,transform, Pattern);
+			s.DealDamage (BaseDamage-(2f*Vector3.Distance(s.GetGameObject().transform.position,transform.position)), transform.position,transform, Pattern);
 		}
 		StartCoroutine ("ExplosionRadius");
 		StartCoroutine ("ExplosionExpansion");
@@ -108,6 +123,7 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 		g.name = "Explosion Radius";
 		g.transform.position = this.transform.position;
 		g.transform.parent = null;
+		g.AddComponent<KillMe> ();
 		LineRenderer l = g.AddComponent<LineRenderer>();
 		RenderCircle (l, eRadius);
 		float a = 0f;
@@ -135,6 +151,7 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 		g.name = "Shockwave";
 		g.transform.position = this.transform.position;
 		g.transform.parent = null;
+		g.AddComponent<KillMe> ();
 		LineRenderer l = g.AddComponent<LineRenderer>();
 		l.SetColors (Color.yellow, Color.yellow);
 		l.material = new Material (Shader.Find ("Particles/Additive"));
@@ -180,8 +197,15 @@ public class Torpedo : MonoBehaviour, IPDTarget {
 	// Update is called once per frame
 	void Update () {
 		fuelTime -= Time.deltaTime;
-		if (hp <= 0 || fuelTime <= 0f) {
+		if ((hp <= 0 || fuelTime <= 0f) && !isDead) {
+			isDead = true;
+			try{
+			GetComponent<Renderer> ().enabled = false;
+			}
+			catch{ //no renderer
+			};
 			PDTargetAbstract.pdDeath.Invoke (this);
+
 			transform.position = new Vector3 (100f, 1000f, 100f); //to trigger OnTriggerExit and let guns reset.
 			StartCoroutine("Destroy");
 		}

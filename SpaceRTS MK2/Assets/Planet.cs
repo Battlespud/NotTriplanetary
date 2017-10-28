@@ -110,9 +110,6 @@ public class Planet : MonoBehaviour, IMineable
     // Update is called once per frame
     void Update()
     {
-		if (Input.GetKeyDown (KeyCode.Backspace)) {
-			InvokeRepeating("Start",0f,.05f);
-		}
     }
 
     private void SetPlanetType(int planetType)

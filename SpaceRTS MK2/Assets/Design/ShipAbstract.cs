@@ -23,6 +23,7 @@ public enum ShipPrefabTypes{
 
 public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 
+	public static System.Random rnd = new System.Random();
 	//Static
 	public static ShipEvent OnDeath = new ShipEvent();
 
@@ -69,6 +70,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 	public string BuildDate;
 
 	public FAC faction;
+	public Empire empire;
 	public GameObject stand;
 	public LineRenderer standlr;
 	public Color c;
@@ -141,8 +143,16 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 	public float MaxArmor;
 
 	//lowest layer to hull is always 0, negatives have penetrated armor entirely.
-	public void DamageArmor(List<Int2> pattern, float dam){
-		int startX = Random.Range (0, Armor.GetLength (0) - 1);
+	public IEnumerator DamageArmor(List<Int2> pattern, float dam){
+		if (shipClass.usingTemplate) {
+			if (dam >= shipClass.Mass / 1000) {
+				if (rnd.NextDouble () < dam / (shipClass.Mass / (2 + 15 * (1 - shipClass.DesignTemplate.Sturdiness)))) {
+					Debug.Log ("Shock Damage");
+					shipClass.TakeComponentDamage (dam * rnd.NextFloat (.45f, .7f));
+				}
+			}
+		}
+		int startX = rnd.Next (0, Armor.GetLength (0) - 1);
 		int startY = 0;
 		for(startY = Armor.GetLength(1)-1; startY >= 0; startY--){
 			if (Armor [startX, startY] > 0f) {
@@ -186,11 +196,12 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 					}
 				}
 		}
+		yield return Ninja.JumpToUnity;
 		Debug.Log ("Penetrating hits: " + counter);
 			if (shipClass.usingTemplate) {
 			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,shipClass.TakeComponentDamage(counter));
 			} else {
-			integrity -= Random.Range (2f, 5f) * counter;
+			integrity -= rnd.NextFloat (2f, 5f) * counter;
 			}
 		if(ShipUI)
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,BuildArmorString());
@@ -200,7 +211,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 	IEnumerator BuildArmorString(){
 			StringBuilder a = new StringBuilder();
 			for (int y = 0; y < Armor.GetLength (1); y++) {
-				for (int x = 0; x < Armor.GetLength (0); x++) {
+			for (int x = 0; x < Armor.GetLength (0); x++) {
 				if (Armor [x, y] == MaxArmor) {
 					a.Append( "<color=green>□</color>");
 				}
@@ -210,7 +221,12 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 				else if (Armor[x,y] <= 0f) {
 					a.Append( "<color=red>□</color>");
 				}
-				}
+			//	float l =   Armor [x, y]/MaxArmor  ;
+			//	Color c = new Color (2.0f * l, 2.0f * (1 - l), 0);
+			//	a.Append( "<color=" + ColorUtility.ToHtmlStringRGBA(c) + ">□</color>");
+
+
+			}
 				a.AppendLine();
 			}
 		yield return Ninja.JumpToUnity;
@@ -290,6 +306,7 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 	}
 
 	public void DieAbstract(){
+		empire.Ships.Remove (GetComponent<Ship>());
 		transform.position = new Vector3 (10f, 10000f, 0f);
 		Destroy (gameObject);
 	}

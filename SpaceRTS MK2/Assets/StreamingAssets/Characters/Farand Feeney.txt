@@ -1,0 +1,14 @@
+Name: Farand Feeney	 Age: 28
+0 Spring 800: Farand Feeney enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Farand Feeney is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Insubordinate
+Adventurous
+Disciplined
+Cautious

@@ -1,0 +1,14 @@
+Name: Lorne Virgoe	 Age: 32
+0 Spring 800: Lorne Virgoe enlists at the rank of Captain.
+0 Spring 800: Captain Lorne Virgoe is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Adventurous
+Conservative
+Impoverished
+Ignorant

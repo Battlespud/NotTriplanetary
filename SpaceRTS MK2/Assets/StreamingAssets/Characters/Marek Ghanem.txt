@@ -1,0 +1,13 @@
+Name: Marek Ghanem	 Age: 33
+0 Spring 800: Marek Ghanem enlists at the rank of Captain.
+0 Spring 800: Captain Marek Ghanem is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Academic
+Rude
+Unappreciative

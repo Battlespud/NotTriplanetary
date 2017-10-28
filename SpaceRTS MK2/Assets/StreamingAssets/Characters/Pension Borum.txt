@@ -1,0 +1,14 @@
+Name: Pension Borum	 Age: 28
+0 Spring 800: Pension Borum enlists at the rank of Lieutenant Commander.
+0 Spring 800: Lieutenant Commander Pension Borum is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Objective
+Optimistic
+Mathematician
+Religious
