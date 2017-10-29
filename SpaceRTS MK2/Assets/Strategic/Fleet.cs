@@ -9,7 +9,7 @@ using System.Linq;
 public class Fleet : MonoBehaviour {
 
 	const float TurnsToRaiseShields = 4;
-
+	static bool pause = false;
 
 	static FleetEvent FleetDeathEvent = new FleetEvent();
 
@@ -46,7 +46,16 @@ public class Fleet : MonoBehaviour {
 	public bool ShieldsUp = false;
 	public float ShieldStrength = 0f;
 
-
+	void Pause(bool b){
+		pause = b;
+		if (pause) {
+			AllowMovement (false);
+		} else {
+			if (StrategicClock.GetPhase () == Phase.GO) {
+				AllowMovement (true);
+			}
+		}
+	}
 
 	void Awake(){
 		FleetDeathEvent.AddListener (CleanReferences);
@@ -55,8 +64,10 @@ public class Fleet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 		Agent = GetComponent<NavMeshAgent> ();
 		StrategicClock.PhaseChange.AddListener (PhaseManager);
+		StrategicClock.PauseEvent.AddListener (Pause);
 		SetupStand (Color.cyan);
 		SortShipsType ();
 	}
@@ -90,7 +101,6 @@ public class Fleet : MonoBehaviour {
 	}
 
 	void HandleShields(){
-		Debug.Log ("Hello?");
 		if (!ShieldsUp) {
 			ShieldStrength = 0f;
 		} else if(ShieldStrength < 1f) {
@@ -108,6 +118,9 @@ public class Fleet : MonoBehaviour {
 			Speed = MaxSpeed;
 	}
 
+
+
+	//AT SPEED 10, acceleration 8, WILL MOVE 25 UNITS OVER 5 SECONDS
 	//threaded, so disregard performance cost for now
 	IEnumerator FleetSpeedIterator(){
 		float max = 1000f;
@@ -141,7 +154,7 @@ public class Fleet : MonoBehaviour {
 
 
 	bool AcceptsOrders(){
-		return (!StrategicClock.isPaused && StrategicClock.strategicClock.currPhase == Phase.ORDERS);
+		return (!pause && StrategicClock.strategicClock.currPhase == Phase.ORDERS);
 	}
 
 	public void SetupStand(Color c){
@@ -259,6 +272,9 @@ public class Fleet : MonoBehaviour {
 		if (Ships.Count > 0) {
 			foreach (StrategicShip s in Ships) {
 				sb.AppendLine (s.DesignClass.HullDesignation.Prefix + " " + s.ShipName);
+				if (s.isDamaged) {
+					sb.Append (" [D]");
+				}
 			}
 		} else {
 			for (int i = 1; i < 40; i++) {
@@ -304,7 +320,8 @@ public class Fleet : MonoBehaviour {
 			Fleet f = col.GetComponent<Fleet> ();
 			if (FactionMatrix.IsHostile (Faction, f.Faction)) {
 				EnemyClose.Add (f);
-				PromptAction ();
+				if(!pause)
+					PromptAction ();
 			} else if(Faction == f.Faction){
 				FriendlyClose.Add (f);
 			}
@@ -322,6 +339,7 @@ public class Fleet : MonoBehaviour {
 
 	void PromptAction(){
 		StrategicUIManager.UpdateUI();
+		StrategicClock.RequestPause ();
 
 	}
 

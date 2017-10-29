@@ -5,6 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 public class StrategicUIManager : MonoBehaviour {
 
+	public static void ZoomTo(Vector3 pos){
+		Camera.main.gameObject.transform.position = new Vector3 (pos.x, 120f, pos.z - 50f);
+	}
+
 	public static StrategicUIManager Manager;
 	public static UnityEvent UpdateUIEvent = new UnityEvent ();
 	public static void UpdateUI (){
@@ -17,6 +21,19 @@ public class StrategicUIManager : MonoBehaviour {
 	public Toggle RaiseShields;
 	public Text FleetShipNamesText;
 	public GameObject UIPanel;
+
+	public GameObject DesignUI;
+	public void ToggleDesignUI(){
+		DesignUI.active = !DesignUI.active;
+		if (!DesignUI.active) {
+			StrategicClock.Unpause ();
+		} else {
+			StrategicClock.RequestPause ();
+		}
+	}
+
+
+	public GameObject BattleUI;
 
 	void TurnManagement(Phase p){
 		UpdateUI ();

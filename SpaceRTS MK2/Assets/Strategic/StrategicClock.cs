@@ -16,7 +16,11 @@ public class StrategicClock : MonoBehaviour {
 
 	public static StrategicClock strategicClock;
 
+
 	public static PhaseEvent PhaseChange = new PhaseEvent();
+	public static BoolEvent PauseEvent = new BoolEvent ();
+
+
 	static string[]Months = new string[12]{"January","February","March","April","May","June","July","August","September","October","November","December"};
 
 	public Text PhaseText;
@@ -28,7 +32,7 @@ public class StrategicClock : MonoBehaviour {
 	static int month = 1;
 	static int year = 2700;
 
-	public static bool isPaused = false;
+	static bool isPaused = false;
 	float TurnLengthBase = 2f; //30
 	float GoTurnLength = 5f; //10f
 	float LengthMultiplier = 1f;
@@ -37,11 +41,14 @@ public class StrategicClock : MonoBehaviour {
 	public bool TimedTurns = false;
 
 	public Phase currPhase = Phase.ORDERS;
+	public static Phase GetPhase(){
+		return strategicClock.currPhase;
+	}
 
 	void Awake(){
 		strategicClock = this;
 		PhaseChange.AddListener (TurnManagement);
-
+		PauseEvent.AddListener (Pause);
 	}
 
 	// Use this for initialization
@@ -51,11 +58,24 @@ public class StrategicClock : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			if (isPaused) {
+				RequestPause ();
+			}
+			else{
+						
+			}
+		}
 	}
 
 
+	public static void RequestPause(){
+		PauseEvent.Invoke (true);
+	}
 
+	public static void Unpause(){
+		PauseEvent.Invoke (false);
+	}
 
 	public static string GetDate(){
 		return Months[month] +" " + year;
@@ -67,6 +87,9 @@ public class StrategicClock : MonoBehaviour {
 		PhaseChange.Invoke (currPhase);
 	}
 
+	void Pause(bool b){
+		isPaused = b;
+	}
 
 	IEnumerator OrdersPhase(){
 		TimeRemaining = TurnLengthBase * LengthMultiplier;
@@ -130,7 +153,7 @@ public class StrategicClock : MonoBehaviour {
 			}
 		case (Phase.INTERRUPT):
 			{
-				isPaused = !isPaused;
+				//dont use
 				break;
 			}
 

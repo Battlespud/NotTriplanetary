@@ -106,6 +106,8 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 		//c = FactionMatrix.FactionColors [(int)faction];
 		ShipName = NameManager.AssignName(this);
 		shipClass = gameObject.GetComponent<ShipClass> ();
+		if (shipClass == null)
+			shipClass = gameObject.AddComponent<ShipClass> ();
 		stand = new GameObject();
 		standlr = stand.AddComponent<LineRenderer> ();
 		stand.transform.position = new Vector3 (this.transform.position.x, 0f, transform.position.z);

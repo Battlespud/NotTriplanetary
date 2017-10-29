@@ -30,11 +30,27 @@ public struct Slipway{
 public class StrategicShipyard : MonoBehaviour {
 
 	public ShipDesign CurrentTooling;
+	public ShipDesign NextTooling;
 
+	public void Retool(ShipDesign newDes){
+		NextTooling = newDes;
+		TimeToNextTooling = CalcToolingTime (newDes);
+	}
+
+	int CalcToolingTime(ShipDesign newDes){
+		int currM = 0;
+		if (CurrentTooling != null) {
+			currM = (int)CurrentTooling.BuildCost;
+		} 
+		return (int)(3+Mathf.Abs(currM - newDes.BuildCost)/Rate*3f);
+	}
+	public int TimeToNextTooling;
 
 	public int MaxTonnage;
 	public int Berths;
 
+
+	//build rate
 	public float Rate = 1f;
 
 	public List<Slipway>Slipways = new List<Slipway>();
@@ -73,6 +89,13 @@ public class StrategicShipyard : MonoBehaviour {
 	}
 
 	void Process(){
+		if (NextTooling != null) {
+			TimeToNextTooling -=1;
+			if (TimeToNextTooling <= 0) {
+				CurrentTooling = NextTooling;
+				NextTooling = null;
+			}
+		}
 		foreach (Slipway s in Slipways) {
 			s.Progress();
 		}
@@ -82,6 +105,7 @@ public class StrategicShipyard : MonoBehaviour {
 		switch (p) {
 		case(Phase.ORDERS):
 			{
+				Process ();
 				break;
 			}
 		case(Phase.GO):
@@ -90,7 +114,6 @@ public class StrategicShipyard : MonoBehaviour {
 			}
 		case (Phase.REVIEW):
 			{
-				Process ();
 				break;
 			}
 		case (Phase.INTERRUPT):

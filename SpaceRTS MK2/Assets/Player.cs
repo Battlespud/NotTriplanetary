@@ -56,7 +56,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		mousePos = SetMousePosition();
-		Ray clickRay = new Ray (mousePos, Vector3.down);
+		Ray clickRay =Camera.main.ScreenPointToRay (mousePos);;
 		RaycastHit hit;
 		Ship hitS = null;
 		if(Physics.Raycast (clickRay, out hit, 10000f))

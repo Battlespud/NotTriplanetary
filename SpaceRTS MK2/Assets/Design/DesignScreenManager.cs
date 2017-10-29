@@ -285,7 +285,7 @@ public class DesignScreenManager : MonoBehaviour {
 
 	void CalculateArmorWidth(){
 		int hs = Mass / 50;
-		ArmorLength =(int)(1 + 1.1*(Mathf.Pow (hs, .77f))); //.66 works well
+		ArmorLength =(int)(1 + 1.1*(Mathf.Pow (hs, .55f))); //.66 works well
 	}
 
 	void RunTest(){

@@ -46,7 +46,7 @@ public class StrategicShip {
 	public ArmorTypes ArmorType;
 
 
-
+	public bool isDamaged = false;
 	public float Thrust;
 	public int Quarters;
 	public int Crew;
@@ -63,13 +63,16 @@ public class StrategicShip {
 		isControllable = false;
 		Thrust = 0;
 		Mass = (int)DesignClass.mass;
+		isDamaged = false;
 		foreach (ShipComponents c in Components) {
-			if (!c.isDamaged()) {
-				Quarters += (int)c.GetQuarters();
-				if (c.isControl()) {
+			if (!c.isDamaged ()) {
+				Quarters += (int)c.GetQuarters ();
+				if (c.isControl ()) {
 					isControllable = true;
 				}
-				Thrust += c.GetThrust();
+				Thrust += c.GetThrust ();
+			} else {
+				isDamaged = true;
 			}
 		}
 		CrewString = string.Format ("Crew: {0}/{1}", Crew, mCrew);
@@ -107,6 +110,12 @@ public class StrategicShip {
 		emissions = new Emissions();
 		ArmorType = template.ArmorType;
 		ChangeStats ();
+	}
+
+	public void CreateShip(GameObject g){
+		Ship s = g.AddComponent<Ship> ();
+		s.shipClass.ImportDesign (DesignClass);
+
 	}
 
 
