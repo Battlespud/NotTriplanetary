@@ -28,6 +28,9 @@ public class StrategicPlayer : MonoBehaviour {
 				switch (p) {
 				case(Phase.ORDERS):
 					{
+				if (SelectedFleet != null) {
+					StrategicUIManager.ZoomTo (SelectedFleet.transform.position);
+				}
 						break;
 					}
 				case(Phase.GO):

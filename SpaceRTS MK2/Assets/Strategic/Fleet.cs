@@ -161,7 +161,7 @@ public class Fleet : MonoBehaviour {
 		GameObject g = new GameObject ();
 		lr = g.AddComponent<LineRenderer> ();
 		lr.material = new Material(Shader.Find("Particles/Additive"));
-		lr.SetColors (Color.green, Color.green);
+		lr.SetColors (Color.blue, Color.blue);
 		lr.SetWidth (.35f, .35f);
 		GameObject stand = new GameObject();
 		standlr = stand.AddComponent<LineRenderer> ();

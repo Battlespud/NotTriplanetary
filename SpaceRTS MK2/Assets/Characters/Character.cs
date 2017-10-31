@@ -12,6 +12,11 @@ public enum Roles{
 	Admiral
 }
 
+public enum Sex{
+	Female,
+	Male
+}
+
 public struct Trait{
 	public static List<Trait>Traits = new List<Trait>();
 	public string Name;
@@ -79,6 +84,7 @@ public class Character {
 
 	public string CharName;
 	public int Age;
+	public Sex sex;
 	public Ship shipPosting;
 	public Empire empire;
 	public int Rank;
@@ -187,6 +193,7 @@ public class Character {
 		CharName = NameManager.GenerateCharName (); //todo
 		Rank = 0;
 		ID = GetNextID();
+		sex = (Sex)Random.Range (0, 2);
 		JoinsUp ();
 	}
 
@@ -194,6 +201,7 @@ public class Character {
 		CharName = NameManager.GenerateCharName (); //todo
 		Rank = i;
 		ID = GetNextID();
+		sex = (Sex)Random.Range (0, 2);
 		JoinsUp ();
 	}
 }

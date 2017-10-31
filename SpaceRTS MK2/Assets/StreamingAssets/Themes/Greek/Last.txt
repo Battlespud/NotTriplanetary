@@ -1,0 +1,255 @@
+Abdera 
+Abila 
+Abydos 
+Acanthus 
+Acharnae 
+Actium 
+Aegina 
+Aegium 
+Aenus 
+Aetos 
+Agrinion 
+Aigosthena 
+Akragas 
+Akrai 
+Alexandretta 
+Alexandria 
+Amarynthos 
+Amasya 
+Amida 
+Amisos 
+Amphicleia 
+Amphipolis 
+Amphissa 
+Ancona 
+Antioch on the Maeander 
+Antioch, Mygdonia 
+Antioch on the Orontes 
+Antioch, Pisidia 
+Antiochia ad Taurum 
+Andros 
+Aphidnae 
+Apollonia 
+Apollonia Pontica 
+Argos 
+Artanes 
+Argyroupoli 
+Asine of Argolis 
+Asine of Messenia 
+Asine of Laconia 
+Aspendos 
+Assus 
+Astacus 
+Athens 
+Baris 
+Borysthenes 
+Bouthroton 
+Brauron 
+Byzantium 
+Bythinion 
+Chalcedon 
+Calydon 
+Carystus 
+Chalcis 
+Chersonesos 
+Clazomenae 
+Cnidus 
+Colosse 
+Corcyra 
+Corinth 
+Croton 
+Cumae 
+Cyme 
+Cyrene 
+Cythera 
+Decelea 
+Delos 
+Delphi 
+Demetrias 
+Didyma 
+Dion 
+Dioscurias 
+Dodona 
+Dorylaion 
+Dyme 
+Edessa 
+Edessa, Mesopotamia 
+Elateia 
+Elea 
+Eleusis 
+Elis 
+Emporion 
+Ephesus 
+Epidamnos 
+Epidauros 
+Eretria 
+Erythrae 
+Gangra 
+Gela 
+Gorgippia 
+Gortyn 
+Gythium 
+Halicarnassus 
+Helike 
+Heraclea 
+Heraclea Lucania 
+Heraclea by Latmus 
+Heraclea Cybistra 
+Heraclea Lyncestis 
+Heraclea Minoa 
+Heraclea Pontica 
+Heraclea Sintica 
+Hermione 
+Hermonassa 
+Hierapolis 
+Himera 
+Histria 
+Ialysos 
+Iasus 
+Imbros 
+Iolkos 
+Iskila modern day Iskilip 
+Ithaca 
+Kallipolis 
+Katane 
+Kerkinitida 
+Kepoi 
+Kimmerikon 
+Kios 
+Knossos 
+Kos 
+Lamia 
+Lampsacus 
+Laodicea 
+Larissa 
+Laus 
+Lefkada 
+Leontini 
+Lepreum 
+Lindus 
+Locri 
+Magnesia on the Maeander 
+Magnesia on the Sipylum 
+Mantinea 
+Marathon 
+Massilia 
+Megalopolis 
+Megara 
+Megara Hyblaea 
+Mesembria 
+Messene 
+Metapontum 
+Methone 
+Miletus 
+Mycenae 
+Mylasa 
+Myndus 
+Myonia 
+Myra 
+Myrmekion 
+Mytilene 
+Naucratis 
+Naupactus 
+Naxos 
+Neapolis 
+Nicopolis 
+Nicea 
+Nymphaion 
+Nysa 
+Naxos 
+Oenoe 
+Odessos 
+Odessos, Thrace 
+Olbia, Sardinia 
+Olbia 
+Olympia 
+Olympus 
+Olynthus 
+Orchomenos 
+Orestias 
+Oreus 
+Oropus 
+Pagasae 
+Pandosia, Epirus 
+Pandosia, Bruttium 
+Pandosia, Lucania 
+Panticapaeum 
+Paros 
+Patrae 
+Pella 
+Pergamum 
+Perinthus 
+Phalerum 
+Phanagoria 
+Pharae 
+Pharnacia 
+Phaselis 
+Philippopolis 
+Phlius 
+Pherae 
+Phocaea 
+Pinara 
+Piraeus 
+Pitiunt 
+Plataea 
+Poseidonia 
+Potidaea 
+Priene 
+Prousa 
+Pteleum 
+Pydna 
+Pylos 
+Pyrgos 
+Rhamnus 
+Rhegion 
+Rhodes 
+Rhypes 
+Rize 
+Salamis 
+Same 
+Selinus 
+Seleucia Pieria 
+Semasus 
+Sestus 
+Seuthopolis 
+Scidrus 
+Sicyon 
+Side 
+Sinope 
+Smyrna 
+Sparta 
+Stagirus 
+Stenimahos 
+Stymphalus 
+Sybaris 
+Syracuse 
+Tanagra 
+Tanais 
+Taras 
+Tauromenium 
+Tegea 
+Tenedos 
+Teos 
+Thebes 
+Theodosia 
+Therma 
+Thermum 
+Thespiae 
+Thoricus 
+Thurii 
+Thyreum 
+Thyria 
+Trachis 
+Trapezus 
+Tripolis 
+Troezen 
+Troy 
+Tyras 
+Tyrns 
+Tyritake 
+Vergina 
+Xanthos 
+Zacynthus 
+Zancle 
+Zeleia 
+Zeugma

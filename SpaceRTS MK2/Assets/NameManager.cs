@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-//using UnityEngine;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -16,7 +15,13 @@ using UnityEngine;
 //    IX,
 //    X
 //}
-public class NameManager
+
+
+
+
+
+
+public static class NameManager
 {	//TODO Use the streaming assets directory please, anything outside the asset management system wont be included in builds.
 
 	static System.Random rand = new System.Random();

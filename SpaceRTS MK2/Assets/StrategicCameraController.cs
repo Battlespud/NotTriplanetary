@@ -8,7 +8,7 @@ public class StrategicCameraController : MonoBehaviour {
 
 	private const int ScrollArea = 10000;
 	private const int ScrollSpeed = 25;
-	private const int DragSpeed = 100;
+	private const int DragSpeed = 350;
 
 	private const int ZoomSpeed = 100;
 	private const int ZoomMin = 5;
@@ -18,6 +18,11 @@ public class StrategicCameraController : MonoBehaviour {
 	private const int PanAngleMin = 30;
 	private const int PanAngleMax = 80;
 
+	Camera cam;
+
+	void Awake(){
+		cam = GetComponent<Camera> ();
+	}
 	// Update is called once per frame
 	void Update()
 	{
@@ -32,9 +37,9 @@ public class StrategicCameraController : MonoBehaviour {
 		}
 
 		// Start panning camera if zooming in close to the ground or if just zooming out.
-		var pan = GetComponent<Camera>().transform.eulerAngles.x - zoomDelta * PanSpeed;
+		var pan = cam.transform.eulerAngles.x - zoomDelta * PanSpeed;
 		pan = Mathf.Clamp(pan, PanAngleMin, PanAngleMax);
-		if (zoomDelta < 0 || GetComponent<Camera>().transform.position.y < (ZoomMax / 2))
+		if (zoomDelta < 0 || cam.transform.position.y < (ZoomMax / 2))
 		{
 			GetComponent<Camera>().transform.eulerAngles = new Vector3(pan, 0, 0);
 		}
@@ -89,7 +94,7 @@ public class StrategicCameraController : MonoBehaviour {
 		}
 
 		// Finally move camera parallel to world axis
-		GetComponent<Camera>().transform.position += translation;
+		cam.transform.position =  Vector3.Lerp(cam.transform.position, cam.transform.position +  translation, 35f* Time.deltaTime);
 	}
 
 }

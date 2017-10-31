@@ -16,6 +16,7 @@ public class StrategicUIManager : MonoBehaviour {
 	}
 
 
+
 	public Text FleetName;
 	public Text ShieldStatus;
 	public Toggle RaiseShields;

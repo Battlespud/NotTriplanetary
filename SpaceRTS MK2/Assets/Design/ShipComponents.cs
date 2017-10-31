@@ -215,7 +215,7 @@ public class ShipComponents {
 				writer.Write ("\n");
 				AbilityFields.AddRange(a.GetType ().GetFields ());
 				foreach (FieldInfo g in AbilityFields) {
-					Debug.Log(AbilityFields.Count + " fields per ability detected");
+//					Debug.Log(AbilityFields.Count + " fields per ability detected");
 					writer.WriteLine(
 						g.Name + ":\t" + g.GetValue (a).ToString());
 				}
