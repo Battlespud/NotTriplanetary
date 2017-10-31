@@ -16,8 +16,8 @@ public class Mine : MonoBehaviour, IResources
     // Use this for initialization
     void Start()
     {
-        GameObject.FindGameObjectWithTag("Controller").GetComponent<Clock>().TurnEvent.AddListener(DoMine);
-        target = GetComponent<IMineable>();
+		StrategicClock.PhaseChange.AddListener (PhaseManager);
+		target = GetComponent<IMineable>();
         Collections.Mines.Add(this);
         Collections.ResourceSources.Add(this);
         if (GetComponent<Asteroid>())
@@ -25,6 +25,29 @@ public class Mine : MonoBehaviour, IResources
             resource = GetComponent<Asteroid>().deposit.resource;
         }
     }
+
+	void PhaseManager(Phase p){
+		switch (p) {
+		case(Phase.ORDERS):
+			{
+				DoMine ();
+				break;
+			}
+		case(Phase.GO):
+			{
+				break;
+			}
+		case (Phase.REVIEW):
+			{
+				break;
+			}
+		case (Phase.INTERRUPT):
+			{
+				break;
+			}
+
+		}	
+	}
 
     void DoMine()
     {

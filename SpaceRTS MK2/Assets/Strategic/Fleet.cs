@@ -6,25 +6,33 @@ using UnityEngine.UI;
 using System.Text;
 using System.Linq;
 
+public enum MoveMode{
+	NORMAL,
+	STATIONKEEPING,
+	INTERCEPT
+}
+
 public class Fleet : MonoBehaviour {
 
 	const float TurnsToRaiseShields = 4;
 	static bool pause = false;
 
+	public MoveMode Mode;
+
 	static FleetEvent FleetDeathEvent = new FleetEvent();
 
 	public NavMeshAgent Agent;
+
+	//intercepts
+	public NavMeshAgent TargetAgent;
+	public Fleet Target;
 
 	LineRenderer lr;
 	LineRenderer standlr;
 	LineRenderer downlr;
 
 	public bool AI = false;
-	enum MoveMode{
-		HOLD, //Holding positions, drives are set to idle to conceal signature
-		WAYPOINT, //Follows waypoints, same as ships in tactical
-		HUNT //Follows target transform
-	}
+
 
 	public FAC Faction;
 	public Empire empire;
@@ -36,7 +44,6 @@ public class Fleet : MonoBehaviour {
 	public float Speed;
 
 	public List<Vector3> Waypoints = new List<Vector3>();
-	public Transform Target;
 
 	//Combat
 	public List<Fleet>EnemyClose = new List<Fleet>();
@@ -70,6 +77,7 @@ public class Fleet : MonoBehaviour {
 		StrategicClock.PauseEvent.AddListener (Pause);
 		SetupStand (Color.cyan);
 		SortShipsType ();
+		AllowMovement (false);
 	}
 
 	void PhaseManager(Phase p){
@@ -141,12 +149,14 @@ public class Fleet : MonoBehaviour {
 
 
 	void AllowMovement(bool f){
+		Agent.Resume ();
 		CalculateFleetSpeed ();
 		Agent.speed = MaxSpeed; //change to speed
 		Agent.angularSpeed = 90f;
 		if (!f) {
-			Agent.speed = 0f;
-			Agent.angularSpeed = 0f;
+		//	Agent.speed = 0f;
+		//	Agent.angularSpeed = 0f;
+			Agent.Stop();
 		}
 		
 	}
@@ -192,11 +202,28 @@ public class Fleet : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		SetPaths ();
-		if (Agent.speed > 0f) {
+		if (Agent.speed > 0f && Mode != MoveMode.INTERCEPT) {
 			WaypointProgress();
-
+		}
+		else if (Mode == MoveMode.INTERCEPT && Target != null) {
+			Waypoints.Clear ();
+			Vector3 last = Agent.destination;
+			try{
+				Agent.destination = CalculateIntercept();
+			}
+			catch{
+				Agent.destination = last;
+			}
+			Waypoints.Add (Agent.destination);
 		}
 	}
+
+	public float TimeToIntercept;
+	Vector3 CalculateIntercept(){
+		TimeToIntercept = (Vector3.Distance (transform.position, Target.transform.position) / MaxSpeed);
+		return (Target.transform.position + TargetAgent.desiredVelocity*(Vector3.Distance(transform.position,Target.transform.position)/MaxSpeed));
+	}
+
 
 	void WaypointProgress(){
 			if (Agent.remainingDistance <= float.Epsilon && Waypoints.Count != 0) {
@@ -206,6 +233,16 @@ public class Fleet : MonoBehaviour {
 					IssueMovementCommand (Waypoints [0]);
 				}
 			}
+	}
+
+	public void Intercept(Fleet t)
+	{
+		Target = t;
+		TargetAgent = t.Agent;
+		Mode = MoveMode.INTERCEPT;
+		Waypoints.Clear ();
+		Agent.Stop ();
+		SetPaths ();
 	}
 
 	public void SetPaths(){

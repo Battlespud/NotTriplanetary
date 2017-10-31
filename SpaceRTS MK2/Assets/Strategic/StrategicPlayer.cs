@@ -112,9 +112,21 @@ public class StrategicPlayer : MonoBehaviour {
 
 	void TryMove(){
 		if (SelectedFleet != null) {
-			Vector3 target = new Vector3();
 			RaycastHit hit;
 			Ray ray = Camera.main.ScreenPointToRay (MousePosition);
+			if(SelectedFleet)SelectedFleet.DeselectColor ();
+			if (Physics.Raycast (ray, out hit)) {
+
+				if (hit.collider.GetComponent<Fleet> ()) {
+					SelectedFleet.Intercept (hit.collider.GetComponent<Fleet> ());
+					Debug.Log ("Intercept Plotted");
+					return;
+				}
+			}
+
+			Vector3 target = new Vector3();
+			RaycastHit moveHit;
+			Ray moveRay = Camera.main.ScreenPointToRay (MousePosition);
 			if (Physics.Raycast (ray, out hit, 10000f, layer_mask)) {
 				SelectedFleet.AddWaypoint(hit.point, Shift);
 				Debug.Log (hit.point);

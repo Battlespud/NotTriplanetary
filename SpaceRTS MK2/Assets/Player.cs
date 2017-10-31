@@ -8,6 +8,8 @@ public enum CameraMode{
 	ORTHO
 };
 
+
+
 public class Player : MonoBehaviour {
 	public static Player Human;
 	public static CameraMode camMode = CameraMode.ORTHO;
