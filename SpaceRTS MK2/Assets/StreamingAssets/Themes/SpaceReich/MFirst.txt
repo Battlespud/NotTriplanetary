@@ -51,7 +51,7 @@ Gotthold
 Gregor
 Gunnar
 Gunter
-G?ther
+Gunther
 Gustav
 Hannes
 Hanno
@@ -86,11 +86,11 @@ Joachim
 Jochen
 Johann
 Jonas
-Jörg
+Jofg
 Josef
 Julian
 Julius
-J?gen
+Jurgen
 Kai
 Karl
 Karl-Heinz
@@ -145,7 +145,7 @@ Rocky
 Roland
 Rolf
 Ruben
-R?iger
+Ruiger
 Rudolf
 Rupert
 Sascha

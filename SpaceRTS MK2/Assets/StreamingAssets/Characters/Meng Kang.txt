@@ -1,0 +1,14 @@
+Name: Meng Kang	 Age: 26
+March 2700: Meng Kang enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Meng Kang is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Complacent
+Suspicious
+Friendly
+Resentful

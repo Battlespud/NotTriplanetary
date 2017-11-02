@@ -1,0 +1,11 @@
+Name: Dan X	 Age: 26
+March 2700: Dan X enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Dan X is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Patient

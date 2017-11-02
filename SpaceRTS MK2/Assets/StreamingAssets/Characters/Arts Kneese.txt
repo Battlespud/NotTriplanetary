@@ -1,9 +1,0 @@
-Name: Arts Kneese	 Age: 35
-0 Spring 800: Arts Kneese enlists at the rank of Commodore.
-0 Spring 800: Commodore Arts Kneese is awarded the Pioneer's Medallion.
-
-
-Awards:Pioneer's Medallion
-
-
-Traits:Methodical

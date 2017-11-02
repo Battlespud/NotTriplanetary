@@ -1,0 +1,19 @@
+
+//Propulsion
+	//Drive
+
+Tech Name: Reaction Drive
+Tech ID: ReactionDrive
+Description: An engine system utilizing basic chemical rocket thrusters for propulsion.
+Section: Propulsion
+SubSection: Drive
+Cost: 10000
+Requirements:
+
+Tech Name: Ion Drive
+Tech ID: IonDrive
+Description: An engine system that accelerates ions via electricity in order to generate thrust.
+Section: Propulsion
+SubSection: Drive
+Cost: 10000
+Requirements: ReactionDrive

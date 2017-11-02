@@ -9,7 +9,9 @@ using System.Linq;
 public enum MoveMode{
 	NORMAL,
 	STATIONKEEPING,
-	INTERCEPT
+	INTERCEPT,
+	MISSILE,
+	BALLISTIC
 }
 
 public class Fleet : MonoBehaviour {
@@ -40,6 +42,7 @@ public class Fleet : MonoBehaviour {
 	public string FleetShipNames;
 
 	public List<StrategicShip>Ships = new List<StrategicShip>();
+	public List<StrategicMissile>Missiles = new List<StrategicMissile>();
 	public float MaxSpeed;
 	public float Speed;
 
@@ -138,7 +141,19 @@ public class Fleet : MonoBehaviour {
 				if (mS < max)
 					max = mS;
 			}
-		} else {
+		}
+		if (Mode==MoveMode.MISSILE) {
+			float accel = 500f;
+			foreach (StrategicMissile m in Missiles) {
+				if (m.MaxAcceleration < max)
+					max = m.MaxAcceleration;
+			}
+			max += Agent.speed;
+		}
+		if (Mode == MoveMode.BALLISTIC) {
+			max = Agent.speed;
+		}
+		else  if(Ships.Count <= 0 && Missiles.Count <= 0){
 			max = 5;
 		}
 
@@ -219,9 +234,15 @@ public class Fleet : MonoBehaviour {
 	}
 
 	public float TimeToIntercept;
+
 	Vector3 CalculateIntercept(){
-		TimeToIntercept = (Vector3.Distance (transform.position, Target.transform.position) / MaxSpeed);
-		return (Target.transform.position + TargetAgent.desiredVelocity*(Vector3.Distance(transform.position,Target.transform.position)/MaxSpeed));
+		TimeToIntercept = Vector3.Distance (transform.position, Target.transform.position) / (Agent.velocity - TargetAgent.velocity).magnitude;
+		if (TargetAgent.velocity == new Vector3 ())
+			return Target.transform.position;
+		Vector3 calculated = Target.transform.position + TargetAgent.desiredVelocity * (Vector3.Distance (transform.position, Target.transform.position) / MaxSpeed);
+			if(calculated == transform.position)
+			return Target.transform.position;
+			return (calculated);
 	}
 
 

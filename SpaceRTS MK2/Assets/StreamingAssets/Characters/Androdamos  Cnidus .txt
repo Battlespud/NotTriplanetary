@@ -1,0 +1,11 @@
+Name: Androdamos  Cnidus 	 Age: 25
+March 2700: Androdamos  Cnidus  enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Androdamos  Cnidus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Survivalist

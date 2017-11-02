@@ -14,7 +14,7 @@ Zhu
 Ma
 H
 Guo
-Lú‹
+Li
 He
 Gao
 Liang
@@ -30,7 +30,7 @@ Deng
 Xiao
 Feng
 Zeng
-Chéng
+Chang
 Cai
 Peng
 Pan
@@ -69,8 +69,8 @@ Zou
 Sh
 Xiong
 Meng
-Qú‹
-Yán
+Qu
+Yue
 Xue
 Hou
 Lei
@@ -91,10 +91,10 @@ Kang
 He
 Yan
 Yin
-Qián
+Qin
 Shi
 Nii
-Hóng
+Hong
 Gong
 Lee
 Chang

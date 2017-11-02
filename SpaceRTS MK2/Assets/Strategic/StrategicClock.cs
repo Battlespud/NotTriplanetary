@@ -81,6 +81,7 @@ public class StrategicClock : MonoBehaviour {
 		return Months[month] +" " + year;
 	}
 
+
 	void EventInvoke(Phase p){
 		currPhase = p;
 		PhaseText.text = currPhase.ToString ();

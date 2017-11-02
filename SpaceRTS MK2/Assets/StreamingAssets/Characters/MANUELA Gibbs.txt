@@ -1,0 +1,13 @@
+Name: MANUELA Gibbs	 Age: 29
+March 2700: MANUELA Gibbs enlists at the rank of Commander.
+March 2700: Commander MANUELA Gibbs is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Insightful
+Rude
+Optimistic

@@ -3981,6 +3981,7 @@ GameObject:
   - component: {fileID: 353226416}
   - component: {fileID: 353226417}
   - component: {fileID: 353226418}
+  - component: {fileID: 353226419}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -4073,6 +4074,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThemeCount: 0
+--- !u!114 &353226419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 353226412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7255d0af80d98840b25c3b060e9eaeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Faction: 0
+  Name: 
+  DebugAvailableTechNames: []
+  Ships: []
+  DistributeCaptains: 0
 --- !u!1 &362814970
 GameObject:
   m_ObjectHideFlags: 0
@@ -7289,7 +7306,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 610621842}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 31.584988, z: 0}
+  m_LocalPosition: {x: 0, y: 31.584976, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 196081425}
@@ -8246,8 +8263,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 610621844}
   m_HandleRect: {fileID: 610621843}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.61000013
+  m_Value: 0.99999976
+  m_Size: 0.6100001
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8642,7 +8659,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 757799452}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1001.42706, y: 497.4824, z: 19.434498}
+  m_LocalPosition: {x: 1001.42706, y: 497.9824, z: 19.434498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 602213775}

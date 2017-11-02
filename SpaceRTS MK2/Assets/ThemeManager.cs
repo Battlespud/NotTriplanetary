@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 
 public class ThemeManager : MonoBehaviour{
+	static System.Random rnd = new System.Random();
 
 	public static ThemeManager Manager;
 
@@ -23,10 +24,29 @@ public class ThemeManager : MonoBehaviour{
 		}
 	}
 
+	public static string GenerateCharName(Theme t, Sex s){
+		if (s == Sex.Female) {
+			return t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next(0, t.CharacterLastNames.Count)];
+		} else {
+			return t.CharacterFirstNamesM [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
+		}
+	}
+
+	public static string GenerateCharName(Sex s){
+		Theme t = Themes [rnd.Next (0, Themes.Count)];
+		Debug.Log (t.ThemeName);
+		if (s == Sex.Female) {
+			return t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
+		} else {
+			return t.CharacterFirstNamesM [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
+		}
+	}
+
 	void Awake(){
 		if (Manager != null) {
 			Debug.Log ("Error, multiple thememanagers present");
 		}
+		Trait.Load ();
 		Manager = this;
 		GenerateThemes ();
 	}

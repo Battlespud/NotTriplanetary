@@ -1,9 +1,0 @@
-Name: Jayme Coors	 Age: 25
-0 Spring 800: Jayme Coors enlists at the rank of Lieutenant Commander.
-0 Spring 800: Lieutenant Commander Jayme Coors is awarded the Pioneer's Medallion.
-
-
-Awards:Pioneer's Medallion
-
-
-Traits:

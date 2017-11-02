@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Text;
 using System.IO;
 
-public enum Roles{
+public enum OfficerRoles{
 	Scientist,
 	Leader,
 	General,
@@ -53,7 +53,7 @@ public class Medal{
 		Name = na;
 		Description = desc;
 		Points = p;
-		DateDesigned = ClockStatic.clock.GetDate ();
+		DateDesigned = StrategicClock.GetDate ();
 		ImageIndex = i;
 		DesignedMedals.Add (this);
 	}
@@ -68,7 +68,10 @@ public class Medal{
 }
 
 public class Character {
-	static Clock clock = ClockStatic.clock;
+
+	public static System.Random rnd = new System.Random();
+
+	static StrategicClock clock = StrategicClock.strategicClock;
 
 	static int NextID = -1;
 	public int GetNextID(){
@@ -77,6 +80,7 @@ public class Character {
 
 	}
 	public int ID;
+	public OfficerRoles Role;
 	public static List<string>NavalRankNames = new List<string>(){"Lieutenant Commander","Commander","Captain","List Captain","Commodore", "Rear Admiral", "Admiral", "Admiral of the Fleet"};
 	public int PromotionPoints;
 	public List<Medal> Medals = new List<Medal>();
@@ -106,7 +110,7 @@ public class Character {
 
 
 	public void JoinsUp(){
-		string st = string.Format("{0}: {1} enlists at the rank of {2}.",clock.GetDate(), CharName, NavalRankNames[Rank]);
+		string st = string.Format("{0}: {1} enlists at the rank of {2}.",StrategicClock.GetDate(), CharName, NavalRankNames[Rank]);
 		AddHistory (st);
 	}
 
@@ -115,28 +119,28 @@ public class Character {
 		s.CaptainString = GetNameString ();
 		empire.Unassigned.Remove (this);
 		shipPosting = s.ship;
-		string st = string.Format("{0}: {1} is placed in command of the {2}.",clock.GetDate(),GetNameString(), s.ShipName);
+		string st = string.Format("{0}: {1} is placed in command of the {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
 		AddHistory (st);
 	}
 
 	public void AwardMedal(Medal m){
 		Medals.Add (m);
 		PromotionPoints += m.Points;
-		string st = string.Format("{0}: {1} is awarded the {2}.",clock.GetDate(),GetNameString(), m.Name);
+		string st = string.Format("{0}: {1} is awarded the {2}.",StrategicClock.GetDate(),GetNameString(), m.Name);
 		AddHistory (st);
 	}
 
 	public void AwardMedal(Medal m, string reason){
 		Medals.Add (m);
 		PromotionPoints += m.Points;
-		string st = string.Format("{0}: {1} is awarded the {2} for '{3}'.",clock.GetDate(),GetNameString(), m.Name, reason);
+		string st = string.Format("{0}: {1} is awarded the {2} for '{3}'.",StrategicClock.GetDate(),GetNameString(), m.Name, reason);
 		AddHistory (st);
 	}
 
 	public void Promote(){
 		if (Rank == NavalRankNames.Count - 1)
 			return;
-		string st = string.Format("{0}: {1} is promoted to the rank of {2}.",clock.GetDate(),GetNameString(), NavalRankNames[Rank+1]);
+		string st = string.Format("{0}: {1} is promoted to the rank of {2}.",StrategicClock.GetDate(),GetNameString(), NavalRankNames[Rank+1]);
 		AddHistory (st);
 		Rank++;
 	}
@@ -146,7 +150,7 @@ public class Character {
 	}
 
 	public void Die(){
-		string st = string.Format("{0}: {1} was killed in the destruction of the {2}.",clock.GetDate(),GetNameString(), shipPosting.ShipName);
+		string st = string.Format("{0}: {1} was killed in the destruction of the {2}.",StrategicClock.GetDate(),GetNameString(), shipPosting.ShipName);
 		AddHistory (st);
 		shipPosting = null;
 		empire.Characters.Remove (this);
@@ -190,18 +194,26 @@ public class Character {
 
 	// Use this for initialization
 	public Character(){
-		CharName = NameManager.GenerateCharName (); //todo
+		sex = (Sex)rnd.Next (0, 2);
+		CharName = ThemeManager.GenerateCharName (sex); //todo
 		Rank = 0;
 		ID = GetNextID();
-		sex = (Sex)Random.Range (0, 2);
 		JoinsUp ();
 	}
 
 	public Character(int i){
-		CharName = NameManager.GenerateCharName (); //todo
 		Rank = i;
 		ID = GetNextID();
-		sex = (Sex)Random.Range (0, 2);
+		sex = (Sex)rnd.Next (0, 2);
+		CharName = ThemeManager.GenerateCharName (sex); //todo
+		JoinsUp ();
+	}
+
+	public Character(int i, Theme t){
+		Rank = i;
+		ID = GetNextID();
+		sex = (Sex)rnd.Next (0, 2);
+		CharName = ThemeManager.GenerateCharName(t,sex); //todo
 		JoinsUp ();
 	}
 }
