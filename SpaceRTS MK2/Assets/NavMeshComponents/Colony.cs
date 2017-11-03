@@ -16,6 +16,7 @@ public class Colony : MonoBehaviour {
 
 	public int manpower;
 
+	public string Description;
 
 
 	// Use this for initialization

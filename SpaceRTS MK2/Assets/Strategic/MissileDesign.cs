@@ -60,9 +60,15 @@ public class MissilePropulsionDesign{
 
 }
 
+public enum WarheadTypes{
+	Conventional,
+	EMP,
+	Laser
+}
+
 public class MissileWarheadDesign{
 	public float Damage;
-
+	WarheadTypes WarheadType;
 	public float Signature;
 	public float Mass;
 }

@@ -67,6 +67,11 @@ public class Medal{
 	}
 }
 
+public enum NavalCommanderRole{
+	XO,
+	CMD
+}
+
 public class Character {
 
 	public static System.Random rnd = new System.Random();
@@ -82,6 +87,7 @@ public class Character {
 	public int ID;
 	public OfficerRoles Role;
 	public static List<string>NavalRankNames = new List<string>(){"Lieutenant Commander","Commander","Captain","List Captain","Commodore", "Rear Admiral", "Admiral", "Admiral of the Fleet"};
+	public static List<string>NavalComanderRoleNames = new List<string>(){"Executive Officer", "Commanding Officer"};
 	public int PromotionPoints;
 	public List<Medal> Medals = new List<Medal>();
 	public List<Trait> Traits = new List<Trait> ();
@@ -89,9 +95,14 @@ public class Character {
 	public string CharName;
 	public int Age;
 	public Sex sex;
-	public Ship shipPosting;
+	public StrategicShip shipPosting;
 	public Empire empire;
 	public int Rank;
+
+
+
+	public bool Noble;
+	public int NobleRank = 0;
 
 	StringBuilder sb;
 
@@ -114,12 +125,19 @@ public class Character {
 		AddHistory (st);
 	}
 
-	public void NewCommand(ShipClass s){
+	public void AppointCaptain(StrategicShip s){
 		s.Captain = this;
-		s.CaptainString = GetNameString ();
 		empire.Unassigned.Remove (this);
-		shipPosting = s.ship;
-		string st = string.Format("{0}: {1} is placed in command of the {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		shipPosting = s;
+		string st = string.Format("{0}: {1} is placed in command of {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		AddHistory (st);
+	}
+
+	public void AppointXO(StrategicShip s){
+		s.Executive = this;
+		empire.Unassigned.Remove (this);
+		shipPosting = s;
+		string st = string.Format("{0}: {1} is appointed Executive Officer onboard {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
 		AddHistory (st);
 	}
 
@@ -143,6 +161,56 @@ public class Character {
 		string st = string.Format("{0}: {1} is promoted to the rank of {2}.",StrategicClock.GetDate(),GetNameString(), NavalRankNames[Rank+1]);
 		AddHistory (st);
 		Rank++;
+	}
+
+	public void Demote(){
+		if (Rank == 0)
+			return;
+		string st = string.Format("{0}: {1} is demoted to the rank of {2}.",StrategicClock.GetDate(),GetNameString(), NavalRankNames[Rank-1]);
+		AddHistory (st);
+		Rank++;
+	}
+
+	public void MakeNoble(){
+		if (Noble)
+			return;
+		NobleRank = 0;
+		string st = string.Format("{0}: {1} {2} is made a peer of the realm.", StrategicClock.GetDate(), empire.Gov.NobleRanks[NobleRank], GetNameString());
+		AddHistory (st);
+		Noble = true;
+	}
+
+	public void MakeNoble(int rank){
+		if (Noble)
+			return;
+		NobleRank = rank;
+		string st = string.Format("{0}: {1} {2} is made a peer of the realm.", StrategicClock.GetDate(), empire.Gov.NobleRanks[NobleRank], GetNameString());
+		AddHistory (st);
+		Noble = true;
+	}
+
+	public void PromoteNoble(){
+		if (NobleRank == empire.Gov.NobleRanks.Count - 1)
+			return;
+		string st = string.Format("{0}: {1} is raised to the station of {2}.",StrategicClock.GetDate(),GetNameString(), NavalRankNames[NobleRank+1]);
+		AddHistory (st);
+		NobleRank++;
+	}
+
+	public void Retire(bool Forced){
+		string st = "";
+		if (Forced) {
+			 st = string.Format ("{0}: {1} was dishonorably discharged from the service.", StrategicClock.GetDate (), GetNameString ());
+		
+		} else {
+			 st = string.Format ("{0}: {1} has retired honorably from the service.", StrategicClock.GetDate (), GetNameString ());
+
+		}
+		AddHistory (st);
+		shipPosting = null;
+		empire.Characters.Remove (this);
+		empire.Unassigned.Remove (this);
+		OutputDeath ();
 	}
 
 	public void AddTrait(Trait t){

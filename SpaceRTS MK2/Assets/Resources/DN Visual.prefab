@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 114669431571424044}
   - component: {fileID: 136391437229066196}
   m_Layer: 0
-  m_Name: DN
+  m_Name: DN Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -839,7 +839,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -873,7 +873,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -907,7 +907,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -941,7 +941,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -975,7 +975,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1009,7 +1009,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1043,7 +1043,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1077,7 +1077,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1111,7 +1111,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1145,7 +1145,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1179,7 +1179,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1597,12 +1597,14 @@ MonoBehaviour:
   UIDate: {fileID: 114218768598438586}
   BuildDate: 
   faction: 1
+  empire: {fileID: 0}
   stand: {fileID: 0}
   standlr: {fileID: 0}
   c: {r: 0, g: 0, b: 0, a: 0}
   ArmorText: {fileID: 0}
   BaseType: 4
   integrity: 100
+  MaxArmor: 0
   dirTarget: {fileID: 0}
   dirTest: 0
   dirInverse: 0
@@ -1649,6 +1651,8 @@ MonoBehaviour:
   light: {fileID: 0}
   self: {fileID: 0}
   pdTargObj: {fileID: 0}
+  lr: {fileID: 0}
+  lrObj: {fileID: 0}
   shooting: 1
   CanFire: 1
   powerCost: 1
@@ -1747,6 +1751,7 @@ MonoBehaviour:
   Port: 0
   Wall: 0
   BatteryPower: 0
+  CaptainString: 
   crew: 0
   mCrew: 0
   CrewString: 
@@ -1754,10 +1759,12 @@ MonoBehaviour:
   marines: 0
   mMarines: 0
   Torpedos: 8
+  ComponentStatus: []
   ShipName: 
   ShipClassName: 
+  MinRank: 0
   MaxDAC: 0
-  LifeSupport: 0
+  Quarters: 0
   Controllable: 0
   Thrust: 0
   TurnThrust: 0
@@ -1806,6 +1813,8 @@ MonoBehaviour:
   light: {fileID: 0}
   self: {fileID: 0}
   pdTargObj: {fileID: 0}
+  lr: {fileID: 0}
+  lrObj: {fileID: 0}
   shooting: 0
   CanFire: 0
   powerCost: 0
@@ -1824,6 +1833,8 @@ MonoBehaviour:
   light: {fileID: 0}
   self: {fileID: 0}
   pdTargObj: {fileID: 0}
+  lr: {fileID: 0}
+  lrObj: {fileID: 0}
   shooting: 1
   CanFire: 1
   powerCost: 1
@@ -2090,7 +2101,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1818064713252424}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.000045776367, y: 21.1, z: -1.78e-13}
+  m_LocalPosition: {x: 0, y: 0, z: -1.78e-13}
   m_LocalScale: {x: 0.5588246, y: 0.67873484, z: 1.0000004}
   m_Children: []
   m_Father: {fileID: 224958349108013782}
@@ -2108,7 +2119,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1998705954512088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 43.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5588893, y: 0.73756975, z: 1}
   m_Children: []
   m_Father: {fileID: 224958349108013782}
@@ -2144,7 +2155,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1336385851165196}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -15.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 224958349108013782}

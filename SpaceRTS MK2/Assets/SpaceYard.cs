@@ -55,12 +55,12 @@ public class SpaceYard : MonoBehaviour, IContext {
 		Debug.Log ("Open Berth is #" + open.Designation);
 		GameObject s = Instantiate (ShipAbstract.ShipPrefabs[visual.value]);
 		ShipAbstract sb = s.GetComponent < ShipAbstract> ();
-		player.empire.Ships.Add (sb.gameObject.GetComponent<Ship> ());
+	//	player.empire.Ships.Add (sb.gameObject.GetComponent<Ship> ());
 		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (open.transform.position.x, .59f, open.transform.position.z));
 		s.transform.rotation = Quaternion.Inverse(open.transform.rotation);
 		sb.faction = FAC.PLAYER;
 		sb.shipClass.ImportDesign (ShipDesign.Designs[design.value]);
-		player.empire.Unassigned [0].NewCommand (sb.GetComponent<ShipClass> ());
+	//	player.empire.Unassigned [0].NewCommand (sb.GetComponent<ShipClass> ());
 
 	//	sb.Start ();
 		Debug.Log ("Ship built");
@@ -89,10 +89,10 @@ public class SpaceYard : MonoBehaviour, IContext {
 		s.GetComponent<NavMeshAgent>().Warp(new Vector3 (open.transform.position.x, .59f, open.transform.position.z));
 		s.transform.rotation = Quaternion.Inverse(open.transform.rotation);
 		s.GetComponent<ShipAbstract>().faction = FAC.PLAYER;
-		player.empire.Ships.Add (s.gameObject.GetComponent<Ship> ());
+//		player.empire.Ships.Add (s.gameObject.GetComponent<Ship> ());
 		s.GetComponent<ShipAbstract> ().RegenColors ();
 		s.GetComponent<ShipClass>().ImportDesign (ShipDesign.Designs[design.value]);
-		player.empire.Unassigned [0].NewCommand (s.GetComponent<ShipClass> ());
+//		player.empire.Unassigned [0].NewCommand (s.GetComponent<ShipClass> ());
 
 		Debug.Log ("Ship built local");
 	}

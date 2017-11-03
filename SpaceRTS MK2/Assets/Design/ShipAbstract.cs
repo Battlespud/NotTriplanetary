@@ -308,7 +308,6 @@ public abstract class ShipAbstract : MonoBehaviour, ICAPTarget, IContext {
 	}
 
 	public void DieAbstract(){
-		empire.Ships.Remove (GetComponent<Ship>());
 		transform.position = new Vector3 (10f, 10000f, 0f);
 		Destroy (gameObject);
 	}

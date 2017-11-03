@@ -24,8 +24,13 @@ public class HistoryEvent{
 //Data container for ships, stored in fleet and used to instantiate the actual monos and gameobjects.
 public class StrategicShip {
 
+	public FAC Faction;
+	public Empire Emp;
+
 	public string ShipName;
 	public Character Captain;
+	public Character Executive;
+
 	public List<Character> CharactersAboard = new List<Character>();
 
 	public List<HistoryEvent> HistoryEvents = new List<HistoryEvent>();
@@ -119,14 +124,18 @@ public class StrategicShip {
 	}
 
 
-	public StrategicShip(ShipDesign template){
+	public StrategicShip(ShipDesign template, Empire emp){
 		Setup (template);
 		ShipName = NameManager.AssignName (this);
+		Emp = emp;
+		Emp.Ships.Add (this);
 	}
 
-	public StrategicShip(ShipDesign template, string name){
+	public StrategicShip(ShipDesign template, string name, Empire emp){
 		Setup (template);
-		ShipName = name;
+		Emp = emp;
+		ShipName = name;	
+		Emp.Ships.Add (this);
 	}
 
 	public void DestroyShip(){

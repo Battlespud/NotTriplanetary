@@ -68,6 +68,8 @@ public class Planet : MonoBehaviour, IMineable
     public Dictionary<RawResources, ResourceDeposit> ResourceDeposits = new Dictionary<RawResources, ResourceDeposit>();
     public int[] composition;
 
+	public string Description;
+
     void AddDeposit(ResourceDeposit r)
     {
         ResourceDeposits.Add(r.resource, r);
