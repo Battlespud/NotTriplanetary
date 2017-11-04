@@ -1,0 +1,11 @@
+Name: Qiang Bai	 Age: 25
+March 2700: Qiang Bai enlists at the rank of Lieutenant.
+March 2700: Lieutenant Qiang Bai is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Resentful

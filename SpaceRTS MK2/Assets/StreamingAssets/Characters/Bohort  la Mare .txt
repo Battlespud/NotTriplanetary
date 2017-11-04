@@ -1,0 +1,11 @@
+Name: Bohort  la Mare 	 Age: 28
+March 2700: Bohort  la Mare  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Bohort  la Mare  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Neurotic

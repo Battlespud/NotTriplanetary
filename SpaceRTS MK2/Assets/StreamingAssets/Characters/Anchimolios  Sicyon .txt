@@ -1,0 +1,13 @@
+Name: Anchimolios  Sicyon 	 Age: 26
+March 2700: Anchimolios  Sicyon  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Anchimolios  Sicyon  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Intolerant
+Humble
+Arrogant

@@ -1,0 +1,12 @@
+Name: Ingo Wieser	 Age: 24
+March 2700: Ingo Wieser enlists at the rank of Lieutenant.
+March 2700: Lieutenant Ingo Wieser is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Delegator
+Impoverished

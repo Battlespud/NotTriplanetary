@@ -1,0 +1,12 @@
+Name: Rosa Krug	 Age: 27
+March 2700: Rosa Krug enlists at the rank of Lieutenant.
+March 2700: Lieutenant Rosa Krug is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Suspicious
+Embraces Change

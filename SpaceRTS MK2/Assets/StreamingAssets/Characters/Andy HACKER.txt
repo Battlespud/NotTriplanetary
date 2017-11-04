@@ -1,0 +1,13 @@
+Name: Andy HACKER	 Age: 24
+March 2700: Andy HACKER enlists at the rank of Lieutenant.
+March 2700: Lieutenant Andy HACKER is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower
+Adventurous
+Ambitious

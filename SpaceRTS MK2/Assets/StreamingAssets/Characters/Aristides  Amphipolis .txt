@@ -1,0 +1,11 @@
+Name: Aristides  Amphipolis 	 Age: 26
+March 2700: Aristides  Amphipolis  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Aristides  Amphipolis  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer

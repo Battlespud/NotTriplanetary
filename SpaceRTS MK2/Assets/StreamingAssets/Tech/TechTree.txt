@@ -3,17 +3,33 @@
 	//Drive
 
 Tech Name: Reaction Drive
-Tech ID: ReactionDrive
+Tech ID: Drive0
 Description: An engine system utilizing basic chemical rocket thrusters for propulsion.
 Section: Propulsion
 SubSection: Drive
-Cost: 10000
+Cost: 500
 Requirements:
 
 Tech Name: Ion Drive
-Tech ID: IonDrive
+Tech ID: Drive1
 Description: An engine system that accelerates ions via electricity in order to generate thrust.
 Section: Propulsion
 SubSection: Drive
-Cost: 10000
-Requirements: ReactionDrive
+Cost: 1000
+Requirements: Drive0
+
+Tech Name: Thermo-Nuclear Drive
+Tech ID: Drive2
+Description: An engine system that uses nuclear reactions to generate heat.
+Section: Propulsion
+SubSection: Drive
+Cost: 2500
+Requirements: Drive1
+
+Tech Name: Nuclear Pulse Drive
+Tech ID: Drive3
+Description: PlaceHolder
+Section: Propulsion
+SubSection: Drive
+Cost: 5000
+Requirements: Drive2

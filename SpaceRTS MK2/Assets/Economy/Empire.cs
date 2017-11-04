@@ -41,6 +41,30 @@ public class Empire : MonoBehaviour {
 	public List<StrategicShip> Ships = new List<StrategicShip> ();
 
 
+	void PhaseManager(Phase p){
+		switch (p) {
+		case(Phase.ORDERS):
+			{
+				EmpireTechTree.DoResearch ();
+				AvailableTechs = EmpireTechTree.GetAvailableTech ();
+				break;
+			}
+		case(Phase.GO):
+			{
+				break;
+			}
+		case (Phase.REVIEW):
+			{
+				break;
+			}
+		case (Phase.INTERRUPT):
+			{
+				break;
+			}
+
+		}	
+	}
+
 
 	public void GenerateStartingOfficerCorps(int i){
 		Debug.Log ("Generating starting officers: " + i);
@@ -51,14 +75,14 @@ public class Empire : MonoBehaviour {
 		foreach (StrategicShip s in Ships) {
 			if (s.Executive == null) {
 				for (int i = 0; i < Unassigned.Count; i++) {
-					if (Unassigned [i].Rank <= 1 ) {
+					if (Unassigned [i].Rank <= 1 && Unassigned[i].Role == OfficerRoles.Navy) {
 						Unassigned [i].AppointXO (s);
 					}
 				}
 			}
 			if(s.Captain == null){
 				for (int i = 0; i < Unassigned.Count; i++) {
-					if (Unassigned [i].Rank >= 2 ) {
+					if (Unassigned [i].Rank >= 2 && Unassigned[i].Role == OfficerRoles.Navy) {
 						Unassigned [i].AppointCaptain (s);
 					}
 				}
@@ -79,10 +103,10 @@ public class Empire : MonoBehaviour {
 	IEnumerator GenerateCorps(int i){
 		//Max rank starting  = 6
 		int index = 0;
-		List<float> Distribution = new List<float>(){.65f,.15f,.1f,.05f, .05f};
+		List<float> Distribution = new List<float>(){.75f,.05f,.1f,.05f, .05f};
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
-				Character c = new Character(index);
+				Character c = new Character(index,OfficerRoles.Navy);
 				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.45f,4f));
 				Characters.Add (c);
 				c.empire = this;
@@ -108,15 +132,51 @@ public class Empire : MonoBehaviour {
 		yield return Ninja.JumpToUnity;
 	}
 
+	IEnumerator GenerateScientists(int i){
+		//Max rank starting  = 6
+		int index = 0;
+		List<float> Distribution = new List<float>(){.85f,.05f,.1f};
+		foreach (float f in Distribution) {
+			for (int d = (int)(i * f); d > 0; d--) {
+				Character c = new Character(index, OfficerRoles.Research);
+				c.Age = (int)(rnd.Next (26, 32) + index*rnd.Next(1.85f,2.75f));
+				Characters.Add (c);
+				c.empire = this;
+				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
+				if (RandomTraits) {
+					int b = rnd.Next (0, 3);
+					for(b=b;b >= 0; b--){
+						int ind = rnd.Next(0,Trait.Traits.Count);
+						try{
+							c.AddTrait (Trait.Traits [ind]);
+						}
+						catch{
+						}
+					}
+				}
+				yield return Ninja.JumpToUnity;
+				c.Output ();
+				yield return Ninja.JumpBack;
+			}
+			index++;
+		}
+		Unassigned.AddRange (Characters);
+		yield return Ninja.JumpToUnity;
+	}
 	public bool DistributeCaptains = false;
+
+	void Awake(){
+		StrategicClock.PhaseChange.AddListener (PhaseManager);
+
+	}
 
 	// Use this for initialization
 	void Start () {
 		AllEmpires.Add (this);
 		BuildTechTree ();
-		Debug.Log (EmpireTechTree.TechByID.Count);
+//		Debug.Log (EmpireTechTree.TechByID.Count);
 		AvailableTechs = EmpireTechTree.GetAvailableTech ();
-		Debug.Log (AvailableTechs.Count);
+	//	Debug.Log (AvailableTechs.Count);
 		GenerateStartingOfficerCorps (100);
 		foreach (Tech t in AvailableTechs) {
 			DebugAvailableTechNames.Add (t.Name);
@@ -185,6 +245,10 @@ public enum GovernmentTypes{
 	Islamic
 }
 
+public class MilitaryStaff{
+
+
+}
 
 
 public class Government{
@@ -224,11 +288,12 @@ public class Government{
 		"Defender of the People",
 		"Chief Security Officer",
 		"Warlord",
-		string.Format("Sword of the {0}", LeaderTitle),
-		string.Format("Right hand of the {0}", LeaderTitle),
-		string.Format("Sword of the {0}", LeaderTitle),
+		"Sword of the ",
+		"Right hand of the {0}",
+		"Sword of the {0}",
 		"Sword of Allah"
 	};
+	
 	static List<string> WarTitleF = new List<string> () {
 		"High Priestess",
 		"President",
@@ -267,6 +332,6 @@ public class Government{
 	};
 
 	public bool HasNobleClass;
-	public List<string> NobleRanks = new List<string>(){"Peer","Honor","Baron","Count","Duke";
+	public List<string> NobleRanks = new List<string> (){ "Peer", "Honor", "Baron", "Count", "Duke" };
 
 }

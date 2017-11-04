@@ -1,0 +1,13 @@
+Name: Zhen Guo	 Age: 24
+March 2700: Zhen Guo enlists at the rank of Lieutenant.
+March 2700: Lieutenant Zhen Guo is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Insubordinate
+Apolitical
+Paranoid

@@ -1,6 +1,6 @@
 Name: Inihue  Neskhons 	 Age: 25
-March 2700: Inihue  Neskhons  enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Inihue  Neskhons  is awarded the Pioneer's Medallion.
+March 2700: Inihue  Neskhons  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Inihue  Neskhons  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Inflexible
-Suspicious
-Cautious
+Tolerant

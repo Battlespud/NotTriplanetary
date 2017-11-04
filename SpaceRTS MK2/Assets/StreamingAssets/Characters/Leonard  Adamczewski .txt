@@ -1,0 +1,12 @@
+Name: Leonard  Adamczewski 	 Age: 28
+March 2700: Leonard  Adamczewski  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Leonard  Adamczewski  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer
+Analytical

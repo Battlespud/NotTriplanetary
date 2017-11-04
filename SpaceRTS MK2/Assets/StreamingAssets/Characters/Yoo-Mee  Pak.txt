@@ -1,0 +1,11 @@
+Name: Yoo-Mee  Pak	 Age: 28
+March 2700: Yoo-Mee  Pak enlists at the rank of Lieutenant.
+March 2700: Lieutenant Yoo-Mee  Pak is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Resourceful

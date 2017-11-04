@@ -1,0 +1,11 @@
+Name: IVAN MARIN	 Age: 26
+March 2700: IVAN MARIN enlists at the rank of Lieutenant.
+March 2700: Lieutenant IVAN MARIN is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer

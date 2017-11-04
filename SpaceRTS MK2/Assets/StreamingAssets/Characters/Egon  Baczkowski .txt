@@ -1,0 +1,13 @@
+Name: Egon  Baczkowski 	 Age: 36
+March 2700: Egon  Baczkowski  enlists at the rank of Captain.
+March 2700: Captain Egon  Baczkowski  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cautious
+Mathematician
+Resourceful

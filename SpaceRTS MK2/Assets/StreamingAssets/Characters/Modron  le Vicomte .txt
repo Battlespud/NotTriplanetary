@@ -1,0 +1,11 @@
+Name: Modron  le Vicomte 	 Age: 26
+March 2700: Modron  le Vicomte  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Modron  le Vicomte  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Callous

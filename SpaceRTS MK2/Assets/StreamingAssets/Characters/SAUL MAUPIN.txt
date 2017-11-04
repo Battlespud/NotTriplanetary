@@ -1,0 +1,11 @@
+Name: SAUL MAUPIN	 Age: 33
+March 2700: SAUL MAUPIN enlists at the rank of Commander.
+March 2700: Commander SAUL MAUPIN is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Academic

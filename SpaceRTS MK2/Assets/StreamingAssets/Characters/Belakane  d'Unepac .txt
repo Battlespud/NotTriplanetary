@@ -1,0 +1,12 @@
+Name: Belakane  d'Unepac 	 Age: 35
+March 2700: Belakane  d'Unepac  enlists at the rank of Commander.
+March 2700: Commander Belakane  d'Unepac  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Partisan
+Analytical

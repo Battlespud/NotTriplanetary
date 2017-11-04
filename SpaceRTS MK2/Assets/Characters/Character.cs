@@ -5,11 +5,10 @@ using System.Text;
 using System.IO;
 
 public enum OfficerRoles{
-	Scientist,
-	Leader,
-	General,
-	Captain,
-	Admiral
+	Research,
+	Gov,
+	Army,
+	Navy
 }
 
 public enum Sex{
@@ -68,8 +67,9 @@ public class Medal{
 }
 
 public enum NavalCommanderRole{
-	XO,
-	CMD
+	XO=2,
+	CMD=1,
+	NONE=0
 }
 
 public class Character {
@@ -86,11 +86,14 @@ public class Character {
 	}
 	public int ID;
 	public OfficerRoles Role;
-	public static List<string>NavalRankNames = new List<string>(){"Lieutenant Commander","Commander","Captain","List Captain","Commodore", "Rear Admiral", "Admiral", "Admiral of the Fleet"};
+	public NavalCommanderRole NavalRole;
+	public int[] TimeInRole = new int[]{0,0,0};
+	public static List<string>NavalRankNames = new List<string>(){"Lieutenant","Lieutenant Commander","Commander","Captain","List Captain","Commodore", "Vice Admiral", "Admiral", "Admiral of the Fleet"};
 	public static List<string>NavalComanderRoleNames = new List<string>(){"Executive Officer", "Commanding Officer"};
 	public int PromotionPoints;
 	public List<Medal> Medals = new List<Medal>();
 	public List<Trait> Traits = new List<Trait> ();
+
 
 	public string CharName;
 	public int Age;
@@ -112,6 +115,13 @@ public class Character {
 		return string.Format ("{0} {1}", NavalRankNames [Rank], CharName);
 	}
 
+	public void UpdateTimeInRole(){
+		if (NavalRole != NavalCommanderRole.NONE) {
+			TimeInRole [(int)NavalRole]++;
+			PromotionPoints += TimeInRole [(int)NavalRole] * (int)NavalRole / 4;
+		}
+	}
+
 	public void AddHistory(string s){
 		sb = new StringBuilder ();
 		sb.Append(History);
@@ -127,6 +137,7 @@ public class Character {
 
 	public void AppointCaptain(StrategicShip s){
 		s.Captain = this;
+		NavalRole = NavalCommanderRole.CMD;
 		empire.Unassigned.Remove (this);
 		shipPosting = s;
 		string st = string.Format("{0}: {1} is placed in command of {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
@@ -135,9 +146,18 @@ public class Character {
 
 	public void AppointXO(StrategicShip s){
 		s.Executive = this;
+		NavalRole = NavalCommanderRole.XO;
 		empire.Unassigned.Remove (this);
 		shipPosting = s;
 		string st = string.Format("{0}: {1} is appointed Executive Officer onboard {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		AddHistory (st);
+	}
+
+	public void Unassign(){
+		NavalRole = NavalCommanderRole.NONE;
+		empire.Unassigned.Add (this);
+		shipPosting = null;
+		string st = string.Format("{0}: {1} has no current assignment.",StrategicClock.GetDate(),GetNameString());
 		AddHistory (st);
 	}
 
@@ -155,6 +175,16 @@ public class Character {
 		AddHistory (st);
 	}
 
+	public void StartResearch(string TechName){
+		string st = string.Format("{0}: {1} begins research into {2}.",StrategicClock.GetDate(),GetNameString(), TechName);
+		AddHistory (st);
+	}
+
+	public void DidResearch(string TechName){
+		string st = string.Format("{0}: {1} completes research into {2}.",StrategicClock.GetDate(),GetNameString(), TechName);
+		AddHistory (st);
+	}
+
 	public void Promote(){
 		if (Rank == NavalRankNames.Count - 1)
 			return;
@@ -166,6 +196,7 @@ public class Character {
 	public void Demote(){
 		if (Rank == 0)
 			return;
+		PromotionPoints -= 500;
 		string st = string.Format("{0}: {1} is demoted to the rank of {2}.",StrategicClock.GetDate(),GetNameString(), NavalRankNames[Rank-1]);
 		AddHistory (st);
 		Rank++;
@@ -262,6 +293,8 @@ public class Character {
 
 	// Use this for initialization
 	public Character(){
+		Role = OfficerRoles.Navy;
+
 		sex = (Sex)rnd.Next (0, 2);
 		CharName = ThemeManager.GenerateCharName (sex); //todo
 		Rank = 0;
@@ -269,7 +302,9 @@ public class Character {
 		JoinsUp ();
 	}
 
-	public Character(int i){
+	public Character(int i, OfficerRoles r){
+		Role = r;
+
 		Rank = i;
 		ID = GetNextID();
 		sex = (Sex)rnd.Next (0, 2);
@@ -277,7 +312,8 @@ public class Character {
 		JoinsUp ();
 	}
 
-	public Character(int i, Theme t){
+	public Character(int i, Theme t, OfficerRoles r){
+		Role = r;
 		Rank = i;
 		ID = GetNextID();
 		sex = (Sex)rnd.Next (0, 2);

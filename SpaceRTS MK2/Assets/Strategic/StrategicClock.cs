@@ -32,7 +32,7 @@ public class StrategicClock : MonoBehaviour {
 	static int month = 1;
 	static int year = 2700;
 
-	static bool isPaused = false;
+	public static bool isPaused = false;
 	float TurnLengthBase = 2f; //30
 	float GoTurnLength = 5f; //10f
 	float LengthMultiplier = 1f;
@@ -91,6 +91,8 @@ public class StrategicClock : MonoBehaviour {
 	void Pause(bool b){
 		isPaused = b;
 	}
+
+
 
 	IEnumerator OrdersPhase(){
 		TimeRemaining = TurnLengthBase * LengthMultiplier;

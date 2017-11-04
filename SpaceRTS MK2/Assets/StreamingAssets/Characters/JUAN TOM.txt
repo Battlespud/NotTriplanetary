@@ -1,0 +1,12 @@
+Name: JUAN TOM	 Age: 25
+March 2700: JUAN TOM enlists at the rank of Lieutenant.
+March 2700: Lieutenant JUAN TOM is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Courageous
+Decisive

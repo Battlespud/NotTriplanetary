@@ -48,7 +48,7 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 		berths.Category = CompCategory.REQUIRED;
 
 		ShipComponents smBerths = new ShipComponents();
-		smBerths.Name = "Crew Quarters";
+		smBerths.Name = "Crew Quarters (S)";
 		smBerths.Mass = 10;
 		smBerths.AddAbility (AbilityCats.CREW, 10);
 		smBerths.Category = CompCategory.REQUIRED;
@@ -66,7 +66,7 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 
 		DesignScreenManager.LoadAllComponents = true;
 		foreach(ShipComponents ce in ShipComponents.DesignedComponents){
-			ce.GetFields();
+		//	ce.GetFields();
 		}
 
 	}

@@ -1,0 +1,11 @@
+Name: Hans Engelhard	 Age: 26
+March 2700: Hans Engelhard enlists at the rank of Lieutenant.
+March 2700: Lieutenant Hans Engelhard is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower

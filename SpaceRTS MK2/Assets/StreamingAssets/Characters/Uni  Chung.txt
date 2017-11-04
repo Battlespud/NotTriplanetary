@@ -1,0 +1,13 @@
+Name: Uni  Chung	 Age: 24
+March 2700: Uni  Chung enlists at the rank of Lieutenant.
+March 2700: Lieutenant Uni  Chung is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Delegator
+Nepotistic
+Mathematician

@@ -1,0 +1,13 @@
+Name: Caliburn  Bohon 	 Age: 28
+March 2700: Caliburn  Bohon  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Caliburn  Bohon  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cowardly
+Imaginative
+Lazy

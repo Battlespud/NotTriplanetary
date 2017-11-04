@@ -1,0 +1,12 @@
+Name: Crudel  Martel 	 Age: 28
+March 2700: Crudel  Martel  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Crudel  Martel  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Analytical
+Methodical

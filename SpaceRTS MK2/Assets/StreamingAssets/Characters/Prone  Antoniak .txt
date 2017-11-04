@@ -1,0 +1,13 @@
+Name: Prone  Antoniak 	 Age: 24
+March 2700: Prone  Antoniak  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Prone  Antoniak  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Philosopher
+Follower
+Inflexible

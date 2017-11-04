@@ -1,0 +1,11 @@
+Name: Ankhef  Takhat 	 Age: 25
+March 2700: Ankhef  Takhat  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Ankhef  Takhat  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Authoritarian

@@ -1,0 +1,13 @@
+Name: Bertha EDGAR	 Age: 31
+March 2700: Bertha EDGAR enlists at the rank of Commander.
+March 2700: Commander Bertha EDGAR is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Resentful
+Patient
+Cowardly

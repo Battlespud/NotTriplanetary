@@ -1,0 +1,13 @@
+Name: Aeson  Naupactus 	 Age: 24
+March 2700: Aeson  Naupactus  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Aeson  Naupactus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Courageous
+Unappreciative
+Callous

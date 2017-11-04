@@ -1,0 +1,11 @@
+Name: Lausanne  Vavassour 	 Age: 25
+March 2700: Lausanne  Vavassour  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Lausanne  Vavassour  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Ignorant

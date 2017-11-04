@@ -1,0 +1,11 @@
+Name: Peng Hou	 Age: 25
+March 2700: Peng Hou enlists at the rank of Lieutenant.
+March 2700: Lieutenant Peng Hou is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Insightful

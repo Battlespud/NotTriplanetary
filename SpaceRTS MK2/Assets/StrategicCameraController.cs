@@ -11,7 +11,7 @@ public class StrategicCameraController : MonoBehaviour {
 	private const int DragSpeed = 350;
 
 	private const int ZoomSpeed = 100;
-	private const int ZoomMin = 5;
+	private const int ZoomMin = 20;
 	private const int ZoomMax = 1000;
 
 	private const int PanSpeed = 50;
@@ -19,6 +19,7 @@ public class StrategicCameraController : MonoBehaviour {
 	private const int PanAngleMax = 80;
 
 	Camera cam;
+	StrategicClock clock;
 
 	void Awake(){
 		cam = GetComponent<Camera> ();
@@ -28,6 +29,10 @@ public class StrategicCameraController : MonoBehaviour {
 	{
 		// Init camera translation for this frame.
 		var translation = Vector3.zero;
+
+		if (StrategicClock.isPaused) {
+			return;
+		}
 
 		// Zoom in or out
 		var zoomDelta = Input.GetAxis("Mouse ScrollWheel")*ZoomSpeed*Time.deltaTime;

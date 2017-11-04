@@ -1,0 +1,13 @@
+Name: Carrado  Briqueville 	 Age: 25
+March 2700: Carrado  Briqueville  enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Carrado  Briqueville  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Inflexible
+Courageous
+Follower

@@ -1,0 +1,11 @@
+Name: Ying Cai	 Age: 31
+March 2700: Ying Cai enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Ying Cai is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Philosopher

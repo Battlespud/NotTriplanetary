@@ -1,0 +1,12 @@
+Name: Anaxilaus  Pylos 	 Age: 24
+March 2700: Anaxilaus  Pylos  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Anaxilaus  Pylos  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Friendly
+Follower

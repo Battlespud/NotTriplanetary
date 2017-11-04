@@ -1,0 +1,13 @@
+Name: Juan Gao	 Age: 26
+March 2700: Juan Gao enlists at the rank of Lieutenant.
+March 2700: Lieutenant Juan Gao is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer
+Suspicious
+Friendly

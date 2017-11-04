@@ -55,8 +55,12 @@ public class DesignScreenManager : MonoBehaviour {
 	public Text CrewReqText;
 	public Transform ContentParentScrollview;
 	public GameObject ButtonPrefab;
+	public GameObject ShipComponentsUIButton;
 	public Text MassText;
+	public Text InstalledText;
 	public ScrollRect scrollview;
+
+	public Text ComponentStrings;
 
 	public Text Description;
 
@@ -64,6 +68,7 @@ public class DesignScreenManager : MonoBehaviour {
 
 	public bool HideObsolete = false;
 	public List<ShipComponents> Components = new List<ShipComponents> ();
+	public List<GameObject> UIObjects = new List<GameObject>();
 	public Dictionary<ShipComponents, int> AddedComponents = new Dictionary<ShipComponents, int>();
 	public ShipComponents EngineDesign; //only one type of engine permitted
 	public int EngineCount;
@@ -96,8 +101,10 @@ public class DesignScreenManager : MonoBehaviour {
 					Components.Add (c);
 			}
 		}
-		int yOff = -30;
+		Debug.Log (Components.Count + " components loaded.");
+		int yOff = -2;
 		int interval = 0;
+		/*
 		foreach (ShipComponents c in Components) {
 			GameObject d = Instantiate (ButtonPrefab) as GameObject;
 			d.transform.SetParent (ContentParentScrollview);
@@ -114,6 +121,29 @@ public class DesignScreenManager : MonoBehaviour {
 			block.highlightedColor = highlight;
 			block.pressedColor = pressed;
 			b.colors = block;
+			interval++;
+			if (ComponentStrings) {
+				ComponentStrings.text += "\n" + c.GenerateDesignString () + "\n";
+			//	for (int i = 0; i <= ComponentStrings.preferredWidth; i++) {
+				//	ComponentStrings.text +=  "_";
+			//	}
+			}
+		}
+		*/
+		foreach (GameObject g in UIObjects) {
+			Destroy (g);
+		}
+		foreach (ShipComponents c in Components) {
+			GameObject d = Instantiate (ShipComponentsUIButton) as GameObject;
+			UIObjects.Add (d);
+			d.transform.SetParent (ContentParentScrollview);
+			d.transform.localPosition = new Vector3 (d.transform.position.x, interval * yOff, d.transform.position.z);
+			d.transform.localScale = new Vector3 (1.71f, .02f, 1f);
+
+			ShipComponentUIManager s = d.GetComponent<ShipComponentUIManager> ();
+			s.Manager = this;
+			s.button.transform.localScale = new Vector3 (4f, 4f, 1f);
+			s.Assign (c);
 			interval++;
 		}
 	}
@@ -170,13 +200,12 @@ public class DesignScreenManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		ButtonPrefab = Resources.Load<GameObject> ("ButtonWide") as GameObject;
+		ShipComponentsUIButton= Resources.Load<GameObject> ("ShipComponentsUIButton") as GameObject;
 		SetupScreen ();
 	}
 
 	void SetupScreen(){
 		Debug.Log ("Setting up design screen");
-
-		LoadAllComponents = true;
 		PopulateComponentList ();
 		HullDesignation.ClearOptions ();
 		HullDesignation.AddOptions (HullDes.HullTypes);
@@ -191,27 +220,29 @@ public class DesignScreenManager : MonoBehaviour {
 	void Update () {
 		if (LoadAllComponents) {
 			LoadAllComponents = false;
-		//	ShipComponents.LoadAllComponents ();
 			PopulateComponentList ();
 		}
 	}
 
 	bool RequirementsMet = false;
 	IEnumerator CheckRequirements(){
-		string OutstandingRequirements = "";
+		string OutstandingRequirements = "Requirements:\n";
 		RequirementsMet = false;
+		int bridgeCount = 0;
 		foreach (ShipComponents c in AddedComponents.Keys.ToList()) {
 			foreach (Ability a in c.Abilities) {
 				if (a.AbilityType == AbilityCats.CONTROL) {
-					RequirementsMet = true;
+					bridgeCount++;
 					break;
+					}
 				}
-				if (RequirementsMet)
-					break;
 			}
-		}
-		if(!RequirementsMet)
-			OutstandingRequirements += "Missing Bridge\n";
+			if (bridgeCount < 1) {
+				OutstandingRequirements += "Missing Bridge\n";
+			} 
+			if (bridgeCount > 1) {
+				OutstandingRequirements += "Cannot have more than 1 Bridge\n";
+			}
 		if (ShipDesign.DesignDictionary.ContainsKey (DesignName.text)) {
 			RequirementsMet = false;
 			OutstandingRequirements += DesignName.text + " is already being used as a class name.\n";
@@ -279,8 +310,17 @@ public class DesignScreenManager : MonoBehaviour {
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CheckRequirements());
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CalcMaxSpeed());
 		ArmorText.text = ArmorLength.ToString() + " x " +  ArmorThickness.ToString ();
+		InstalledText.text = GenerateInstalledText();
 		Description.text = BuildDescription();
 
+	}
+
+	string GenerateInstalledText(){
+		string a = "Added:\n";
+		foreach (ShipComponents c in AddedComponents.Keys) {
+			a += string.Format ("{0}KT: {1} {2}x\n",c.Mass*AddedComponents[c], c.Name, AddedComponents [c]);
+		}
+		return a;
 	}
 
 	void CalculateArmorWidth(){
@@ -344,7 +384,7 @@ public class DesignScreenManager : MonoBehaviour {
 	}
 
 	string BuildDescription(){
-		string description = string.Format ("{0} Class {1}\t{2} Tons\t{3} Crew\t{4} BuildCost\n{5} km/s",DesignName.text,HullDesignation.options [HullDesignation.value].text,Mass,ReqCrew, "#",MaxSpeed);
+		string description = string.Format ("{0} Class {1}\t{2} KTons\t{3} Crew\t{4} BuildCost\n{5} km/s",DesignName.text,HullDesignation.options [HullDesignation.value].text,Mass,ReqCrew, "#",MaxSpeed);
 		return description;
 	}
 

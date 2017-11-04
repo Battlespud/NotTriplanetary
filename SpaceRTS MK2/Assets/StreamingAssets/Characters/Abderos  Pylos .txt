@@ -1,0 +1,12 @@
+Name: Abderos  Pylos 	 Age: 24
+March 2700: Abderos  Pylos  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Abderos  Pylos  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Philosopher
+Historian

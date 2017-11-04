@@ -1,0 +1,13 @@
+Name: JOHN CHIN	 Age: 25
+March 2700: JOHN CHIN enlists at the rank of Lieutenant.
+March 2700: Lieutenant JOHN CHIN is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Complacent
+Survivalist
+Aggressive

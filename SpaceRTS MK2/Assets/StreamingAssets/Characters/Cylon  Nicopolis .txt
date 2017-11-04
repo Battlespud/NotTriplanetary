@@ -1,0 +1,13 @@
+Name: Cylon  Nicopolis 	 Age: 26
+March 2700: Cylon  Nicopolis  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cylon  Nicopolis  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Ignorant
+Attractive
+Pessimistic

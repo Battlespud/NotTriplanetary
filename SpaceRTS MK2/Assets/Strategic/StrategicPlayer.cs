@@ -63,7 +63,7 @@ public class StrategicPlayer : MonoBehaviour {
 
 	void TrySelect(){
 		if (EventSystem.current.IsPointerOverGameObject ()) {
-			Debug.Log ("Click over UI (Anything child'd to Controller will block clicks from world)");
+		//	Debug.Log ("Click over UI (Anything child'd to Controller will block clicks from world)");
 			return;
 		}// is the touch on the GUI
 		RaycastHit hit;

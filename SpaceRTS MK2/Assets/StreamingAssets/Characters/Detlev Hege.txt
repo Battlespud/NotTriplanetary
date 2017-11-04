@@ -1,0 +1,12 @@
+Name: Detlev Hege	 Age: 25
+March 2700: Detlev Hege enlists at the rank of Lieutenant.
+March 2700: Lieutenant Detlev Hege is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Combatative
+Pessimistic

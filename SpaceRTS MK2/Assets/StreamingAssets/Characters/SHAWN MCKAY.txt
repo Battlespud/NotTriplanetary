@@ -1,0 +1,11 @@
+Name: SHAWN MCKAY	 Age: 28
+March 2700: SHAWN MCKAY enlists at the rank of Lieutenant.
+March 2700: Lieutenant SHAWN MCKAY is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Academic

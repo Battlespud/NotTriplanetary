@@ -1,0 +1,13 @@
+Name: Celeas  Olbia 	 Age: 28
+March 2700: Celeas  Olbia  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Celeas  Olbia  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Honest
+Complacent
+Follower

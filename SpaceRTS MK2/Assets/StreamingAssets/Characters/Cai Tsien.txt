@@ -1,0 +1,13 @@
+Name: Cai Tsien	 Age: 26
+March 2700: Cai Tsien enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cai Tsien is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Dishonest
+Paranoid
+Ignorant

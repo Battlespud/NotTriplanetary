@@ -1,0 +1,12 @@
+Name: Eurydike  Cnidus 	 Age: 26
+March 2700: Eurydike  Cnidus  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Eurydike  Cnidus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Neurotic
+Hunter

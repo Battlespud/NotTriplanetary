@@ -1,0 +1,12 @@
+Name: Kem  In 	 Age: 25
+March 2700: Kem  In  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Kem  In  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Resentful
+Paranoid

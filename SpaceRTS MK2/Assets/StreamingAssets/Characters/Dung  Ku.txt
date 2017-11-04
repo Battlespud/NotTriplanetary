@@ -1,0 +1,11 @@
+Name: Dung  Ku	 Age: 25
+March 2700: Dung  Ku enlists at the rank of Lieutenant.
+March 2700: Lieutenant Dung  Ku is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Decisive

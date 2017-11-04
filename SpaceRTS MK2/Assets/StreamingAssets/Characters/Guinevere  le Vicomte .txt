@@ -1,0 +1,11 @@
+Name: Guinevere  le Vicomte 	 Age: 28
+March 2700: Guinevere  le Vicomte  enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Guinevere  le Vicomte  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Analytical

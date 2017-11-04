@@ -1,0 +1,11 @@
+Name: Korean  Zhang	 Age: 36
+March 2700: Korean  Zhang enlists at the rank of Captain.
+March 2700: Captain Korean  Zhang is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Partisan

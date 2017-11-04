@@ -1,0 +1,13 @@
+Name: HECTOR BARKSDALE	 Age: 40
+March 2700: HECTOR BARKSDALE enlists at the rank of List Captain.
+March 2700: List Captain HECTOR BARKSDALE is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Authoritarian
+Patient
+Impatient

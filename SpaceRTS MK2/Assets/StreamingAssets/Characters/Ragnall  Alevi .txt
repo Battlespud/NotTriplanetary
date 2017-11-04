@@ -1,0 +1,13 @@
+Name: Ragnall  Alevi 	 Age: 25
+March 2700: Ragnall  Alevi  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Ragnall  Alevi  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Defector
+Impoverished
+Authoritarian

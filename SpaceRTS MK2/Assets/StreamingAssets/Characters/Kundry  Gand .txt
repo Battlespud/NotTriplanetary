@@ -1,0 +1,13 @@
+Name: Kundry  Gand 	 Age: 25
+March 2700: Kundry  Gand  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Kundry  Gand  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Indecisive
+Partisan
+Conservative

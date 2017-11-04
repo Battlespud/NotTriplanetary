@@ -1,0 +1,13 @@
+Name: Astolat  Poussin 	 Age: 26
+March 2700: Astolat  Poussin  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Astolat  Poussin  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower
+Imaginative
+Defector

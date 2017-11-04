@@ -51,7 +51,7 @@ public struct Emissions{
 }
 
 public class ShipComponents {
-	public static List<ShipComponents> DesignedComponents = new List<ShipComponents> ();
+	public static List<ShipComponents> DesignedComponents = new List<ShipComponents> ();   //TODO: Make these dictionaries that take Empire and return a list
 	public static List<ShipComponents> DesignedFighterComponents = new List<ShipComponents> ();
 	public static List<int>UsedID = new List<int>();
 	public static Dictionary<int,ShipComponents> IDComp = new Dictionary<int, ShipComponents> ();

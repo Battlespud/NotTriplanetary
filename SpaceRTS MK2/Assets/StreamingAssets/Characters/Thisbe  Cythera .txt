@@ -1,0 +1,13 @@
+Name: Thisbe  Cythera 	 Age: 24
+March 2700: Thisbe  Cythera  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Thisbe  Cythera  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Optimistic
+Rude
+Inflexible

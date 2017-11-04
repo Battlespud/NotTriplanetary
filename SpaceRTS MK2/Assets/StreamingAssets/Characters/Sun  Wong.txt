@@ -1,0 +1,13 @@
+Name: Sun  Wong	 Age: 25
+March 2700: Sun  Wong enlists at the rank of Lieutenant.
+March 2700: Lieutenant Sun  Wong is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Courageous
+Enterprising
+Apolitical

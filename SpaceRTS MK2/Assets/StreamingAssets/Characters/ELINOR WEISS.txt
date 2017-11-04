@@ -1,0 +1,11 @@
+Name: ELINOR WEISS	 Age: 27
+March 2700: ELINOR WEISS enlists at the rank of Lieutenant.
+March 2700: Lieutenant ELINOR WEISS is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Academic

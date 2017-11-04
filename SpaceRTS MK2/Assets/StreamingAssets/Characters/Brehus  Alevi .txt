@@ -1,0 +1,12 @@
+Name: Brehus  Alevi 	 Age: 28
+March 2700: Brehus  Alevi  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Brehus  Alevi  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower
+Academic

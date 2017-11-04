@@ -1,0 +1,11 @@
+Name: Gunnar Hintz	 Age: 24
+March 2700: Gunnar Hintz enlists at the rank of Lieutenant.
+March 2700: Lieutenant Gunnar Hintz is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Innovative

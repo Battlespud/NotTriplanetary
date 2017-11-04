@@ -1,0 +1,11 @@
+Name: Clarion  le Berruier 	 Age: 28
+March 2700: Clarion  le Berruier  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Clarion  le Berruier  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Neurotic

@@ -1,0 +1,13 @@
+Name: Qiang Gao	 Age: 26
+March 2700: Qiang Gao enlists at the rank of Lieutenant.
+March 2700: Lieutenant Qiang Gao is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Lazy
+Delegator
+Cowardly

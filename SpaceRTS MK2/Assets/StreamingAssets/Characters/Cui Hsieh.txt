@@ -1,0 +1,11 @@
+Name: Cui Hsieh	 Age: 25
+March 2700: Cui Hsieh enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cui Hsieh is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Delegator

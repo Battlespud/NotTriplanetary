@@ -1,0 +1,11 @@
+Name: Xian Qin	 Age: 25
+March 2700: Xian Qin enlists at the rank of Lieutenant.
+March 2700: Lieutenant Xian Qin is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Complacent

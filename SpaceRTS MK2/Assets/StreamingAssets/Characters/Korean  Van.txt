@@ -1,0 +1,13 @@
+Name: Korean  Van	 Age: 24
+March 2700: Korean  Van enlists at the rank of Lieutenant.
+March 2700: Lieutenant Korean  Van is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Dynamic
+Follower
+Insightful

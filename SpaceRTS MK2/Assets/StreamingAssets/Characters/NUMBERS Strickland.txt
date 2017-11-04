@@ -1,0 +1,13 @@
+Name: NUMBERS Strickland	 Age: 26
+March 2700: NUMBERS Strickland enlists at the rank of Lieutenant.
+March 2700: Lieutenant NUMBERS Strickland is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Born Leader
+Courageous
+Jealous
