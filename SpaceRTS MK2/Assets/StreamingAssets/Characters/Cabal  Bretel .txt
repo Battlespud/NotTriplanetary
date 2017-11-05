@@ -1,0 +1,12 @@
+Name: Cabal  Bretel 	 Age: 25
+March 2700: Cabal  Bretel  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cabal  Bretel  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Decisive
+Lazy

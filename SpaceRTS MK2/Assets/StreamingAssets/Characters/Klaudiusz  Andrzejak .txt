@@ -1,6 +1,6 @@
-Name: Klaudiusz  Andrzejak 	 Age: 31
-March 2700: Klaudiusz  Andrzejak  enlists at the rank of Captain.
-March 2700: Captain Klaudiusz  Andrzejak  is awarded the Pioneer's Medallion.
+Name: Klaudiusz  Andrzejak 	 Age: 24
+March 2700: Klaudiusz  Andrzejak  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Klaudiusz  Andrzejak  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Apolitical
-Unappreciative
+Astronomer
+Resentful

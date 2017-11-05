@@ -30,7 +30,6 @@ public class ContextMenu : MonoBehaviour
     {
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Ray clickRay = new Ray(mousePos, Vector3.down);
 
 
         if (Input.GetMouseButtonDown(1))
@@ -41,7 +40,10 @@ public class ContextMenu : MonoBehaviour
             c.GetComponent<Canvas>().worldCamera = Camera.main;
             c.transform.position = mousePos;
             RaycastHit[] hits;
-            hits = Physics.RaycastAll(mousePos, Vector3.down, 100f);
+           // hits = Physics.RaycastAll(mousePos, Vector3.down, 100f);  //FOR ORTHOGRAPHIC
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			Debug.DrawLine (ray.origin, ray.direction*1000f,Color.green,20f);
+			hits = Physics.RaycastAll (ray, 1000f);
             List<IContext> context = new List<IContext>();
             foreach (RaycastHit h in hits)
             {
@@ -69,6 +71,11 @@ public class ContextMenu : MonoBehaviour
                     bgo.transform.position = new Vector3(c.transform.position.x + xSize * i, c.transform.position.y - ySize * j, c.transform.position.z);
                     //button.OnClick(action);
                     bgo.GetComponent<Button>().onClick.AddListener(action);
+					ColorBlock co = new ColorBlock ();
+					co.highlightedColor = Color.cyan;
+					co.pressedColor = Color.green;
+					bgo.GetComponent<Button> ().colors = co;
+
                     string name = action.Method.ToString().Substring(5);
                     bgo.GetComponentInChildren<Text>().text = name.Substring(0, name.Length - 2);
                     j++;
@@ -94,7 +101,7 @@ public class ContextMenu : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            destroy = true;
+    //        destroy = true;
         }
     }
 }

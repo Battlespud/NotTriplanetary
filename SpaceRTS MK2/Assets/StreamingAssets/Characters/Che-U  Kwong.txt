@@ -1,4 +1,4 @@
-Name: Che-U  Kwong	 Age: 27
+Name: Che-U  Kwong	 Age: 24
 March 2700: Che-U  Kwong enlists at the rank of Lieutenant.
 March 2700: Lieutenant Che-U  Kwong is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Adventurous
+Calm
+Pessimistic

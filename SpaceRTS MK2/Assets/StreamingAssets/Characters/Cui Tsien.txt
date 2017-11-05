@@ -1,0 +1,12 @@
+Name: Cui Tsien	 Age: 28
+March 2700: Cui Tsien enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cui Tsien is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cheerful
+Disorganized

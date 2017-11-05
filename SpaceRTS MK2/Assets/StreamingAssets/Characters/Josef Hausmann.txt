@@ -1,0 +1,11 @@
+Name: Josef Hausmann	 Age: 30
+March 2700: Josef Hausmann enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Josef Hausmann is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Defector

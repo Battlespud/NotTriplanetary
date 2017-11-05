@@ -1,6 +1,6 @@
-Name: Na Chang	 Age: 27
-March 2700: Na Chang enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Na Chang is awarded the Pioneer's Medallion.
+Name: Na Chang	 Age: 37
+March 2700: Na Chang enlists at the rank of Captain.
+March 2700: Captain Na Chang is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Gloomy
-Gifted
-Attractive
+Neurotic
+Disciplined

@@ -1,4 +1,4 @@
-Name: Konstanty  Adamczak 	 Age: 27
+Name: Konstanty  Adamczak 	 Age: 28
 March 2700: Konstanty  Adamczak  enlists at the rank of Lieutenant.
 March 2700: Lieutenant Konstanty  Adamczak  is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Pessimistic
+Cold
+Academic
+Resourceful

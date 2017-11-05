@@ -217,6 +217,7 @@ public class Fleet : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		SetPaths ();
+		downlr.SetPositions(new Vector3[]{new Vector3(0f,0f,0f), new Vector3 (0f, StrategicExtensions.yLayer*-6.5f, 0f)});
 		if (Agent.speed > 0f && Mode != MoveMode.INTERCEPT) {
 			WaypointProgress();
 		}

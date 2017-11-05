@@ -1,0 +1,13 @@
+Name: DION CASS	 Age: 25
+March 2700: DION CASS enlists at the rank of Lieutenant.
+March 2700: Lieutenant DION CASS is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Combatative
+Inflexible
+Nepotistic

@@ -8,6 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Embraces Change
-Hunter
-Arrogant
+Ignorant
+Trusting
+Disciplined

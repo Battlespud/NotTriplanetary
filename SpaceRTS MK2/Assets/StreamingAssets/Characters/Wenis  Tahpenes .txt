@@ -1,6 +1,6 @@
-Name: Wenis  Tahpenes 	 Age: 34
-March 2700: Wenis  Tahpenes  enlists at the rank of List Captain.
-March 2700: List Captain Wenis  Tahpenes  is awarded the Pioneer's Medallion.
+Name: Wenis  Tahpenes 	 Age: 33
+March 2700: Wenis  Tahpenes  enlists at the rank of Commander.
+March 2700: Commander Wenis  Tahpenes  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Nepotistic
-Analytical
+Honest
+Astronomer

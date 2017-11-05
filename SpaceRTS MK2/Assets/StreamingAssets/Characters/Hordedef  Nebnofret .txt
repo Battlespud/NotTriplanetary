@@ -1,0 +1,13 @@
+Name: Hordedef  Nebnofret 	 Age: 27
+March 2700: Hordedef  Nebnofret  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Hordedef  Nebnofret  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Analytical
+Objective
+Intolerant

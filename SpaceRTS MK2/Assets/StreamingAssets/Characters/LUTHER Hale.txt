@@ -1,0 +1,11 @@
+Name: LUTHER Hale	 Age: 24
+March 2700: LUTHER Hale enlists at the rank of Lieutenant.
+March 2700: Lieutenant LUTHER Hale is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Neurotic

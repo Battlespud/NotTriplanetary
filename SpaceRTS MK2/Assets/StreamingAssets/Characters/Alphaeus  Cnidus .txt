@@ -1,0 +1,13 @@
+Name: Alphaeus  Cnidus 	 Age: 31
+March 2700: Alphaeus  Cnidus  enlists at the rank of Commander.
+March 2700: Commander Alphaeus  Cnidus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Enthusiastic
+Cowardly
+Methodical

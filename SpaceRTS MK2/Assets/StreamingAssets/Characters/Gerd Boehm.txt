@@ -1,0 +1,12 @@
+Name: Gerd Boehm	 Age: 28
+March 2700: Gerd Boehm enlists at the rank of Lieutenant.
+March 2700: Lieutenant Gerd Boehm is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Historian
+Courteous

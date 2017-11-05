@@ -1,0 +1,13 @@
+Name: Heiko Agricola	 Age: 24
+March 2700: Heiko Agricola enlists at the rank of Lieutenant.
+March 2700: Lieutenant Heiko Agricola is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cautious
+Authoritarian
+Indecisive

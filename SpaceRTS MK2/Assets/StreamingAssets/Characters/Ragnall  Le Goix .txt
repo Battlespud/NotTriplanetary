@@ -1,0 +1,13 @@
+Name: Ragnall  Le Goix 	 Age: 27
+March 2700: Ragnall  Le Goix  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Ragnall  Le Goix  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Patient
+Cowardly
+Defector

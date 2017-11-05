@@ -1,0 +1,13 @@
+Name: Valerie Spieler	 Age: 27
+March 2700: Valerie Spieler enlists at the rank of Lieutenant.
+March 2700: Lieutenant Valerie Spieler is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Complacent
+Ambitious
+Cautious

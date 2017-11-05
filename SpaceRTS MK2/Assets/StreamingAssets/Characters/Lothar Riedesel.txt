@@ -1,0 +1,13 @@
+Name: Lothar Riedesel	 Age: 25
+March 2700: Lothar Riedesel enlists at the rank of Lieutenant.
+March 2700: Lieutenant Lothar Riedesel is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Complacent
+Adventurous
+Aggressive

@@ -1,0 +1,13 @@
+Name: Lausanne  Le Marinier 	 Age: 26
+March 2700: Lausanne  Le Marinier  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Lausanne  Le Marinier  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Jealous
+Impoverished
+Calm

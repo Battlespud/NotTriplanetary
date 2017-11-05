@@ -1,4 +1,4 @@
-Name: Elcmene  Myndus 	 Age: 28
+Name: Elcmene  Myndus 	 Age: 29
 March 2700: Elcmene  Myndus  enlists at the rank of Lieutenant Commander.
 March 2700: Lieutenant Commander Elcmene  Myndus  is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Mathematician
+Analytical
+Philosopher

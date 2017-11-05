@@ -1,6 +1,6 @@
-Name: Hae  Mih	 Age: 28
-March 2700: Hae  Mih enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Hae  Mih is awarded the Pioneer's Medallion.
+Name: Hae  Mih	 Age: 26
+March 2700: Hae  Mih enlists at the rank of Lieutenant.
+March 2700: Lieutenant Hae  Mih is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Tolerant
-Sincere
-Methodical
+Narcissist
+Dynamic
+Follower

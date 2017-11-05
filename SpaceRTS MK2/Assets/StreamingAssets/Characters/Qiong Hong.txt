@@ -1,4 +1,4 @@
-Name: Qiong Hong	 Age: 24
+Name: Qiong Hong	 Age: 25
 March 2700: Qiong Hong enlists at the rank of Lieutenant.
 March 2700: Lieutenant Qiong Hong is awarded the Pioneer's Medallion.
 
@@ -8,6 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Callous
-Debonaire
-Gloomy
+Insubordinate
+Attractive
+Paranoid

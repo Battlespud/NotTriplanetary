@@ -1,6 +1,6 @@
-Name: Liang Li	 Age: 26
-March 2700: Liang Li enlists at the rank of Lieutenant.
-March 2700: Lieutenant Liang Li is awarded the Pioneer's Medallion.
+Name: Liang Li	 Age: 28
+March 2700: Liang Li enlists at the rank of Commander.
+March 2700: Commander Liang Li is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Enterprising
-Impoverished
-Patient
+Dynamic
+Stubborn

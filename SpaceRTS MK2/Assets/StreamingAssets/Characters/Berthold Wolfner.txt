@@ -1,0 +1,12 @@
+Name: Berthold Wolfner	 Age: 24
+March 2700: Berthold Wolfner enlists at the rank of Lieutenant.
+March 2700: Lieutenant Berthold Wolfner is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer
+Motivated

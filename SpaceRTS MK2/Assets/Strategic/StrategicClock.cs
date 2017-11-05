@@ -59,11 +59,11 @@ public class StrategicClock : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			if (isPaused) {
+			if (!isPaused) {
 				RequestPause ();
 			}
 			else{
-						
+				Unpause ();		
 			}
 		}
 	}

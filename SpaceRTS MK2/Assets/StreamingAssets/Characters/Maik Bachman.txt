@@ -1,0 +1,13 @@
+Name: Maik Bachman	 Age: 26
+March 2700: Maik Bachman enlists at the rank of Lieutenant.
+March 2700: Lieutenant Maik Bachman is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Complacent
+Courageous
+Methodical

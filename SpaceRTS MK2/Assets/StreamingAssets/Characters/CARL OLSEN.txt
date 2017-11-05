@@ -1,0 +1,13 @@
+Name: CARL OLSEN	 Age: 26
+March 2700: CARL OLSEN enlists at the rank of Lieutenant.
+March 2700: Lieutenant CARL OLSEN is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Pessimistic
+Philosopher
+Born Leader

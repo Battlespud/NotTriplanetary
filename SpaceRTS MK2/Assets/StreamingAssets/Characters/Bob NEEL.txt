@@ -1,0 +1,12 @@
+Name: Bob NEEL	 Age: 24
+March 2700: Bob NEEL enlists at the rank of Lieutenant.
+March 2700: Lieutenant Bob NEEL is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Insightful
+Combatative

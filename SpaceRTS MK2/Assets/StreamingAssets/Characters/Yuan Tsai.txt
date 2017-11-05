@@ -1,6 +1,6 @@
-Name: Yuan Tsai	 Age: 30
-March 2700: Yuan Tsai enlists at the rank of Commander.
-March 2700: Commander Yuan Tsai is awarded the Pioneer's Medallion.
+Name: Yuan Tsai	 Age: 24
+March 2700: Yuan Tsai enlists at the rank of Lieutenant.
+March 2700: Lieutenant Yuan Tsai is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Friendly
+Embraces Change
+Historian
+Jealous

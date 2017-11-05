@@ -1,0 +1,11 @@
+Name: Tetisherit  Tutu 	 Age: 25
+March 2700: Tetisherit  Tutu  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Tetisherit  Tutu  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Hunter

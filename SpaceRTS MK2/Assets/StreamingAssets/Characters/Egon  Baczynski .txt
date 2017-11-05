@@ -1,0 +1,12 @@
+Name: Egon  Baczynski 	 Age: 25
+March 2700: Egon  Baczynski  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Egon  Baczynski  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Partisan
+Born Leader

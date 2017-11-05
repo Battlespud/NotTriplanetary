@@ -1,0 +1,11 @@
+Name: MELVIN ROUSSEL	 Age: 25
+March 2700: MELVIN ROUSSEL enlists at the rank of Lieutenant.
+March 2700: Lieutenant MELVIN ROUSSEL is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Impoverished

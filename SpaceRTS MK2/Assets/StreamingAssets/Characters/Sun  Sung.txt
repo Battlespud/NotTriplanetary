@@ -1,0 +1,11 @@
+Name: Sun  Sung	 Age: 24
+March 2700: Sun  Sung enlists at the rank of Lieutenant.
+March 2700: Lieutenant Sun  Sung is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Innovative

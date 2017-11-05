@@ -1,0 +1,12 @@
+Name: Jens Keller	 Age: 28
+March 2700: Jens Keller enlists at the rank of Lieutenant.
+March 2700: Lieutenant Jens Keller is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Innovative
+Astronomer

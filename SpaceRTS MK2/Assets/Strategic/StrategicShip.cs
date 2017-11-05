@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Text;
 
 public class HistoryEvent{
 	public string Header;
@@ -82,6 +82,7 @@ public class StrategicShip {
 		}
 		CrewString = string.Format ("Crew: {0}/{1}", Crew, mCrew);
 		UpdateComponentStatusStrings ();
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,BuildArmorString()); //TODO Test this and make sure it works
 	}
 
 	void UpdateComponentStatusStrings(){
@@ -128,12 +129,15 @@ public class StrategicShip {
 		Setup (template);
 		ShipName = NameManager.AssignName (this);
 		Emp = emp;
+		Faction = emp.Faction;
+
 		Emp.Ships.Add (this);
 	}
 
 	public StrategicShip(ShipDesign template, string name, Empire emp){
 		Setup (template);
 		Emp = emp;
+		Faction = emp.Faction;
 		ShipName = name;	
 		Emp.Ships.Add (this);
 	}
@@ -141,6 +145,8 @@ public class StrategicShip {
 	public void DestroyShip(){
 		NameManager.RecycleName (this);
 	}
+
+
 
 	void SetupArmor(int c, int r, float armorStrength){
 		Armor = new float[c, r];
@@ -151,5 +157,31 @@ public class StrategicShip {
 		}
 	}
 
+	public string ArmorString;
+
+	IEnumerator BuildArmorString(){
+		StringBuilder a = new StringBuilder();
+		for (int y = 0; y < Armor.GetLength (1); y++) {
+			for (int x = 0; x < Armor.GetLength (0); x++) {
+				if (Armor [x, y] == (float)ArmorType) {
+					a.Append( "<color=green>□</color>");
+				}
+				else if (Armor[x,y] > 0f && Armor[x,y] < (float)ArmorType) {
+					a.Append( "<color=yellow>□</color>");
+				}
+				else if (Armor[x,y] <= 0f) {
+					a.Append( "<color=red>□</color>");
+				}
+				//	float l =   Armor [x, y]/MaxArmor  ;
+				//	Color c = new Color (2.0f * l, 2.0f * (1 - l), 0);
+				//	a.Append( "<color=" + ColorUtility.ToHtmlStringRGBA(c) + ">□</color>");
+
+
+			}
+			a.AppendLine();
+		}
+		ArmorString = a.ToString();
+		yield return Ninja.JumpToUnity;
+	}
 
 }

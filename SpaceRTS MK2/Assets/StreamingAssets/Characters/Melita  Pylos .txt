@@ -1,4 +1,4 @@
-Name: Melita  Pylos 	 Age: 26
+Name: Melita  Pylos 	 Age: 27
 March 2700: Melita  Pylos  enlists at the rank of Lieutenant.
 March 2700: Lieutenant Melita  Pylos  is awarded the Pioneer's Medallion.
 
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Methodical
-Jealous
-Cold
+Unappreciative
+Neurotic

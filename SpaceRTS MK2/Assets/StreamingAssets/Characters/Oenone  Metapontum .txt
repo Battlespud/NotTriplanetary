@@ -1,0 +1,13 @@
+Name: Oenone  Metapontum 	 Age: 25
+March 2700: Oenone  Metapontum  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Oenone  Metapontum  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cheerful
+Paranoid
+Adventurous

@@ -1,23 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public struct Slipway{
+public class Slipway{
 	public StrategicShipyard parent;
+	public float BuildCost;
 	public float TurnsToCompletion;
 	public string NameOverride; 
 	public bool InUse;
 
-	public void Assign(float time){
+	public void Assign(float cost){
 		InUse = true;
-		TurnsToCompletion = time;
+		BuildCost = cost;
 	}
 
 	public void Progress(){
 		if (!InUse)
 			return;
-		TurnsToCompletion -= 1;
-		if (TurnsToCompletion <= 0)
+		BuildCost -= parent.Rate * (1 + (((parent.CurrentTooling.mass / 5000) - 1) / 2)); 
+		TurnsToCompletion = (int)System.Math.Ceiling(BuildCost / (1 + (((parent.CurrentTooling.mass / 5000) - 1) / 2)));
+		if (BuildCost <= 0)
+			TurnsToCompletion = -1;
 			Complete ();
 	}
 
@@ -27,17 +31,24 @@ public struct Slipway{
 	}
 }
 
-public class StrategicShipyard : MonoBehaviour {
+public class StrategicShipyard : MonoBehaviour, IContext{
+
+	//DEBUG
+	public bool AddSlipwayPls = true;
 
 	public ShipDesign CurrentTooling;
 	public ShipDesign NextTooling;
+
+	public Empire empire;
+
+	List<StrategicShip>DockedShips = new List<StrategicShip>();
 
 	public void Retool(ShipDesign newDes){
 		NextTooling = newDes;
 		TimeToNextTooling = CalcToolingTime (newDes);
 	}
 
-	int CalcToolingTime(ShipDesign newDes){
+	public int CalcToolingTime(ShipDesign newDes){
 		int currM = 0;
 		if (CurrentTooling != null) {
 			currM = (int)CurrentTooling.BuildCost;
@@ -66,7 +77,10 @@ public class StrategicShipyard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (AddSlipwayPls) {
+			AddSlipway ();
+			AddSlipwayPls = false;
+		}
 	}
 
 	float CalculateTime(){
@@ -74,6 +88,8 @@ public class StrategicShipyard : MonoBehaviour {
 	}
 
 	public void CompleteShip(){
+		StrategicShip s = new StrategicShip (CurrentTooling, empire);
+		DockedShips.Add (s);
 		//TODO actually make the ship reference for the fleet list.
 	}
 
@@ -122,5 +138,26 @@ public class StrategicShipyard : MonoBehaviour {
 			}
 
 		}	
+	}
+
+	public void AddSlipway(){
+		Slipway s = new Slipway ();
+		s.parent = this;
+		Slipways.Add (s);
+	}
+
+	void OpenMenu(){
+		Debug.Log ("Opening spaceyard ui");
+		StrategicShipyardUIManager.Manager.Open (this);
+	}
+
+	public List<UnityAction> ContextActions()
+	{
+		List<UnityAction> actions = new List<UnityAction>(){new UnityAction(OpenMenu)};
+		return actions;
+	}
+
+	public GameObject getGameObject(){
+		return gameObject;
 	}
 }

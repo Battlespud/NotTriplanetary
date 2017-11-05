@@ -1,0 +1,13 @@
+Name: Neil MARCH	 Age: 27
+March 2700: Neil MARCH enlists at the rank of Lieutenant.
+March 2700: Lieutenant Neil MARCH is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Calm
+Motivated
+Pessimistic

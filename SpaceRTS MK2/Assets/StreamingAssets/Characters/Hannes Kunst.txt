@@ -1,0 +1,13 @@
+Name: Hannes Kunst	 Age: 33
+March 2700: Hannes Kunst enlists at the rank of Commander.
+March 2700: Commander Hannes Kunst is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Friendly
+Cowardly
+Uncaring

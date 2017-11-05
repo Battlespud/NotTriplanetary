@@ -1,0 +1,11 @@
+Name: HERMAN MCCARTNEY	 Age: 25
+March 2700: HERMAN MCCARTNEY enlists at the rank of Lieutenant.
+March 2700: Lieutenant HERMAN MCCARTNEY is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Suspicious

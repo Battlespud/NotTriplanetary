@@ -1,0 +1,11 @@
+Name: Hans-Peter Kruer	 Age: 26
+March 2700: Hans-Peter Kruer enlists at the rank of Lieutenant.
+March 2700: Lieutenant Hans-Peter Kruer is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Modest

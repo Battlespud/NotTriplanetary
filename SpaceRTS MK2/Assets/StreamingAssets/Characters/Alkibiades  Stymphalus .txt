@@ -1,0 +1,12 @@
+Name: Alkibiades  Stymphalus 	 Age: 28
+March 2700: Alkibiades  Stymphalus  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Alkibiades  Stymphalus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Dishonest
+Stubborn

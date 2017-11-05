@@ -1,0 +1,12 @@
+Name: Dechtire  Bourdet 	 Age: 27
+March 2700: Dechtire  Bourdet  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Dechtire  Bourdet  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower
+Defector

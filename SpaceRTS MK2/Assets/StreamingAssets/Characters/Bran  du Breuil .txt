@@ -1,0 +1,11 @@
+Name: Bran  du Breuil 	 Age: 25
+March 2700: Bran  du Breuil  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Bran  du Breuil  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Resentful

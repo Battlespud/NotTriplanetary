@@ -1,4 +1,4 @@
-Name: Ju Cai	 Age: 26
+Name: Ju Cai	 Age: 27
 March 2700: Ju Cai enlists at the rank of Lieutenant.
 March 2700: Lieutenant Ju Cai is awarded the Pioneer's Medallion.
 
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Religious
-Optimistic
-Pessimistic
+Debonaire
+Friendly

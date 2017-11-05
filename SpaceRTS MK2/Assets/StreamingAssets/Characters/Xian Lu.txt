@@ -1,4 +1,4 @@
-Name: Xian Lu	 Age: 26
+Name: Xian Lu	 Age: 24
 March 2700: Xian Lu enlists at the rank of Lieutenant.
 March 2700: Lieutenant Xian Lu is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Courteous
-Enthusiastic
+Ignorant
+Embraces Change

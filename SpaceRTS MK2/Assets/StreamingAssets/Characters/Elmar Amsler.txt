@@ -1,0 +1,11 @@
+Name: Elmar Amsler	 Age: 24
+March 2700: Elmar Amsler enlists at the rank of Lieutenant.
+March 2700: Lieutenant Elmar Amsler is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Paranoid

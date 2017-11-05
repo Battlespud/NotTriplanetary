@@ -1,0 +1,12 @@
+Name: Dinas  Tranchant 	 Age: 30
+March 2700: Dinas  Tranchant  enlists at the rank of Captain.
+March 2700: Captain Dinas  Tranchant  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Religious
+Impoverished

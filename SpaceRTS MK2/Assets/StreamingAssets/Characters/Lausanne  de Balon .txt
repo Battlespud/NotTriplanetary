@@ -1,0 +1,13 @@
+Name: Lausanne  de Balon 	 Age: 24
+March 2700: Lausanne  de Balon  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Lausanne  de Balon  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Dynamic
+Unforgiving
+Flexible

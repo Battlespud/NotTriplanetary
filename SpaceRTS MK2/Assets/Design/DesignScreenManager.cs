@@ -138,7 +138,7 @@ public class DesignScreenManager : MonoBehaviour {
 			UIObjects.Add (d);
 			d.transform.SetParent (ContentParentScrollview);
 			d.transform.localPosition = new Vector3 (d.transform.position.x, interval * yOff, d.transform.position.z);
-			d.transform.localScale = new Vector3 (1.71f, .02f, 1f);
+			d.transform.localScale = new Vector3 (1.71f, .025f, 1f);
 
 			ShipComponentUIManager s = d.GetComponent<ShipComponentUIManager> ();
 			s.Manager = this;

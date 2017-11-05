@@ -1,0 +1,13 @@
+Name: Margawse  Moron 	 Age: 25
+March 2700: Margawse  Moron  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Margawse  Moron  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Honest
+Stubborn
+Dishonest
