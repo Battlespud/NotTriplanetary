@@ -1,6 +1,6 @@
-Name: Huan He	 Age: 27
-March 2700: Huan He enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Huan He is awarded the Pioneer's Medallion.
+Name: Huan He	 Age: 28
+March 2700: Huan He enlists at the rank of Lieutenant.
+March 2700: Lieutenant Huan He is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Survivalist
+Mathematician
+Motivated
+Born Leader

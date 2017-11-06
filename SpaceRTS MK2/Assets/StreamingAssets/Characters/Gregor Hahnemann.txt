@@ -1,0 +1,11 @@
+Name: Gregor Hahnemann	 Age: 28
+March 2700: Gregor Hahnemann enlists at the rank of Lieutenant.
+March 2700: Lieutenant Gregor Hahnemann is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Partisan

@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Impoverished
-Delusional
-Authoritarian
+Paranoid
+Gloomy

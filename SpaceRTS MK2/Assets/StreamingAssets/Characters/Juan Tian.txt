@@ -1,0 +1,13 @@
+Name: Juan Tian	 Age: 27
+March 2700: Juan Tian enlists at the rank of Lieutenant.
+March 2700: Lieutenant Juan Tian is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Enterprising
+Philosopher
+Dishonest

@@ -1,6 +1,6 @@
-Name: Chan Yin	 Age: 26
-March 2700: Chan Yin enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Chan Yin is awarded the Pioneer's Medallion.
+Name: Chan Yin	 Age: 27
+March 2700: Chan Yin enlists at the rank of Lieutenant.
+March 2700: Lieutenant Chan Yin is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,7 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Analytical
-Narcissist
-Hunter
-Dishonest
+Academic

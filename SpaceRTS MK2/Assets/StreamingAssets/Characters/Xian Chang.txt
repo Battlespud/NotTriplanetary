@@ -1,6 +1,6 @@
-Name: Xian Chang	 Age: 32
-March 2700: Xian Chang enlists at the rank of Commander.
-March 2700: Commander Xian Chang is awarded the Pioneer's Medallion.
+Name: Xian Chang	 Age: 27
+March 2700: Xian Chang enlists at the rank of Lieutenant.
+March 2700: Lieutenant Xian Chang is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Hunter
-Focused
+Cautious
+Indecisive
+Cowardly

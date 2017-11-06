@@ -1,0 +1,13 @@
+Name: Elroy RUST	 Age: 27
+March 2700: Elroy RUST enlists at the rank of Lieutenant.
+March 2700: Lieutenant Elroy RUST is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Mathematician
+Survivalist
+Complacent

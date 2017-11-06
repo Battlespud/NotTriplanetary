@@ -1,0 +1,13 @@
+Name: Ariston  Tenedos 	 Age: 27
+March 2700: Ariston  Tenedos  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Ariston  Tenedos  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Academic
+Ignorant
+Disorganized

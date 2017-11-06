@@ -1,0 +1,12 @@
+Name: Henning Helm	 Age: 28
+March 2700: Henning Helm enlists at the rank of Lieutenant.
+March 2700: Lieutenant Henning Helm is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Complacent
+Capricious

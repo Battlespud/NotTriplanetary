@@ -1,0 +1,13 @@
+Name: Holger Schumann	 Age: 36
+March 2700: Holger Schumann enlists at the rank of Captain.
+March 2700: Captain Holger Schumann is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Decisive
+Conservative
+Aggressive

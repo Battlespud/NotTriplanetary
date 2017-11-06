@@ -47,7 +47,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	void SetupSlipways(){
 
-		int yOff = -22;
+		int yOff = -35;
 		int interval = 1;
 
 		foreach (SlipwayButtonUIManager g in Slipways) {
@@ -61,9 +61,11 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 			e.Manager = this;
 			Slipways.Add (e);
 			d.transform.SetParent (SlipwaysContentParent.transform);
-			//d.transform.localPosition = new Vector3 (d.transform.position.x, interval * yOff, d.transform.position.z);
-			d.transform.localPosition = new Vector3();
-			d.transform.localScale = new Vector3 (1.71f, .3f, 1f);
+			d.transform.localScale = new Vector3 (.8f, .3f, 1f);
+		//	d.transform.rotation = DockedShipsContentParent.transform.rotation;
+
+			d.transform.localPosition = new Vector3 (93, interval * yOff, 0f);
+		//	d.transform.localPosition = new Vector3();
 
 			e.AssignSlip (c, interval.ToString() );
 			interval++;
@@ -72,6 +74,8 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	//Resets the dropdown
 	void SetupRetoolUI(){
+		if (ShipDesign.Designs.Count <= 0)
+			return;
 		DesignsDrop.ClearOptions ();
 		DesignsDrop.AddOptions (ShipDesign.DesignNames);
 		UpdateRetoolUI ();
@@ -79,6 +83,8 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	//Updates the text without resetting the dropdown
 	void UpdateRetoolUI(int doesNothingJustHereBecauseOfDumbUnityEventRequirements = 0){
+		if (ShipDesign.Designs.Count <= 0)
+			return;
 		if (Shipyard.CurrentTooling != null) {
 			if (DropToShip () != Shipyard.CurrentTooling) {
 				RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}", Shipyard.CalcToolingTime (DropToShip ()), Shipyard.CurrentTooling.DesignName, DropToShip ().DesignName);
@@ -123,6 +129,10 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	}
 
+	public void BuildShip(){
+		SelectedSlipway.Slip.Assign
+	}
+
 
 	// Use this for initialization
 	void Start () {
@@ -135,7 +145,10 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		foreach (SlipwayButtonUIManager a in Slipways) {
+			a.transform.rotation = DockedShipsContentParent.transform.rotation;
+		//	a.transform.position = new Vector3 (93);
+		}
 	}
 
 

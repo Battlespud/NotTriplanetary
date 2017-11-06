@@ -1,4 +1,4 @@
-Name: Jong-Min  Sun	 Age: 27
+Name: Jong-Min  Sun	 Age: 28
 March 2700: Jong-Min  Sun enlists at the rank of Lieutenant.
 March 2700: Lieutenant Jong-Min  Sun is awarded the Pioneer's Medallion.
 
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Innovative
-Innovative
-Rude
+Partisan
+Born Leader

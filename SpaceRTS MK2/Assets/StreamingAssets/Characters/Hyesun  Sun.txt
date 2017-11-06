@@ -1,6 +1,6 @@
-Name: Hyesun  Sun	 Age: 26
-March 2700: Hyesun  Sun enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Hyesun  Sun is awarded the Pioneer's Medallion.
+Name: Hyesun  Sun	 Age: 25
+March 2700: Hyesun  Sun enlists at the rank of Lieutenant.
+March 2700: Lieutenant Hyesun  Sun is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Impatient
-Academic
-Apolitical
+Disorganized

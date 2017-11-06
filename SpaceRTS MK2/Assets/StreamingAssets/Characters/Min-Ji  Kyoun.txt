@@ -1,4 +1,4 @@
-Name: Min-Ji  Kyoun	 Age: 25
+Name: Min-Ji  Kyoun	 Age: 26
 March 2700: Min-Ji  Kyoun enlists at the rank of Lieutenant.
 March 2700: Lieutenant Min-Ji  Kyoun is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Patient
+Enthusiastic
+Cheerful

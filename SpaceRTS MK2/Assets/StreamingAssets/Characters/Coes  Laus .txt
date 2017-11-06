@@ -1,0 +1,12 @@
+Name: Coes  Laus 	 Age: 28
+March 2700: Coes  Laus  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Coes  Laus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Impoverished
+Philosopher

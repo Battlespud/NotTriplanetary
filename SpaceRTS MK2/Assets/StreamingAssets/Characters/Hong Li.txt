@@ -1,4 +1,4 @@
-Name: Hong Li	 Age: 25
+Name: Hong Li	 Age: 28
 March 2700: Hong Li enlists at the rank of Lieutenant.
 March 2700: Lieutenant Hong Li is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Academic
+Indecisive
+Stubborn
+Philosopher

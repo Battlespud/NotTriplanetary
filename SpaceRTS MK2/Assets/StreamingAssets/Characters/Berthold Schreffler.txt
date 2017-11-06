@@ -1,0 +1,11 @@
+Name: Berthold Schreffler	 Age: 30
+March 2700: Berthold Schreffler enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Berthold Schreffler is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Born Leader

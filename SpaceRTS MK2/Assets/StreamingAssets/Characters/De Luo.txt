@@ -1,0 +1,13 @@
+Name: De Luo	 Age: 26
+March 2700: De Luo enlists at the rank of Lieutenant.
+March 2700: Lieutenant De Luo is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Analytical
+Cowardly
+Partisan

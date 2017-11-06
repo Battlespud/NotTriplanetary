@@ -1,0 +1,12 @@
+Name: Martin Bach	 Age: 27
+March 2700: Martin Bach enlists at the rank of Lieutenant.
+March 2700: Lieutenant Martin Bach is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Methodical
+Complacent

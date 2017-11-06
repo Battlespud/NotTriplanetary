@@ -1,4 +1,4 @@
-Name: Nubkhas  Nefertiry 	 Age: 27
+Name: Nubkhas  Nefertiry 	 Age: 26
 March 2700: Nubkhas  Nefertiry  enlists at the rank of Lieutenant.
 March 2700: Lieutenant Nubkhas  Nefertiry  is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Sincere
-Defector
+Follower

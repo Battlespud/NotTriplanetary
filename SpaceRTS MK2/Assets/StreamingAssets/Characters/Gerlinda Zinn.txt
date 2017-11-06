@@ -1,4 +1,4 @@
-Name: Gerlinda Zinn	 Age: 28
+Name: Gerlinda Zinn	 Age: 26
 March 2700: Gerlinda Zinn enlists at the rank of Lieutenant.
 March 2700: Lieutenant Gerlinda Zinn is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Innovative
+Authoritarian
+Sincere

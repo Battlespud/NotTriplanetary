@@ -1,0 +1,13 @@
+Name: Franz Kapp	 Age: 26
+March 2700: Franz Kapp enlists at the rank of Lieutenant.
+March 2700: Lieutenant Franz Kapp is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Apolitical
+Impatient
+Unappreciative

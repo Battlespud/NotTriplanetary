@@ -1,0 +1,13 @@
+Name: Hei  Mih	 Age: 34
+March 2700: Hei  Mih enlists at the rank of Captain.
+March 2700: Captain Hei  Mih is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Attractive
+Cowardly
+Arrogant
