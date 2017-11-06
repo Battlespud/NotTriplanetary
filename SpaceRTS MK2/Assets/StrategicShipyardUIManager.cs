@@ -43,11 +43,14 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 		if (!Shipyard)
 			return;
 		UpdateRetoolUI ();
+		foreach (SlipwayButtonUIManager s in Slipways) {
+			s.UpdateUI ();
+		}
 	}
 
 	void SetupSlipways(){
 
-		int yOff = -35;
+		int yOff = -40;
 		int interval = 1;
 
 		foreach (SlipwayButtonUIManager g in Slipways) {
@@ -61,10 +64,13 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 			e.Manager = this;
 			Slipways.Add (e);
 			d.transform.SetParent (SlipwaysContentParent.transform);
-			d.transform.localScale = new Vector3 (.8f, .3f, 1f);
-		//	d.transform.rotation = DockedShipsContentParent.transform.rotation;
+		//	d.GetComponent<RectTransform>().localScale = new Vector3 (.8f, .3f, 1f);
+			d.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge (RectTransform.Edge.Left, 45f, d.GetComponent<RectTransform>().rect.width);
+			d.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval, d.GetComponent<RectTransform>().rect.height);
+			d.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (93f, interval * yOff, 0f);
+			d.GetComponent<RectTransform> ().rotation = SlipwaysContentParent.GetComponent<RectTransform> ().rotation;
 
-			d.transform.localPosition = new Vector3 (93, interval * yOff, 0f);
+	//		d.GetComponent<RectTransform>().localPosition = new Vector3 (93, interval * yOff, 0f);
 		//	d.transform.localPosition = new Vector3();
 
 			e.AssignSlip (c, interval.ToString() );
@@ -92,7 +98,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 				RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}", "Already Tooled", Shipyard.CurrentTooling.DesignName, DropToShip ().DesignName);
 			}
 		} else {
-			RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}", "Instant", "None", DropToShip ().DesignName);
+			RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}",  Shipyard.CalcToolingTime(DropToShip()), "None", DropToShip ().DesignName);
 		}
 	}
 
@@ -130,7 +136,15 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 	}
 
 	public void BuildShip(){
-		SelectedSlipway.Slip.Assign
+		if(SelectedSlipway)
+			SelectedSlipway.Slip.Assign ();
+		UpdateUI ();
+	}
+
+	public void CancelBuildShip(){
+		if (SelectedSlipway)
+			SelectedSlipway.Slip.Cancel ();
+		UpdateUI ();
 	}
 
 

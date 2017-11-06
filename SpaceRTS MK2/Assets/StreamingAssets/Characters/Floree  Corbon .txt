@@ -1,0 +1,13 @@
+Name: Floree  Corbon 	 Age: 25
+March 2700: Floree  Corbon  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Floree  Corbon  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Aggressive
+Analytical
+Inflexible

@@ -10,9 +10,14 @@ public class Slipway{
 	public string NameOverride; 
 	public bool InUse;
 
-	public void Assign(float cost){
+	public void Assign(){
 		InUse = true;
-		BuildCost = cost;
+		BuildCost = parent.CurrentTooling.BuildCost;
+	}
+
+	public void Cancel(){
+		InUse = false;
+		BuildCost = 0f;
 	}
 
 	public void Progress(){
@@ -99,7 +104,7 @@ public class StrategicShipyard : MonoBehaviour, IContext{
 		while(!done && i < Slipways.Count){
 			if (!Slipways [i].InUse) {
 				done = true;
-				Slipways[i].Assign(CalculateTime());
+				Slipways[i].Assign();
 			}
 		}
 	}

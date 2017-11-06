@@ -1,0 +1,12 @@
+Name: Cymbeline  Giscard 	 Age: 28
+March 2700: Cymbeline  Giscard  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cymbeline  Giscard  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Trusting
+Ignorant

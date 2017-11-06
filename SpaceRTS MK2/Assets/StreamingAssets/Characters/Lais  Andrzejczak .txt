@@ -1,4 +1,4 @@
-Name: Lais  Andrzejczak 	 Age: 28
+Name: Lais  Andrzejczak 	 Age: 26
 March 2700: Lais  Andrzejczak  enlists at the rank of Lieutenant.
 March 2700: Lieutenant Lais  Andrzejczak  is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Tolerant
-Gifted
+Friendly
+Follower
+Nepotistic

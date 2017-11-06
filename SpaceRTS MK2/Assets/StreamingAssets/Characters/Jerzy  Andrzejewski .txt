@@ -1,0 +1,13 @@
+Name: Jerzy  Andrzejewski 	 Age: 25
+March 2700: Jerzy  Andrzejewski  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Jerzy  Andrzejewski  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Courteous
+Conservative
+Disciplined

@@ -1,4 +1,4 @@
-Name: Peng Shen	 Age: 27
+Name: Peng Shen	 Age: 28
 March 2700: Peng Shen enlists at the rank of Lieutenant.
 March 2700: Lieutenant Peng Shen is awarded the Pioneer's Medallion.
 
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Adventurous
-Friendly
-Courageous
+Unappreciative
+Calm

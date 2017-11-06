@@ -1,0 +1,13 @@
+Name: So-Young  Cho	 Age: 30
+March 2700: So-Young  Cho enlists at the rank of Commander.
+March 2700: Commander So-Young  Cho is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Analytical
+Ignorant
+Delegator

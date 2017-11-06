@@ -1,4 +1,4 @@
-Name: Wei Wang	 Age: 24
+Name: Wei Wang	 Age: 28
 March 2700: Wei Wang enlists at the rank of Lieutenant.
 March 2700: Lieutenant Wei Wang is awarded the Pioneer's Medallion.
 
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Ambitious
-Embraces Change
-Disorganized
+Impatient
+Aggressive

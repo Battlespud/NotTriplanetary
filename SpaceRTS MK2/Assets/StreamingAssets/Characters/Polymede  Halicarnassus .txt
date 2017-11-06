@@ -1,0 +1,12 @@
+Name: Polymede  Halicarnassus 	 Age: 28
+March 2700: Polymede  Halicarnassus  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Polymede  Halicarnassus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cowardly
+Philosopher

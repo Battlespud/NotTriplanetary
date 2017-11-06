@@ -1,0 +1,11 @@
+Name: RUBEN CRIDER	 Age: 25
+March 2700: RUBEN CRIDER enlists at the rank of Lieutenant.
+March 2700: Lieutenant RUBEN CRIDER is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Partisan

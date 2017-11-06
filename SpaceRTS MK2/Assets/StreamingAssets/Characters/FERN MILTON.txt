@@ -1,0 +1,13 @@
+Name: FERN MILTON	 Age: 24
+March 2700: FERN MILTON enlists at the rank of Lieutenant.
+March 2700: Lieutenant FERN MILTON is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Rude
+Resourceful
+Suspicious

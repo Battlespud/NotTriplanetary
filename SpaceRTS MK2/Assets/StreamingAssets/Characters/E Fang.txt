@@ -1,6 +1,6 @@
-Name: E Fang	 Age: 32
-March 2700: E Fang enlists at the rank of Commander.
-March 2700: Commander E Fang is awarded the Pioneer's Medallion.
+Name: E Fang	 Age: 24
+March 2700: E Fang enlists at the rank of Lieutenant.
+March 2700: Lieutenant E Fang is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Cheerful
-Hunter
+Born Leader

@@ -1,0 +1,13 @@
+Name: Che  Perci 	 Age: 26
+March 2700: Che  Perci  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Che  Perci  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cold
+Tolerant
+Dishonest

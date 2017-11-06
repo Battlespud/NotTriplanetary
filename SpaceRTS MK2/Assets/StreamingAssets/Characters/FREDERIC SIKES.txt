@@ -1,0 +1,11 @@
+Name: FREDERIC SIKES	 Age: 28
+March 2700: FREDERIC SIKES enlists at the rank of Lieutenant.
+March 2700: Lieutenant FREDERIC SIKES is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Analytical

@@ -1,0 +1,13 @@
+Name: Maik Zeigler	 Age: 25
+March 2700: Maik Zeigler enlists at the rank of Lieutenant.
+March 2700: Lieutenant Maik Zeigler is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Enthusiastic
+Astronomer
+Adventurous

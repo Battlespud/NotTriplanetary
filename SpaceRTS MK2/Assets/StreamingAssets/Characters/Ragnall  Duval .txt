@@ -1,0 +1,13 @@
+Name: Ragnall  Duval 	 Age: 25
+March 2700: Ragnall  Duval  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Ragnall  Duval  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower
+Complacent
+Humble

@@ -1,0 +1,13 @@
+Name: TY Floyd	 Age: 33
+March 2700: TY Floyd enlists at the rank of Commander.
+March 2700: Commander TY Floyd is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Lazy
+Cautious
+Analytical

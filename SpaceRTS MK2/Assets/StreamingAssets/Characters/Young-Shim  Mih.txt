@@ -8,5 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Astronomer
-Jealous
+Ambitious

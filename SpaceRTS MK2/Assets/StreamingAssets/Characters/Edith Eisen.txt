@@ -1,0 +1,11 @@
+Name: Edith Eisen	 Age: 24
+March 2700: Edith Eisen enlists at the rank of Lieutenant.
+March 2700: Lieutenant Edith Eisen is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Partisan

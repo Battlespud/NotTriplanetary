@@ -1,0 +1,12 @@
+Name: Amphios  Plataea 	 Age: 26
+March 2700: Amphios  Plataea  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Amphios  Plataea  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Philosopher
+Rude

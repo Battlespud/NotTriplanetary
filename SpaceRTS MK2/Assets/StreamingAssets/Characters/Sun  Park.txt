@@ -1,0 +1,13 @@
+Name: Sun  Park	 Age: 28
+March 2700: Sun  Park enlists at the rank of Commander.
+March 2700: Commander Sun  Park is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Apolitical
+Courageous
+Follower

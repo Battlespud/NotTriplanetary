@@ -1,0 +1,12 @@
+Name: Aischylos  Naupactus 	 Age: 25
+March 2700: Aischylos  Naupactus  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Aischylos  Naupactus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Uncaring
+Egomaniac

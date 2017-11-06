@@ -1,0 +1,11 @@
+Name: Belos  Paros 	 Age: 25
+March 2700: Belos  Paros  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Belos  Paros  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Academic
