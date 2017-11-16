@@ -135,7 +135,7 @@ public class StrategicShip {
 
 	public void SetupMaint(){
 		BaseFailRate = Mass / 100;
-		float MaintMass;
+		float MaintMass = 0;
 		foreach (ShipComponents c in Components) {
 			if (!c.isDamaged()) {
 				MaintMass += c.getMaintMass ();
@@ -157,12 +157,31 @@ public class StrategicShip {
 		CurrParts = 0;
 		float MaintMass = 0;
 		foreach (ShipComponents c in Components) {
-			if (!c.isDamaged) {
+			if (!c.isDamaged()) {
 				MaintMass += c.getMaintMass ();
-				MaxParts += c.GetMaxSpareParts ();
-				CurrParts += c.GetCurrentSpareParts ();
+				MaxParts += (int) c.GetMaxSpareParts();
+				CurrParts += (int) c.GetCurrentSpareParts();
 			}
 		}
+		float percent = MaintMass / Mass;
+		if (percent == 0f) 
+			BaseFailRate = Mass / 5;
+		if(MaintClock < 1){
+			EffectiveFailRate = BaseFailRate * (4 / (percent * 100f));
+		}
+		else{
+			EffectiveFailRate = BaseFailRate * (4 / (percent*100f))*MaintClock;
+		}
+	}
+
+	public bool UseMaintParts(int amount){
+		if (CurrParts >= amount) {
+			foreach (ShipComponents c in Components) {
+
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public void RollMaint(){

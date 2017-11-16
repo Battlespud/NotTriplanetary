@@ -67,6 +67,7 @@ public class ShipComponents {
 	public static Dictionary<int,ShipComponents> IDComp = new Dictionary<int, ShipComponents> ();
 
 	public bool Obsolete = false; //Obsolete components will be hidden in UI
+	public bool Default = false;
 
 	public string Name;
 	public int ID; //unique identifier
