@@ -1,0 +1,11 @@
+Name: Hermann Brink	 Age: 25
+March 2700: Hermann Brink enlists at the rank of Lieutenant.
+March 2700: Lieutenant Hermann Brink is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Conservative

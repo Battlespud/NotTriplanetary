@@ -24,6 +24,8 @@ public class HistoryEvent{
 //Data container for ships, stored in fleet and used to instantiate the actual monos and gameobjects.
 public class StrategicShip {
 
+	public static System.Random random = new System.Random ();
+
 	public FAC Faction;
 	public Empire Emp;
 
@@ -62,6 +64,18 @@ public class StrategicShip {
 	public bool isControllable;
 
 	public Emissions emissions;
+
+	//Maint
+	public int MaxParts;
+	public int CurrParts;
+	public const int TurnsPerMaintClockTick = 5;
+	public float BaseFailRate;
+	public float EffectiveFailRate;
+	public float MaintClock = 0f;
+	public float OverhaulMulti = 3f; //1 turn in dock = 3 turns deployed
+	public float MaintLife;
+	public bool InDrydock = true;
+	public bool IsDeployed = false;
 
 	void ChangeStats(){
 		Quarters = 0;
@@ -116,6 +130,53 @@ public class StrategicShip {
 		emissions = new Emissions();
 		ArmorType = template.ArmorType;
 		ChangeStats ();
+		SetupMaint ();
+	}
+
+	public void SetupMaint(){
+		BaseFailRate = Mass / 100;
+		float MaintMass;
+		foreach (ShipComponents c in Components) {
+			if (!c.isDamaged()) {
+				MaintMass += c.getMaintMass ();
+			}
+		}
+		float percent = MaintMass / Mass;
+		if (percent == 0f) 
+			BaseFailRate = Mass / 5;
+		if(MaintClock < 1){
+			EffectiveFailRate = BaseFailRate * (4 / (percent * 100f));
+		}
+		else{
+			EffectiveFailRate = BaseFailRate * (4/(percent*100f))*MaintClock;
+		}
+	}
+
+	public void UpdateMaint(){ //Call after damage
+		MaxParts = 0;
+		CurrParts = 0;
+		float MaintMass = 0;
+		foreach (ShipComponents c in Components) {
+			if (!c.isDamaged) {
+				MaintMass += c.getMaintMass ();
+				MaxParts += c.GetMaxSpareParts ();
+				CurrParts += c.GetCurrentSpareParts ();
+			}
+		}
+	}
+
+	public void RollMaint(){
+
+	}
+
+	public void TakeInternalHit(float damage){ //skips armor
+		ShipComponents c = Components [random.Next (0, Components.Count)];
+		if (!c.isDamaged ()) {
+			c.Damage ();
+			ChangeStats ();
+		} else {
+			TakeInternalHit (damage);
+		}
 	}
 
 	public void CreateShip(GameObject g){

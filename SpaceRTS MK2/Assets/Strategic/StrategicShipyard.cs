@@ -46,7 +46,7 @@ public class StrategicShipyard : MonoBehaviour, IContext{
 
 	public Empire empire;
 
-	List<StrategicShip>DockedShips = new List<StrategicShip>();
+	public List<StrategicShip>DockedShips = new List<StrategicShip>();
 
 	public void Retool(ShipDesign newDes){
 		NextTooling = newDes;

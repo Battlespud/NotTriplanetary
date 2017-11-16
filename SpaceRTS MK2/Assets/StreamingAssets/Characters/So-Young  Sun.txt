@@ -1,4 +1,4 @@
-Name: So-Young  Sun	 Age: 26
+Name: So-Young  Sun	 Age: 28
 March 2700: So-Young  Sun enlists at the rank of Lieutenant.
 March 2700: Lieutenant So-Young  Sun is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Capricious
-Insubordinate
+Enterprising
+Debonaire

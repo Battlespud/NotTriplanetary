@@ -18,6 +18,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	public GameObject SlipwaysPrefab;
 	public GameObject SlipwaysContentParent;
+
 	public Dropdown DesignsDrop;
 	public Button RetoolButton;
 	public Text RetoolSummaryText;
@@ -27,6 +28,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 	public Button BuildShipButton;
 	public Button CancelBuildButton;
 
+	public GameObject DockedShipPrefab;
 	public GameObject DockedShipsContentParent;
 
 	public Button ExitButton;
@@ -77,6 +79,39 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 			interval++;
 		}
 	}
+
+	/*
+	void SetupDockedShips(){
+
+		int yOff = -40;
+		int interval = 1;
+
+		foreach (DockedShipPrefab g in DockedShipPrefabs) {
+			Destroy (g.gameObject);
+		}
+		DockedShipPrefabs.Clear();
+
+		foreach (StrategicShip c in Shipyard.DockedShips) {
+			GameObject d = Instantiate (DockedShipPrefab) as GameObject;
+			DockedShipManager e = d.GetComponent<DockedShipManager> ();
+			e.Manager = this;
+			DockedShipsManager.Add (e);
+			d.transform.SetParent (DockedShipsContentParent.transform);
+			//	d.GetComponent<RectTransform>().localScale = new Vector3 (.8f, .3f, 1f);
+			d.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge (RectTransform.Edge.Left, 45f, d.GetComponent<RectTransform>().rect.width);
+			d.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval, d.GetComponent<RectTransform>().rect.height);
+			d.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (93f, interval * yOff, 0f);
+			d.GetComponent<RectTransform> ().rotation = DockedShipsContentParent.GetComponent<RectTransform> ().rotation;
+
+			//		d.GetComponent<RectTransform>().localPosition = new Vector3 (93, interval * yOff, 0f);
+			//	d.transform.localPosition = new Vector3();
+
+		//	e.AssignSlip (c, interval.ToString() );
+			interval++;
+		}
+	}
+
+*/
 
 	//Resets the dropdown
 	void SetupRetoolUI(){

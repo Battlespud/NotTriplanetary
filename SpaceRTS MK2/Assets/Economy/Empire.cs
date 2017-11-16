@@ -47,6 +47,7 @@ public class Empire : MonoBehaviour {
 			{
 				EmpireTechTree.DoResearch ();
 				AvailableTechs = EmpireTechTree.GetAvailableTech ();
+				ProgressMaint();
 				break;
 			}
 		case(Phase.GO):
@@ -63,6 +64,21 @@ public class Empire : MonoBehaviour {
 			}
 
 		}	
+	}
+
+	void ProgressMaint(){
+		foreach (StrategicShip ship in Ships) {
+			if (ship.IsDeployed) {
+				ship.MaintClock += .1f;
+				ship.RollMaint ();
+			}
+			if (ship.InDrydock) {
+				ship.MaintClock -= ship.OverhaulMulti * .1f;
+			}
+			if (ship.MaintClock <= 0f) {
+				ship.MaintClock = 0f;
+			}
+		}
 	}
 
 

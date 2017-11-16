@@ -8,8 +8,8 @@ public enum CompCategory{
 	DEFAULT,
 	REQUIRED,
 	ENGINE,
-	WEAPON
-
+	WEAPON,
+	UTILITY
 };
 
 public enum CompClass{
@@ -23,10 +23,10 @@ public enum AbilityCats{
 	CONTROL, //rating is # of ships in fleet. default is not fleet command ship.
 	CREW,    //Life support + quarters
 	SENSOR,  //type(0,1,2) cast from enum, sensitivity(1-100), hardening(0-1)
-	USEFUEL,  //uses this amount of fuel when active
-	FUEL,	  //fuel storage
+	USEFUEL,  //uses this amount of fuel when active, per turn
+	FUEL,	  //fuel storage. Rating = current. Rating 2 = Max, Rating 3 = Explosion chance 0.00-1.00
 	HANGAR,   //fighter/fac storage
-	MAINT,  //
+	MAINT,  //Engineering Space, rating is effective mass (at higher tech levels it may be more effective than its actual mass), rating2 is current Spare parts count. Rating 3 is Max spare parts count.
 
 }
 
@@ -36,12 +36,22 @@ public enum SENSORTYPES{
 	ACTIVE = 2
 }
 
-public struct Ability{
+public class Ability{
 	public AbilityCats AbilityType;
 	public float Rating;
 	public float Rating2;
 	public float Rating3;
 	public float thrust; //only used by engines
+
+	public Ability DeepClone(){
+		Ability a = new Ability ();
+		a.AbilityType = AbilityType;
+		a.Rating = Rating;
+		a.Rating2 = Rating2;
+		a.Rating3 = Rating3;
+		a.thrust = thrust;
+		return a;
+	}
 }
 
 public struct Emissions{
@@ -103,7 +113,7 @@ public class ShipComponents {
 		HTK = Mass / 100;
 	}
 
-	bool Damaged = false;    //no longer functions
+	bool Damaged = false;   
 	public bool isDamaged(){
 		return Damaged;
 	}
@@ -112,6 +122,7 @@ public class ShipComponents {
 	public void Damage(){
 		Debug.Log(Name + " has been damaged.");
 		Damaged = true;
+		SetSpareParts (0);
 	}
 
 	public void Fix(){
@@ -146,6 +157,66 @@ public class ShipComponents {
 		}
 		return false;
 	}
+	public bool isMaint(){
+		foreach (Ability a in Abilities) {
+			if (a.AbilityType == AbilityCats.MAINT)
+				return true;
+		}
+		return false;
+	}
+	public float getMaintMass(){
+		foreach (Ability a in Abilities) {
+			if (a.AbilityType == AbilityCats.MAINT)
+				return a.Rating;
+		}
+		return 0f;
+	}
+	public float GetCurrentSpareParts(){
+		foreach (Ability a in Abilities) {
+			if (a.AbilityType == AbilityCats.MAINT)
+				return a.Rating2;
+			}
+		return 0f;
+	}
+	public float GetMaxSpareParts(){
+		foreach (Ability a in Abilities) {
+			if (a.AbilityType == AbilityCats.MAINT)
+				return a.Rating3;
+		}
+		return 0f;
+	}
+	public void UseSpareParts(float f){
+		foreach (Ability a in Abilities) {
+			if (a.AbilityType == AbilityCats.MAINT) {
+				a.Rating2 -= f;
+			}
+		}
+		return;
+	}
+	public void SetSpareParts(float f){
+		foreach (Ability a in Abilities) {
+			if (a.AbilityType == AbilityCats.MAINT)
+				a.Rating2 = f;
+			if (a.Rating2 > a.Rating3)
+				a.Rating2 = a.Rating3;
+		}
+	}
+
+	public bool isFuel(){
+		foreach (Ability a in Abilities) {
+			if (a.AbilityType == AbilityCats.FUEL)
+				return true;
+		}
+		return false;
+	}
+	public void SetFuel(float f){
+		foreach (Ability a in Abilities) {
+			if (a.AbilityType == AbilityCats.FUEL)
+				a.Rating = f;
+			if (a.Rating > a.Rating2)
+				a.Rating = a.Rating2;
+		}
+	}
 	public float GetFuelUse(){
 		foreach (Ability a in Abilities) {
 			if (a.AbilityType == AbilityCats.USEFUEL)
@@ -153,6 +224,8 @@ public class ShipComponents {
 		}
 		return 0;
 	}
+
+
 	/// <summary>
 	/// Adds the ability.
 	/// </summary>
@@ -178,8 +251,8 @@ public class ShipComponents {
 		ShipComponents dest = new ShipComponents ();
 		dest.Mass = Mass;
 		foreach (Ability a in Abilities) {
-			Ability d = new Ability ();
-			d = a;
+			Ability d;
+			d = a.DeepClone();
 			dest.Abilities.Add (d);
 		}
 		dest.ThermalSig = ThermalSig;

@@ -51,6 +51,9 @@ public class ShipDesign {
 	public int mTorpedoes;
 	public ArmorTypes ArmorType;
 
+	//Maint
+	public float BaseFailRate;
+	public float EFailRate;
 
 	public ShipPrefabTypes BaseType;//visual
 
@@ -76,6 +79,7 @@ public class ShipDesign {
 		}
 		MaxRoll = curr; //exclusive
 	}
+
 
 
 	public ShipDesign(string d){
