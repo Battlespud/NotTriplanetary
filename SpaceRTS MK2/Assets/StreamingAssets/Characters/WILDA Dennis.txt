@@ -1,0 +1,13 @@
+Name: WILDA Dennis	 Age: 30
+March 2700: WILDA Dennis enlists at the rank of Lieutenant.
+March 2700: Lieutenant WILDA Dennis is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Calm
+Survivalist
+Intolerant

@@ -1,0 +1,11 @@
+Name: Edgar Busch	 Age: 28
+March 2700: Edgar Busch enlists at the rank of Lieutenant.
+March 2700: Lieutenant Edgar Busch is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Mathematician

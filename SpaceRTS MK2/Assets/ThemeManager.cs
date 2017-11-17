@@ -26,7 +26,7 @@ public class ThemeManager : MonoBehaviour{
 
 	public static string GenerateCharName(Theme t, Sex s){
 		if (s == Sex.Female) {
-			return t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next(0, t.CharacterLastNames.Count)];
+			return t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count )] + " " + t.CharacterLastNames [rnd.Next(0, t.CharacterLastNames.Count)];
 		} else {
 			return t.CharacterFirstNamesM [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
 		}
@@ -38,7 +38,12 @@ public class ThemeManager : MonoBehaviour{
 		if (s == Sex.Female) {
 			return t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
 		} else {
+			try{
 			return t.CharacterFirstNamesM [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
+			}
+			catch{
+				return NameManager.GenerateCharName();
+			}
 		}
 	}
 

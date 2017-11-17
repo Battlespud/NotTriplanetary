@@ -1,0 +1,13 @@
+Name: An Zou	 Age: 24
+March 2700: An Zou enlists at the rank of Lieutenant.
+March 2700: Lieutenant An Zou is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Authoritarian
+Motivated
+Adventurous

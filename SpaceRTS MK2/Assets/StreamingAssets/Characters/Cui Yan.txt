@@ -1,0 +1,12 @@
+Name: Cui Yan	 Age: 25
+March 2700: Cui Yan enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cui Yan is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Modest
+Delegator

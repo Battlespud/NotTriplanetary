@@ -1,0 +1,13 @@
+Name: ALBERTA ALI	 Age: 25
+March 2700: ALBERTA ALI enlists at the rank of Lieutenant.
+March 2700: Lieutenant ALBERTA ALI is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Suspicious
+Motivated
+Follower

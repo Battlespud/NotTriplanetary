@@ -1,4 +1,4 @@
-Name: Nun-Hel  Chang	 Age: 24
+Name: Nun-Hel  Chang	 Age: 31
 March 2700: Nun-Hel  Chang enlists at the rank of Lieutenant.
 March 2700: Lieutenant Nun-Hel  Chang is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Innovative
+Uncaring

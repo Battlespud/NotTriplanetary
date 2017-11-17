@@ -15,6 +15,7 @@ public class Tech{
 }
 
 public enum TechSection{
+	All,
 	DesignedSystems,  //research for unlocking designed components
 	C3,
 	Sensors,
@@ -35,7 +36,8 @@ public enum TechSection{
 };
 
 public enum TechSubSection{
-	Drive
+	Drive,
+	Laser
 
 };
 

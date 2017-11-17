@@ -1,6 +1,6 @@
-Name: Edwin  Arciszewski 	 Age: 37
-March 2700: Edwin  Arciszewski  enlists at the rank of List Captain.
-March 2700: List Captain Edwin  Arciszewski  is awarded the Pioneer's Medallion.
+Name: Edwin  Arciszewski 	 Age: 26
+March 2700: Edwin  Arciszewski  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Edwin  Arciszewski  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Calm
-Lazy
-Paranoid
+Focused

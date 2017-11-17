@@ -8,6 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Paranoid
-Paranoid
-Born Leader
+Patient

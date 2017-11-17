@@ -136,7 +136,7 @@ public class Character {
 	}
 
 	public void AppointCaptain(StrategicShip s){
-		s.Captain = this;
+		s.AssignOfficer (this, NavalCommanderRole.CMD);
 		NavalRole = NavalCommanderRole.CMD;
 		empire.Unassigned.Remove (this);
 		shipPosting = s;
@@ -145,7 +145,7 @@ public class Character {
 	}
 
 	public void AppointXO(StrategicShip s){
-		s.Executive = this;
+		s.AssignOfficer (this, NavalCommanderRole.XO);
 		NavalRole = NavalCommanderRole.XO;
 		empire.Unassigned.Remove (this);
 		shipPosting = s;

@@ -1,0 +1,11 @@
+Name: Liang Liu	 Age: 30
+March 2700: Liang Liu enlists at the rank of Lieutenant.
+March 2700: Lieutenant Liang Liu is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer

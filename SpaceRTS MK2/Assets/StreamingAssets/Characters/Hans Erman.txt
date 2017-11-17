@@ -1,0 +1,13 @@
+Name: Hans Erman	 Age: 28
+March 2700: Hans Erman enlists at the rank of Lieutenant.
+March 2700: Lieutenant Hans Erman is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Imaginative
+Egomaniac
+Cold

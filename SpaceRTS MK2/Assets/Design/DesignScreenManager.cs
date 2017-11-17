@@ -60,6 +60,8 @@ public class DesignScreenManager : MonoBehaviour {
 	public Text InstalledText;
 	public ScrollRect scrollview;
 
+	public int IntendedDeploymentInTurns = 20;
+
 	public Text ComponentStrings;
 
 	public Text Description;
@@ -77,7 +79,10 @@ public class DesignScreenManager : MonoBehaviour {
 	//Calculations
 	public int Tonnage; //in kilotons
 
-
+	//maint
+	public float BaseFailRate = 0f;
+	public float EffectiveFailRate = 0f;
+	public float EngineeringPercent;
 
 	//Info
 	public int ArmorThickness = 1;
@@ -90,6 +95,7 @@ public class DesignScreenManager : MonoBehaviour {
 
 
 	public void PopulateComponentList(){
+		ShipComponents.DesignedComponents = ShipComponents.DesignedComponents.OrderByDescending (x => x.Category).ToList ();
 		Components.Clear();
 		if (HideObsolete) {
 			foreach (ShipComponents c in ShipComponents.DesignedComponents) {
@@ -101,7 +107,7 @@ public class DesignScreenManager : MonoBehaviour {
 					Components.Add (c);
 			}
 		}
-		Debug.Log (Components.Count + " components loaded.");
+	//	Debug.Log (Components.Count + " components loaded.");
 		int yOff = -2;
 		int interval = 0;
 		/*
@@ -139,7 +145,7 @@ public class DesignScreenManager : MonoBehaviour {
 			d.transform.SetParent (ContentParentScrollview);
 			d.transform.localPosition = new Vector3 (d.transform.position.x, interval * yOff, d.transform.position.z);
 			d.transform.localScale = new Vector3 (1.71f, .025f, 1f);
-
+			d.GetComponent<RectTransform> ().rotation = Camera.main.transform.rotation;
 			ShipComponentUIManager s = d.GetComponent<ShipComponentUIManager> ();
 			s.Manager = this;
 			s.button.transform.localScale = new Vector3 (4f, 4f, 1f);
@@ -201,12 +207,13 @@ public class DesignScreenManager : MonoBehaviour {
 	void Start () {
 		ButtonPrefab = Resources.Load<GameObject> ("ButtonWide") as GameObject;
 		ShipComponentsUIButton= Resources.Load<GameObject> ("ShipComponentsUIButton") as GameObject;
+		InvokeRepeating ("PopulateComponentList", 0f, .3f);
 		SetupScreen ();
 	}
 
 	void SetupScreen(){
 		Debug.Log ("Setting up design screen");
-		PopulateComponentList ();
+	//	PopulateComponentList ();
 		HullDesignation.ClearOptions ();
 		HullDesignation.AddOptions (HullDes.HullTypes);
 		ArmorThickness = 1;
@@ -303,6 +310,22 @@ public class DesignScreenManager : MonoBehaviour {
 		MassText.text = "Mass: " + M + "kt";
 	}
 
+	public void SetupMaint(){
+		float MaintMass = 0;
+		foreach (ShipComponents c in ShipComponents.DesignedComponents) {
+			if (c.isMaint() && AddedComponents.ContainsKey(c)) {
+				MaintMass += c.getMaintMass ()*AddedComponents[c];
+			}
+		}
+		Debug.Log (MaintMass + " Maint Mass");
+		float percent = (MaintMass / Mass)*100f;
+		BaseFailRate = Mass / 950  * (2 / (percent)); //Chance of breakdown during 20 turn deployment
+		if (percent == 0f) 
+			BaseFailRate = Mass / 5; 
+		EffectiveFailRate = BaseFailRate * (StrategicShip.TimeBetweenRolls / 20);
+		EngineeringPercent = percent;
+	}
+
 	void OnChange(){
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CheckCrewRequirements());
 		CalculateArmorWidth ();
@@ -310,6 +333,7 @@ public class DesignScreenManager : MonoBehaviour {
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CheckRequirements());
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,CalcMaxSpeed());
 		ArmorText.text = ArmorLength.ToString() + " x " +  ArmorThickness.ToString ();
+		SetupMaint ();
 		InstalledText.text = GenerateInstalledText();
 		Description.text = BuildDescription();
 
@@ -384,7 +408,8 @@ public class DesignScreenManager : MonoBehaviour {
 	}
 
 	string BuildDescription(){
-		string description = string.Format ("{0} Class {1}\t{2} KTons\t{3} Crew\t{4} BuildCost\n{5} km/s",DesignName.text,HullDesignation.options [HullDesignation.value].text,Mass,ReqCrew, "#",MaxSpeed);
+		string description = string.Format ("{0} Class {1}\t{2} KTons\t{3} Crew\t{4} BuildCost\n{5} km/s\nBFR: {6}%\tEFR: {7}%\tEngineering:{8}%",
+											DesignName.text, HullDesignation.options [HullDesignation.value].text, Mass, ReqCrew, "#",MaxSpeed, BaseFailRate*100f, EffectiveFailRate*100f, EngineeringPercent);
 		return description;
 	}
 

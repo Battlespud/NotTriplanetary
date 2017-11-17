@@ -1,0 +1,13 @@
+Name: Qiang H	 Age: 27
+March 2700: Qiang H enlists at the rank of Lieutenant.
+March 2700: Lieutenant Qiang H is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Lazy
+Optimistic
+Resourceful

@@ -1,0 +1,13 @@
+Name: John HAINES	 Age: 25
+March 2700: John HAINES enlists at the rank of Lieutenant.
+March 2700: Lieutenant John HAINES is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Humble
+Adventurous
+Follower

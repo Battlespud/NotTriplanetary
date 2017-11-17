@@ -1,0 +1,11 @@
+Name: Frank Abendroth	 Age: 28
+March 2700: Frank Abendroth enlists at the rank of Lieutenant.
+March 2700: Lieutenant Frank Abendroth is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Academic

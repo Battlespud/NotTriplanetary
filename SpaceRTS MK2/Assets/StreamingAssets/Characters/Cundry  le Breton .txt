@@ -1,0 +1,13 @@
+Name: Cundry  le Breton 	 Age: 26
+March 2700: Cundry  le Breton  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cundry  le Breton  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Stubborn
+Resentful
+Friendly

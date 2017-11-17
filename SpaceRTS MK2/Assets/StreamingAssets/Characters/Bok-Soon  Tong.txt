@@ -1,4 +1,4 @@
-Name: Bok-Soon  Tong	 Age: 29
+Name: Bok-Soon  Tong	 Age: 32
 March 2700: Bok-Soon  Tong enlists at the rank of Commander.
 March 2700: Commander Bok-Soon  Tong is awarded the Pioneer's Medallion.
 
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Courageous
 Astronomer
-Inflexible
+Suspicious

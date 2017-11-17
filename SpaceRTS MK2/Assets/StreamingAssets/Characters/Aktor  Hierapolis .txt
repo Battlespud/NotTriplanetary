@@ -1,0 +1,13 @@
+Name: Aktor  Hierapolis 	 Age: 25
+March 2700: Aktor  Hierapolis  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Aktor  Hierapolis  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Born Leader
+Sincere
+Dishonest

@@ -1,0 +1,13 @@
+Name: Angharat  d'Ecouis 	 Age: 25
+March 2700: Angharat  d'Ecouis  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Angharat  d'Ecouis  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Defector
+Ignorant
+Resourceful

@@ -1,4 +1,4 @@
-Name: Qiao Ga	 Age: 27
+Name: Qiao Ga	 Age: 28
 March 2700: Qiao Ga enlists at the rank of Lieutenant.
 March 2700: Lieutenant Qiao Ga is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Courageous
-Enterprising
+Stubborn
+Embraces Change
+Narcissist

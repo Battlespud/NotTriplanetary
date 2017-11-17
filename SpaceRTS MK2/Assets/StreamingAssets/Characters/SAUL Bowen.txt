@@ -1,0 +1,12 @@
+Name: SAUL Bowen	 Age: 24
+March 2700: SAUL Bowen enlists at the rank of Lieutenant.
+March 2700: Lieutenant SAUL Bowen is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Combatative
+Partisan

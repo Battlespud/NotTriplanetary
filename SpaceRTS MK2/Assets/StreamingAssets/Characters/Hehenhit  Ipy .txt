@@ -1,4 +1,4 @@
-Name: Hehenhit  Ipy 	 Age: 27
+Name: Hehenhit  Ipy 	 Age: 28
 March 2700: Hehenhit  Ipy  enlists at the rank of Lieutenant.
 March 2700: Lieutenant Hehenhit  Ipy  is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Inflexible
+Impoverished
+Sincere

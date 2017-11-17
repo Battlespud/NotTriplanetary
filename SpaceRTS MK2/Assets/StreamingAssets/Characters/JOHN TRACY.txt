@@ -1,0 +1,13 @@
+Name: JOHN TRACY	 Age: 32
+March 2700: JOHN TRACY enlists at the rank of Commander.
+March 2700: Commander JOHN TRACY is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Embraces Change
+Cowardly
+Ignorant

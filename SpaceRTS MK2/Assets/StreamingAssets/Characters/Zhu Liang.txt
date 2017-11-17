@@ -1,6 +1,6 @@
-Name: Zhu Liang	 Age: 25
-March 2700: Zhu Liang enlists at the rank of Lieutenant.
-March 2700: Lieutenant Zhu Liang is awarded the Pioneer's Medallion.
+Name: Zhu Liang	 Age: 36
+March 2700: Zhu Liang enlists at the rank of List Captain.
+March 2700: List Captain Zhu Liang is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Embraces Change
+Religious
+Imaginative

@@ -1,0 +1,11 @@
+Name: Bran  du Tilleul 	 Age: 25
+March 2700: Bran  du Tilleul  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Bran  du Tilleul  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Insubordinate

@@ -1,4 +1,4 @@
-Name: Ju Chang	 Age: 26
+Name: Ju Chang	 Age: 24
 March 2700: Ju Chang enlists at the rank of Lieutenant.
 March 2700: Lieutenant Ju Chang is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Debonaire
+Impatient
+Philosopher

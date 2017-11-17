@@ -1,0 +1,13 @@
+Name: Steffi Vogel	 Age: 30
+March 2700: Steffi Vogel enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Steffi Vogel is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Gifted
+Ignorant
+Focused

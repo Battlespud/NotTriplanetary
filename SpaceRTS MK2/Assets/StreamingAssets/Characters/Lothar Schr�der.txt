@@ -1,0 +1,11 @@
+Name: Lothar Schr�der	 Age: 24
+March 2700: Lothar Schr�der enlists at the rank of Lieutenant.
+March 2700: Lieutenant Lothar Schr�der is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Mathematician

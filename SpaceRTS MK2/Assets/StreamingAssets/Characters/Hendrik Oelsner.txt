@@ -1,0 +1,13 @@
+Name: Hendrik Oelsner	 Age: 25
+March 2700: Hendrik Oelsner enlists at the rank of Lieutenant.
+March 2700: Lieutenant Hendrik Oelsner is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Analytical
+Ignorant
+Tolerant

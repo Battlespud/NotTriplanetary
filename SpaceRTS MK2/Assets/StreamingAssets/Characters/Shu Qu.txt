@@ -1,0 +1,11 @@
+Name: Shu Qu	 Age: 26
+March 2700: Shu Qu enlists at the rank of Lieutenant.
+March 2700: Lieutenant Shu Qu is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Paranoid

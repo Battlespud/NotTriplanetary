@@ -1,0 +1,13 @@
+Name: Catterick  de Caulmont 	 Age: 24
+March 2700: Catterick  de Caulmont  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Catterick  de Caulmont  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Calm
+Impatient
+Cheerful

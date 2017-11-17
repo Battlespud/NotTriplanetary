@@ -1,0 +1,11 @@
+Name: Accalon  de Valles 	 Age: 25
+March 2700: Accalon  de Valles  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Accalon  de Valles  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Ignorant

@@ -1,4 +1,4 @@
-Name: Anna Reuter	 Age: 28
+Name: Anna Reuter	 Age: 24
 March 2700: Anna Reuter enlists at the rank of Lieutenant.
 March 2700: Lieutenant Anna Reuter is awarded the Pioneer's Medallion.
 
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Gloomy
-Jealous
-Conservative
+Astronomer
+Cold

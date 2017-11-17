@@ -1,0 +1,13 @@
+Name: Actor  Lepreum 	 Age: 26
+March 2700: Actor  Lepreum  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Actor  Lepreum  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Attractive
+Dynamic
+Attractive

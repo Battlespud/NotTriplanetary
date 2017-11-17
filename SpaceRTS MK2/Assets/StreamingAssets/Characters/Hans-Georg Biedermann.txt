@@ -1,0 +1,11 @@
+Name: Hans-Georg Biedermann	 Age: 26
+March 2700: Hans-Georg Biedermann enlists at the rank of Lieutenant.
+March 2700: Lieutenant Hans-Georg Biedermann is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Resourceful

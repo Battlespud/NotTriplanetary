@@ -1,6 +1,6 @@
-Name: Christian Herbst	 Age: 25
-March 2700: Christian Herbst enlists at the rank of Lieutenant.
-March 2700: Lieutenant Christian Herbst is awarded the Pioneer's Medallion.
+Name: Christian Herbst	 Age: 30
+March 2700: Christian Herbst enlists at the rank of Captain.
+March 2700: Captain Christian Herbst is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Trusting
-Delegator
-Disciplined
+Dynamic
+Motivated

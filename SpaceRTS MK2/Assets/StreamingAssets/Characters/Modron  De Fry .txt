@@ -1,0 +1,11 @@
+Name: Modron  De Fry 	 Age: 24
+March 2700: Modron  De Fry  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Modron  De Fry  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Intolerant

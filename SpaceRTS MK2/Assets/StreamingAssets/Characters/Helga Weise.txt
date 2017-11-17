@@ -1,0 +1,11 @@
+Name: Helga Weise	 Age: 24
+March 2700: Helga Weise enlists at the rank of Lieutenant.
+March 2700: Lieutenant Helga Weise is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower

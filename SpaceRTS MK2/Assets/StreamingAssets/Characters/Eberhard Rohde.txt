@@ -1,0 +1,13 @@
+Name: Eberhard Rohde	 Age: 24
+March 2700: Eberhard Rohde enlists at the rank of Lieutenant.
+March 2700: Lieutenant Eberhard Rohde is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Lazy
+Arrogant
+Methodical

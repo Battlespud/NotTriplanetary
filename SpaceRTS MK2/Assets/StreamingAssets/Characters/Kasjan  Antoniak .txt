@@ -1,6 +1,6 @@
 Name: Kasjan  Antoniak 	 Age: 31
-March 2700: Kasjan  Antoniak  enlists at the rank of Commander.
-March 2700: Commander Kasjan  Antoniak  is awarded the Pioneer's Medallion.
+March 2700: Kasjan  Antoniak  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Kasjan  Antoniak  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Trusting
+Courageous
+Innovative

@@ -1,6 +1,6 @@
-Name: Bonifacy  Adamczak 	 Age: 26
-March 2700: Bonifacy  Adamczak  enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Bonifacy  Adamczak  is awarded the Pioneer's Medallion.
+Name: Bonifacy  Adamczak 	 Age: 24
+March 2700: Bonifacy  Adamczak  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Bonifacy  Adamczak  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,7 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Methodical
-Friendly
-Analytical
-Intolerant
+Neurotic
+Sincere

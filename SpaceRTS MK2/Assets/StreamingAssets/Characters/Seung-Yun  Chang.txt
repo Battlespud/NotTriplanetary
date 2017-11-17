@@ -1,6 +1,6 @@
-Name: Seung-Yun  Chang	 Age: 26
-March 2700: Seung-Yun  Chang enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Seung-Yun  Chang is awarded the Pioneer's Medallion.
+Name: Seung-Yun  Chang	 Age: 25
+March 2700: Seung-Yun  Chang enlists at the rank of Lieutenant.
+March 2700: Lieutenant Seung-Yun  Chang is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Gloomy
+Delusional
+Unforgiving
+Disorganized

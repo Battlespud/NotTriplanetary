@@ -1,6 +1,6 @@
-Name: Ho-Jun  Yaung	 Age: 25
-March 2700: Ho-Jun  Yaung enlists at the rank of Lieutenant.
-March 2700: Lieutenant Ho-Jun  Yaung is awarded the Pioneer's Medallion.
+Name: Ho-Jun  Yaung	 Age: 28
+March 2700: Ho-Jun  Yaung enlists at the rank of Commander.
+March 2700: Commander Ho-Jun  Yaung is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Aggressive
-Nepotistic
-Apolitical
+Focused
+Debonaire

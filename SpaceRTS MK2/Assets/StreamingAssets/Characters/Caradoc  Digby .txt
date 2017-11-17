@@ -1,6 +1,6 @@
-Name: Caradoc  Digby 	 Age: 41
-March 2700: Caradoc  Digby  enlists at the rank of List Captain.
-March 2700: List Captain Caradoc  Digby  is awarded the Pioneer's Medallion.
+Name: Caradoc  Digby 	 Age: 24
+March 2700: Caradoc  Digby  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Caradoc  Digby  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Cautious
-Decisive
+Academic
+Impoverished

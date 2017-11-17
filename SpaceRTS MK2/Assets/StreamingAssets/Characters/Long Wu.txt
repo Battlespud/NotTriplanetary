@@ -1,6 +1,6 @@
-Name: Long Wu	 Age: 29
-March 2700: Long Wu enlists at the rank of Commander.
-March 2700: Commander Long Wu is awarded the Pioneer's Medallion.
+Name: Long Wu	 Age: 24
+March 2700: Long Wu enlists at the rank of Lieutenant.
+March 2700: Lieutenant Long Wu is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Dishonest
-Attractive
-Patient
+Delegator
+Egomaniac
+Rude

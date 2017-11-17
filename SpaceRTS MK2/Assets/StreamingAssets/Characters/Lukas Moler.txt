@@ -1,0 +1,13 @@
+Name: Lukas Moler	 Age: 24
+March 2700: Lukas Moler enlists at the rank of Lieutenant.
+March 2700: Lieutenant Lukas Moler is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer
+Methodical
+Indecisive

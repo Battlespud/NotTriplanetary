@@ -1,0 +1,11 @@
+Name: Enid  Roger 	 Age: 29
+March 2700: Enid  Roger  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Enid  Roger  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Defector

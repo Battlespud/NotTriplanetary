@@ -1,0 +1,12 @@
+Name: Taree Uno	 Age: 26
+March 2700: Taree Uno enlists at the rank of Lieutenant.
+March 2700: Lieutenant Taree Uno is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Pessimistic
+Optimistic

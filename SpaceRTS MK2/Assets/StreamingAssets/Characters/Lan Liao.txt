@@ -1,4 +1,4 @@
-Name: Lan Liao	 Age: 24
+Name: Lan Liao	 Age: 27
 March 2700: Lan Liao enlists at the rank of Lieutenant.
 March 2700: Lieutenant Lan Liao is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Dishonest
-Academic
+Jealous
+Hunter

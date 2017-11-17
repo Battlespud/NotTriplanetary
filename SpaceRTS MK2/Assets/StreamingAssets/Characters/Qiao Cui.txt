@@ -1,4 +1,4 @@
-Name: Qiao Cui	 Age: 27
+Name: Qiao Cui	 Age: 28
 March 2700: Qiao Cui enlists at the rank of Lieutenant.
 March 2700: Lieutenant Qiao Cui is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Flexible
-Attractive
+Cheerful
+Gloomy
+Combatative

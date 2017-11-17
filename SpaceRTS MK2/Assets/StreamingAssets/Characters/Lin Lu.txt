@@ -1,4 +1,4 @@
-Name: Lin Lu	 Age: 26
+Name: Lin Lu	 Age: 27
 March 2700: Lin Lu enlists at the rank of Lieutenant.
 March 2700: Lieutenant Lin Lu is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Lazy
+Resentful
+Mathematician
+Follower

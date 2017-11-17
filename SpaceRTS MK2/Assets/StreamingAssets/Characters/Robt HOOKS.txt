@@ -1,0 +1,13 @@
+Name: Robt HOOKS	 Age: 28
+March 2700: Robt HOOKS enlists at the rank of Lieutenant.
+March 2700: Lieutenant Robt HOOKS is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Disciplined
+Indecisive
+Complacent

@@ -1,0 +1,13 @@
+Name: Cleathes  Sestus 	 Age: 27
+March 2700: Cleathes  Sestus  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cleathes  Sestus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Sincere
+Cowardly
+Calm

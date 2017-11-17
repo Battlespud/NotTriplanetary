@@ -1,0 +1,13 @@
+Name: Catterick  Dumont 	 Age: 28
+March 2700: Catterick  Dumont  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Catterick  Dumont  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Uncaring
+Enterprising
+Born Leader

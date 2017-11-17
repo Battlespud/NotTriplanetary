@@ -1,6 +1,6 @@
-Name: Orithyia  Asine of Argolis 	 Age: 28
-March 2700: Orithyia  Asine of Argolis  enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Orithyia  Asine of Argolis  is awarded the Pioneer's Medallion.
+Name: Orithyia  Asine of Argolis 	 Age: 31
+March 2700: Orithyia  Asine of Argolis  enlists at the rank of Commander.
+March 2700: Commander Orithyia  Asine of Argolis  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,7 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Focused
-Ambitious
-Callous
-Attractive
+Defector

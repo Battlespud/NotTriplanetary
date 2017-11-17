@@ -1,0 +1,13 @@
+Name: Domingart  Parthenai 	 Age: 26
+March 2700: Domingart  Parthenai  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Domingart  Parthenai  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Callous
+Courageous
+Conservative

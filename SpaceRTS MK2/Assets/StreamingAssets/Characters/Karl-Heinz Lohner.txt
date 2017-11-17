@@ -1,0 +1,11 @@
+Name: Karl-Heinz Lohner	 Age: 25
+March 2700: Karl-Heinz Lohner enlists at the rank of Lieutenant.
+March 2700: Lieutenant Karl-Heinz Lohner is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Defector

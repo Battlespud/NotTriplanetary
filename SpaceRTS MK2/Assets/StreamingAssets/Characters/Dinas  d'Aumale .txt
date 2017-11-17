@@ -1,0 +1,12 @@
+Name: Dinas  d'Aumale 	 Age: 28
+March 2700: Dinas  d'Aumale  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Dinas  d'Aumale  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cold
+Defector

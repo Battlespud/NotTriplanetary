@@ -1,4 +1,4 @@
-Name: Brangoire  d'Eresby 	 Age: 26
+Name: Brangoire  d'Eresby 	 Age: 28
 March 2700: Brangoire  d'Eresby  enlists at the rank of Lieutenant.
 March 2700: Lieutenant Brangoire  d'Eresby  is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Debonaire
-Follower
+Lazy
+Inflexible

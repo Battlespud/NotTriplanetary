@@ -1,4 +1,4 @@
-Name: Yi Fu	 Age: 25
+Name: Yi Fu	 Age: 24
 March 2700: Yi Fu enlists at the rank of Lieutenant.
 March 2700: Lieutenant Yi Fu is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Enterprising
-Suspicious
+Tolerant
+Aggressive

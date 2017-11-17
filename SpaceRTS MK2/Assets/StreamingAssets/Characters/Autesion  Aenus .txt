@@ -1,0 +1,11 @@
+Name: Autesion  Aenus 	 Age: 25
+March 2700: Autesion  Aenus  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Autesion  Aenus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower

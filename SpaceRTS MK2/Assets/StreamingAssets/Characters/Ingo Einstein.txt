@@ -1,0 +1,13 @@
+Name: Ingo Einstein	 Age: 26
+March 2700: Ingo Einstein enlists at the rank of Lieutenant.
+March 2700: Lieutenant Ingo Einstein is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Enthusiastic
+Decisive
+Analytical

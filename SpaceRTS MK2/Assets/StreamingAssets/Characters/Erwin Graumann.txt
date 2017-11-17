@@ -1,0 +1,11 @@
+Name: Erwin Graumann	 Age: 24
+March 2700: Erwin Graumann enlists at the rank of Lieutenant.
+March 2700: Lieutenant Erwin Graumann is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Delegator

@@ -1,0 +1,11 @@
+Name: Xue Shi	 Age: 30
+March 2700: Xue Shi enlists at the rank of Commander.
+March 2700: Commander Xue Shi is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Mathematician

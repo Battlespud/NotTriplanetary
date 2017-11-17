@@ -1,0 +1,13 @@
+Name: Cymodoce  Stagirus 	 Age: 25
+March 2700: Cymodoce  Stagirus  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cymodoce  Stagirus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Lazy
+Defector
+Insubordinate

@@ -1,0 +1,11 @@
+Name: Lausanne  Achard 	 Age: 28
+March 2700: Lausanne  Achard  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Lausanne  Achard  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Disciplined

@@ -1,0 +1,11 @@
+Name: Tutu  Weret 	 Age: 28
+March 2700: Tutu  Weret  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Tutu  Weret  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Indecisive

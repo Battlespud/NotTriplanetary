@@ -1,0 +1,11 @@
+Name: Dinas  Berni�res 	 Age: 25
+March 2700: Dinas  Berni�res  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Dinas  Berni�res  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Philosopher

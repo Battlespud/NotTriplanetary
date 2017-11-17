@@ -1,0 +1,11 @@
+Name: Gabriele Schlachter	 Age: 24
+March 2700: Gabriele Schlachter enlists at the rank of Lieutenant.
+March 2700: Lieutenant Gabriele Schlachter is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Partisan

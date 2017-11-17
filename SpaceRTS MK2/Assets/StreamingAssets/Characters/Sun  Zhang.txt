@@ -1,0 +1,11 @@
+Name: Sun  Zhang	 Age: 26
+March 2700: Sun  Zhang enlists at the rank of Lieutenant.
+March 2700: Lieutenant Sun  Zhang is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer

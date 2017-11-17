@@ -85,6 +85,8 @@ public class Empire : MonoBehaviour {
 	public void GenerateStartingOfficerCorps(int i){
 		Debug.Log ("Generating starting officers: " + i);
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,GenerateCorps(i));
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,GenerateScientists(15));
+
 	}
 
 	public void DistributeOfficers(){
@@ -182,6 +184,8 @@ public class Empire : MonoBehaviour {
 	public bool DistributeCaptains = false;
 
 	void Awake(){
+		BuildTechTree ();
+		ResearchScreenManager.ActiveEmpire = this;
 		StrategicClock.PhaseChange.AddListener (PhaseManager);
 
 	}
@@ -189,11 +193,10 @@ public class Empire : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		AllEmpires.Add (this);
-		BuildTechTree ();
 //		Debug.Log (EmpireTechTree.TechByID.Count);
 		AvailableTechs = EmpireTechTree.GetAvailableTech ();
 	//	Debug.Log (AvailableTechs.Count);
-		GenerateStartingOfficerCorps (100);
+		GenerateStartingOfficerCorps (20);
 		foreach (Tech t in AvailableTechs) {
 			DebugAvailableTechNames.Add (t.Name);
 		}

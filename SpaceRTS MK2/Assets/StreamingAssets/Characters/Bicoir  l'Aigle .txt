@@ -1,0 +1,13 @@
+Name: Bicoir  l'Aigle 	 Age: 28
+March 2700: Bicoir  l'Aigle  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Bicoir  l'Aigle  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Partisan
+Complacent
+Gifted

@@ -23,8 +23,9 @@ public class HistoryEvent{
 
 //Data container for ships, stored in fleet and used to instantiate the actual monos and gameobjects.
 public class StrategicShip {
-
+	
 	public static System.Random random = new System.Random ();
+
 
 	public FAC Faction;
 	public Empire Emp;
@@ -48,6 +49,7 @@ public class StrategicShip {
 
 	ShipPrefabTypes VisualPrefab;
 
+	public string ShipLog = "";
 
 	public float[,] Armor;
 	public ArmorTypes ArmorType;
@@ -69,6 +71,7 @@ public class StrategicShip {
 	public int MaxParts;
 	public int CurrParts;
 	public const int TurnsPerMaintClockTick = 5;
+	float MaintDamage = 2f;
 	public float BaseFailRate;
 	public float EffectiveFailRate;
 	public float MaintClock = 0f;
@@ -110,6 +113,11 @@ public class StrategicShip {
 
 	public Fleet ParentFleet;
 
+	public void AssignFleet(Fleet f){
+		ShipLog += string.Format ("{0}: {1} is attached to {2}", StrategicClock.GetDate (), ShipName, f.FleetName);
+		ParentFleet = f;
+	}
+		
 
 	public void Save(Ship s){
 		ShipName = s.shipClass.ShipName;
@@ -130,29 +138,16 @@ public class StrategicShip {
 		emissions = new Emissions();
 		ArmorType = template.ArmorType;
 		ChangeStats ();
-		SetupMaint ();
+		UpdateMaint ();
+		ShipLog += string.Format ("{0}: {1} is launched.", StrategicClock.GetDate (), ShipName);
 	}
 
-	public void SetupMaint(){
-		BaseFailRate = Mass / 100;
-		float MaintMass = 0;
-		foreach (ShipComponents c in Components) {
-			if (!c.isDamaged()) {
-				MaintMass += c.getMaintMass ();
-			}
-		}
-		float percent = MaintMass / Mass;
-		if (percent == 0f) 
-			BaseFailRate = Mass / 5;
-		if(MaintClock < 1){
-			EffectiveFailRate = BaseFailRate * (4 / (percent * 100f));
-		}
-		else{
-			EffectiveFailRate = BaseFailRate * (4/(percent*100f))*MaintClock;
-		}
-	}
+
 
 	public void UpdateMaint(){ //Call after damage
+		MaintDamage = Mass / 2000f;
+		if (MaintDamage < 2f)
+			MaintDamage = 2f;
 		MaxParts = 0;
 		CurrParts = 0;
 		float MaintMass = 0;
@@ -163,38 +158,56 @@ public class StrategicShip {
 				CurrParts += (int) c.GetCurrentSpareParts();
 			}
 		}
-		float percent = MaintMass / Mass;
+		float percent = (MaintMass / Mass)*100f;
+		BaseFailRate = (Mass / 175  * (2 / (percent))) + MaintClock*(Mass / 145  * (4 / (percent))); //Chance of breakdown during 20 turn deployment
 		if (percent == 0f) 
-			BaseFailRate = Mass / 5;
-		if(MaintClock < 1){
-			EffectiveFailRate = BaseFailRate * (4 / (percent * 100f));
-		}
-		else{
-			EffectiveFailRate = BaseFailRate * (4 / (percent*100f))*MaintClock;
-		}
+			BaseFailRate = Mass / 5 + (Mass/5)*MaintClock;
+		EffectiveFailRate = BaseFailRate * (TimeBetweenRolls / 20);
 	}
 
-	public bool UseMaintParts(int amount){
+	public bool UseMaintParts(float amount){
 		if (CurrParts >= amount) {
 			foreach (ShipComponents c in Components) {
-
+				if (amount > c.GetCurrentSpareParts ()) {
+					amount -= (int)c.GetCurrentSpareParts ();
+					c.SetSpareParts(0f);
+				} else {
+					c.SetSpareParts(c.GetCurrentSpareParts() - amount);
+					amount = 0;
+				}
+				if (amount <= 0)
+					break;
 			}
 			return true;
 		}
 		return false;
 	}
 
+	float TimeSinceLastRoll = 0f;
+	public const float TimeBetweenRolls = 5; //in turns
 	public void RollMaint(){
-
+		TimeSinceLastRoll += 1;
+		if (TimeSinceLastRoll > TimeBetweenRolls - .1*MaintClock) {
+			TimeSinceLastRoll = 0f;
+			if (random.NextFloat (0f, 1f) < EffectiveFailRate)
+				TakeInternalHit (MaintDamage);
+		}
 	}
 
-	public void TakeInternalHit(float damage){ //skips armor
+	public void TakeInternalHit(float damage, int counter = 0){ //skips armor
 		ShipComponents c = Components [random.Next (0, Components.Count)];
 		if (!c.isDamaged ()) {
-			c.Damage ();
-			ChangeStats ();
+			if (!UseMaintParts (c.MaintReq)) {
+				c.Damage ();
+				ShipLog += string.Format ("{0}: {1} experiences a maintenance failure with the {2}, repairs proved impossible with current supplies.", StrategicClock.GetDate (), ShipName,c.Name);
+				ChangeStats ();
+			} else {
+				ShipLog += string.Format ("{0}: {1} experiences a maintenance failure with the {2}, repairs were made with maintenance supplies.", StrategicClock.GetDate (), ShipName,c.Name);
+			}
 		} else {
-			TakeInternalHit (damage);
+			if (counter > 6)
+				DestroyShip ();
+			TakeInternalHit (damage, counter++);
 		}
 	}
 
@@ -202,6 +215,22 @@ public class StrategicShip {
 		Ship s = g.AddComponent<Ship> ();
 		s.shipClass.ImportDesign (DesignClass);
 
+	}
+
+	public void AssignOfficer(Character c, NavalCommanderRole role ){
+		if (role == NavalCommanderRole.XO) {
+			if (Executive != null)
+				Executive.Unassign ();
+			Executive = c;
+			ShipLog += string.Format ("{0}: {1} is appointed as Executive Officer", StrategicClock.GetDate (), Executive.GetNameString());
+		}
+
+		else if(role == NavalCommanderRole.CMD) {
+			if (Captain != null)
+				Captain.Unassign ();
+			Captain = c;
+			ShipLog += string.Format ("{0}: {1} is appointed as Commanding Officer.", StrategicClock.GetDate (), Executive.GetNameString());
+		}
 	}
 
 
@@ -223,7 +252,19 @@ public class StrategicShip {
 	}
 
 	public void DestroyShip(){
-		NameManager.RecycleName (this);
+	//	NameManager.RecycleName (this);
+		//TODO
+		ShipLog += string.Format("\n{0}: {1} is lost.",StrategicClock.GetDate(),ShipName);
+		Emp.Ships.Remove(this);
+		if(ParentFleet)
+			ParentFleet.Ships.Remove (this);
+		if (Captain != null)
+			Captain.Die ();
+		if (Executive != null)
+			Executive.Die ();
+		foreach(Character c in CharactersAboard){
+			c.Die ();
+		}
 	}
 
 

@@ -1,4 +1,4 @@
-Name: Amosis  Taheret 	 Age: 25
+Name: Amosis  Taheret 	 Age: 28
 March 2700: Amosis  Taheret  enlists at the rank of Lieutenant.
 March 2700: Lieutenant Amosis  Taheret  is awarded the Pioneer's Medallion.
 
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Impoverished
+Calm
+Complacent

@@ -1,0 +1,13 @@
+Name: TIA Brown	 Age: 25
+March 2700: TIA Brown enlists at the rank of Lieutenant.
+March 2700: Lieutenant TIA Brown is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Capricious
+Dynamic
+Modest

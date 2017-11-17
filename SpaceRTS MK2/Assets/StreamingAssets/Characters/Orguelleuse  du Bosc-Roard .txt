@@ -1,0 +1,12 @@
+Name: Orguelleuse  du Bosc-Roard 	 Age: 25
+March 2700: Orguelleuse  du Bosc-Roard  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Orguelleuse  du Bosc-Roard  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower
+Intolerant

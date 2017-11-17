@@ -1,0 +1,13 @@
+Name: Kang X	 Age: 24
+March 2700: Kang X enlists at the rank of Lieutenant.
+March 2700: Lieutenant Kang X is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Analytical
+Partisan
+Focused

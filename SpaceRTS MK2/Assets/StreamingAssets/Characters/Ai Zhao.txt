@@ -1,6 +1,6 @@
-Name: Ai Zhao	 Age: 25
-March 2700: Ai Zhao enlists at the rank of Lieutenant.
-March 2700: Lieutenant Ai Zhao is awarded the Pioneer's Medallion.
+Name: Ai Zhao	 Age: 38
+March 2700: Ai Zhao enlists at the rank of List Captain.
+March 2700: List Captain Ai Zhao is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Religious
+Neurotic
+Paranoid

@@ -1,0 +1,13 @@
+Name: Chloris  Troy 	 Age: 25
+March 2700: Chloris  Troy  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Chloris  Troy  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Patient
+Partisan
+Cowardly

@@ -1,6 +1,6 @@
-Name: Eun-Hwa  Hahn	 Age: 27
-March 2700: Eun-Hwa  Hahn enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Eun-Hwa  Hahn is awarded the Pioneer's Medallion.
+Name: Eun-Hwa  Hahn	 Age: 33
+March 2700: Eun-Hwa  Hahn enlists at the rank of List Captain.
+March 2700: List Captain Eun-Hwa  Hahn is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Friendly
-Honest
+Attractive

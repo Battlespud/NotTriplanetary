@@ -33,3 +33,12 @@ Section: Propulsion
 SubSection: Drive
 Cost: 5000
 Requirements: Drive2
+
+//TEST
+Tech Name: Gas Laser
+Tech ID: GasLaser
+Description: A basic chemical laser.
+Section: EnergyWeapons
+SubSection: Laser
+Cost: 500
+Requirements:

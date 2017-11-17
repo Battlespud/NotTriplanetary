@@ -1,0 +1,12 @@
+Name: Jens Hache	 Age: 28
+March 2700: Jens Hache enlists at the rank of Lieutenant.
+March 2700: Lieutenant Jens Hache is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Methodical
+Academic

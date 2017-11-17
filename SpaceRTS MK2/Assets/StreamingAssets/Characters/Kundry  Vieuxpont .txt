@@ -1,0 +1,11 @@
+Name: Kundry  Vieuxpont 	 Age: 25
+March 2700: Kundry  Vieuxpont  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Kundry  Vieuxpont  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Analytical

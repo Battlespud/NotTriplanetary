@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Insightful
-Hunter
+Ignorant
+Flexible

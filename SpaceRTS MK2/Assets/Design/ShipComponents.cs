@@ -85,7 +85,7 @@ public class ShipComponents {
 	public float powerReq;
 	public float ThermalSig;
 	public float EMSig;
-
+	public float MaintReq; //How many spare parts needed.
 
 	public bool Enabled = true;
 	public bool toggleable = false;
@@ -274,7 +274,6 @@ public class ShipComponents {
 		List<FieldInfo> Fields = new List<FieldInfo> ();
 		Fields.AddRange (GetType ().GetFields ());
 		List<FieldInfo> AbilityFields = new List<FieldInfo> ();
-
 	//	Debug.Log ("Fields found: " + Fields.Count);
 		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + Name + "REFLECTED.txt"); 
 		using (StreamWriter writer = new StreamWriter (path)) {

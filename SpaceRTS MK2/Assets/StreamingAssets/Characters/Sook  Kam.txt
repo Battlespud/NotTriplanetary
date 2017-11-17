@@ -1,0 +1,12 @@
+Name: Sook  Kam	 Age: 30
+March 2700: Sook  Kam enlists at the rank of Commander.
+March 2700: Commander Sook  Kam is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Courageous
+Cowardly

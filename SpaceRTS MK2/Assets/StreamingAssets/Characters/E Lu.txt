@@ -1,4 +1,4 @@
-Name: E Lu	 Age: 24
+Name: E Lu	 Age: 26
 March 2700: E Lu enlists at the rank of Lieutenant.
 March 2700: Lieutenant E Lu is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Focused
-Trusting
+Cold
+Capricious

@@ -1,6 +1,6 @@
-Name: Zhen Hsieh	 Age: 28
-March 2700: Zhen Hsieh enlists at the rank of Lieutenant.
-March 2700: Lieutenant Zhen Hsieh is awarded the Pioneer's Medallion.
+Name: Zhen Hsieh	 Age: 37
+March 2700: Zhen Hsieh enlists at the rank of Captain.
+March 2700: Captain Zhen Hsieh is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Indecisive
+Patient
+Authoritarian
+Dynamic

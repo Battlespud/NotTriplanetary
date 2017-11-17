@@ -1,6 +1,6 @@
-Name: Yu-Min  Cho	 Age: 38
-March 2700: Yu-Min  Cho enlists at the rank of List Captain.
-March 2700: List Captain Yu-Min  Cho is awarded the Pioneer's Medallion.
+Name: Yu-Min  Cho	 Age: 28
+March 2700: Yu-Min  Cho enlists at the rank of Lieutenant.
+March 2700: Lieutenant Yu-Min  Cho is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Cautious
-Religious
+Mathematician
+Narcissist
+Suspicious

@@ -1,6 +1,6 @@
-Name: Ju Zhau	 Age: 26
-March 2700: Ju Zhau enlists at the rank of Lieutenant.
-March 2700: Lieutenant Ju Zhau is awarded the Pioneer's Medallion.
+Name: Ju Zhau	 Age: 32
+March 2700: Ju Zhau enlists at the rank of Commander.
+March 2700: Commander Ju Zhau is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Cautious
-Motivated
+Cowardly
 Cautious

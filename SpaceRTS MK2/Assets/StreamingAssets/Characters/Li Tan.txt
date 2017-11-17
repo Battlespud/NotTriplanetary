@@ -1,0 +1,12 @@
+Name: Li Tan	 Age: 25
+March 2700: Li Tan enlists at the rank of Lieutenant.
+March 2700: Lieutenant Li Tan is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Authoritarian
+Suspicious

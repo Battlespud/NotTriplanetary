@@ -1,0 +1,13 @@
+Name: Cheiron  Same 	 Age: 25
+March 2700: Cheiron  Same  enlists at the rank of Lieutenant.
+March 2700: Lieutenant Cheiron  Same  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Inflexible
+Hunter
+Cowardly

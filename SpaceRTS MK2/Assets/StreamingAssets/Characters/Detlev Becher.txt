@@ -1,0 +1,13 @@
+Name: Detlev Becher	 Age: 30
+March 2700: Detlev Becher enlists at the rank of Lieutenant.
+March 2700: Lieutenant Detlev Becher is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Modest
+Delegator
+Friendly
