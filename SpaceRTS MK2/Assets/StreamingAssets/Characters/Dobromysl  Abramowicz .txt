@@ -1,6 +1,6 @@
-Name: Dobromysl  Abramowicz 	 Age: 24
-March 2700: Dobromysl  Abramowicz  enlists at the rank of Lieutenant.
-March 2700: Lieutenant Dobromysl  Abramowicz  is awarded the Pioneer's Medallion.
+Name: Dobromysl  Abramowicz 	 Age: 26
+March 2700: Dobromysl  Abramowicz  enlists at the rank of Ensign.
+March 2700: Ensign Dobromysl  Abramowicz  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Capricious
-Impatient
+Cold
+Combatative
+Enthusiastic

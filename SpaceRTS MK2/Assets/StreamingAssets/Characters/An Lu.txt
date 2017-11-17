@@ -1,6 +1,6 @@
-Name: An Lu	 Age: 24
-March 2700: An Lu enlists at the rank of Lieutenant.
-March 2700: Lieutenant An Lu is awarded the Pioneer's Medallion.
+Name: An Lu	 Age: 31
+March 2700: An Lu enlists at the rank of Ensign.
+March 2700: Research Assistant An Lu is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Rude
-Resentful
-Unappreciative
+Ambitious
+Follower
+Arrogant

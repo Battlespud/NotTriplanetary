@@ -1,0 +1,13 @@
+Name: Armin Aniol 	 Age: 30
+March 2700: Armin Aniol  enlists at the rank of Ensign.
+March 2700: Research Assistant Armin Aniol  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Dishonest
+Honest
+Friendly

@@ -1,6 +1,6 @@
 Name: Merope  Amphissa 	 Age: 27
-March 2700: Merope  Amphissa  enlists at the rank of Lieutenant.
-March 2700: Lieutenant Merope  Amphissa  is awarded the Pioneer's Medallion.
+March 2700: Merope  Amphissa  enlists at the rank of Ensign.
+March 2700: Research Assistant Merope  Amphissa  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Egomaniac
+Dynamic
+Courageous

@@ -1,0 +1,13 @@
+Name: Lunete  Le Masson 	 Age: 30
+March 2700: Lunete  Le Masson  enlists at the rank of Lieutenant.
+March 2700: Associate Researcher Lunete  Le Masson  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Conservative
+Resourceful
+Rude

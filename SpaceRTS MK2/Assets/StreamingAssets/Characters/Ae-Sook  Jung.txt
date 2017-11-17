@@ -1,4 +1,4 @@
-Name: Ae-Sook  Jung	 Age: 27
+Name: Ae-Sook  Jung	 Age: 25
 March 2700: Ae-Sook  Jung enlists at the rank of Lieutenant.
 March 2700: Lieutenant Ae-Sook  Jung is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Calm
-Uncaring
+Flexible

@@ -1,6 +1,6 @@
-Name: Chun-Ok  Chang	 Age: 24
-March 2700: Chun-Ok  Chang enlists at the rank of Lieutenant.
-March 2700: Lieutenant Chun-Ok  Chang is awarded the Pioneer's Medallion.
+Name: Chun-Ok  Chang	 Age: 30
+March 2700: Chun-Ok  Chang enlists at the rank of Lt. Commander.
+March 2700: Researcher Chun-Ok  Chang is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Imaginative
-Focused
+Suspicious

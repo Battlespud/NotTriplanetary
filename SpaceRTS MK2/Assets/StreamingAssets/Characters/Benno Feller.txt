@@ -1,0 +1,13 @@
+Name: Benno Feller	 Age: 26
+March 2700: Benno Feller enlists at the rank of Ensign.
+March 2700: Research Assistant Benno Feller is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Born Leader
+Optimistic
+Disorganized

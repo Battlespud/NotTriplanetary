@@ -1,6 +1,6 @@
-Name: Lan Wang	 Age: 25
-March 2700: Lan Wang enlists at the rank of Lieutenant.
-March 2700: Lieutenant Lan Wang is awarded the Pioneer's Medallion.
+Name: Lan Wang	 Age: 38
+March 2700: Lan Wang enlists at the rank of Commander.
+March 2700: Senior Researcher Lan Wang is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Unappreciative
+Cowardly
+Imaginative

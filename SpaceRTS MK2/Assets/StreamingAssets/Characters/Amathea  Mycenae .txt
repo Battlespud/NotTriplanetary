@@ -1,6 +1,6 @@
-Name: Amathea  Mycenae 	 Age: 24
-March 2700: Amathea  Mycenae  enlists at the rank of Lieutenant.
-March 2700: Lieutenant Amathea  Mycenae  is awarded the Pioneer's Medallion.
+Name: Amathea  Mycenae 	 Age: 34
+March 2700: Amathea  Mycenae  enlists at the rank of Lt. Commander.
+March 2700: Researcher Amathea  Mycenae  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Hunter
-Insubordinate
+Ignorant
+Calm

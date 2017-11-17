@@ -1,0 +1,11 @@
+Name: Ai Dong	 Age: 24
+March 2700: Ai Dong enlists at the rank of Lieutenant.
+March 2700: Lieutenant Ai Dong is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Academic

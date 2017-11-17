@@ -29,6 +29,8 @@ public class Empire : MonoBehaviour {
 	public string Name;
 	public Government Gov;
 
+	public  int StartingOfficers = 100;
+
 	public bool Player = true;
 
 	public TechTree EmpireTechTree;
@@ -84,7 +86,7 @@ public class Empire : MonoBehaviour {
 
 	public void GenerateStartingOfficerCorps(int i){
 		Debug.Log ("Generating starting officers: " + i);
-		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,GenerateCorps(i));
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,GenerateCorps(StartingOfficers));
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,GenerateScientists(15));
 
 	}
@@ -114,6 +116,17 @@ public class Empire : MonoBehaviour {
 			if (c.Role == r)
 				ch.Add (c);
 		}
+		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
+		return ch;
+	}
+
+	public List<Character>GetCharactersByTypeAndRank(OfficerRoles r, int rank){
+		List<Character> ch = new List<Character> ();
+		foreach (Character c in Characters) {
+			if (c.Role == r && c.Rank == rank)
+				ch.Add (c);
+		}
+		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
 	}
 
@@ -121,12 +134,14 @@ public class Empire : MonoBehaviour {
 	IEnumerator GenerateCorps(int i){
 		//Max rank starting  = 6
 		int index = 0;
-		List<float> Distribution = new List<float>(){.75f,.05f,.1f,.05f, .05f};
+		List<float> Distribution = new List<float>(){.65f,.125f,.1f,.075f, .05f};
+		float NobilityChance = .2f;
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index,OfficerRoles.Navy);
 				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.45f,4f));
 				Characters.Add (c);
+				c.Noble = MakeNobleChance (NobilityChance);
 				c.empire = this;
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -153,12 +168,14 @@ public class Empire : MonoBehaviour {
 	IEnumerator GenerateScientists(int i){
 		//Max rank starting  = 6
 		int index = 0;
-		List<float> Distribution = new List<float>(){.85f,.05f,.1f};
+		List<float> Distribution = new List<float>(){.55f,.2f,.15f,.1f};
+		float NobilityChance = .1f;
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index, OfficerRoles.Research);
 				c.Age = (int)(rnd.Next (26, 32) + index*rnd.Next(1.85f,2.75f));
 				Characters.Add (c);
+				c.Noble = MakeNobleChance (NobilityChance);
 				c.empire = this;
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -182,6 +199,12 @@ public class Empire : MonoBehaviour {
 		yield return Ninja.JumpToUnity;
 	}
 	public bool DistributeCaptains = false;
+
+	bool MakeNobleChance(float f){
+		if (rnd.NextFloat (0, 1f) < f)
+			return true;
+		return false;
+	}
 
 	void Awake(){
 		BuildTechTree ();
@@ -351,6 +374,14 @@ public class Government{
 	};
 
 	public bool HasNobleClass;
-	public List<string> NobleRanks = new List<string> (){ "Peer", "Honor", "Baron", "Count", "Duke" };
+	 List<string> NobleRanksM = new List<string> (){ "Peer", "Honor", "Baron", "Count", "Duke" };
+	 List<string> NobleRanksF = new List<string> (){ "Peer", "Honor", "Baron", "Count", "Duke" };
+	public Dictionary<Sex,List<string>>NobleRanks = new Dictionary<Sex, List<string>>();
+
+	public Government(){
+		NobleRanks.Add (Sex.Female, NobleRanksF);
+		NobleRanks.Add (Sex.Male, NobleRanksM);
+	}
+
 
 }

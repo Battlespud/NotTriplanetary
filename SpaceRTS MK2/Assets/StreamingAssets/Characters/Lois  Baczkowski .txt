@@ -1,6 +1,6 @@
-Name: Lois  Baczkowski 	 Age: 35
-March 2700: Lois  Baczkowski  enlists at the rank of List Captain.
-March 2700: List Captain Lois  Baczkowski  is awarded the Pioneer's Medallion.
+Name: Lois  Baczkowski 	 Age: 34
+March 2700: Lois  Baczkowski  enlists at the rank of Lt. Commander.
+March 2700: Researcher Lois  Baczkowski  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Combatative
+Uncaring
+Partisan
+Resourceful

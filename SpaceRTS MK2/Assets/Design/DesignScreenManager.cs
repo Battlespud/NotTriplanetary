@@ -108,7 +108,7 @@ public class DesignScreenManager : MonoBehaviour {
 			}
 		}
 	//	Debug.Log (Components.Count + " components loaded.");
-		int yOff = -2;
+		float yOff = -7.5f;
 		int interval = 0;
 		/*
 		foreach (ShipComponents c in Components) {
@@ -142,13 +142,17 @@ public class DesignScreenManager : MonoBehaviour {
 		foreach (ShipComponents c in Components) {
 			GameObject d = Instantiate (ShipComponentsUIButton) as GameObject;
 			UIObjects.Add (d);
-			d.transform.SetParent (ContentParentScrollview);
-			d.transform.localPosition = new Vector3 (d.transform.position.x, interval * yOff, d.transform.position.z);
-			d.transform.localScale = new Vector3 (1.71f, .025f, 1f);
+		d.transform.SetParent (ContentParentScrollview);
+			//d.transform.localPosition = new Vector3 (d.transform.position.x, interval * yOff, d.transform.position.z);
 			d.GetComponent<RectTransform> ().rotation = Camera.main.transform.rotation;
+			d.GetComponent<RectTransform> ().transform.localScale = new Vector3 (1f, 1f, 1f);
+
+			d.GetComponent<RectTransform> ().sizeDelta = new Vector2 (1458, 10f);
+			d.GetComponent<RectTransform>().anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
+			//d.transform.localScale = new Vector3 (1.71f, .025f, 1f);
 			ShipComponentUIManager s = d.GetComponent<ShipComponentUIManager> ();
 			s.Manager = this;
-			s.button.transform.localScale = new Vector3 (4f, 4f, 1f);
+		//	s.button.transform.localScale = new Vector3 (4f, 4f, 1f);
 			s.Assign (c);
 			interval++;
 		}
@@ -207,7 +211,7 @@ public class DesignScreenManager : MonoBehaviour {
 	void Start () {
 		ButtonPrefab = Resources.Load<GameObject> ("ButtonWide") as GameObject;
 		ShipComponentsUIButton= Resources.Load<GameObject> ("ShipComponentsUIButton") as GameObject;
-		InvokeRepeating ("PopulateComponentList", 0f, .3f);
+	//	InvokeRepeating ("PopulateComponentList", 0f, 1f);
 		SetupScreen ();
 	}
 

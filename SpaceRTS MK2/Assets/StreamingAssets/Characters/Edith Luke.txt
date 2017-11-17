@@ -1,6 +1,6 @@
-Name: Edith Luke	 Age: 24
-March 2700: Edith Luke enlists at the rank of Lieutenant.
-March 2700: Lieutenant Edith Luke is awarded the Pioneer's Medallion.
+Name: Edith Luke	 Age: 28
+March 2700: Edith Luke enlists at the rank of Ensign.
+March 2700: Ensign Edith Luke is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Paranoid
-Courageous
+Disorganized
+Embraces Change
+Insightful

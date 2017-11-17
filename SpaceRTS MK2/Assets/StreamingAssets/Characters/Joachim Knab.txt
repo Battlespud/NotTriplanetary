@@ -1,0 +1,13 @@
+Name: Joachim Knab	 Age: 33
+March 2700: Joachim Knab enlists at the rank of Commander.
+March 2700: Senior Researcher Joachim Knab is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Astronomer
+Delegator
+Academic

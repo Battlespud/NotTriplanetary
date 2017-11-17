@@ -87,13 +87,36 @@ public class Character {
 	public int ID;
 	public OfficerRoles Role;
 	public NavalCommanderRole NavalRole;
-	public int[] TimeInRole = new int[]{0,0,0};
-	public static List<string>NavalRankNames = new List<string>(){"Lieutenant","Lieutenant Commander","Commander","Captain","List Captain","Commodore", "Vice Admiral", "Admiral", "Admiral of the Fleet"};
+	public int[] TimeInRole = new int[]{0,0,0};																						//Why doesnt this initialization work?
+	public static Dictionary<OfficerRoles,List<string>> JobTitlesDictLong = new Dictionary<OfficerRoles, List<string>> (); //{ {OfficerRoles.Navy,NavalRankNames}, {OfficerRoles.Army, ArmyRankNames}, {OfficerRoles.Gov, GovRankNames}, {OfficerRoles.Research, ResearchRankNames }};
+	public static Dictionary<OfficerRoles,List<string>> JobTitlesDictShort = new Dictionary<OfficerRoles, List<string>> ();
+	public static List<string>NavalRankNames = new List<string>(){"Ensign", "Lieutenant","Lt. Commander","Commander","Captain","List Captain","Commodore", "Rear Admiral", "Vice Admiral", "Admiral", "Admiral of the Fleet"}; //add more
+	public static List<string>ResearchRankNames = new List<string>(){"Research Assistant","Associate Researcher","Researcher","Senior Researcher","Associate Director","Director", "Secretary of Science"};
+	public static List<string>GovRankNames = new List<string>(){"Junior Clerk","Clerk","Senior Clerk","Manager","Senior Manager","Junior Executive", "Executive", "Undersecretary", "Secretary of Government"};
+	public static List<string>ArmyRankNames = new List<string>(){"Second Lieutenant","Lieutenant","Captain","Major","Lt. Colonel","Colonel", "Brigadier", "Major General", "General"};
+
+	public static List<string>NavalRankNamesS = new List<string>(){"En.", "Lt.","Lt. Cmdr.","Cmdr.","Cpt.","L. Cptn.","Como.", "R. Adm.", "V. Adm.", "Adm.", "F. Adm."}; //add more
+	public static List<string>ResearchRankNamesS = new List<string>(){"R.A.","Assoc.","R.","S.R.","A.Dir","Dir.", "Sec. Sci."};
+	public static List<string>GovRankNamesS = new List<string>(){"J. Clk.","Clk.","S. Clk.","Man.","S. Man.","J. Exec.", "Exec.", "USec.", "SecGov."};
+	public static List<string>ArmyRankNamesS = new List<string>(){"2nd. LT.","LT.","CPT.","MJR.","LT. COL.","COL.", "BRIG.", "MJR. GEN.", "GEN."};
+
 	public static List<string>NavalComanderRoleNames = new List<string>(){"Executive Officer", "Commanding Officer"};
 	public int PromotionPoints;
 	public List<Medal> Medals = new List<Medal>();
 	public List<Trait> Traits = new List<Trait> ();
 
+	//im so sorry u exist
+	 static Character(){
+		JobTitlesDictLong.Add (OfficerRoles.Navy, NavalRankNames);
+		JobTitlesDictLong.Add (OfficerRoles.Army, ArmyRankNames);
+		JobTitlesDictLong.Add (OfficerRoles.Research, ResearchRankNames);
+		JobTitlesDictLong.Add (OfficerRoles.Gov, GovRankNames);
+
+		JobTitlesDictShort.Add (OfficerRoles.Navy, NavalRankNamesS);
+		JobTitlesDictShort.Add (OfficerRoles.Army, ArmyRankNamesS);
+		JobTitlesDictShort.Add (OfficerRoles.Research, ResearchRankNamesS);
+		JobTitlesDictShort.Add (OfficerRoles.Gov, GovRankNamesS);
+	}
 
 	public string CharName;
 	public int Age;
@@ -111,8 +134,18 @@ public class Character {
 
 	public string History;
 
-	public string GetNameString(){
-		return string.Format ("{0} {1}", NavalRankNames [Rank], CharName);
+	public string GetNameString( bool isShortened = false, bool NobleOnly = false){
+		if(NobleOnly && Noble)
+			return string.Format ("{0} {1}", empire.Gov.NobleRanks[sex][NobleRank], CharName);
+		
+		if (isShortened) 
+			return string.Format ("{0} {1}", JobTitlesDictShort[Role][Rank], CharName);
+		
+		return string.Format ("{0} {1}", JobTitlesDictLong[Role][Rank], CharName);
+	}
+
+	public string GetNobleTitle(){
+		return  empire.Gov.NobleRanks[sex][NobleRank];
 	}
 
 	public void UpdateTimeInRole(){
@@ -186,9 +219,9 @@ public class Character {
 	}
 
 	public void Promote(){
-		if (Rank == NavalRankNames.Count - 1)
+		if (Rank >= JobTitlesDictLong[Role].Count - 1)
 			return;
-		string st = string.Format("{0}: {1} is promoted to the rank of {2}.",StrategicClock.GetDate(),GetNameString(), NavalRankNames[Rank+1]);
+		string st = string.Format("{0}: {1} is promoted to the rank of {2}.",StrategicClock.GetDate(),GetNameString(), JobTitlesDictLong[Role][Rank+1]);
 		AddHistory (st);
 		Rank++;
 	}
@@ -197,7 +230,7 @@ public class Character {
 		if (Rank == 0)
 			return;
 		PromotionPoints -= 500;
-		string st = string.Format("{0}: {1} is demoted to the rank of {2}.",StrategicClock.GetDate(),GetNameString(), NavalRankNames[Rank-1]);
+		string st = string.Format("{0}: {1} is demoted to the rank of {2}.",StrategicClock.GetDate(),GetNameString(), JobTitlesDictLong[Role][Rank-1]);
 		AddHistory (st);
 		Rank++;
 	}
@@ -206,7 +239,7 @@ public class Character {
 		if (Noble)
 			return;
 		NobleRank = 0;
-		string st = string.Format("{0}: {1} {2} is made a peer of the realm.", StrategicClock.GetDate(), empire.Gov.NobleRanks[NobleRank], GetNameString());
+		string st = string.Format("{0}: {1} is made a peer of the realm.", StrategicClock.GetDate(), GetNameString(false,true));
 		AddHistory (st);
 		Noble = true;
 	}
@@ -215,7 +248,7 @@ public class Character {
 		if (Noble)
 			return;
 		NobleRank = rank;
-		string st = string.Format("{0}: {1} {2} is made a peer of the realm.", StrategicClock.GetDate(), empire.Gov.NobleRanks[NobleRank], GetNameString());
+		string st = string.Format("{0}: {1} is made a peer of the realm.", StrategicClock.GetDate(),  GetNameString(false,true));
 		AddHistory (st);
 		Noble = true;
 	}
@@ -223,9 +256,9 @@ public class Character {
 	public void PromoteNoble(){
 		if (NobleRank == empire.Gov.NobleRanks.Count - 1)
 			return;
-		string st = string.Format("{0}: {1} is raised to the station of {2}.",StrategicClock.GetDate(),GetNameString(), NavalRankNames[NobleRank+1]);
-		AddHistory (st);
 		NobleRank++;
+		string st = string.Format("{0}: {1} is raised to the station of {2}.",StrategicClock.GetDate(),GetNameString(),GetNobleTitle());
+		AddHistory (st);
 	}
 
 	public void Retire(bool Forced){

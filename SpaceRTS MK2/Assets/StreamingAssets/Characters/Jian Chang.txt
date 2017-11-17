@@ -1,6 +1,6 @@
-Name: Jian Chang	 Age: 25
+Name: Jian Chang	 Age: 29
 March 2700: Jian Chang enlists at the rank of Lieutenant.
-March 2700: Lieutenant Jian Chang is awarded the Pioneer's Medallion.
+March 2700: Associate Researcher Jian Chang is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Ignorant
-Insightful
+Delusional

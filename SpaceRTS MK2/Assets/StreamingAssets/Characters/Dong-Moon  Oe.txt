@@ -1,6 +1,6 @@
-Name: Dong-Moon  Oe	 Age: 36
-March 2700: Dong-Moon  Oe enlists at the rank of List Captain.
-March 2700: List Captain Dong-Moon  Oe is awarded the Pioneer's Medallion.
+Name: Dong-Moon  Oe	 Age: 31
+March 2700: Dong-Moon  Oe enlists at the rank of Lieutenant.
+March 2700: Associate Researcher Dong-Moon  Oe is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Astronomer
-Indecisive
-Callous
+Tolerant
+Resourceful

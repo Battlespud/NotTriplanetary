@@ -1,6 +1,6 @@
-Name: Cheng Yao	 Age: 25
-March 2700: Cheng Yao enlists at the rank of Lieutenant.
-March 2700: Lieutenant Cheng Yao is awarded the Pioneer's Medallion.
+Name: Cheng Yao	 Age: 26
+March 2700: Cheng Yao enlists at the rank of Ensign.
+March 2700: Research Assistant Cheng Yao is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Combatative
+Impoverished

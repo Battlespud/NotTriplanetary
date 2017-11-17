@@ -54,8 +54,8 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 		smBerths.Category = CompCategory.REQUIRED;
 
 		ShipComponents Engineering = new ShipComponents();
-		Engineering.Name = "Engineering";
-		Engineering.Mass = 25;
+		Engineering.Name = "Engineering Section";
+		Engineering.Mass = 35;
 		Engineering.CrewRequired = 15;
 		Engineering.AddAbility(AbilityCats.MAINT,Engineering.Mass,25f,25f);
 		Engineering.Category = CompCategory.UTILITY;

@@ -1,0 +1,12 @@
+Name: Bert Hauser	 Age: 30
+March 2700: Bert Hauser enlists at the rank of Ensign.
+March 2700: Research Assistant Bert Hauser is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Lazy
+Suspicious

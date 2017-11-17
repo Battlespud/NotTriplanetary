@@ -1,6 +1,6 @@
-Name: Canace  Badowski 	 Age: 26
+Name: Canace  Badowski 	 Age: 29
 March 2700: Canace  Badowski  enlists at the rank of Lieutenant.
-March 2700: Lieutenant Canace  Badowski  is awarded the Pioneer's Medallion.
+March 2700: Associate Researcher Canace  Badowski  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Courageous
+Survivalist
+Delusional

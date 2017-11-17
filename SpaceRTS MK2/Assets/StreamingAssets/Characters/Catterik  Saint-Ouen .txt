@@ -1,6 +1,6 @@
 Name: Catterik  Saint-Ouen 	 Age: 26
-March 2700: Catterik  Saint-Ouen  enlists at the rank of Lieutenant.
-March 2700: Lieutenant Catterik  Saint-Ouen  is awarded the Pioneer's Medallion.
+March 2700: Catterik  Saint-Ouen  enlists at the rank of Lieutenant Commander.
+March 2700: Lieutenant Commander Catterik  Saint-Ouen  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Impoverished
+Complacent
+Motivated

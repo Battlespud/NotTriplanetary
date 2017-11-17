@@ -18,7 +18,7 @@ public class ScientistManager : MonoBehaviour {
 		Scientist = c;
 		Text t = GetComponentInChildren<Text> ();
 		try{
-		t.text = Scientist.GetNameString();
+			t.text = Scientist.GetNameString(true);
 		}
 		catch{
 		}

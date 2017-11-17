@@ -1,6 +1,6 @@
-Name: Chang-Shik  Park	 Age: 27
-March 2700: Chang-Shik  Park enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Chang-Shik  Park is awarded the Pioneer's Medallion.
+Name: Chang-Shik  Park	 Age: 26
+March 2700: Chang-Shik  Park enlists at the rank of Ensign.
+March 2700: Research Assistant Chang-Shik  Park is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Authoritarian
+Stubborn
+Optimistic

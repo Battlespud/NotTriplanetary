@@ -1,0 +1,13 @@
+Name: In-Tak  Pak	 Age: 35
+March 2700: In-Tak  Pak enlists at the rank of Lt. Commander.
+March 2700: Researcher In-Tak  Pak is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Trusting
+Neurotic
+Aggressive

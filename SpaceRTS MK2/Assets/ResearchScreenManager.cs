@@ -89,8 +89,7 @@ public class ResearchScreenManager : MonoBehaviour {
 			Destroy (g);
 		}
 		ScientistObjects.Clear ();
-		foreach (Character d in ActiveEmpire.Characters) {
-		//	if (d.Role == OfficerRoles.Research) {
+		foreach (Character d in ActiveEmpire.GetCharactersByType(OfficerRoles.Research)) {
 				GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
 				ScientistObjects.Add (g);
 				RectTransform h = g.GetComponent<RectTransform> ();
@@ -106,8 +105,7 @@ public class ResearchScreenManager : MonoBehaviour {
 				h.sizeDelta = new Vector2 (180f, 35f);
 				h.localScale = new Vector3 (1f, 1f, 1f);
 				interval++;
-			}
-		//}
+		}
 	}
 
 	void Update(){

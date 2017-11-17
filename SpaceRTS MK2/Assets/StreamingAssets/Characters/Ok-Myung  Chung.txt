@@ -1,0 +1,13 @@
+Name: Ok-Myung  Chung	 Age: 30
+March 2700: Ok-Myung  Chung enlists at the rank of Ensign.
+March 2700: Research Assistant Ok-Myung  Chung is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Aggressive
+Dynamic
+Lazy
