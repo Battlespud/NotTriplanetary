@@ -24,6 +24,8 @@ public class ResearchScreenManager : MonoBehaviour {
 	public Character SelectedScientist;
 	public Tech SelectedTech;
 
+	public GameObject ResearchProjectsParent;
+
 	public List<GameObject> TechsObjects = new List<GameObject>();
 	public List<GameObject> ScientistObjects = new List<GameObject>();
 
@@ -90,12 +92,18 @@ public class ResearchScreenManager : MonoBehaviour {
 		}
 		ScientistObjects.Clear ();
 		foreach (Character d in ActiveEmpire.GetCharactersByType(OfficerRoles.Research)) {
+			bool busy = false;
+			foreach (ResearchProject r in ActiveEmpire.EmpireTechTree.ResearchProjects) {
+				if (d == r.Scientist)
+					busy = true;
+			}
+			if (!busy) {
 				GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
 				ScientistObjects.Add (g);
 				RectTransform h = g.GetComponent<RectTransform> ();
 				ScientistManager manager = g.AddComponent<ScientistManager> ();
 				manager.Manager = this;
-				manager.Assign(d);
+				manager.Assign (d);
 				h.SetParent (ScientistsContent.transform);
 				//	h.rotation = manager.GetComponent<RectTransform> ().rotation;
 				h.rotation = Camera.main.transform.rotation;
@@ -105,6 +113,33 @@ public class ResearchScreenManager : MonoBehaviour {
 				h.sizeDelta = new Vector2 (180f, 35f);
 				h.localScale = new Vector3 (1f, 1f, 1f);
 				interval++;
+			}
+		}
+	}
+
+	public List<GameObject> ResearchProjectObjects = new List<GameObject>();
+	void ResearchProjects(){
+		int yOff = -45;
+		int interval = 1;
+		foreach (GameObject g in ResearchProjectObjects) {
+			Destroy (g);
+		}
+		ResearchProjectObjects.Clear ();
+		foreach (ResearchProject d in ActiveEmpire.EmpireTechTree.ResearchProjects) {
+			GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+			ResearchProjectObjects.Add (g);
+			RectTransform h = g.GetComponent<RectTransform> ();
+			ResearchProjectButtonManager manager = g.AddComponent<ResearchProjectButtonManager> ();
+			manager.Setup(d,this);
+			h.SetParent (ResearchProjectsParent.transform);
+			//	h.rotation = manager.GetComponent<RectTransform> ().rotation;
+			h.rotation = Camera.main.transform.rotation;
+			//	g.transform.rotation = manager.transform.rotation;
+			h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
+			//	h.SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval,h.rect.height);
+			h.sizeDelta = new Vector2 (360f, 35f);
+			h.localScale = new Vector3 (1f, 1f, 1f);
+			interval++;
 		}
 	}
 
@@ -112,9 +147,24 @@ public class ResearchScreenManager : MonoBehaviour {
 
 	}
 
+	int GetSelectedLabs(){
+		return 1; //TODO
+	}
+
+	public void CreateResearchProject()
+	{
+		if(SelectedScientist != null && SelectedTech != null)
+			ActiveEmpire.EmpireTechTree.CreateResearch (SelectedScientist, SelectedTech, GetSelectedLabs ());
+		ResearchProjects ();
+		UpdateUI ();
+	}
+
 	public void UpdateUI(){
-		OnTechSectionChange (TechSections.value);
-		ScientistButtons ();
+		if (gameObject.active) {
+			OnTechSectionChange (TechSections.value);
+			ScientistButtons ();
+			ResearchProjects ();
+		}
 	}
 
 	public void ToggleActive(){

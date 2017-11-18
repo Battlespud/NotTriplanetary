@@ -33,6 +33,20 @@ public class OfficerManagerUI : MonoBehaviour {
 	public Text RankNum;
 	public Text RankName;
 	public Text Nobility;
+	public Image Portrait;
+	Sprite DefaultPortrait;
+
+	//Filters
+	public Toggle NobilityFilter;
+	bool NoblesOnly(){
+		return NobilityFilter.isOn;
+	}
+
+	public Toggle UnassignedFilter;
+	bool UnassignedOnly(){
+		return NobilityFilter.isOn;
+	}
+
 
 	List<Text>OfficerFields = new List<Text>();
 
@@ -71,11 +85,16 @@ public class OfficerManagerUI : MonoBehaviour {
 		RankName.text = SelectedChar.GetJobTitle ();
 		Nobility.text = SelectedChar.GetNobleTitle ();
 		Historytext.text = SelectedChar.History;
+		if (SelectedChar.Portrait != null) {
+			Portrait.sprite = SelectedChar.Portrait;
+		} else {
+			Portrait.sprite = DefaultPortrait;
+		}
 	}
 
 	List<GameObject>OfficerButtons = new List<GameObject>();
 
-	void UpdateOfficerScroll(int i){
+	void UpdateOfficerScroll(int i = 0){
 		if (!Initialized)
 			Initialize ();
 		OfficerRoles r = (OfficerRoles)i;
@@ -89,28 +108,35 @@ public class OfficerManagerUI : MonoBehaviour {
 		OfficerButtons.Clear ();
 		foreach (Character d in ActiveEmpire.GetCharactersByType (r))
 			 {
-			GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
-			OfficerButtons.Add (g);
-			RectTransform h = g.GetComponent<RectTransform> ();
-			OfficerButtonManager manager = g.AddComponent<OfficerButtonManager> ();
-			manager.Manager = this;
-			manager.Assign(d);
-			h.SetParent (OfficersParent.transform);
-			h.rotation = Camera.main.transform.rotation;
-			h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
-			h.sizeDelta = new Vector2 (800f, 35f);
-			h.localScale = new Vector3 (1f, 1f, 1f);
-			interval++;
+			if(!NoblesOnly() || (NoblesOnly() && d.Noble)){
+				if (!UnassignedOnly () || r != OfficerRoles.Navy || (UnassignedOnly () && d.NavalRole == NavalCommanderRole.NONE)) {
+					GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+					OfficerButtons.Add (g);
+					RectTransform h = g.GetComponent<RectTransform> ();
+					OfficerButtonManager manager = g.AddComponent<OfficerButtonManager> ();
+					manager.Manager = this;
+					manager.Assign (d);
+					h.SetParent (OfficersParent.transform);
+					h.rotation = Camera.main.transform.rotation;
+					h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
+					h.sizeDelta = new Vector2 (800f, 35f);
+					h.localScale = new Vector3 (1f, 1f, 1f);
+					interval++;
+				}
+			}
 		}
-
 	}
 
+	void UpdateOfficerScrollBoolProxy(bool b){
+		UpdateOfficerScroll (RolesDrop.value);
+	}
 
 	bool Initialized = false;
 
 	// Use this for initialization
 	void Initialize () {
 		Initialized = true;
+		DefaultPortrait = Portrait.sprite;
 		ButtonPrefab = Resources.Load<GameObject>("Button") as GameObject;
 		RolesDrop.ClearOptions ();
 		List<string> RolesStrings = new List<string> ();
@@ -120,6 +146,7 @@ public class OfficerManagerUI : MonoBehaviour {
 		RolesDrop.AddOptions (RolesStrings);
 		RolesDrop.onValueChanged.RemoveAllListeners ();
 		RolesDrop.onValueChanged.AddListener (UpdateOfficerScroll);
+		NobilityFilter.onValueChanged.AddListener (UpdateOfficerScrollBoolProxy);
 	}
 
 

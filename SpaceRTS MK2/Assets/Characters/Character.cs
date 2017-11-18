@@ -160,6 +160,8 @@ public class Character {
 	public int Rank;
 	public int HP = 100;
 
+	public Sprite Portrait;
+
 	public List<int> PersonalityAspects = new List<int>(){0,0,0,0,0,0};
 
 

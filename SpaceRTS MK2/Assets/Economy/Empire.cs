@@ -94,11 +94,11 @@ public class Empire : MonoBehaviour {
 			Debug.Log (t + " Officers waiting for theme manager..." );
 			yield return null;
 		}
-			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync (this, GenerateCorps (StartingOfficers));
-			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync (this, GenerateScientists (15));
+			StartCoroutine(GenerateCorps (StartingOfficers));
+			StartCoroutine(GenerateScientists (15));
+
 	}
-
-
+		
 
 	public void DistributeOfficers(){
 		foreach (StrategicShip s in Ships) {
