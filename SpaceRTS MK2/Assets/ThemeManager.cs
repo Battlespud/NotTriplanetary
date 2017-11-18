@@ -14,6 +14,8 @@ public class ThemeManager : MonoBehaviour{
 
 	public int ThemeCount;
 
+	public static bool Initialized = false;
+
 	public void GenerateThemes(){
 		List<string> paths = new List<string> ();
 		paths.AddRange(Directory.GetDirectories (System.IO.Path.Combine (Application.streamingAssetsPath, "Themes")));
@@ -22,21 +24,40 @@ public class ThemeManager : MonoBehaviour{
 		foreach (string path in paths) {
 			Theme t = new Theme (path);
 		}
+		Initialized = true;
 	}
 
 	public static string GenerateCharName(Theme t, Sex s){
 		if (s == Sex.Female) {
+			try{
 			return t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count )] + " " + t.CharacterLastNames [rnd.Next(0, t.CharacterLastNames.Count)];
+			}
+			catch{
+				Debug.LogError ("Failed to Assign Name Properly.");
+				return null;
+			}
 		} else {
+			try{
 			return t.CharacterFirstNamesM [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
+			}
+			catch{
+				Debug.LogError ("Failed to Assign Name Properly.");
+				return null;
+			}
 		}
+
 	}
 
 	public static string GenerateCharName(Sex s){
 		Theme t = Themes [rnd.Next (0, Themes.Count)];
-		Debug.Log (t.ThemeName);
+//		Debug.Log (t.ThemeName);
 		if (s == Sex.Female) {
+			try{
 			return t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
+			}
+			catch{
+				return NameManager.GenerateCharName();
+			}
 		} else {
 			try{
 			return t.CharacterFirstNamesM [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
@@ -49,7 +70,7 @@ public class ThemeManager : MonoBehaviour{
 
 	void Awake(){
 		if (Manager != null) {
-			Debug.Log ("Error, multiple thememanagers present");
+			Debug.Log ("Error, multiple ThemeManagers present");
 		}
 		Trait.Load ();
 		Manager = this;

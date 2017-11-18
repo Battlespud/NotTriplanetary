@@ -1,0 +1,12 @@
+Name: Enide  Montaigu 	 Age: 40
+March 2700: Enide  Montaigu  enlists at the rank of Colonel.
+March 2700: COL. Enide  Montaigu  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Complacent
+Pessimistic

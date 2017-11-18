@@ -1,0 +1,13 @@
+Name: Lausanne  Le Roux 	 Age: 25
+March 2700: Lausanne  Le Roux  enlists at the rank of Ensign.
+March 2700: En. Lausanne  Le Roux  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Disorganized
+Gifted
+Cowardly

@@ -1,0 +1,11 @@
+Name: Choi  Cho	 Age: 32
+March 2700: Choi  Cho enlists at the rank of Lt. Commander.
+March 2700: Lt. Cmdr. Choi  Cho is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower

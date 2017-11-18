@@ -34,15 +34,21 @@ public class OfficerButtonManager : MonoBehaviour {
 	//	SelectedColor = Color.cyan;
 		ColorBlock cb = b.colors;
 		cb.highlightedColor = Color.cyan;
-
+		t = GetComponent<RectTransform> ();
+		if (Officer.Noble) {
+			cb.normalColor = Color.yellow;
+		}
 		b.colors = cb;
 	}
 
 	Color DefaultColor;
 	Color SelectedColor;
 
+	RectTransform t;
+
 	// Update is called once per frame
 	void Update () {
-
+		if (gameObject.active)
+			t.rotation = Camera.main.transform.rotation;
 	}
 }

@@ -25,6 +25,7 @@ public class OfficerManagerUI : MonoBehaviour {
 	public Text Sex;
 	public Text Personality;
 	public Text Role;
+	public Image RoleImage;
 	public Text PP;
 	public Text DateComm;
 	public Text Health;
@@ -47,6 +48,14 @@ public class OfficerManagerUI : MonoBehaviour {
 		Sex.text = SelectedChar.sex.ToString() [0].ToString();
 		Personality.text = SelectedChar.GetPersonalitySummary ();
 		Role.text = SelectedChar.Role.ToString ();
+		if (SelectedChar.Role == OfficerRoles.Navy)
+			RoleImage.color = Color.blue;
+		if (SelectedChar.Role == OfficerRoles.Army)
+			RoleImage.color = Color.green;
+		if (SelectedChar.Role == OfficerRoles.Government)
+			RoleImage.color = Color.cyan;
+		if (SelectedChar.Role == OfficerRoles.Research)
+			RoleImage.color = Color.yellow;
 		PP.text = string.Format("PP: {0}",SelectedChar.PromotionPoints);
 		DateComm.text = SelectedChar.CommissionDate;
 		Health.text = string.Format ("{0}/100", SelectedChar.HP);
@@ -67,6 +76,8 @@ public class OfficerManagerUI : MonoBehaviour {
 	List<GameObject>OfficerButtons = new List<GameObject>();
 
 	void UpdateOfficerScroll(int i){
+		if (!Initialized)
+			Initialize ();
 		OfficerRoles r = (OfficerRoles)i;
 
 		int yOff = -45;
@@ -95,9 +106,11 @@ public class OfficerManagerUI : MonoBehaviour {
 	}
 
 
+	bool Initialized = false;
 
 	// Use this for initialization
-	void Start () {
+	void Initialize () {
+		Initialized = true;
 		ButtonPrefab = Resources.Load<GameObject>("Button") as GameObject;
 		RolesDrop.ClearOptions ();
 		List<string> RolesStrings = new List<string> ();
@@ -105,11 +118,21 @@ public class OfficerManagerUI : MonoBehaviour {
 			RolesStrings.Add (t.ToString ());
 		}
 		RolesDrop.AddOptions (RolesStrings);
+		RolesDrop.onValueChanged.RemoveAllListeners ();
 		RolesDrop.onValueChanged.AddListener (UpdateOfficerScroll);
 	}
 
 
-
+	public void ToggleActive(){
+		if (gameObject.active) {
+			StrategicClock.Unpause ();
+			gameObject.active = false;
+		} else {
+			StrategicClock.RequestPause ();
+			UpdateOfficerScroll (0);
+			gameObject.active = true;
+		}
+	}
 	
 	// Update is called once per frame
 	void Update () {

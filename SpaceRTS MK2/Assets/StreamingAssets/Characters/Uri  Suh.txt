@@ -1,0 +1,13 @@
+Name: Uri  Suh	 Age: 25
+March 2700: Uri  Suh enlists at the rank of Lieutenant.
+March 2700: Lt. Uri  Suh is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Delegator
+Complacent
+Religious

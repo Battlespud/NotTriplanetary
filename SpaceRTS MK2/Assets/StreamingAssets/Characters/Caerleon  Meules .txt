@@ -1,0 +1,13 @@
+Name: Caerleon  Meules 	 Age: 42
+March 2700: Caerleon  Meules  enlists at the rank of Captain.
+March 2700: Cpt. Caerleon  Meules  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Honest
+Trusting
+Resentful

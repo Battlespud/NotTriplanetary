@@ -1,0 +1,11 @@
+Name: Qiao Fang	 Age: 30
+March 2700: Qiao Fang enlists at the rank of Lieutenant.
+March 2700: Lt. Qiao Fang is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Mathematician

@@ -1,0 +1,12 @@
+Name: Bert Erman	 Age: 42
+March 2700: Bert Erman enlists at the rank of Brigadier.
+March 2700: BRIG. Bert Erman is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Apolitical
+Optimistic

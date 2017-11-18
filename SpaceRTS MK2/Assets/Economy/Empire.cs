@@ -86,12 +86,19 @@ public class Empire : MonoBehaviour {
 	}
 
 
-	public void GenerateStartingOfficerCorps(int i){
+	public IEnumerator GenerateStartingOfficerCorps(int i){
 		Debug.Log ("Generating starting officers: " + i);
-		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,GenerateCorps(StartingOfficers));
-		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,GenerateScientists(15));
-
+		int t = 0;
+		while (ThemeManager.Initialized != true) {
+			t++;
+			Debug.Log (t + " Officers waiting for theme manager..." );
+			yield return null;
+		}
+			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync (this, GenerateCorps (StartingOfficers));
+			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync (this, GenerateScientists (15));
 	}
+
+
 
 	public void DistributeOfficers(){
 		foreach (StrategicShip s in Ships) {
@@ -114,9 +121,24 @@ public class Empire : MonoBehaviour {
 
 	public List<Character>GetCharactersByType(OfficerRoles r){
 		List<Character> ch = new List<Character> ();
+		List<Character> imthenulls = new List<Character> ();
 		foreach (Character c in Characters) {
-			if (c.Role == r)
-				ch.Add (c);
+			if (c != null) {
+				try {
+					if (c.Role == r)
+						ch.Add (c);
+				} catch {
+					if (string.IsNullOrEmpty (c.CharName))
+						c.CharName = "Null";
+					Debug.LogError (c.CharName + " has failed to process");
+				}
+			} else {
+				imthenulls.Add (c);
+				Debug.LogError ("A null character was removed from the list");
+			}
+		}
+		foreach (Character c in imthenulls) {
+			Characters.Remove (c);
 		}
 		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
@@ -124,26 +146,45 @@ public class Empire : MonoBehaviour {
 
 	public List<Character>GetCharactersByTypeAndRank(OfficerRoles r, int rank){
 		List<Character> ch = new List<Character> ();
+		List<Character> imthenulls = new List<Character> ();
+
 		foreach (Character c in Characters) {
-			if (c.Role == r && c.Rank == rank)
-				ch.Add (c);
+			if (c != null) {
+				try {
+					if (c.Role == r && c.Rank == rank)
+						ch.Add (c);
+				} catch {
+					if (c.CharName == null)
+						c.CharName = "Null";
+					Debug.Log (c.CharName + " has failed to process");
+				}
+			}
+			else {
+				imthenulls.Add (c);
+				Debug.LogError ("A null character was removed from the list");
+			}
+		}
+		foreach (Character c in imthenulls) {
+			Characters.Remove (c);
 		}
 		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
 	}
 
 	public static bool RandomTraits = true;
+
+
 	IEnumerator GenerateCorps(int i){
 		//Max rank starting  = 6
 		int index = 0;
-		List<float> Distribution = new List<float>(){.65f,.125f,.1f,.075f, .05f};
+		List<float> Distribution = new List<float>(){.55f,.2f,.125f,.15f, .075f};
 		float NobilityChance = .2f;
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index,OfficerRoles.Navy);
 				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.45f,4f));
 				Characters.Add (c);
-				c.Noble = MakeNobleChance (NobilityChance);
+				c.Noble = MakeNobleChance (NobilityChance + index/100*5f);
 				c.empire = this;
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -152,6 +193,32 @@ public class Empire : MonoBehaviour {
 						int ind = rnd.Next(0,Trait.Traits.Count);
 						try{
 						c.AddTrait (Trait.Traits [ind]);
+						}
+						catch{
+						}
+					}
+				}
+				yield return Ninja.JumpToUnity;
+				c.Output ();
+				yield return Ninja.JumpBack;
+			}
+			index++;
+		}
+		index = 0;
+		foreach (float f in Distribution) {
+			for (int d = (int)(i * f); d > 0; d--) {
+				Character c = new Character(index,OfficerRoles.Army);
+				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.45f,4f));
+				Characters.Add (c);
+				c.Noble = MakeNobleChance (NobilityChance/2 + (index-2f)/100*5f);
+				c.empire = this;
+				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
+				if (RandomTraits) {
+					int b = rnd.Next (0, 3);
+					for(b=b;b >= 0; b--){
+						int ind = rnd.Next(0,Trait.Traits.Count);
+						try{
+							c.AddTrait (Trait.Traits [ind]);
 						}
 						catch{
 						}
@@ -175,9 +242,36 @@ public class Empire : MonoBehaviour {
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index, OfficerRoles.Research);
-				c.Age = (int)(rnd.Next (26, 32) + index*rnd.Next(1.85f,2.75f));
+				c.Age = (int)(rnd.Next (26, 32) + index/100*rnd.Next(1.85f,7.75f));
 				Characters.Add (c);
-				c.Noble = MakeNobleChance (NobilityChance);
+				c.Noble = MakeNobleChance (NobilityChance + index/100f*5f);
+				c.empire = this;
+				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
+				if (RandomTraits) {
+					int b = rnd.Next (0, 3);
+					for(b=b;b >= 0; b--){
+						int ind = rnd.Next(0,Trait.Traits.Count);
+						try{
+							c.AddTrait (Trait.Traits [ind]);
+						}
+						catch{
+						}
+					}
+				}
+				yield return Ninja.JumpToUnity;
+				c.Output ();
+				yield return Ninja.JumpBack;
+			}
+			index++;
+		}
+		index = 0;
+		Distribution = new List<float>(){.3f,.25f,.2f,.1f,.1f,.05f};
+		foreach (float f in Distribution) {
+			for (int d = (int)(i*1.5f * f); d > 0; d--) {
+				Character c = new Character(index, OfficerRoles.Government);
+				c.Age = (int)(rnd.Next (22, 32) + index*rnd.Next(2.85f,3.75f));
+				Characters.Add (c);
+				c.Noble = MakeNobleChance (NobilityChance*2 + (index - 2.5f)/100*15f);
 				c.empire = this;
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -222,7 +316,7 @@ public class Empire : MonoBehaviour {
 //		Debug.Log (EmpireTechTree.TechByID.Count);
 		AvailableTechs = EmpireTechTree.GetAvailableTech ();
 	//	Debug.Log (AvailableTechs.Count);
-		GenerateStartingOfficerCorps (20);
+		StartCoroutine( GenerateStartingOfficerCorps (20));
 		foreach (Tech t in AvailableTechs) {
 			DebugAvailableTechNames.Add (t.Name);
 		}

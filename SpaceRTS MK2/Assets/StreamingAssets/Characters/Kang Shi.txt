@@ -1,0 +1,11 @@
+Name: Kang Shi	 Age: 30
+March 2700: Kang Shi enlists at the rank of Captain.
+March 2700: Cpt. Kang Shi is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Stubborn

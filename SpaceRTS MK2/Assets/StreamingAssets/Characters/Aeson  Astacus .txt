@@ -1,0 +1,13 @@
+Name: Aeson  Astacus 	 Age: 24
+March 2700: Aeson  Astacus  enlists at the rank of Ensign.
+March 2700: En. Aeson  Astacus  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Adventurous
+Friendly
+Trusting

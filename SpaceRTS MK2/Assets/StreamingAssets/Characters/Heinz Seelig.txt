@@ -1,0 +1,13 @@
+Name: Heinz Seelig	 Age: 28
+March 2700: Heinz Seelig enlists at the rank of Lieutenant.
+March 2700: LT. Heinz Seelig is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cautious
+Ignorant
+Stubborn

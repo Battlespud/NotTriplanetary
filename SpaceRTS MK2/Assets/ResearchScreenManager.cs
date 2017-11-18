@@ -113,13 +113,8 @@ public class ResearchScreenManager : MonoBehaviour {
 	}
 
 	public void UpdateUI(){
-		try{
 		OnTechSectionChange (TechSections.value);
 		ScientistButtons ();
-		}
-		catch{
-			Debug.LogError ("Failed to update research UI");
-		}
 	}
 
 	public void ToggleActive(){

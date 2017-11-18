@@ -133,7 +133,7 @@ public class StrategicClock : MonoBehaviour {
 	}
 
 	void TurnManagement(Phase p){
-		Debug.Log ("Turn Manager is starting the " + p.ToString () + " phase.");
+//		Debug.Log ("Turn Manager is starting the " + p.ToString () + " phase.");
 		switch (p) {
 		case(Phase.ORDERS):
 			{

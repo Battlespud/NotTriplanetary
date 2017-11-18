@@ -1,0 +1,11 @@
+Name: Aratus  Ithaca 	 Age: 25
+March 2700: Aratus  Ithaca  enlists at the rank of Ensign.
+March 2700: En. Aratus  Ithaca  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Focused

@@ -1,0 +1,13 @@
+Name: Alketas  Aphidnae 	 Age: 29
+March 2700: Alketas  Aphidnae  enlists at the rank of Researcher.
+March 2700: R. Alketas  Aphidnae  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Follower
+Analytical
+Combatative

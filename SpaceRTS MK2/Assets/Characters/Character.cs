@@ -36,7 +36,7 @@ public struct Trait{
 		Summary = string.Format ("{0}:({1}) {2}",Name,arraystring,Description);
 		Traits.Add (this);
 
-		Debug.Log (Summary);
+//		Debug.Log (Summary);
 	}
 	public static void Load(){
 		//Load traits
@@ -213,8 +213,14 @@ public class Character {
 	}
 
 	public string GetJobTitle(bool Full = true){
-		if(Full)
+		if (Full) {
+			try{
 			return JobTitlesDictLong [Role] [Rank];
+			}
+			catch{
+				Debug.LogError ("Integer: " + Rank + " is invalid with Role: " + Role.ToString ());
+			}
+		}
 		return JobTitlesDictShort [Role] [Rank];
 	}
 
@@ -240,7 +246,7 @@ public class Character {
 
 
 	public void JoinsUp(){
-		string st = string.Format("{0}: {1} enlists at the rank of {2}.",StrategicClock.GetDate(), CharName, NavalRankNames[Rank]);
+		string st = string.Format("{0}: {1} enlists at the rank of {2}.",StrategicClock.GetDate(), CharName, GetJobTitle());
 		CommissionDate = StrategicClock.GetDate ();
 		AddHistory (st);
 	}
