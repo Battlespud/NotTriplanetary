@@ -27,6 +27,51 @@ public class ThemeManager : MonoBehaviour{
 		Initialized = true;
 	}
 
+	IEnumerator ImportPortraits(){
+		List<string> paths = new List<string> ();
+		string pathAppend = @"Images\CharacterSprites";
+		yield return Ninja.JumpToUnity;
+		paths.AddRange(Directory.GetDirectories (System.IO.Path.Combine (Application.streamingAssetsPath, pathAppend )));
+		yield return Ninja.JumpBack;
+		Debug.Log (paths.Count + " Parent Level Portrait folders detected.");
+		int g = 0;
+		foreach (string path in paths) {
+			for (int i = 0; i < 2; i++)
+			{
+				string modPath = path + @"\" +((Sex)i).ToString()[0];
+				List<string> splitPath = new List<string> ();
+				splitPath.AddRange(modPath.Split ('\\'));
+				string FieldName = string.Format ("{1}{0}",splitPath[splitPath.Count-2] , splitPath[splitPath.Count-1]);
+				List<Sprite> reflected = (List<Sprite>)typeof(Character).GetField(FieldName).GetValue(null);
+				string[] FilePaths = Directory.GetFiles (modPath);
+				yield return Ninja.JumpToUnity;
+				foreach (string p in FilePaths) {
+					Texture2D preSprite = LoadTextureFromFile (p);
+					Sprite s = Sprite.Create (preSprite, new Rect (0f, 0f, preSprite.width, preSprite.height), new Vector2 (.5f, .5f), 100f);
+					reflected.Add (s);
+					g++;
+				}
+				Debug.Log(string.Format("Loading {0} {1}",((Sex)i).ToString(),splitPath[splitPath.Count-2]));
+				yield return Ninja.JumpBack;	
+			}
+			yield return Ninja.JumpToUnity;
+			Debug.Log("Number of Sprites Loaded: " + g );
+		}
+	}
+
+	public static Texture2D LoadTextureFromFile(string filename)
+	{
+		// "Empty" texture. Will be replaced by LoadImage
+		Texture2D texture = new Texture2D(4, 4);
+
+		FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+		byte[] imageData = new byte[fs.Length];
+		fs.Read(imageData, 0, (int)fs.Length);
+		texture.LoadImage(imageData);
+
+		return texture;
+	}
+
 	public static string GenerateCharName(Theme t, Sex s){
 		if (s == Sex.Female) {
 			try{
@@ -75,6 +120,7 @@ public class ThemeManager : MonoBehaviour{
 		Trait.Load ();
 		Manager = this;
 		GenerateThemes ();
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,ImportPortraits());
 	}
 
 }

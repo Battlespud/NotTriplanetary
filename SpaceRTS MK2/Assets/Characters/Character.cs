@@ -139,6 +139,28 @@ public class Character {
 	public List<Medal> Medals = new List<Medal>();
 	public List<Trait> Traits = new List<Trait> ();
 
+	//Images
+	public static	List<Sprite>MNavy = new List<Sprite>();
+	public static	List<Sprite>FNavy = new List<Sprite>();
+
+	public static	List<Sprite>MGovernment = new List<Sprite>();
+	public	static List<Sprite>FGovernment = new List<Sprite>();
+
+	public static	List<Sprite>MArmy = new List<Sprite>();
+	public static	List<Sprite>FArmy = new List<Sprite>();
+
+	public static	List<Sprite>MResearch = new List<Sprite>();
+	public static	List<Sprite>FResearch = new List<Sprite>();
+
+	public static void LoadPortraits(string path){
+
+	}
+
+	public static List<Sprite>GetValidPortraits(Character c){
+		string FieldName = string.Format ("{0}{1}", c.sex.ToString () [0], c.Role.ToString ());
+		return (List<Sprite>)typeof(Character).GetField(FieldName).GetValue(null);
+	}
+
 	//im so sorry u exist
 	 static Character(){
 		JobTitlesDictLong.Add (OfficerRoles.Navy, NavalRankNames);
@@ -251,6 +273,8 @@ public class Character {
 		string st = string.Format("{0}: {1} enlists at the rank of {2}.",StrategicClock.GetDate(), CharName, GetJobTitle());
 		CommissionDate = StrategicClock.GetDate ();
 		AddHistory (st);
+		if(GetValidPortraits(this).Count > 1)
+			Portrait = GetValidPortraits (this) [rnd.Next(0,GetValidPortraits (this).Count)];
 	}
 
 	public void AppointCaptain(StrategicShip s){
