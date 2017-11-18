@@ -1,6 +1,6 @@
-Name: Zhen Zhau	 Age: 31
-March 2700: Zhen Zhau enlists at the rank of Commander.
-March 2700: Commander Zhen Zhau is awarded the Pioneer's Medallion.
+Name: Zhen Zhau	 Age: 26
+March 2700: Zhen Zhau enlists at the rank of Ensign.
+March 2700: Research Assistant Zhen Zhau is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Analytical
-Religious
+Enthusiastic
+Gifted

@@ -1,6 +1,6 @@
-Name: Zhen Tian	 Age: 26
-March 2700: Zhen Tian enlists at the rank of Lieutenant.
-March 2700: Lieutenant Zhen Tian is awarded the Pioneer's Medallion.
+Name: Zhen Tian	 Age: 24
+March 2700: Zhen Tian enlists at the rank of Ensign.
+March 2700: Ensign Zhen Tian is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Enterprising
+Survivalist
+Egomaniac

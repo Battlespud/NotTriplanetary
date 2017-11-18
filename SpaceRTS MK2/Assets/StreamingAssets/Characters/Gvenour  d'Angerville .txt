@@ -1,0 +1,13 @@
+Name: Gvenour  d'Angerville 	 Age: 28
+March 2700: Gvenour  d'Angerville  enlists at the rank of Ensign.
+March 2700: Research Assistant Gvenour  d'Angerville  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Impoverished
+Ignorant
+Enterprising

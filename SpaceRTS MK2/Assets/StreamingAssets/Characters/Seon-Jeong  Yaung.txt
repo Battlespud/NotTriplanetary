@@ -1,6 +1,6 @@
-Name: Seon-Jeong  Yaung	 Age: 27
-March 2700: Seon-Jeong  Yaung enlists at the rank of Lieutenant.
-March 2700: Lieutenant Seon-Jeong  Yaung is awarded the Pioneer's Medallion.
+Name: Seon-Jeong  Yaung	 Age: 28
+March 2700: Seon-Jeong  Yaung enlists at the rank of Ensign.
+March 2700: Ensign Seon-Jeong  Yaung is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Capricious
+Humble
+Enterprising

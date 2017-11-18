@@ -1,6 +1,6 @@
-Name: Hong-Gil  Sung	 Age: 30
+Name: Hong-Gil  Sung	 Age: 25
 March 2700: Hong-Gil  Sung enlists at the rank of Ensign.
-March 2700: Research Assistant Hong-Gil  Sung is awarded the Pioneer's Medallion.
+March 2700: En. Hong-Gil  Sung is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Courageous
+Delusional
+Ignorant

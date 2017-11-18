@@ -1,4 +1,4 @@
-Name: Xue Fu	 Age: 29
+Name: Xue Fu	 Age: 26
 March 2700: Xue Fu enlists at the rank of Ensign.
 March 2700: Research Assistant Xue Fu is awarded the Pioneer's Medallion.
 
@@ -8,5 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Astronomer
-Objective
+Egomaniac

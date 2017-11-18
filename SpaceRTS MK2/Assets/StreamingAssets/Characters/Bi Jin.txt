@@ -1,6 +1,6 @@
-Name: Bi Jin	 Age: 34
-March 2700: Bi Jin enlists at the rank of Commander.
-March 2700: Commander Bi Jin is awarded the Pioneer's Medallion.
+Name: Bi Jin	 Age: 27
+March 2700: Bi Jin enlists at the rank of Ensign.
+March 2700: Ensign Bi Jin is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Conservative
-Flexible
-Suspicious
+Objective
+Debonaire

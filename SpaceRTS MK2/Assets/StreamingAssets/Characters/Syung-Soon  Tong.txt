@@ -1,6 +1,6 @@
-Name: Syung-Soon  Tong	 Age: 24
-March 2700: Syung-Soon  Tong enlists at the rank of Lieutenant.
-March 2700: Lieutenant Syung-Soon  Tong is awarded the Pioneer's Medallion.
+Name: Syung-Soon  Tong	 Age: 26
+March 2700: Syung-Soon  Tong enlists at the rank of Ensign.
+March 2700: R.A. Syung-Soon  Tong is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Modest
-Unforgiving
+Resentful
+Impatient

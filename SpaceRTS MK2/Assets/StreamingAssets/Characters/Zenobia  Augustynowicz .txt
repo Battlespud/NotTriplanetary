@@ -1,6 +1,6 @@
-Name: Zenobia  Augustynowicz 	 Age: 27
-March 2700: Zenobia  Augustynowicz  enlists at the rank of Lieutenant.
-March 2700: Lieutenant Zenobia  Augustynowicz  is awarded the Pioneer's Medallion.
+Name: Zenobia  Augustynowicz 	 Age: 31
+March 2700: Zenobia  Augustynowicz  enlists at the rank of Ensign.
+March 2700: Research Assistant Zenobia  Augustynowicz  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Delusional
-Cowardly
-Debonaire
+Astronomer

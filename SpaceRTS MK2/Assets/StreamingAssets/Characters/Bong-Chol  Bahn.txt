@@ -1,6 +1,6 @@
-Name: Bong-Chol  Bahn	 Age: 27
-March 2700: Bong-Chol  Bahn enlists at the rank of Lieutenant.
-March 2700: Lieutenant Bong-Chol  Bahn is awarded the Pioneer's Medallion.
+Name: Bong-Chol  Bahn	 Age: 34
+March 2700: Bong-Chol  Bahn enlists at the rank of Commander.
+March 2700: Senior Researcher Bong-Chol  Bahn is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,4 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Gloomy
+Cowardly
+Honest

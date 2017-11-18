@@ -1,6 +1,6 @@
 Name: Hong-Gil  Yi	 Age: 28
-March 2700: Hong-Gil  Yi enlists at the rank of Lieutenant Commander.
-March 2700: Lieutenant Commander Hong-Gil  Yi is awarded the Pioneer's Medallion.
+March 2700: Hong-Gil  Yi enlists at the rank of Ensign.
+March 2700: Research Assistant Hong-Gil  Yi is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,5 +8,4 @@ Pioneer's Medallion
 
 
 Traits:
-Partisan
-Friendly
+Apolitical

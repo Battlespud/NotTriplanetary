@@ -1,0 +1,11 @@
+Name: Cylon  Lepreum 	 Age: 24
+March 2700: Cylon  Lepreum  enlists at the rank of Ensign.
+March 2700: Ensign Cylon  Lepreum  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Hunter

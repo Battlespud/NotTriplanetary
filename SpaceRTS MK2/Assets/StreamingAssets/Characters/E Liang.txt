@@ -1,0 +1,11 @@
+Name: E Liang	 Age: 28
+March 2700: E Liang enlists at the rank of Lieutenant.
+March 2700: Associate Researcher E Liang is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Enterprising

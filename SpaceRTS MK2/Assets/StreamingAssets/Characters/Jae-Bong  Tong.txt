@@ -1,6 +1,6 @@
-Name: Jae-Bong  Tong	 Age: 32
-March 2700: Jae-Bong  Tong enlists at the rank of Commander.
-March 2700: Senior Researcher Jae-Bong  Tong is awarded the Pioneer's Medallion.
+Name: Jae-Bong  Tong	 Age: 25
+March 2700: Jae-Bong  Tong enlists at the rank of Ensign.
+March 2700: Ensign Jae-Bong  Tong is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,5 @@ Pioneer's Medallion
 
 
 Traits:
-Partisan
-Born Leader
-Friendly
+Ambitious
+Rude

@@ -1,0 +1,12 @@
+Name: Manfred Bachmann	 Age: 30
+March 2700: Manfred Bachmann enlists at the rank of Lieutenant.
+March 2700: Lieutenant Manfred Bachmann is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Cautious
+Enthusiastic

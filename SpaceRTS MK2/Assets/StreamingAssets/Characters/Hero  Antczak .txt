@@ -1,0 +1,13 @@
+Name: Hero  Antczak 	 Age: 25
+March 2700: Hero  Antczak  enlists at the rank of Ensign.
+March 2700: Ensign Hero  Antczak  is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Calm
+Disorganized
+Friendly

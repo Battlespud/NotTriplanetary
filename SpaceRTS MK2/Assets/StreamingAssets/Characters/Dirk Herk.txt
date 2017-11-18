@@ -1,0 +1,11 @@
+Name: Dirk Herk	 Age: 28
+March 2700: Dirk Herk enlists at the rank of Lt. Commander.
+March 2700: Lt. Commander Dirk Herk is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Decisive

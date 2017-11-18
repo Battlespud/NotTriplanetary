@@ -1,85 +1,85 @@
-Academic
-Adventurous
-Aggressive
-Ambitious
-Analytical
-Apolitical
-Arrogant
-Astronomer
-Attractive
-Authoritarian
-Born Leader
-Callous
-Calm
-Capricious
-Cautious
-Cheerful
-Cold
-Combatative
-Complacent
-Conservative
-Courageous
-Courteous
-Cowardly
-Debonaire
-Decisive
-Delegator
-Delusional
-Disciplined
-Dishonest
-Disorganized
-Defector
-Dynamic
-Egomaniac
-Embraces Change
-Enthusiastic
-Enterprising
-Flexible
-Focused
-Follower
-Friendly
-Gifted
-Gloomy
-Historian
-Honest
-Humble
-Hunter
-Ignorant
-Imaginative
-Impatient
-Impoverished
-Indecisive
-Inflexible
-Innovative
-Insightful
-Insubordinate
-Intolerant
-Jealous
-Lazy
-Mathematician
-Methodical
-Modest
-Motivated
-Narcissist
-Nepotistic
-Neurotic
-Objective
-Optimistic
-Paranoid
-Partisan
-Patient
-Pessimistic
-Philosopher
-Resentful
-Religious
-Resourceful
-Rude
-Sincere
-Stubborn
-Survivalist
-Suspicious
-Tolerant
-Trusting
-Unappreciative
-Uncaring
-Unforgiving
+Academic+{0,0,0,0,0,0}+Spends their free time immersed in intellectual pursuits.
+Adventurous+{0,0,0,0,0,0} +Always eager to explore undiscovered country.
+Aggressive+{0,0,0,0,0,0}+This officer believes in always being on the offense.
+Ambitious+{0,0,0,0,0,0}+Never satisfied with their position, and always looking for opportunities to advance.
+Analytical+{0,0,0,0,0,0}+More computer than person.
+Apolitical+{0,0,0,0,0,0}+Wants nothing to do with the political side of empire.
+Arrogant+{0,0,0,0,0,0}+The Gods gift to the Navy.
+Astronomer+{0,0,0,0,0,0}+An expert on stellar phenomena and astrogation.
+Attractive+{0,0,0,0,0,0}+People cant keep their eyes off this officer. The dress uniform definitely doesn't hurt.
+Authoritarian+{0,0,0,0,0,0}+Commands with an iron fist.
+Born Leader+{0,0,0,0,0,0}+Others are drawn to by this officer's charisma.
+Callous+{0,0,0,0,0,0}+Some wonder whether this officer cares any more for the lives of their allies than they do those of their enemies.
+Calm+{0,0,0,0,0,0}+Never quick to anger or easy to ruffle.
+Capricious+{0,0,0,0,0,0}+Unpredictable at best.
+Cautious+{0,0,0,0,0,0}+Slow to approach a situation, but willing to commit once the best course of action is clear.
+Cheerful+{0,0,0,0,0,0}+Always able to lighten even the darkest mood.
+Cold+{0,0,0,0,0,0}+Rules over the bridge with all the personability of a statue.
+Combatative+{0,0,0,0,0,0}+Quick to strike back at any perceived slight, whether from friend or foe.
+Complacent+{0,0,0,0,0,0}+Happy with their place in the order of things, not much can rile this officer.
+Conservative+{0,0,0,0,0,0}+Dedicated to protecting the time honored traditions of the nation.
+Courageous+{0,0,0,0,0,0}+Always the first into the breach.
+Courteous+{0,0,0,0,0,0}+Often extends courtesies neither required or expected.
+Cowardly+{0,0,0,0,0,0}+Only appreciates a ship for its ability to escape the enemy.
+Debonaire+{0,0,0,0,0,0}+A rising noble.
+Decisive+{0,0,0,0,0,0}+This officer makes decisions quickly and commits to them.
+Delegator+{0,0,0,0,0,0}+Quick to spread responsibilites among a crew or fleet to maximize performance.
+Delusional+{0,0,0,0,0,0}+Suffers from delusions of grandeur.
+Disciplined+{0,0,0,0,0,0}+A stickler for regulations, and expects the same of their underlings.
+Dishonest+{0,0,0,0,0,0}+This officer is always hiding something from others.
+Disorganized+{0,0,0,0,0,0}+Paperwork just has a way of going missing. As do missiles on occasion.
+Defector+{0,0,0,0,0,0}+A defector from a rival power. Can they be trusted not to turn again?
+Dynamic+{0,0,0,0,0,0}+This officer is never standing still, another project is always ready.
+Egomaniac+{0,0,0,0,0,0}+Ready to commit towards any course of action that will boost their reputation.
+Embraces Change+{0,0,0,0,0,0}+Eager to embrace advancing technologies and ideas.
+Enthusiastic+{0,0,0,0,0,0}+The Academy never managed to ruin the joy of space for this officer.
+Enterprising+{0,0,0,0,0,0}+Business pursuits needn't interfere with an officers responsibilities.
+Flexible+{0,0,0,0,0,0}+This officer has no standard approach and quickly adapts to changing situations.
+Focused+{0,0,0,0,0,0}+Posesses a laser focus.
+Follower+{0,0,0,0,0,0}+A poor leader, but a faithful subordinate.
+Friendly+{0,0,0,0,0,0}+Quick to make friends and ingratiate themselves.
+Gifted+{0,0,0,0,0,0}+Everything just seems a bit easier to this officer.
+Gloomy+{0,0,0,0,0,0}+Suffers from a permanent case of doom and gloom.
+Historian+{0,0,0,0,0,0}+Spends their free time studying ancient histories.
+Honest+{0,0,0,0,0,0}+This officer never hesitates to tell the truth, regardless of political considerations.
+Humble+{0,0,0,0,0,0}+A humble leader, always quick to glorify their subordinates.
+Hunter+{0,0,0,0,0,0}+Lives for the hunt, ideal for special and nonconventional operations.
+Ignorant+{0,0,0,0,0,0}+Never seems to know what they're supposed to.
+Imaginative+{0,0,0,0,0,0}+Has a lively imagination, for better or for worse.
+Impatient+{0,0,0,0,0,0}+Struggles to wait and prone to jumping the gun.
+Impoverished+{0,0,0,0,0,0}+Personally impoverished, how this may affect their loyalty and performance is unknown.
+Indecisive+{0,0,0,0,0,0}+Totally unable to commit to a course of action, regardless of the strength of the evidence.
+Inflexible+{0,0,0,0,0,0}+Once an action is chosen, theres simply no going back for this officer.
+Innovative+{0,0,0,0,0,0}+A known innovator of new tactics and stratagems.
+Insightful+{0,0,0,0,0,0}+Prone to bouts of genius when presented with a problem.
+Insubordinate+{0,0,0,0,0,0}+Chronically unable to obey orders and a total menace to their superiors.
+Intolerant+{0,0,0,0,0,0}+The only good xeno is a dead xeno.
+Jealous+{0,0,0,0,0,0}+Always covets the newest, fastest, largest and most powerful.
+Lazy+{0,0,0,0,0,0}+Demands the best but never puts the effort forward to get it.
+Mathematician+{0,0,0,0,0,0}+An expert mathematician.
+Methodical+{0,0,0,0,0,0}+A dedicated, by the book leader.
+Modest+{0,0,0,0,0,0}+Always quick to understate their own achievements.
+Motivated+{0,0,0,0,0,0}+Something drives this officer to fight just a bit harder.
+Narcissist+{0,0,0,0,0,0}+Nothing matters to this officer except themselves.
+Nepotistic+{0,0,0,0,0,0}+Their last name seems to have had quite an impact on their test results.
+Neurotic+{0,0,0,0,0,0}+The slighest disturbance drives this officer off the edge.
+Objective+{0,0,0,0,0,0}+Easily able to seperate their analysis from their own feelings.
+Optimistic+{0,0,0,0,0,0}+The missile magazines are half full.
+Paranoid+{0,0,0,0,0,0}+Everyones out to get this officer, according to them at least.
+Partisan+{0,0,0,0,0,0}+More dedicated to fighting the enemy within than the enemy without.
+Patient+{0,0,0,0,0,0}+Nothing can drive this officer to premature action.
+Pessimistic+{0,0,0,0,0,0}+The missile magazines are half empty.
+Philosopher+{0,0,0,0,0,0}+Has an entire closet full of togas.
+Resentful+{0,0,0,0,0,0}+Has a whole book full of grudges.
+Religious+{0,0,0,0,0,0}+The gods will protect this officer, they hope.
+Resourceful+{0,0,0,0,0,0}+Can rebuild a frameshift drive from a paperclip and some ducttape.
+Rude+{0,0,0,0,0,0}+A total jerk for absolutely no reason.
+Sincere+{0,0,0,0,0,0}+A classical gentleman officer.
+Stubborn+{0,0,0,0,0,0}+Sticks out even the worst conditions and circumstances without breaking.
+Survivalist+{0,0,0,0,0,0}+Ready for any situation.
+Suspicious+{0,0,0,0,0,0}+Not quite paranoid, but still wary of everything, and everyone, around them.
+Tolerant+{0,0,0,0,0,0}+Xenos aren't that bad.
+Trusting+{0,0,0,0,0,0}+Quick to trust, maybe too quick. This officer cant comprehend treachery.
+Unappreciative+{0,0,0,0,0,0}+Never appreciates the efforts of their compatriots.
+Uncaring+{0,0,0,0,0,0}+Never seems to feel as strongly as their comrades.
+Unforgiving+{0,0,0,0,0,0}+Will cross the galaxy to seek revenge.

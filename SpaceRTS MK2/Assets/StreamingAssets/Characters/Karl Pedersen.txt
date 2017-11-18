@@ -1,0 +1,13 @@
+Name: Karl Pedersen	 Age: 30
+March 2700: Karl Pedersen enlists at the rank of Ensign.
+March 2700: Research Assistant Karl Pedersen is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Friendly
+Arrogant
+Rude

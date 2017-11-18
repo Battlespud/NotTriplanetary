@@ -1,6 +1,6 @@
-Name: Esemkhebe  Rai 	 Age: 29
-March 2700: Esemkhebe  Rai  enlists at the rank of Lieutenant.
-March 2700: Lieutenant Esemkhebe  Rai  is awarded the Pioneer's Medallion.
+Name: Esemkhebe  Rai 	 Age: 26
+March 2700: Esemkhebe  Rai  enlists at the rank of Ensign.
+March 2700: En. Esemkhebe  Rai  is awarded the Pioneer's Medallion.
 
 
 Awards:
@@ -8,6 +8,6 @@ Pioneer's Medallion
 
 
 Traits:
-Defector
-Defector
-Delusional
+Dynamic
+Flexible
+Arrogant

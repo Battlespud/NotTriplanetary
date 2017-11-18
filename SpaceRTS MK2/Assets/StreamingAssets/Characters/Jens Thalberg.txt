@@ -1,0 +1,12 @@
+Name: Jens Thalberg	 Age: 26
+March 2700: Jens Thalberg enlists at the rank of Ensign.
+March 2700: Ensign Jens Thalberg is awarded the Pioneer's Medallion.
+
+
+Awards:
+Pioneer's Medallion
+
+
+Traits:
+Partisan
+Stubborn

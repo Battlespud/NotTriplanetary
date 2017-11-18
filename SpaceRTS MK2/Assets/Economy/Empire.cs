@@ -27,9 +27,11 @@ public class Empire : MonoBehaviour {
 	public FAC Faction;
 	public Eras Era;
 	public string Name;
-	public Government Gov;
+	public Government Gov = new Government();
 
 	public  int StartingOfficers = 100;
+
+	public int CurrentOfficers;
 
 	public bool Player = true;
 
@@ -209,6 +211,7 @@ public class Empire : MonoBehaviour {
 	void Awake(){
 		BuildTechTree ();
 		ResearchScreenManager.ActiveEmpire = this;
+		OfficerManagerUI.ActiveEmpire = this;
 		StrategicClock.PhaseChange.AddListener (PhaseManager);
 
 	}
@@ -272,6 +275,7 @@ public class Empire : MonoBehaviour {
 			DistributeOfficers ();
 			DistributeCaptains = false;
 		}
+		CurrentOfficers = Characters.Count;
 	}
 }
 
