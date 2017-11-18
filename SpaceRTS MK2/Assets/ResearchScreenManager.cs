@@ -41,7 +41,7 @@ public class ResearchScreenManager : MonoBehaviour {
 
 		TechSections.onValueChanged.AddListener (OnTechSectionChange);
 		ToggleActive ();
-		InvokeRepeating ("UpdateUI", 0f, .2f);
+		InvokeRepeating ("UpdateUI", 0f, 1f);
 	}
 
 	void SetupScreen(){
@@ -137,7 +137,7 @@ public class ResearchScreenManager : MonoBehaviour {
 			//	g.transform.rotation = manager.transform.rotation;
 			h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
 			//	h.SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval,h.rect.height);
-			h.sizeDelta = new Vector2 (360f, 35f);
+			h.sizeDelta = new Vector2 (190f, 35f);
 			h.localScale = new Vector3 (1f, 1f, 1f);
 			interval++;
 		}
@@ -156,14 +156,13 @@ public class ResearchScreenManager : MonoBehaviour {
 		if(SelectedScientist != null && SelectedTech != null)
 			ActiveEmpire.EmpireTechTree.CreateResearch (SelectedScientist, SelectedTech, GetSelectedLabs ());
 		ResearchProjects ();
-		UpdateUI ();
 	}
 
 	public void UpdateUI(){
 		if (gameObject.active) {
 			OnTechSectionChange (TechSections.value);
 			ScientistButtons ();
-			ResearchProjects ();
+		//	ResearchProjects ();
 		}
 	}
 

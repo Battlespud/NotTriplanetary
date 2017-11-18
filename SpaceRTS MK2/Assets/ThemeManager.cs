@@ -62,13 +62,14 @@ public class ThemeManager : MonoBehaviour{
 	public static Texture2D LoadTextureFromFile(string filename)
 	{
 		// "Empty" texture. Will be replaced by LoadImage
-		Texture2D texture = new Texture2D(4, 4);
+		Texture2D texture = new Texture2D(64, 64,TextureFormat.RGB24,false);
 
 		FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
 		byte[] imageData = new byte[fs.Length];
 		fs.Read(imageData, 0, (int)fs.Length);
 		texture.LoadImage(imageData);
-
+		if (texture.format == null)
+			Debug.LogError ("Something went wrong with loading the texture");
 		return texture;
 	}
 

@@ -14,13 +14,19 @@ public class ResearchProjectButtonManager : MonoBehaviour {
 	public void Setup(ResearchProject p,ResearchScreenManager r){
 		Res = p;
 		Manager = r;
-		t.text = "";//string.Format ("{0}\tCost: {1}\tLead: {2} ",Res.tech.Name,Res.cost,Res.Scientist.GetNameString(true));
+		Debug.Log("New research project " + Res.tech.Name);
+		t = GetComponentInChildren<Text> ();
+		b = GetComponent<Button> ();
+
+		t.fontSize = 10;
+		t.GetComponent<RectTransform> ().localScale = new Vector3 (.5f, 1f, 1f);
+
+		t.text = string.Format ("{0}\tCost: {1}\tLead: {2} ",Res.tech.Name,Res.cost,Res.Scientist.GetNameString(true));
 	}
 
 	// Use this for initialization
 	void Start () {
-		t = GetComponentInChildren<Text> ();
-		b = GetComponent<Button> ();
+
 	}
 	
 	// Update is called once per frame
