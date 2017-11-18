@@ -199,7 +199,7 @@ public class Empire : MonoBehaviour {
 					}
 				}
 				yield return Ninja.JumpToUnity;
-				c.Output ();
+			//	c.Output ();
 				yield return Ninja.JumpBack;
 			}
 			index++;
@@ -225,7 +225,7 @@ public class Empire : MonoBehaviour {
 					}
 				}
 				yield return Ninja.JumpToUnity;
-				c.Output ();
+			//	c.Output ();
 				yield return Ninja.JumpBack;
 			}
 			index++;
@@ -259,7 +259,7 @@ public class Empire : MonoBehaviour {
 					}
 				}
 				yield return Ninja.JumpToUnity;
-				c.Output ();
+			//	c.Output ();
 				yield return Ninja.JumpBack;
 			}
 			index++;
@@ -286,7 +286,7 @@ public class Empire : MonoBehaviour {
 					}
 				}
 				yield return Ninja.JumpToUnity;
-				c.Output ();
+			//	c.Output ();
 				yield return Ninja.JumpBack;
 			}
 			index++;
