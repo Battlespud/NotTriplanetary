@@ -106,6 +106,7 @@ public class Empire : MonoBehaviour {
 				for (int i = 0; i < Unassigned.Count; i++) {
 					if (Unassigned [i].Rank <= 1 && Unassigned[i].Role == OfficerRoles.Navy) {
 						Unassigned [i].AppointXO (s);
+						Unassigned [i].MoveTo (s);
 					}
 				}
 			}
@@ -113,10 +114,38 @@ public class Empire : MonoBehaviour {
 				for (int i = 0; i < Unassigned.Count; i++) {
 					if (Unassigned [i].Rank >= 2 && Unassigned[i].Role == OfficerRoles.Navy) {
 						Unassigned [i].AppointCaptain (s);
+						Unassigned [i].MoveTo (s);
 					}
 				}
 			}
 		}
+	}
+
+	public List<Character>GetCharactersByType(OfficerRoles r, List<Character> CharSet){
+		List<Character> ch = new List<Character> ();
+		List<Character> imthenulls = new List<Character> ();
+		if (CharSet.Count < 1)
+			CharSet.AddRange (Characters);
+		foreach (Character c in CharSet) {
+			if (c != null) {
+				try {
+					if (c.Role == r)
+						ch.Add (c);
+				} catch {
+					if (string.IsNullOrEmpty (c.CharName))
+						c.CharName = "Null";
+					Debug.LogError (c.CharName + " has failed to process");
+				}
+			} else {
+				imthenulls.Add (c);
+				Debug.LogError ("A null character was removed from the list");
+			}
+		}
+		foreach (Character c in imthenulls) {
+			Characters.Remove (c);
+		}
+		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
+		return ch;
 	}
 
 	public List<Character>GetCharactersByType(OfficerRoles r){
@@ -169,6 +198,21 @@ public class Empire : MonoBehaviour {
 		}
 		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
+	}
+
+	public List<Character> GetCharactersAtLocation(ILocation loc, OfficerRoles? rNullable = null){
+		List<Character> Output = new List<Character> ();
+		foreach (Character c in Characters) {
+			if (c.Location == loc)
+				Output.Add (c);
+		}
+		if (rNullable != null && Output.Count > 0) {
+			OfficerRoles r = rNullable.Value;
+			Output = GetCharactersByType (r, Output);
+		}
+		Output = Output.OrderByDescending (x => x.Role).ThenByDescending(x => x.Rank).ThenByDescending(x => x.Noble).ToList ();
+
+		return Output;
 	}
 
 	public static bool RandomTraits = true;

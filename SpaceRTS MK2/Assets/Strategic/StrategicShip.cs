@@ -22,10 +22,33 @@ public class HistoryEvent{
 }
 
 //Data container for ships, stored in fleet and used to instantiate the actual monos and gameobjects.
-public class StrategicShip {
+public class StrategicShip : ILocation{
 	
 	public static System.Random random = new System.Random ();
 
+	#region ILocation
+	public string GetLocationName(){
+		return ShipName;
+	}
+	public object GetLocation(){
+		return (object)this;
+	}
+	public void MoveCharacterToThis(Character c){
+		c.shipPosting = this;
+	}
+	public void MoveCharacterFromThis(Character c){
+		if (c.shipPosting == this)
+			c.shipPosting = null;
+		if (Captain == c) {
+			Captain = null;
+		}
+		if (Executive == c) {
+			Executive = null;
+		}
+	}
+
+
+	#endregion
 
 	public FAC Faction;
 	public Empire Emp;

@@ -152,9 +152,6 @@ public class Character {
 	public static	List<Sprite>MResearch = new List<Sprite>();
 	public static	List<Sprite>FResearch = new List<Sprite>();
 
-	public static void LoadPortraits(string path){
-
-	}
 
 	public static List<Sprite>GetValidPortraits(Character c){
 		string FieldName = string.Format ("{0}{1}", c.sex.ToString () [0], c.Role.ToString ());
@@ -181,6 +178,7 @@ public class Character {
 	public Empire empire;
 	public int Rank;
 	public int HP = 100;
+	public ILocation Location;
 
 	public Sprite Portrait;
 
@@ -268,6 +266,16 @@ public class Character {
 			Die ();
 	}
 
+	public void MoveTo(ILocation loc){
+		string FormerLoc = "";
+		if (Location != null) {
+			Location.MoveCharacterFromThis (this);
+			FormerLoc = Location.GetLocationName ();
+		}
+		Location = loc;
+		Location.MoveCharacterToThis (this);
+		string st = string.Format("{0}: {1} transfers from {2} to {3}.",StrategicClock.GetDate(), GetNameString(true), FormerLoc, Location.GetLocationName());
+	}
 
 	public void JoinsUp(){
 		string st = string.Format("{0}: {1} enlists at the rank of {2}.",StrategicClock.GetDate(), CharName, GetJobTitle());
@@ -281,7 +289,7 @@ public class Character {
 		s.AssignOfficer (this, NavalCommanderRole.CMD);
 		NavalRole = NavalCommanderRole.CMD;
 		empire.Unassigned.Remove (this);
-		shipPosting = s;
+		MoveTo (s);
 		string st = string.Format("{0}: {1} is placed in command of {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
 		AddHistory (st);
 	}
@@ -290,8 +298,18 @@ public class Character {
 		s.AssignOfficer (this, NavalCommanderRole.XO);
 		NavalRole = NavalCommanderRole.XO;
 		empire.Unassigned.Remove (this);
-		shipPosting = s;
+		MoveTo (s);
 		string st = string.Format("{0}: {1} is appointed Executive Officer onboard {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		AddHistory (st);
+	}
+
+	public void AppointSeniorOfficer(StrategicShipyard s){
+		s.SeniorOfficer = this;
+		NavalRole = NavalCommanderRole.CMD;
+		empire.Unassigned.Remove (this);
+		shipPosting = null;
+		Location = s;
+		string st = string.Format("{0}: {1} is placed as the senior officer aboard {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
 		AddHistory (st);
 	}
 

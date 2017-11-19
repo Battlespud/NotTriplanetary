@@ -36,10 +36,37 @@ public class Slipway{
 	}
 }
 
-public class StrategicShipyard : MonoBehaviour, IContext{
+public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 
 	//DEBUG
 	public bool AddSlipwayPls = true;
+
+
+	public string GetLocationName(){
+		return ShipYardName;
+	}
+	public object GetLocation(){
+		return (object)this;
+	}
+	public void MoveCharacterToThis(Character c){
+		UpdateSeniorOfficer ();
+	}
+	public void MoveCharacterFromThis(Character c){
+		UpdateSeniorOfficer ();
+	}
+
+	void UpdateSeniorOfficer(){
+		SeniorOfficer = null;
+		if (empire.GetCharactersAtLocation (this) [0] != null) {
+			SeniorOfficer = empire.GetCharactersAtLocation (this) [0];
+			SeniorOfficer.AppointSeniorOfficer (this);
+		}
+	}
+
+	public Character SeniorOfficer;
+
+
+	public string ShipYardName = "";
 
 	public ShipDesign CurrentTooling;
 	public ShipDesign NextTooling;

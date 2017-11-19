@@ -46,6 +46,7 @@ public class OfficerManagerUI : MonoBehaviour {
 	bool UnassignedOnly(){
 		return NobilityFilter.isOn;
 	}
+	public InputField NameFilter;
 
 
 	List<Text>OfficerFields = new List<Text>();
@@ -106,28 +107,32 @@ public class OfficerManagerUI : MonoBehaviour {
 		}
 
 		OfficerButtons.Clear ();
-		foreach (Character d in ActiveEmpire.GetCharactersByType (r))
-			 {
-			if(!NoblesOnly() || (NoblesOnly() && d.Noble)){
-				if (!UnassignedOnly () || r != OfficerRoles.Navy || (UnassignedOnly () && d.NavalRole == NavalCommanderRole.NONE)) {
-					GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
-					OfficerButtons.Add (g);
-					RectTransform h = g.GetComponent<RectTransform> ();
-					OfficerButtonManager manager = g.AddComponent<OfficerButtonManager> ();
-					manager.Manager = this;
-					manager.Assign (d);
-					h.SetParent (OfficersParent.transform);
-					h.rotation = Camera.main.transform.rotation;
-					h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
-					h.sizeDelta = new Vector2 (800f, 35f);
-					h.localScale = new Vector3 (1f, 1f, 1f);
-					interval++;
+		foreach (Character d in ActiveEmpire.GetCharactersByType (r)) {
+			if (string.IsNullOrEmpty (NameFilter.text) || d.GetNameString ().Contains (NameFilter.text)) {
+				if (!NoblesOnly () || (NoblesOnly () && d.Noble)) {
+					if (!UnassignedOnly () || r != OfficerRoles.Navy || (UnassignedOnly () && d.NavalRole == NavalCommanderRole.NONE)) {
+						GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+						OfficerButtons.Add (g);
+						RectTransform h = g.GetComponent<RectTransform> ();
+						OfficerButtonManager manager = g.AddComponent<OfficerButtonManager> ();
+						manager.Manager = this;
+						manager.Assign (d);
+						h.SetParent (OfficersParent.transform);
+						h.rotation = Camera.main.transform.rotation;
+						h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
+						h.sizeDelta = new Vector2 (800f, 35f);
+						h.localScale = new Vector3 (1f, 1f, 1f);
+						interval++;
+					}
 				}
 			}
 		}
 	}
 
 	void UpdateOfficerScrollBoolProxy(bool b){
+		UpdateOfficerScroll (RolesDrop.value);
+	}
+	void UpdateOfficerScrollStringProxy(string b){
 		UpdateOfficerScroll (RolesDrop.value);
 	}
 
@@ -147,6 +152,7 @@ public class OfficerManagerUI : MonoBehaviour {
 		RolesDrop.onValueChanged.RemoveAllListeners ();
 		RolesDrop.onValueChanged.AddListener (UpdateOfficerScroll);
 		NobilityFilter.onValueChanged.AddListener (UpdateOfficerScrollBoolProxy);
+		NameFilter.onValueChanged.AddListener (UpdateOfficerScrollStringProxy);
 	}
 
 
