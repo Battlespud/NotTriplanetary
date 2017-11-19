@@ -66,7 +66,7 @@ public struct Trait{
 			Trait t = new Trait (traitName, desc, mods);
 			numTraits = i + 1;
 		}
-		Debug.Log("Loaded " + numTraits + " traits.");
+//		Debug.Log("Loaded " + numTraits + " traits.");
 	}
 }
 
@@ -267,49 +267,69 @@ public class Character {
 	}
 
 	public void MoveTo(ILocation loc){
-		string FormerLoc = "";
+		if (Location == loc)
+			return;
+		string FormerLoc = "NULL";
 		if (Location != null) {
 			Location.MoveCharacterFromThis (this);
 			FormerLoc = Location.GetLocationName ();
 		}
 		Location = loc;
+		string st = string.Format("{0}: {1} <color=yellow>transfers</color> from <color=white>{2}</color> to <color=white>{3}</color>.",StrategicClock.GetDate(), GetNameString(true), FormerLoc, Location.GetLocationName());
+		AddHistory (st);
 		Location.MoveCharacterToThis (this);
-		string st = string.Format("{0}: {1} transfers from {2} to {3}.",StrategicClock.GetDate(), GetNameString(true), FormerLoc, Location.GetLocationName());
+
 	}
 
 	public void JoinsUp(){
-		string st = string.Format("{0}: {1} enlists at the rank of {2}.",StrategicClock.GetDate(), CharName, GetJobTitle());
+		string st = string.Format("{0}: {1} enlists at the rank of <color=yellow>{2}</color>.",StrategicClock.GetDate(), CharName, GetJobTitle());
 		CommissionDate = StrategicClock.GetDate ();
 		AddHistory (st);
 		if(GetValidPortraits(this).Count > 1)
 			Portrait = GetValidPortraits (this) [rnd.Next(0,GetValidPortraits (this).Count)];
+		for (int i = 0; i < PersonalityAspects.Count; i++) {
+			PersonalityAspects[i] += rnd.Next (-20, 21);
+		}
 	}
 
 	public void AppointCaptain(StrategicShip s){
-		s.AssignOfficer (this, NavalCommanderRole.CMD);
-		NavalRole = NavalCommanderRole.CMD;
 		empire.Unassigned.Remove (this);
 		MoveTo (s);
-		string st = string.Format("{0}: {1} is placed in command of {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		s.AssignOfficer (this, NavalCommanderRole.CMD);
+		NavalRole = NavalCommanderRole.CMD;
+		string st = string.Format("{0}: {1} is placed in appointed<color=cyan>Captain</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
 		AddHistory (st);
 	}
 
 	public void AppointXO(StrategicShip s){
-		s.AssignOfficer (this, NavalCommanderRole.XO);
-		NavalRole = NavalCommanderRole.XO;
 		empire.Unassigned.Remove (this);
 		MoveTo (s);
-		string st = string.Format("{0}: {1} is appointed Executive Officer onboard {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		s.AssignOfficer (this, NavalCommanderRole.XO);
+		NavalRole = NavalCommanderRole.XO;
+		string st = string.Format("{0}: {1} is appointed <color=cyan>Executive Officer</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
 		AddHistory (st);
 	}
 
 	public void AppointSeniorOfficer(StrategicShipyard s){
+		if(Location != s)
+			MoveTo (s);
 		s.SeniorOfficer = this;
 		NavalRole = NavalCommanderRole.CMD;
 		empire.Unassigned.Remove (this);
 		shipPosting = null;
 		Location = s;
-		string st = string.Format("{0}: {1} is placed as the senior officer aboard {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
+		string st = string.Format("{0}: {1} is <color=green>appointed</color> the <color=cyan>Senior Officer</color> aboard <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
+		AddHistory (st);
+	}
+
+	public void StepDownSeniorOfficer(StrategicShipyard s){
+		if(Location != s)
+			MoveTo (s);
+		NavalRole = NavalCommanderRole.NONE;
+		empire.Unassigned.Add (this);
+		shipPosting = null;
+		Location = s;
+		string st = string.Format("{0}: {1} <color=orange>steps down</color> as the <color=cyan>Senior Officer</color> aboard {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
 		AddHistory (st);
 	}
 
@@ -317,31 +337,31 @@ public class Character {
 		NavalRole = NavalCommanderRole.NONE;
 		empire.Unassigned.Add (this);
 		shipPosting = null;
-		string st = string.Format("{0}: {1} has no current assignment.",StrategicClock.GetDate(),GetNameString(true));
+		string st = string.Format("{0}: {1} has <color=red>no current assignment</color>.",StrategicClock.GetDate(),GetNameString(true));
 		AddHistory (st);
 	}
 
 	public void AwardMedal(Medal m){
 		Medals.Add (m);
 		PromotionPoints += m.Points;
-		string st = string.Format("{0}: {1} is awarded the {2}.",StrategicClock.GetDate(),GetNameString(true), m.Name);
+		string st = string.Format("{0}: {1} is <color=green>awarded</color> the <color=silver>{2}</color>.",StrategicClock.GetDate(),GetNameString(true), m.Name);
 		AddHistory (st);
 	}
 
 	public void AwardMedal(Medal m, string reason){
 		Medals.Add (m);
 		PromotionPoints += m.Points;
-		string st = string.Format("{0}: {1} is awarded the {2} for '{3}'.",StrategicClock.GetDate(),GetNameString(true), m.Name, reason);
+		string st = string.Format("{0}: {1} is <color=green>awarded</color> the <color=silver>{2}</color> for '{3}'.",StrategicClock.GetDate(),GetNameString(true), m.Name, reason);
 		AddHistory (st);
 	}
 
 	public void StartResearch(string TechName){
-		string st = string.Format("{0}: {1} begins research into {2}.",StrategicClock.GetDate(),GetNameString(true), TechName);
+		string st = string.Format("{0}: {1} begins <color=blue>research</color> into {2}.",StrategicClock.GetDate(),GetNameString(true), TechName);
 		AddHistory (st);
 	}
 
 	public void DidResearch(string TechName){
-		string st = string.Format("{0}: {1} completes research into {2}.",StrategicClock.GetDate(),GetNameString(true), TechName);
+		string st = string.Format("{0}: {1} <color=green>completes</color> <color=blue>research</color> into {2}.",StrategicClock.GetDate(),GetNameString(true), TechName);
 		AddHistory (st);
 	}
 
@@ -349,7 +369,7 @@ public class Character {
 		if (Rank >= JobTitlesDictLong[Role].Count - 1)
 			return;
 		Rank++;
-		string st = string.Format("{0}: {1} is promoted to the rank of {2}.",StrategicClock.GetDate(),CharName, GetJobTitle());
+		string st = string.Format("{0}: {1} is <color=green>promoted</color> to the rank of <color=yellow>{2}</color>.",StrategicClock.GetDate(),CharName, GetJobTitle());
 		AddHistory (st);
 	}
 
@@ -358,25 +378,17 @@ public class Character {
 			return;
 		PromotionPoints -= 500;
 		Rank--;
-		string st = string.Format("{0}: {1} is demoted to the rank of {2}.",StrategicClock.GetDate(), CharName, GetJobTitle());
+		string st = string.Format("{0}: {1} is <color=red>demoted</color> to the rank of <color=yellow>{2}</color>.",StrategicClock.GetDate(), CharName, GetJobTitle());
 		AddHistory (st);
 	}
 
-	public void MakeNoble(){
-		if (Noble)
-			return;
-		NobleRank = 0;
-		string st = string.Format("{0}: {1} is made a peer of the realm.", StrategicClock.GetDate(), GetNameString(true));
-		AddHistory (st);
-		Noble = true;
-	}
 
-	public void MakeNoble(int rank){
+	public void MakeNoble(int rank = 0){
 		if (Noble)
 			return;
 		Noble = true;
 		NobleRank = rank;
-		string st = string.Format("{0}: {1} is made a {2} of the realm.", StrategicClock.GetDate(),  GetNameString(true),GetNobleTitle());
+		string st = string.Format("{0}: {1} is made a <color=#C9BE62>{2}</color> of the realm.", StrategicClock.GetDate(),  GetNameString(true),GetNobleTitle());
 		AddHistory (st);
 	}
 
@@ -385,17 +397,17 @@ public class Character {
 			return;
 		Noble = true;
 		NobleRank++;
-		string st = string.Format("{0}: {1} is raised to the station of {2}.",StrategicClock.GetDate(),GetNameString(),GetNobleTitle());
+		string st = string.Format("{0}: {1} is raised to the station of <color=#C9BE62>{2}</color>.",StrategicClock.GetDate(),GetNameString(),GetNobleTitle());
 		AddHistory (st);
 	}
 
 	public void Retire(bool Forced){
 		string st = "";
 		if (Forced) {
-			 st = string.Format ("{0}: {1} was dishonorably discharged from the service.", StrategicClock.GetDate (), GetNameString ());
+			 st = string.Format ("{0}: {1} was <color=red>dishonorably discharged</color> from the service.", StrategicClock.GetDate (), GetNameString ());
 		
 		} else {
-			st = string.Format ("{0}: {1} {2} has retired honorably from the service.", StrategicClock.GetDate (),GetNobleTitle(), GetNameString ());
+			st = string.Format ("{0}: {1} {2} has <color=green>retired honorably</color> from the service.", StrategicClock.GetDate (),GetNobleTitle(), GetNameString ());
 		}
 		AddHistory (st);
 		shipPosting = null;
@@ -426,7 +438,7 @@ public class Character {
 	}
 
 	public void Die(){
-		string st = string.Format("{0}: {1} was killed in the destruction of the {2}.",StrategicClock.GetDate(),GetNameString(), shipPosting.ShipName);
+		string st = string.Format("{0}: {1} was <color=red>killed</color> in the destruction of the <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), shipPosting.ShipName);
 		AddHistory (st);
 		shipPosting = null;
 		empire.Characters.Remove (this);

@@ -12,6 +12,7 @@ public class OfficerManagerUI : MonoBehaviour {
 	public Dropdown RolesDrop;
 	public GameObject RanksParent;
 	public GameObject OfficersParent;
+	public GameObject LocationsParent;
 
 	public Text Historytext;
 
@@ -35,6 +36,7 @@ public class OfficerManagerUI : MonoBehaviour {
 	public Text Nobility;
 	public Image Portrait;
 	Sprite DefaultPortrait;
+	public Text Location;
 
 	//Filters
 	public Toggle NobilityFilter;
@@ -91,7 +93,95 @@ public class OfficerManagerUI : MonoBehaviour {
 		} else {
 			Portrait.sprite = DefaultPortrait;
 		}
+		if (SelectedChar.Location != null) {
+			System.Type t = SelectedChar.Location.GetLocType ();
+			if (t == typeof(StrategicShip)) {
+				if (SelectedChar.NavalRole != NavalCommanderRole.NONE)
+					Location.text = SelectedChar.NavalRole.ToString () + " | ";
+			}
+			else if((t == typeof(StrategicShipyard)))
+			{
+				if (SelectedChar.NavalRole == NavalCommanderRole.CMD) {
+					Location.text = "S.O. | ";
+				}
+			}
+			Location.text += SelectedChar.Location.GetLocationName ();
+
+		} else {
+			Location.text = "Null";
+		}
+		UpdateLocations ();
+
 	}
+
+	//valid transfers
+	public List<GameObject> LocationButtons = new List<GameObject>();
+
+	void UpdateLocations(){
+		List<ILocation> Locs = new List<ILocation> ();
+
+		while (LocationButtons.Count > 0) {
+			foreach (GameObject g in LocationButtons) {
+				Destroy (g);
+			}
+			LocationButtons.Clear ();
+		}
+//		Debug.Log (LocationButtons.Count + " Loc Count");
+		if (SelectedChar.Location == null) {
+			foreach (StrategicShip s in SelectedChar.empire.Ships) {
+				Locs.Add (s);
+			}
+			foreach (StrategicShipyard s in SelectedChar.empire.Yards) {
+				Locs.Add (s);
+			}
+		} else {
+			Locs.Add (SelectedChar.Location);
+			object obj = SelectedChar.Location.GetLocation ();
+			System.Type t = SelectedChar.Location.GetLocType ();
+			string tName = t.FullName;
+			string ShipT = typeof(StrategicShip).FullName;
+			string ShipyardT = typeof(StrategicShipyard).FullName;
+
+			StrategicShip ship;
+			StrategicShipyard yard;
+			if (tName == ShipT) {
+				ship = (StrategicShip)obj;
+				if (ship.ParentFleet != null) {
+					foreach (StrategicShip s in ship.ParentFleet.Ships) {
+						Locs.Add (s);
+					}
+				}
+			} else if (tName == ShipyardT) {
+				yard = (StrategicShipyard)obj;
+				foreach (StrategicShip s in yard.DockedShips) {
+					Locs.Add (s);
+				}
+			}
+		}
+
+		int yOff = -45;
+		int interval = 1;
+		foreach (ILocation d in Locs) {
+						GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+						LocationButtons.Add (g);
+						RectTransform h = g.GetComponent<RectTransform> ();
+						ILocationButtonManager manager = g.AddComponent<ILocationButtonManager> ();
+						manager.Manager = this;
+						manager.Assign (d);
+						h.SetParent (LocationsParent.transform);
+						h.rotation = Camera.main.transform.rotation;
+						h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
+						h.sizeDelta = new Vector2 (600f, 35f);
+						h.localScale = new Vector3 (1f, 1f, 1f);
+						interval++;
+		}
+	}
+
+	public void SelectLocation(ILocation Loc){
+		SelectedChar.MoveTo (Loc);
+		UpdateOfficerUI ();
+	}
+
 
 	List<GameObject>OfficerButtons = new List<GameObject>();
 

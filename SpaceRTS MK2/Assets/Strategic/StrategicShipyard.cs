@@ -48,6 +48,9 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	public object GetLocation(){
 		return (object)this;
 	}
+	public System.Type GetLocType(){
+		return this.GetType ();
+	}
 	public void MoveCharacterToThis(Character c){
 		UpdateSeniorOfficer ();
 	}
@@ -56,17 +59,21 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	}
 
 	void UpdateSeniorOfficer(){
-		SeniorOfficer = null;
-		if (empire.GetCharactersAtLocation (this) [0] != null) {
+		List<Character> Here = empire.GetCharactersAtLocation (this);
+		if (Here[0] != null && Here [0] != SeniorOfficer) {
+			if(SeniorOfficer != null)
+				SeniorOfficer.StepDownSeniorOfficer (this);
 			SeniorOfficer = empire.GetCharactersAtLocation (this) [0];
 			SeniorOfficer.AppointSeniorOfficer (this);
 		}
+		else if (Here[0] == null)
+			SeniorOfficer = null;
 	}
 
 	public Character SeniorOfficer;
 
 
-	public string ShipYardName = "";
+	public string ShipYardName = "Imperial Yardworks";
 
 	public ShipDesign CurrentTooling;
 	public ShipDesign NextTooling;
@@ -104,7 +111,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 
 	// Use this for initialization
 	void Start () {
-		
+		empire.Yards.Add (this);
 	}
 	
 	// Update is called once per frame

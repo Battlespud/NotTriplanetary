@@ -33,7 +33,7 @@ public class ThemeManager : MonoBehaviour{
 		yield return Ninja.JumpToUnity;
 		paths.AddRange(Directory.GetDirectories (System.IO.Path.Combine (Application.streamingAssetsPath, pathAppend )));
 		yield return Ninja.JumpBack;
-		Debug.Log (paths.Count + " Parent Level Portrait folders detected.");
+	//	Debug.Log (paths.Count + " Parent Level Portrait folders detected.");
 		int g = 0;
 		foreach (string path in paths) {
 			for (int i = 0; i < 2; i++)
@@ -51,7 +51,7 @@ public class ThemeManager : MonoBehaviour{
 					reflected.Add (s);
 					g++;
 				}
-				Debug.Log(string.Format("Loading {0} {1}",((Sex)i).ToString(),splitPath[splitPath.Count-2]));
+//				Debug.Log(string.Format("Loading {0} {1}",((Sex)i).ToString(),splitPath[splitPath.Count-2]));
 				yield return Ninja.JumpBack;	
 			}
 			yield return Ninja.JumpToUnity;

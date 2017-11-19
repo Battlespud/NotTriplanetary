@@ -43,7 +43,7 @@ public class Empire : MonoBehaviour {
 	public List<Character> Unassigned = new List<Character>();
 	public List<Character> Dead = new List<Character>();
 	public List<StrategicShip> Ships = new List<StrategicShip> ();
-
+	public List<StrategicShipyard> Yards = new List<StrategicShipyard> ();
 
 	void PhaseManager(Phase p){
 		switch (p) {
@@ -210,7 +210,7 @@ public class Empire : MonoBehaviour {
 			OfficerRoles r = rNullable.Value;
 			Output = GetCharactersByType (r, Output);
 		}
-		Output = Output.OrderByDescending (x => x.Role).ThenByDescending(x => x.Rank).ThenByDescending(x => x.Noble).ToList ();
+		Output = Output.OrderByDescending(x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 
 		return Output;
 	}

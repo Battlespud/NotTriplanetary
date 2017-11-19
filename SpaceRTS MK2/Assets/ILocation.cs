@@ -8,7 +8,7 @@ public interface ILocation  {
 
 	string GetLocationName();
 	object GetLocation();
-
+	System.Type GetLocType();
 	void MoveCharacterToThis(Character c);
 	void MoveCharacterFromThis(Character c);
 

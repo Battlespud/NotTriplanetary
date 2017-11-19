@@ -33,6 +33,9 @@ public class StrategicShip : ILocation{
 	public object GetLocation(){
 		return (object)this;
 	}
+	public System.Type GetLocType(){
+		return this.GetType ();
+	}
 	public void MoveCharacterToThis(Character c){
 		c.shipPosting = this;
 	}
