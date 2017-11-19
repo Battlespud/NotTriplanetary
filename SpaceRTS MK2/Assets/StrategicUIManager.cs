@@ -15,7 +15,7 @@ public class StrategicUIManager : MonoBehaviour {
 		UpdateUIEvent.Invoke ();
 	}
 
-
+	public GameObject MainUI;
 
 	public Text FleetName;
 	public Text ShieldStatus;
@@ -74,6 +74,6 @@ public class StrategicUIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		MainUI.active = !StrategicClock.isPaused;
 	}
 }

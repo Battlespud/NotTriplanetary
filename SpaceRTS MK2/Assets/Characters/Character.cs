@@ -19,12 +19,12 @@ public enum Sex{
 public struct Trait{
 	public static List<Trait>Traits = new List<Trait>();
 	static char delimiter = '+';
-
+	public string Raw;
 	public string Name;
 	public string Description;
 	public List<int> PersonalityModifiers;
 	public string Summary;
-	public Trait(string s, string d, List<int> modifiers = null){
+	public Trait(string s, string d, string r, List<int> modifiers = null ){
 		Name = s;
 		Description = d;
 		PersonalityModifiers = new List<int> ();
@@ -33,6 +33,7 @@ public struct Trait{
 		foreach (int i in PersonalityModifiers) {
 			arraystring += i.ToString() + ",";
 		}
+		Raw = r;
 		Summary = string.Format ("{0}:({1}) {2}",Name,arraystring,Description);
 		Traits.Add (this);
 
@@ -40,6 +41,7 @@ public struct Trait{
 	}
 	public static void Load(){
 		//Load traits
+		Traits.Clear();
 		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Traits/" ); 
 		string[] traits = File.ReadAllLines(path+"Traits.txt");
 		//string[] descr=File.ReadAllLines(path+"Descriptions.txt");
@@ -63,7 +65,7 @@ public struct Trait{
 			}
 			string desc = cut [2];
 
-			Trait t = new Trait (traitName, desc, mods);
+			Trait t = new Trait (traitName, desc,traits[i], mods);
 			numTraits = i + 1;
 		}
 //		Debug.Log("Loaded " + numTraits + " traits.");
@@ -287,8 +289,8 @@ public class Character {
 		AddHistory (st);
 		if(GetValidPortraits(this).Count > 1)
 			Portrait = GetValidPortraits (this) [rnd.Next(0,GetValidPortraits (this).Count)];
-		for (int i = 0; i < PersonalityAspects.Count; i++) {
-			PersonalityAspects[i] += rnd.Next (-20, 21);
+		for (int d = 0; d < PersonalityAspects.Count; d++) {
+			PersonalityAspects[d] += rnd.Next (-50, 50);
 		}
 	}
 
@@ -344,14 +346,14 @@ public class Character {
 	public void AwardMedal(Medal m){
 		Medals.Add (m);
 		PromotionPoints += m.Points;
-		string st = string.Format("{0}: {1} is <color=green>awarded</color> the <color=silver>{2}</color>.",StrategicClock.GetDate(),GetNameString(true), m.Name);
+		string st = string.Format("{0}: {1} is <color=green>awarded</color> the <color=#D4AF37>{2}</color>.",StrategicClock.GetDate(),GetNameString(true), m.Name);
 		AddHistory (st);
 	}
 
 	public void AwardMedal(Medal m, string reason){
 		Medals.Add (m);
 		PromotionPoints += m.Points;
-		string st = string.Format("{0}: {1} is <color=green>awarded</color> the <color=silver>{2}</color> for '{3}'.",StrategicClock.GetDate(),GetNameString(true), m.Name, reason);
+		string st = string.Format("{0}: {1} is <color=green>awarded</color> the <color=#D4AF37>{2}</color> for '{3}'.",StrategicClock.GetDate(),GetNameString(true), m.Name, reason);
 		AddHistory (st);
 	}
 
@@ -427,14 +429,26 @@ public class Character {
 		StringBuilder sb = new StringBuilder ();
 		if (inline) {
 			for (int i = 0; i < 6; i++) {
-				sb.Append (PersonalityAspectsStrings [i] + ": " + PersonalityAspects [i]+"\t");
+				string c="";
+				if (PersonalityAspects [i] > 74)
+					c = "<color=green>";
+				if (PersonalityAspects [i] > 24 && PersonalityAspects [i] < 75)
+					c = "<color=cyan>";
+				else if (PersonalityAspects [i] > -25 && PersonalityAspects [i] < 25)
+					c = "<color=white>";
+				else if (PersonalityAspects [i] > -75 && PersonalityAspects [i] <= -25)
+					c = "<color=yellow>";
+				else if (PersonalityAspects [i] <= -75)
+					c = "<color=red>";
+				sb.Append (c + PersonalityAspectsStrings [i]+"</color>     ");
+			//	sb.Append (c + PersonalityAspectsStrings [i] + ": " + PersonalityAspects [i]+"</color>\t");
 			}
 		} else {
 			for (int i = 0; i < 6; i++) {
 				sb.AppendLine (PersonalityAspectsStrings [i] + ": " + PersonalityAspects [i]);
 			}
 		}
-		return sb.ToString ();
+		return sb.ToString ().Trim();
 	}
 
 	public void Die(){
@@ -482,6 +496,7 @@ public class Character {
 
 	// Use this for initialization
 	public Character(){
+
 		Role = OfficerRoles.Navy;
 		sex = (Sex)rnd.Next (0, 2);
 		CharName = ThemeManager.GenerateCharName (sex); //todo
@@ -491,6 +506,8 @@ public class Character {
 	}
 
 	public Character(int i, OfficerRoles r){
+
+
 		Role = r;
 
 		Rank = i;
@@ -501,10 +518,12 @@ public class Character {
 	}
 
 	public Character(int i, Theme t, OfficerRoles r){
+
 		Role = r;
 		Rank = i;
 		ID = GetNextID();
 		sex = (Sex)rnd.Next (0, 2);
+
 		CharName = ThemeManager.GenerateCharName(t,sex); //todo
 		JoinsUp ();
 	}

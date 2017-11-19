@@ -37,6 +37,7 @@ public class OfficerManagerUI : MonoBehaviour {
 	public Image Portrait;
 	Sprite DefaultPortrait;
 	public Text Location;
+	public Text TraitsText;
 
 	//Filters
 	public Toggle NobilityFilter;
@@ -93,6 +94,7 @@ public class OfficerManagerUI : MonoBehaviour {
 		} else {
 			Portrait.sprite = DefaultPortrait;
 		}
+		Location.text = "";
 		if (SelectedChar.Location != null) {
 			System.Type t = SelectedChar.Location.GetLocType ();
 			if (t == typeof(StrategicShip)) {
@@ -111,7 +113,10 @@ public class OfficerManagerUI : MonoBehaviour {
 			Location.text = "Null";
 		}
 		UpdateLocations ();
-
+		TraitsText.text = "";
+		foreach (Trait t in SelectedChar.Traits) {
+			TraitsText.text += t.Name + "\n";
+		}
 	}
 
 	//valid transfers
@@ -198,7 +203,7 @@ public class OfficerManagerUI : MonoBehaviour {
 
 		OfficerButtons.Clear ();
 		foreach (Character d in ActiveEmpire.GetCharactersByType (r)) {
-			if (string.IsNullOrEmpty (NameFilter.text) || d.GetNameString ().Contains (NameFilter.text)) {
+			if (string.IsNullOrEmpty (NameFilter.text)  || d.GetNameString().IndexOf(NameFilter.text.Trim(),System.StringComparison.InvariantCultureIgnoreCase) > -1 ||(d.Location != null && d.Location.GetLocationName().IndexOf(NameFilter.text.Trim(),System.StringComparison.InvariantCultureIgnoreCase) > -1))  {
 				if (!NoblesOnly () || (NoblesOnly () && d.Noble)) {
 					if (!UnassignedOnly () || r != OfficerRoles.Navy || (UnassignedOnly () && d.NavalRole == NavalCommanderRole.NONE)) {
 						GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
@@ -242,7 +247,12 @@ public class OfficerManagerUI : MonoBehaviour {
 		RolesDrop.onValueChanged.RemoveAllListeners ();
 		RolesDrop.onValueChanged.AddListener (UpdateOfficerScroll);
 		NobilityFilter.onValueChanged.AddListener (UpdateOfficerScrollBoolProxy);
+		RolesDrop.onValueChanged.AddListener (ClearNameFilter);
 		NameFilter.onValueChanged.AddListener (UpdateOfficerScrollStringProxy);
+	}
+
+	void ClearNameFilter(int proxy){
+		NameFilter.text = "";
 	}
 
 
