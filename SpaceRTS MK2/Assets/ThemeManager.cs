@@ -59,11 +59,12 @@ public class ThemeManager : MonoBehaviour{
 		}
 	}
 
+	//image dictionary via index, input when coroutine finishes and use initialization variable plus while loop to wait before loading;
+
 	public static Texture2D LoadTextureFromFile(string filename)
 	{
 		// "Empty" texture. Will be replaced by LoadImage
 		Texture2D texture = new Texture2D(64, 64,TextureFormat.RGB24,false);
-
 		FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
 		byte[] imageData = new byte[fs.Length];
 		fs.Read(imageData, 0, (int)fs.Length);

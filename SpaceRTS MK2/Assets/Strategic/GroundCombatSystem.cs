@@ -2,19 +2,91 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundCombat{
-	public static List<GroundCombat>AllGroundCombats = new List<GroundCombat>();
+public class GroundCombat
+{
+	public static List<GroundCombat> AllGroundCombats = new List<GroundCombat>();
+	const int NumTurns = 5;
 
-	public GroundCombat(){
-		AllGroundCombats.Add (this);
+	public List<GroundUnit> Attackers;
+	public List<GroundUnit> Defenders;
+
+	public GroundCombat(List<GroundUnit> atk, List<GroundUnit> def)
+	{
+		StrategicClock.PhaseChange.AddListener(PhaseManager);
+		AllGroundCombats.Add(this);
+		Attackers = atk;
+		Defenders = def;
 	}
 
-	void End(){
-		AllGroundCombats.Remove (this);
+	void End()
+	{
+		AllGroundCombats.Remove(this);
+	}
+
+void PhaseManager(Phase p){
+	switch (p) {
+	case(Phase.ORDERS):
+		{
+			break;
+		}
+	case(Phase.GO):
+		{
+			ProgressCombat();
+			break;
+		}
+	case (Phase.REVIEW):
+		{
+			break;
+		}
+	case (Phase.INTERRUPT):
+		{
+			break;
+		}
 	}
 }
 
-public class GroundUnit:ILocation{
+void ProgressCombat()
+{
+	bool isDefender = true;
+	ApplyDamage(isDefender ? Attackers : Defenders, GetCombatStats(isDefender ? Defenders : Attackers));
+}
+
+
+KeyValuePair<float,int> GetCombatStats(List<GroundUnit> force)
+{
+	float power = 0f;
+	int count = 0;
+	force.ForEach((unit) => 
+		{
+			if (unit.CombatEffective)
+			{
+				power += unit.GetCombatPower();
+				count++;
+			}
+		});
+	return new KeyValuePair<float, int>(power, count);
+}
+
+void ApplyDamage(List<GroundUnit> forceOne, KeyValuePair<float,int> forceTwo)
+{
+	KeyValuePair<float, int> fOneStats = GetCombatStats(forceOne);
+
+	float fTwoDPT = forceTwo.Value / NumTurns;
+	float dmg = fOneStats.Value <= 0 ? 
+		fTwoDPT :
+		fTwoDPT / fOneStats.Value;
+
+	forceOne.ForEach((unit) => 
+		{
+			if (unit.CombatEffective)
+			{
+				unit.RecieveDamage(dmg);
+			}
+		});
+	}
+}
+
+public class GroundUnit : ILocation{
 	static System.Random rand = new System.Random();
 
 	#region Location
@@ -79,7 +151,7 @@ public class GroundUnit:ILocation{
 			Commander.InjureGroundCombat (Location, this, leftovers);
 			NumberTroops = 0;
 		} 
-
+		UpdateStatus();
 	}
 
 	void UpdateStatus(){
@@ -98,7 +170,7 @@ public class GroundUnit:ILocation{
 
 	public GroundUnit(Empire e, int num, float h, float cr){
 		empire = e;
-			empire.GroundUnits.Add (this);
+		empire.GroundUnits.Add (this);
 		UnitName = empire.GetName (this);
 		MaxNumberTroops = num;
 		NumberTroops = MaxNumberTroops;
@@ -106,7 +178,5 @@ public class GroundUnit:ILocation{
 		CombatRating = cr;
 		Log.Add(new HistoryEvent(string.Format("<Color=white>{0}</color> is brought into service",UnitName)));
 	}
-
-
 
 }

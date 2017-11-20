@@ -8,6 +8,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 
 	public Empire ActiveEmpire;
 	static List<string>PriorityColors = new List<string>(){"<color=green>","<color=red>","<color=orange>","<color=yellow>","<color=cyan>","<color=blue>","<color=white>"};
+	Dictionary<LogCategories,string> CatColor = new Dictionary<LogCategories, string> ();
 
 	public GameObject EntriesContentParent;
 	public RectTransform EntriesContentParentRect;
@@ -18,7 +19,15 @@ public class EmpireLogManagerUI : MonoBehaviour {
 	public Dropdown Years;
 
 	public Dropdown Priority;
-	public bool PriorityLowerOrEqual = true;
+	bool PriorityLowerOrEqual = false;
+
+	//Readout
+	public Text HeadlineReadout;
+	public Text DateReadout;
+	public Text PriorityReadout;
+	public Text DescriptionReadout;
+	public Text CategoryReadout;
+
 
 	static List<string> priorityStrings = new List<string> ();
 	public List<GameObject> Buttons = new List<GameObject> ();
@@ -31,6 +40,11 @@ public class EmpireLogManagerUI : MonoBehaviour {
 		for (int i = 0; i < PriorityColors.Count; i++) {
 			priorityStrings.Add(string.Format("<color=white>[</color>{0}{1}</color><color=white>]</color>",PriorityColors[i],i));
 		}
+		CatColor.Add (LogCategories.DEFAULT, "<color=white>");
+		CatColor.Add (LogCategories.ECONOMIC, "<color=green>");
+		CatColor.Add (LogCategories.EXPLORATION, "<color=magenta>");
+		CatColor.Add (LogCategories.MILITARY, "<color=red>");
+		CatColor.Add (LogCategories.TECH, "<color=cyan>");
 		Priority.ClearOptions();
 		Priority.AddOptions(priorityStrings);
 		Priority.onValueChanged.AddListener(UpdateLog);
@@ -89,7 +103,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 		List<EmpireLogEntry> Entries = ActiveEmpire.GetLogs( Date());
 		List<EmpireLogEntry> ToDisplay = new List<EmpireLogEntry> ();
 		foreach (EmpireLogEntry e in Entries) {
-			if ((e.Priority <= Priority.value && PriorityLowerOrEqual) || Priority.value == e.Priority|| Priority.value <= 0) {
+			if ( (e.Priority <= Priority.value && PriorityLowerOrEqual) || Priority.value == e.Priority || Priority.value <= 0) {
 	//			if (Categories.Contains (e.Category)) {
 					ToDisplay.Add (e);
 				}
@@ -105,6 +119,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 		Buttons.Clear ();
 		foreach (EmpireLogEntry d in ToDisplay) {
 			GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+			Buttons.Add (g);
 			RectTransform h = g.GetComponent<RectTransform> ();
 			EmpireLogButtonManager manager = g.AddComponent<EmpireLogButtonManager> ();
 			manager.Setup(d,this);
@@ -122,7 +137,14 @@ public class EmpireLogManagerUI : MonoBehaviour {
 	}
 
 	void UpdateReadout(){
-		
+		if (SelectedEntry != null) {
+			CategoryReadout.text = string.Format ("{0}{1}</color>", CatColor [SelectedEntry.Category], SelectedEntry.Category.ToString ());
+			DateReadout.text = SelectedEntry.Date;
+			DescriptionReadout.text = SelectedEntry.Description;
+			HeadlineReadout.text = SelectedEntry.Headline;
+			PriorityReadout.text = string.Format ("<color=white>[</color>{0}{1}</color><color=white>]</color>", PriorityColors [SelectedEntry.Priority], SelectedEntry.Priority);
+
+		}
 	}
 
 	void ToggleCategory(LogCategories c)

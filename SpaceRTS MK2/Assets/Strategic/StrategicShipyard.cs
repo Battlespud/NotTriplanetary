@@ -128,7 +128,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 
 	public void CompleteShip(){
 		StrategicShip s = new StrategicShip (CurrentTooling, empire);
-		EmpireLogEntry E = new EmpireLogEntry(LogCategories.TECH,4,empire,"STARSHIP CONSTRUCTED",string.Format("{0} has finished construction of a {1}-Class {2}, the {3}.",ShipYardName,s.DesignClass.DesignName,s.DesignClass.HullDesignation.HullType,s.ShipName));
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.TECH,4,empire,"STARSHIP CONSTRUCTED",string.Format("{0} has <color=green>finished construction</color> of a <color=silver>{1}</color>-Class {2}, the {3}.",ShipYardName,s.DesignClass.DesignName,s.DesignClass.HullDesignation.HullType,s.ShipName));
 		DockedShips.Add (s);
 		//TODO actually make the ship reference for the fleet list.
 	}
@@ -184,11 +184,10 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 		Slipway s = new Slipway ();
 		s.parent = this;
 		Slipways.Add (s);
-		EmpireLogEntry E = new EmpireLogEntry(LogCategories.TECH,5,empire,"SLIPWAY ADDED",string.Format("{0} has added a new Slipway, bringing the total count up to {1}.",ShipYardName,Slipways.Count));
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.TECH,5,empire,"SLIPWAY ADDED",string.Format("{0} has <color=green>added</color> a new <color=purple>Slipway</color>, bringing the total count up to {1}.",ShipYardName,Slipways.Count));
 	}
 
 	void OpenMenu(){
-		Debug.Log ("Opening spaceyard ui");
 		StrategicShipyardUIManager.Manager.Open (this);
 	}
 

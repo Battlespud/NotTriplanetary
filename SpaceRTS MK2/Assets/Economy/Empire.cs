@@ -302,12 +302,12 @@ public class Empire : MonoBehaviour {
 	IEnumerator GenerateCorps(int i){
 		//Max rank starting  = 6
 		int index = 0;
-		List<float> Distribution = new List<float>(){.55f,.2f,.125f,.15f, .075f};
+		List<float> Distribution = new List<float>(){.40f,.2f,.15f,.1f,.075f,.05f,.035f,.025f};
 		float NobilityChance = .2f;
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index,OfficerRoles.Navy);
-				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.45f,4f));
+				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.25f,3f));
 				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance + index/100*5f);
 				c.empire = this;
@@ -362,7 +362,7 @@ public class Empire : MonoBehaviour {
 	IEnumerator GenerateScientists(int i){
 		//Max rank starting  = 6
 		int index = 0;
-		List<float> Distribution = new List<float>(){.55f,.2f,.15f,.1f};
+		List<float> Distribution = new List<float>(){.55f,.2f,.15f,.1f,.05f,.025f};
 		float NobilityChance = .1f;
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
@@ -447,7 +447,7 @@ public class Empire : MonoBehaviour {
 //		Debug.Log (EmpireTechTree.TechByID.Count);
 		AvailableTechs = EmpireTechTree.GetAvailableTech ();
 	//	Debug.Log (AvailableTechs.Count);
-		StartCoroutine( GenerateStartingOfficerCorps (20));
+		StartCoroutine( GenerateStartingOfficerCorps (StartingOfficers));
 		foreach (Tech t in AvailableTechs) {
 			DebugAvailableTechNames.Add (t.Name);
 		}
