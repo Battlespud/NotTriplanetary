@@ -12,7 +12,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 	public GameObject EntriesContentParent;
 	public RectTransform EntriesContentParentRect;
 
-	public List<LogCategories>Categories = new List<LogCategories>();
+	public List<LogCategories>Categories = new List<LogCategories>(){LogCategories.DEFAULT,LogCategories.ECONOMIC,LogCategories.EXPLORATION,LogCategories.MILITARY,LogCategories.TECH};
 
 	public Dropdown Months;
 	public Dropdown Years;
@@ -36,6 +36,8 @@ public class EmpireLogManagerUI : MonoBehaviour {
 		Priority.onValueChanged.AddListener(UpdateLog);
 		Months.onValueChanged.AddListener (ResetScroll);
 		Years.onValueChanged.AddListener (ResetScroll);
+		Months.onValueChanged.AddListener (UpdateLog);
+		Years.onValueChanged.AddListener (UpdateLog);
 		Months.ClearOptions ();
 		Months.AddOptions ( StrategicClock.Months);
 		ButtonPrefab = Resources.Load<GameObject>("Button") as GameObject;
@@ -53,6 +55,8 @@ public class EmpireLogManagerUI : MonoBehaviour {
 		switch (p) {
 		case(Phase.ORDERS):
 			{
+				Months.value = StrategicClock.month;
+				Years.value = StrategicClock.year;
 				break;
 			}
 		case(Phase.GO):
@@ -61,8 +65,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 			}
 		case (Phase.REVIEW):
 			{
-				Months.value = StrategicClock.month;
-				Years.value = StrategicClock.year;
+
 				break;
 			}
 		case (Phase.INTERRUPT):
@@ -76,25 +79,26 @@ public class EmpireLogManagerUI : MonoBehaviour {
 
 	string Date(){
 	//	Months[month] +" " + year;
-		return string.Format ("{0} {1}", StrategicClock.Months [Months.value], StrategicClock.Years [Years.value]);
+	//	Debug.Log(string.Format ("{0} {1}", StrategicClock.Months [Months.value], StrategicClock.Years [Years.value]) + " Date Log Request");
+		return string.Format ("{0} {1}", StrategicClock.Months [Months.value], StrategicClock.Years [Years.value]).Trim();
 	}
 
 
 
 	void UpdateLog(int z = 0){
-		List<EmpireLogEntry> Entries = ActiveEmpire.Logbook [Date()];
+		List<EmpireLogEntry> Entries = ActiveEmpire.GetLogs( Date());
 		List<EmpireLogEntry> ToDisplay = new List<EmpireLogEntry> ();
 		foreach (EmpireLogEntry e in Entries) {
 			if ((e.Priority <= Priority.value && PriorityLowerOrEqual) || Priority.value == e.Priority|| Priority.value <= 0) {
-				if (Categories.Contains (e.Category)) {
+	//			if (Categories.Contains (e.Category)) {
 					ToDisplay.Add (e);
 				}
-			}
+		//	}
 		}
 		ToDisplay = ToDisplay.OrderBy (x => x.Priority).ToList ();
 
-		int yOff = -45;
-		int interval = 0;
+		int yOff = -35;
+		int interval = 1;
 		foreach (GameObject g in Buttons) {
 			Destroy (g);
 		}
@@ -110,8 +114,8 @@ public class EmpireLogManagerUI : MonoBehaviour {
 			//	g.transform.rotation = manager.transform.rotation;
 			h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
 			//	h.SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval,h.rect.height);
-			h.sizeDelta = new Vector2 (400f, 35f);
-			h.localScale = new Vector3 (1f, 1f, 1f);
+			h.sizeDelta = new Vector2 (600f, 25f);
+			h.localScale = new Vector3 (2f, 1f, 1f);
 			interval++;
 		}
 

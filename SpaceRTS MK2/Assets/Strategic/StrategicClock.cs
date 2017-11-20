@@ -30,7 +30,7 @@ public class StrategicClock : MonoBehaviour {
 
 	public int TurnNumber=1;
 
-	static public int month = 1;
+	static public int month = 0;
 	static public int year = 2700;
 
 	public static bool isPaused = false;
@@ -72,7 +72,7 @@ public class StrategicClock : MonoBehaviour {
 	}
 
 	public static string GetDate(){
-		return Months[month] +" " + year;
+		return (Months[month] +" " + year).Trim();
 	}
 
 
@@ -157,14 +157,24 @@ public class StrategicClock : MonoBehaviour {
 		}
 	}
 
-	void ProgressTime(){
+	public string GetFutureDate(int m){
+		return Months[m] +" " + year;
+	}
 
+	void ProgressTime(){
 		TurnNumber++;
 		month++;
 		if (month > 11) {
 			month = 0;
 			year++;
 			Years.Add (year.ToString());
+			foreach (Empire e in Empire.AllEmpires) {
+				for(int i = 0; i < 12; i++){
+					if (!e.Logbook.ContainsKey (GetFutureDate(i))) {
+						e.Logbook.Add (GetFutureDate (i), new List<EmpireLogEntry> ());
+					}
+				}
+			}
 		}
 	}
 

@@ -52,6 +52,7 @@ public class EmpireLogEntry{
 		InvolvedGroundUnits = units;
 		InvolvedCharacters = chars;
 		Date = StrategicClock.GetDate ();
+//		Debug.Log (Date);
 		empire = e;
 		e.AddLog (this);
 	}
@@ -437,6 +438,11 @@ public class Empire : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		AllEmpires.Add (this);
+		for(int i = 0; i < 12; i++){
+			if (Logbook.ContainsKey (StrategicClock.strategicClock.GetFutureDate (i))) {
+				Logbook.Add (StrategicClock.strategicClock.GetFutureDate (i), new List<EmpireLogEntry> ());
+			}
+		}
 		Token = new DesignerToken (EmpireName);
 //		Debug.Log (EmpireTechTree.TechByID.Count);
 		AvailableTechs = EmpireTechTree.GetAvailableTech ();

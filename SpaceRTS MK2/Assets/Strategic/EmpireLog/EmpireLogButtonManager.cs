@@ -19,19 +19,24 @@ public class EmpireLogButtonManager : MonoBehaviour {
 	public void Setup(EmpireLogEntry p,EmpireLogManagerUI h){
 		e = p;
 		Manager = h;
+		GetComponent<Image> ().color = Color.grey;
 		r = GetComponent<RectTransform> ();
 		t = GetComponentInChildren<Text> ();
 		b = GetComponent<Button> ();
 		CatColor.Add (LogCategories.DEFAULT, "<color=white>");
 		CatColor.Add (LogCategories.ECONOMIC, "<color=green>");
 		CatColor.Add (LogCategories.EXPLORATION, "<color=magenta>");
-		CatColor.Add (LogCategories.MILITARY, "<color=D4AF37>");
+		CatColor.Add (LogCategories.MILITARY, "<color=red>");
 		CatColor.Add (LogCategories.TECH, "<color=cyan>");
-		t.fontSize = 10;
-		t.GetComponent<RectTransform> ().localScale = new Vector3 (.5f, 1f, 1f);
+		t.fontSize = 18;
+		t.GetComponent<RectTransform> ().localScale = new Vector3 (1.5f, 1f, 1f);
 		b.onClick.AddListener (Select);
 
-		t.text = string.Format ("{0}: [{1}{2}</color>] {3}{4}</color> {5}",e.Date,Colors[e.Priority] ,e.Priority, CatColor[e.Category],e.Category.ToString(),e.Headline);
+
+		t.GetComponent<RectTransform>().offsetMin = new Vector2 (130f, t.GetComponent<RectTransform>().offsetMin.y);
+		t.alignment = TextAnchor.MiddleLeft;
+
+		t.text = string.Format ("{0}[{1}{2}</color>] {3}{4}</color> {5}","",Colors[e.Priority] ,e.Priority, CatColor[e.Category],e.Category.ToString(),e.Headline);
 	}
 
 	public void Select(){
