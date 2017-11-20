@@ -59,7 +59,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	}
 
 	void UpdateSeniorOfficer(){
-		List<Character> Here = empire.GetCharactersAtLocation (this);
+		List<Character> Here = empire.GetCharactersAtLocation (this,OfficerRoles.Navy);
 		if (Here[0] != null && Here [0] != SeniorOfficer) {
 			if(SeniorOfficer != null)
 				SeniorOfficer.StepDownSeniorOfficer (this);

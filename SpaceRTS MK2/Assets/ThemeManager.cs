@@ -73,6 +73,7 @@ public class ThemeManager : MonoBehaviour{
 		return texture;
 	}
 
+	#region CharacterNames
 	public static string GenerateCharName(Theme t, Sex s){
 		if (s == Sex.Female) {
 			try{
@@ -113,6 +114,14 @@ public class ThemeManager : MonoBehaviour{
 			}
 		}
 	}
+	#endregion
+
+	#region Naming
+	public string GetName(StrategicShip sh, Theme the){
+		return the.ShipNames [rnd.Next (0, the.ShipNames.Count)];
+	}
+	//TODO add companies,s pace stations, ground units, etc
+	#endregion
 
 	void Awake(){
 		if (Manager != null) {

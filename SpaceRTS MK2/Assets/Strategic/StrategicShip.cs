@@ -40,6 +40,8 @@ public class StrategicShip : ILocation{
 		c.shipPosting = this;
 	}
 	public void MoveCharacterFromThis(Character c){
+
+		/*
 		if (c.shipPosting == this)
 			c.shipPosting = null;
 		if (Captain == c) {
@@ -48,8 +50,28 @@ public class StrategicShip : ILocation{
 		if (Executive == c) {
 			Executive = null;
 		}
+		*/
 	}
 
+	void UpdateCommand(){
+		List<Character> OnBoard = Emp.GetCharactersAtLocation (this, OfficerRoles.Navy);
+		if(OnBoard.Count > 0){
+			if (Captain != null && Captain != OnBoard [0]) {
+				Captain.StepDownCaptain (this);
+				ShipLog += string.Format ("{0}: {1} stands down as Captain.", StrategicClock.GetDate (), Captain.GetNameString());
+
+			}
+			OnBoard [0].AppointCaptain (this);
+		}
+		if(OnBoard.Count > 1){
+			if (Executive != null && Executive != OnBoard [1]) {
+				Executive.StepDownXO (this);
+				ShipLog += string.Format ("{0}: {1} stands down as Exec.", StrategicClock.GetDate (), Executive.GetNameString());
+
+			}
+			OnBoard [1].AppointXO (this);
+		}
+	}
 
 	#endregion
 
@@ -131,7 +153,19 @@ public class StrategicShip : ILocation{
 	void UpdateComponentStatusStrings(){
 		ComponentStatus.Clear();
 		foreach(ShipComponents c in Components){
-			string s = string.Format("{0} Functional: {1}",c.Name, c.isDamaged());
+			string stat = "";
+			string color = "";
+			string colorEnd = "</color>";
+			if (c.isDamaged ()) {
+				stat = "XX";
+				color = "<color=green>";
+			}
+			else {
+				stat = "OK";
+				color = "<color=red>";
+
+			}
+			string s = string.Format("{1}{2}{3} | {4}{5}{6}",color,stat,colorEnd,color,c.Name,colorEnd);
 			ComponentStatus.Add(s);
 		}
 	}
@@ -146,8 +180,8 @@ public class StrategicShip : ILocation{
 		
 
 	public void Save(Ship s){
-		ShipName = s.shipClass.ShipName;
-		Captain = s.shipClass.Captain;
+		//ShipName = s.shipClass.ShipName;
+	//	Captain = s.shipClass.Captain;
 	}
 
 	void Setup(ShipDesign template){
@@ -245,15 +279,11 @@ public class StrategicShip : ILocation{
 
 	public void AssignOfficer(Character c, NavalCommanderRole role ){
 		if (role == NavalCommanderRole.XO) {
-			if (Executive != null)
-				Executive.Unassign ();
 			Executive = c;
 			ShipLog += string.Format ("{0}: {1} is appointed as Executive Officer", StrategicClock.GetDate (), Executive.GetNameString());
 		}
 
 		else if(role == NavalCommanderRole.CMD) {
-			if (Captain != null)
-				Captain.Unassign ();
 			Captain = c;
 			ShipLog += string.Format ("{0}: {1} is appointed as Commanding Officer.", StrategicClock.GetDate (), Executive.GetNameString());
 		}
@@ -262,7 +292,7 @@ public class StrategicShip : ILocation{
 
 	public StrategicShip(ShipDesign template, Empire emp){
 		Setup (template);
-		ShipName = NameManager.AssignName (this);
+		ShipName = emp.GetName (this);
 		Emp = emp;
 		Faction = emp.Faction;
 

@@ -5,10 +5,10 @@ using System.Text;
 using System.IO;
 
 public enum OfficerRoles{
-	Research,
-	Government,
-	Army,
-	Navy
+	Research=3,
+	Government=2,
+	Army=1,
+	Navy=0
 }
 
 public enum Sex{
@@ -264,8 +264,10 @@ public class Character {
 
 	public void ModHP(int i){
 		HP += i;
-		if (HP <= 0)
+		if (HP <= 0) {
 			Die ();
+			HP = 0;
+		}
 	}
 
 	public void MoveTo(ILocation loc){
@@ -295,20 +297,62 @@ public class Character {
 	}
 
 	public void AppointCaptain(StrategicShip s){
+		if (s.Captain == this)
+			return;
 		empire.Unassigned.Remove (this);
 		MoveTo (s);
+		shipPosting = s;
 		s.AssignOfficer (this, NavalCommanderRole.CMD);
 		NavalRole = NavalCommanderRole.CMD;
-		string st = string.Format("{0}: {1} is placed in appointed<color=cyan>Captain</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		string st = string.Format("{0}: {1} is placed in <color=green>appointed</color> <color=cyan>Captain</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
 		AddHistory (st);
 	}
 
 	public void AppointXO(StrategicShip s){
+		if (s.Executive == this)
+			return;
 		empire.Unassigned.Remove (this);
 		MoveTo (s);
+		shipPosting = s;
 		s.AssignOfficer (this, NavalCommanderRole.XO);
 		NavalRole = NavalCommanderRole.XO;
-		string st = string.Format("{0}: {1} is appointed <color=cyan>Executive Officer</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		string st = string.Format("{0}: {1} is <color=green>appointed</color> <color=cyan>Executive Officer</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		AddHistory (st);
+	}
+	public void StepDownCaptain(StrategicShip s){
+		empire.Unassigned.Add (this);
+		MoveTo (s);
+	//	s.AssignOfficer (this, NavalCommanderRole.CMD);
+		NavalRole = NavalCommanderRole.NONE;
+		string st = string.Format("{0}: {1} <color=orange>stands down</color> as <color=cyan>Captain</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		AddHistory (st);
+	}
+
+	public void StepDownXO(StrategicShip s){
+		empire.Unassigned.Remove (this);
+		MoveTo (s);
+	//	s.AssignOfficer (this, NavalCommanderRole.XO);
+		NavalRole = NavalCommanderRole.NONE;
+		string st = string.Format("{0}: {1} <color=orange>stands down</color> as <color=cyan>Executive Officer</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		AddHistory (st);
+	}
+	public void AppointCommander(GroundUnit s){
+		if(Location != s)
+			MoveTo (s.Location);
+		NavalRole = NavalCommanderRole.CMD;
+		empire.Unassigned.Remove (this);
+		shipPosting = null;
+		Location = s.Location;
+		string st = string.Format("{0}: {1} is <color=green>appointed</color> the <color=cyan>Commander</color> of <color=grey>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.UnitName);
+		AddHistory (st);
+	}
+
+	public void StepDownCommander(GroundUnit s){
+		NavalRole = NavalCommanderRole.NONE;
+		empire.Unassigned.Add (this);
+		shipPosting = null;
+		Location = s.Location;
+		string st = string.Format("{0}: {1} <color=orange>steps down</color> as the <color=cyan>Commander</color> of <color=grey>{2}</color?.",StrategicClock.GetDate(),GetNameString(), s.UnitName);
 		AddHistory (st);
 	}
 
@@ -364,6 +408,16 @@ public class Character {
 
 	public void DidResearch(string TechName){
 		string st = string.Format("{0}: {1} <color=green>completes</color> <color=blue>research</color> into {2}.",StrategicClock.GetDate(),GetNameString(true), TechName);
+		AddHistory (st);
+	}
+
+	public void EntersGroundCombat(ILocation loc, GroundUnit gu){
+		string st = string.Format("{0}: {1} enters ground combat in command of <color=magenta>{2}</color> on <color=white>{3}</color>.",StrategicClock.GetDate(),GetNameString(true), gu.UnitName,loc.GetLocationName());
+		AddHistory (st);
+	}
+	public void InjureGroundCombat(ILocation loc, GroundUnit gu, float dam){
+		string st = string.Format("{0}: {1} is <color=red>injured</color> {2}  while in command of <color=magenta>{3}</color> on <color=white>{4}</color>.",StrategicClock.GetDate(),GetNameString(true),HP +  "HP - " + (int)dam , gu.UnitName,loc.GetLocationName());
+		ModHP ((int)dam * -1);
 		AddHistory (st);
 	}
 

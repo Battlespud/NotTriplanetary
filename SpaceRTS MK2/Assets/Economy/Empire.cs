@@ -44,6 +44,10 @@ public class Empire : MonoBehaviour {
 	public List<Character> Dead = new List<Character>();
 	public List<StrategicShip> Ships = new List<StrategicShip> ();
 	public List<StrategicShipyard> Yards = new List<StrategicShipyard> ();
+	public List<GroundUnit>GroundUnits = new List<GroundUnit>();
+	int GroundUnitIndex = 0;
+
+	public Dictionary<Theme,float>EmpireThemes = new Dictionary<Theme, float>();
 
 	void PhaseManager(Phase p){
 		switch (p) {
@@ -102,19 +106,14 @@ public class Empire : MonoBehaviour {
 
 	public void DistributeOfficers(){
 		foreach (StrategicShip s in Ships) {
-			if (s.Executive == null) {
-				for (int i = 0; i < Unassigned.Count; i++) {
-					if (Unassigned [i].Rank <= 1 && Unassigned[i].Role == OfficerRoles.Navy) {
-						Unassigned [i].AppointXO (s);
-						Unassigned [i].MoveTo (s);
-					}
+			if (s.Executive == null || s.Captain == null) {
+				if(s.Captain ==null){
+					Character prospect = Unassigned.OrderByDescending (x => x.Rank) [0];
+					prospect.MoveTo (s);
 				}
-			}
-			if(s.Captain == null){
-				for (int i = 0; i < Unassigned.Count; i++) {
-					if (Unassigned [i].Rank >= 2 && Unassigned[i].Role == OfficerRoles.Navy) {
-						Unassigned [i].AppointCaptain (s);
-						Unassigned [i].MoveTo (s);
+				if(s.Executive ==null){
+					Character prospect = Unassigned.OrderBy (x => x.Rank) [0];
+					prospect.MoveTo (s);
 					}
 				}
 			}
@@ -209,9 +208,19 @@ public class Empire : MonoBehaviour {
 		if (rNullable != null && Output.Count > 0) {
 			OfficerRoles r = rNullable.Value;
 			Output = GetCharactersByType (r, Output);
+			if (Output.Count < 1) {
+				Debug.LogError ("No valid characters found, finding all other characters in order to prevent exception!");
+				foreach (Character c in Characters) {
+					if (c.Location == loc)
+						Output.Add (c);
+				}
+			}
 		}
-		Output = Output.OrderByDescending(x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
-
+		if (rNullable == null) {
+			Output = Output.OrderByDescending (x => x.Rank).ThenByDescending (x => x.Noble).ThenByDescending (x => x.NobleRank).ToList ();
+		} else {
+			Output = Output.OrderBy (x => x.Role).ThenByDescending (x => x.Rank).ThenByDescending (x => x.Noble).ThenByDescending (x => x.NobleRank).ToList ();
+		}
 		return Output;
 	}
 
@@ -415,6 +424,78 @@ public class Empire : MonoBehaviour {
 		}
 		CurrentOfficers = Characters.Count;
 	}
+
+
+
+	#region Naming
+
+	struct Range{
+		float bottom;
+		float top;
+		public Theme theme;
+		public Range(float a, float b, Theme d){
+			bottom = a;
+			top = b;
+			theme = d;
+		}
+		public bool InRange(float c){
+			if (c >= bottom && c < top)
+				return true;
+			return false;
+		}
+	}
+
+	public string GetName(GroundUnit unit, Theme theme = null){
+		string name = "NoValidThemeSet";
+		List<Range> Ranges = new List<Range> ();
+		if (theme == null) {
+			float last=0;
+			Theme lastT = null;
+			foreach (Theme t in EmpireThemes.Keys) {
+				if (lastT == null)
+					last = 0;
+				Ranges.Add(new Range(last,last+EmpireThemes[t],t));
+				lastT = t;
+			}
+			float roll = rnd.NextFloat (0, last);
+			foreach (Range r in Ranges) {
+				if (r.InRange (roll)) {
+					lastT = r.theme;
+				}
+			//	name = ThemeManager.GetName (unit);
+			}
+		} else {
+
+		}
+		name = GroundUnitIndex + ". Mobile Infanterie";
+		return name;
+	}
+
+	public string GetName(StrategicShip unit, Theme theme = null){
+		string name = "NoValidThemeSet";
+		List<Range> Ranges = new List<Range> ();
+		if (theme == null) {
+			float last=0f;
+			Theme lastT=null;
+			foreach (Theme t in EmpireThemes.Keys) {
+				if (lastT == null)
+					last = 0;
+				Ranges.Add(new Range(last,last+EmpireThemes[t],t));
+				lastT = t;
+			}
+			float roll = rnd.NextFloat (0, last);
+			foreach (Range r in Ranges) {
+				if (r.InRange (roll)) {
+					theme = r.theme;
+				}
+				name = ThemeManager.Manager.GetName (unit, theme);
+			}
+		} else {
+			name = ThemeManager.Manager.GetName (unit, theme);
+		}
+		return name;
+	}
+	#endregion
 }
 
 public enum GovernmentTypes{

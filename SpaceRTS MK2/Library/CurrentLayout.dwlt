@@ -106,10 +106,10 @@ MonoBehaviour:
     y: 30
     width: 2560
     height: 1308
-  m_MinSize: {x: 683, y: 342}
-  m_MaxSize: {x: 12008, y: 8042}
+  m_MinSize: {x: 681, y: 342}
+  m_MaxSize: {x: 12006, y: 8042}
   vertical: 0
-  controlID: 76
+  controlID: 51
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -130,10 +130,10 @@ MonoBehaviour:
     y: 0
     width: 2283
     height: 1308
-  m_MinSize: {x: 406, y: 342}
-  m_MaxSize: {x: 8006, y: 8042}
+  m_MinSize: {x: 404, y: 342}
+  m_MaxSize: {x: 8004, y: 8042}
   vertical: 1
-  controlID: 77
+  controlID: 52
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -154,10 +154,10 @@ MonoBehaviour:
     y: 0
     width: 2283
     height: 926
-  m_MinSize: {x: 406, y: 221}
-  m_MaxSize: {x: 8006, y: 4021}
+  m_MinSize: {x: 404, y: 221}
+  m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
-  controlID: 13
+  controlID: 87
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -176,8 +176,8 @@ MonoBehaviour:
     y: 0
     width: 449
     height: 926
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -201,8 +201,8 @@ MonoBehaviour:
     y: 0
     width: 1834
     height: 926
-  m_MinSize: {x: 204, y: 221}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -407,9 +407,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: a4ff0000
-    m_LastClickedID: 65444
-    m_ExpandedIDs: 063df1ff0c3df1ff123df1ff0e67f1ff6a8ff1ff1a89f5ffda06faffb6a8feff4046ffff086fffff1eceffff06e3ffff5eeaffff9efbffff000000007c4a00000c4c0000dcf90000befc00000aff0000f20201007e040100ac060100480b0100
+    m_SelectedIDs: 0c070000
+    m_LastClickedID: 0
+    m_ExpandedIDs: 9efbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.13136934, y: 0.098108895, z: -0.013069025, w: -0.9863803}
     speed: 2
-    m_Value: {x: -0.13136934, y: 0.098108895, z: -0.013069025, w: -0.9863803}
+    m_Value: {x: -0.13136934, y: 0.09810889, z: -0.013069024, w: -0.9863803}
   m_Size:
     m_Target: 140.33315
     speed: 2
@@ -537,7 +537,7 @@ MonoBehaviour:
     height: 361
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
-    m_NameFilter: strateg
+    m_NameFilter: 
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -548,19 +548,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets
+    - Assets/Strategic
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Strategic
   m_LastFoldersGridSize: -1
   m_LastProjectPath: G:\Unity\NotTriplanetary\SpaceRTS MK2
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 31}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e2280000282a00006c2a0000fc2b0000fa2d0000fe2f00000c300000703100004049000042490000ffffff7f
+    m_SelectedIDs: fe2d0000
+    m_LastClickedID: 11774
+    m_ExpandedIDs: 00000000e62800002c2a0000702a0000002c0000fe2d00000230000010300000763100009e490000a0490000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -588,7 +588,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e2280000282a00006c2a0000fc2b0000fa2d0000fe2f00000c3000004049000042490000
+    m_ExpandedIDs: 00000000e62800002c2a0000702a0000002c0000fe2d00000230000010300000763100009e490000a0490000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -613,8 +613,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: befc0000
-    m_LastClickedInstanceID: 64702
+    m_SelectedInstanceIDs: 0c070000
+    m_LastClickedInstanceID: 1804
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300009c08f9ffe6300000922900004628000002310000782b0000e4310000a884000000000000
     m_RenameOverlay:
