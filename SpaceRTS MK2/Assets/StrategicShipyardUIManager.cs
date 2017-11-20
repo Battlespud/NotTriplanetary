@@ -18,6 +18,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	public GameObject SlipwaysPrefab;
 	public GameObject SlipwaysContentParent;
+	public RectTransform SlipwaysContentParentRect;
 
 	public Dropdown DesignsDrop;
 	public Button RetoolButton;
@@ -30,6 +31,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	public GameObject DockedShipPrefab;
 	public GameObject DockedShipsContentParent;
+	public RectTransform DockedShipsContentParentRect;
 
 	public Button ExitButton;
 
@@ -194,9 +196,17 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		foreach (SlipwayButtonUIManager a in Slipways) {
-			a.transform.rotation = DockedShipsContentParent.transform.rotation;
-		//	a.transform.position = new Vector3 (93);
+		if (gameObject.active) {
+			foreach (SlipwayButtonUIManager a in Slipways) {
+				a.transform.rotation = DockedShipsContentParent.transform.rotation;
+				//	a.transform.position = new Vector3 (93);
+			}
+			if (DockedShipsContentParentRect.localPosition.y < 0) {
+				DockedShipsContentParentRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
+			if (SlipwaysContentParentRect.localPosition.y < 0) {
+				SlipwaysContentParentRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
 		}
 	}
 

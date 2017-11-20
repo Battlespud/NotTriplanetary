@@ -16,15 +16,20 @@ public class ResearchScreenManager : MonoBehaviour {
 	public GameObject ButtonPrefab;
 
 	public GameObject TechsContent;
+	public RectTransform TechsContentRect;
+
 	public Dropdown TechSections;
 	public List<string> TechSectionNames = new List<string> (); 
 
 	public GameObject ScientistsContent;
+	public RectTransform ScientistsContentRect;
 
 	public Character SelectedScientist;
 	public Tech SelectedTech;
 
 	public GameObject ResearchProjectsParent;
+	public RectTransform ResearchProjectsContentRect;
+
 
 	public List<GameObject> TechsObjects = new List<GameObject>();
 	public List<GameObject> ScientistObjects = new List<GameObject>();
@@ -143,6 +148,12 @@ public class ResearchScreenManager : MonoBehaviour {
 		}
 	}
 
+	void ResetScroll(){
+		ResearchProjectsContentRect.localPosition = new Vector3 (0f, 0f, 0f);
+		ScientistsContentRect.localPosition = new Vector3 (0f, 0f, 0f);
+		TechsContentRect.localPosition  = new Vector3 (0f, 0f, 0f);
+	}
+
 	void Update(){
 
 	}
@@ -156,13 +167,22 @@ public class ResearchScreenManager : MonoBehaviour {
 		if(SelectedScientist != null && SelectedTech != null)
 			ActiveEmpire.EmpireTechTree.CreateResearch (SelectedScientist, SelectedTech, GetSelectedLabs ());
 		ResearchProjects ();
+		ResetScroll ();
 	}
 
 	public void UpdateUI(){
 		if (gameObject.active) {
 			OnTechSectionChange (TechSections.value);
 			ScientistButtons ();
-		//	ResearchProjects ();
+			if (ResearchProjectsContentRect.localPosition.y < 0) {
+				ResearchProjectsContentRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
+			if (ScientistsContentRect.localPosition.y < 0) {
+				ScientistsContentRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
+			if (TechsContentRect.localPosition.y < 0) {
+				TechsContentRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
 		}
 	}
 
@@ -171,6 +191,7 @@ public class ResearchScreenManager : MonoBehaviour {
 			StrategicClock.Unpause ();
 			gameObject.active = false;
 	} else {
+			ResetScroll ();
 			StrategicClock.RequestPause ();
 			gameObject.active = true;
 		}

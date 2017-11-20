@@ -38,9 +38,10 @@ public class StrategicShip : ILocation{
 	}
 	public void MoveCharacterToThis(Character c){
 		c.shipPosting = this;
+		CharactersAboard.Add (c);
 	}
 	public void MoveCharacterFromThis(Character c){
-
+		CharactersAboard.Remove (c);
 		/*
 		if (c.shipPosting == this)
 			c.shipPosting = null;
@@ -260,13 +261,17 @@ public class StrategicShip : ILocation{
 			if (!UseMaintParts (c.MaintReq)) {
 				c.Damage ();
 				ShipLog += string.Format ("{0}: {1} experiences a maintenance failure with the {2}, repairs proved impossible with current supplies.", StrategicClock.GetDate (), ShipName,c.Name);
+				EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,Emp,"MAINTENANCE FAILURE",string.Format("{0} has experienced a maintenance failure.",ShipName));
 				ChangeStats ();
 			} else {
 				ShipLog += string.Format ("{0}: {1} experiences a maintenance failure with the {2}, repairs were made with maintenance supplies.", StrategicClock.GetDate (), ShipName,c.Name);
+				EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,4,Emp,"MAINTENANCE FAILURE",string.Format("{0} has experienced a maintenance failure. No damage reported.",ShipName),CharactersAboard,new List<StrategicShip>{this});
 			}
 		} else {
-			if (counter > 6)
+			if (counter > 6) {
 				DestroyShip ();
+				ShipLog += "<color=red>---Loss Resultant from Catastrophic Maintenance Failures---</color>";
+			}
 			TakeInternalHit (damage, counter++);
 		}
 	}
@@ -310,7 +315,8 @@ public class StrategicShip : ILocation{
 	public void DestroyShip(){
 	//	NameManager.RecycleName (this);
 		//TODO
-		ShipLog += string.Format("\n{0}: {1} is lost.",StrategicClock.GetDate(),ShipName);
+		ShipLog += string.Format("\n{0}: <color=red>---Contact Lost---</color> ",StrategicClock.GetDate());
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,2,Emp,"SHIP DESTROYED",string.Format("Contact has been lost with {0}.\nThe ships logs may contain more detailed information.",ShipName));
 		Emp.Ships.Remove(this);
 		if(ParentFleet)
 			ParentFleet.Ships.Remove (this);

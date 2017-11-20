@@ -60,8 +60,50 @@ public struct Emissions{
 	public float TCS;
 }
 
+public class DesignerToken{
+	//Used for identifying design owners and users
+	public string OwnerName;
+
+	public DesignerToken(string s){
+		OwnerName = s;
+	}
+}
+
 public class ShipComponents {
 	public static List<ShipComponents> DesignedComponents = new List<ShipComponents> ();   //TODO: Make these dictionaries that take Empire and return a list
+
+	static List<DesignerToken>MasterDesignerTokenList = new List<DesignerToken>();
+	public static Dictionary<DesignerToken,List<ShipComponents>> MasterComponentDictionary = new Dictionary<DesignerToken, List<ShipComponents>>();
+	static List<ShipComponents> PublicDomainComponents = new List<ShipComponents> ();
+
+	public void AddComponentToPublicDomain(ShipComponents c){
+		PublicDomainComponents.Add (c);
+		UpdatePublicDomain ();
+	}
+
+	void UpdatePublicDomain(){
+		foreach (List<ShipComponents> l in MasterComponentDictionary.Values) {
+			foreach (ShipComponents c in PublicDomainComponents) {
+				if (!l.Contains (c))
+					l.Add (c);
+			}
+		}
+	}
+
+	public void RegisterToken (DesignerToken T){
+		if(MasterComponentDictionary.ContainsKey(T)){
+			MasterComponentDictionary.Add (T, new List<ShipComponents> ());
+			MasterDesignerTokenList.Add (T);
+			UpdatePublicDomain ();
+		}
+	}
+
+	public void AddDesign(DesignerToken T, ShipComponents C){
+		if (!MasterComponentDictionary.ContainsKey (T)) 
+			RegisterToken (T);
+		MasterComponentDictionary [T].Add (C);
+	}
+
 	public static List<ShipComponents> DesignedFighterComponents = new List<ShipComponents> ();
 	public static List<int>UsedID = new List<int>();
 	public static Dictionary<int,ShipComponents> IDComp = new Dictionary<int, ShipComponents> ();
@@ -71,6 +113,10 @@ public class ShipComponents {
 
 	public string Name;
 	public int ID; //unique identifier
+
+	public DesignerToken Designer;
+	public string DesignDate;
+	public string BuildDate;
 
 	public string Description;
 
@@ -266,6 +312,8 @@ public class ShipComponents {
 		dest.Obsolete = Obsolete;
 		dest.Category = Category;
 
+		dest.BuildDate = StrategicClock.GetDate ();
+		dest.DesignDate = DesignDate;
 		return dest;
 	}
 
@@ -295,6 +343,11 @@ public class ShipComponents {
 				AbilityFields.Clear ();
 			}
 		}
+	}
+
+	public ShipComponents(){
+		DesignDate = StrategicClock.GetDate ();
+		BuildDate = DesignDate;
 	}
 	/*
 

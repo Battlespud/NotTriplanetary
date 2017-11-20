@@ -21,7 +21,8 @@ public class StrategicClock : MonoBehaviour {
 	public static BoolEvent PauseEvent = new BoolEvent ();
 
 
-	static string[]Months = new string[12]{"January","February","March","April","May","June","July","August","September","October","November","December"};
+	public static readonly List<string>Months = new List<string>(){"January","February","March","April","May","June","July","August","September","October","November","December"};
+	public static List<string> Years = new List<string>(){"2700"};
 
 	public Text PhaseText;
 
@@ -29,8 +30,8 @@ public class StrategicClock : MonoBehaviour {
 
 	public int TurnNumber=1;
 
-	static int month = 1;
-	static int year = 2700;
+	static public int month = 1;
+	static public int year = 2700;
 
 	public static bool isPaused = false;
 	float TurnLengthBase = 2f; //30
@@ -58,14 +59,7 @@ public class StrategicClock : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			if (!isPaused) {
-				RequestPause ();
-			}
-			else{
-				Unpause ();		
-			}
-		}
+
 	}
 
 
@@ -167,9 +161,10 @@ public class StrategicClock : MonoBehaviour {
 
 		TurnNumber++;
 		month++;
-		if (month > 12) {
-			month = 1;
+		if (month > 11) {
+			month = 0;
 			year++;
+			Years.Add (year.ToString());
 		}
 	}
 

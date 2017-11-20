@@ -12,7 +12,9 @@ public class OfficerManagerUI : MonoBehaviour {
 	public Dropdown RolesDrop;
 	public GameObject RanksParent;
 	public GameObject OfficersParent;
+	public RectTransform OfficersParentRect;
 	public GameObject LocationsParent;
+	public RectTransform LocationsParentRect;
 
 	public Text Historytext;
 
@@ -38,6 +40,8 @@ public class OfficerManagerUI : MonoBehaviour {
 	Sprite DefaultPortrait;
 	public Text Location;
 	public Text TraitsText;
+
+	public RectTransform HistoryRect;
 
 	//Filters
 	public Toggle NobilityFilter;
@@ -85,7 +89,7 @@ public class OfficerManagerUI : MonoBehaviour {
 		if (SelectedChar.HP >25 && SelectedChar.HP < 76)
 			HealthColor = Color.yellow;
 		HealthImage.color = HealthColor;
-		RankNum.text = string.Format("{0}-{1}",Character.RolesAbbrev[(int)SelectedChar.Role],SelectedChar.Rank);
+		RankNum.text = string.Format("{0}-{1}",Character.RolesAbbrev[SelectedChar.Role],SelectedChar.Rank);
 		RankName.text = SelectedChar.GetJobTitle ();
 		Nobility.text = SelectedChar.GetNobleTitle ();
 		Historytext.text = SelectedChar.History;
@@ -226,9 +230,18 @@ public class OfficerManagerUI : MonoBehaviour {
 
 	void UpdateOfficerScrollBoolProxy(bool b){
 		UpdateOfficerScroll (RolesDrop.value);
+		ResetScroll ();
 	}
 	void UpdateOfficerScrollStringProxy(string b){
 		UpdateOfficerScroll (RolesDrop.value);
+		ResetScroll ();
+	}
+
+	void ResetScroll(){
+		if (Initialized) {
+			OfficersParentRect.localPosition = new Vector3 (0f, 0f, 0f);
+			LocationsParentRect.position = new Vector3 (0f, 0f, 0f);
+		}
 	}
 
 	bool Initialized = false;
@@ -249,6 +262,8 @@ public class OfficerManagerUI : MonoBehaviour {
 		NobilityFilter.onValueChanged.AddListener (UpdateOfficerScrollBoolProxy);
 		RolesDrop.onValueChanged.AddListener (ClearNameFilter);
 		NameFilter.onValueChanged.AddListener (UpdateOfficerScrollStringProxy);
+		LocationsParentRect = LocationsParent.GetComponent<RectTransform> ();
+		OfficersParentRect = OfficersParent.GetComponent<RectTransform> ();
 	}
 
 	void ClearNameFilter(int proxy){
@@ -262,6 +277,7 @@ public class OfficerManagerUI : MonoBehaviour {
 			gameObject.active = false;
 		} else {
 			StrategicClock.RequestPause ();
+			ResetScroll ();
 			UpdateOfficerScroll (0);
 			gameObject.active = true;
 		}
@@ -269,6 +285,16 @@ public class OfficerManagerUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (gameObject.active) {
+			if (LocationsParentRect.localPosition.y < 0) {
+				LocationsParentRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
+			if (OfficersParentRect.localPosition.y < 0) {
+				OfficersParentRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
+			if (HistoryRect.localPosition.y < 0) {
+				HistoryRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
+		}
 	}
 }

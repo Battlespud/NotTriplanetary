@@ -134,7 +134,8 @@ public class Character {
 	public static List<string>GovRankNamesS = new List<string>(){"J. Clk.","Clk.","S. Clk.","Man.","S. Man.","J. Exec.", "Exec.", "USec.", "SecGov."};
 	public static List<string>ArmyRankNamesS = new List<string>(){"2nd. LT.","LT.","CPT.","MJR.","LT. COL.","COL.", "BRIG.", "MJR. GEN.", "GEN."};
 
-	public static List<string>RolesAbbrev = new List<string>(){"SCI","GOV","MA","FL"};
+	//public static List<string>RolesAbbrev = new List<string>(){"SCI","GOV","MA","FL"};
+	public static Dictionary<OfficerRoles,string>RolesAbbrev = new Dictionary<OfficerRoles, string>();
 
 	public static List<string>NavalComanderRoleNames = new List<string>(){"Executive Officer", "Commanding Officer"};
 	public int PromotionPoints;
@@ -171,6 +172,11 @@ public class Character {
 		JobTitlesDictShort.Add (OfficerRoles.Army, ArmyRankNamesS);
 		JobTitlesDictShort.Add (OfficerRoles.Research, ResearchRankNamesS);
 		JobTitlesDictShort.Add (OfficerRoles.Government, GovRankNamesS);
+
+		RolesAbbrev.Add (OfficerRoles.Navy, "OF");
+		RolesAbbrev.Add (OfficerRoles.Army, "MN");
+		RolesAbbrev.Add (OfficerRoles.Government, "GV");
+		RolesAbbrev.Add (OfficerRoles.Research, "RD");
 	}
 
 	public string CharName;
@@ -259,6 +265,8 @@ public class Character {
 		sb = new StringBuilder ();
 		sb.Append(History);
 		sb.AppendLine (s);
+		sb.AppendLine("-----------------------------------------------"); 	
+
 		History = sb.ToString ();
 	}
 
@@ -487,11 +495,11 @@ public class Character {
 				if (PersonalityAspects [i] > 74)
 					c = "<color=green>";
 				if (PersonalityAspects [i] > 24 && PersonalityAspects [i] < 75)
-					c = "<color=cyan>";
+					c = "<color=teal>";
 				else if (PersonalityAspects [i] > -25 && PersonalityAspects [i] < 25)
 					c = "<color=white>";
 				else if (PersonalityAspects [i] > -75 && PersonalityAspects [i] <= -25)
-					c = "<color=yellow>";
+					c = "<color=orange>";
 				else if (PersonalityAspects [i] <= -75)
 					c = "<color=red>";
 				sb.Append (c + PersonalityAspectsStrings [i]+"</color>     ");

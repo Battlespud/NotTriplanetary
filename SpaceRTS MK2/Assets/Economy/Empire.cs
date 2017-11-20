@@ -16,6 +16,47 @@ public enum Eras{
 	Interstellar
 }
 
+public enum LogCategories{
+	DEFAULT,
+	MILITARY,
+	ECONOMIC,
+	TECH,
+	EXPLORATION
+}
+
+public class EmpireLogEntry{
+	Empire empire;
+
+	public int Priority = 5; //1 is highest
+
+	public List<StrategicShip> InvolvedShips = new List<StrategicShip> ();
+	public List<GroundUnit> InvolvedGroundUnits = new List<GroundUnit> ();
+	public List<Character> InvolvedCharacters = new List<Character> ();
+	public LogCategories Category;
+	public string Headline;
+	public string Date;
+	public string Description;
+
+	public bool Seen = false;
+
+	public EmpireLogEntry(LogCategories l, int i,Empire e, string Head, string Descr = "", List<Character> chars = null, List<StrategicShip> ships = null, List<GroundUnit> units = null){
+		Priority = i;
+		Category = l;
+		if (Priority < 1)
+			Priority = 1;
+		if (Priority > 6)
+			Priority = 6;
+		Headline = Head;
+		Description = Descr;
+		InvolvedShips = ships;
+		InvolvedGroundUnits = units;
+		InvolvedCharacters = chars;
+		Date = StrategicClock.GetDate ();
+		empire = e;
+		e.AddLog (this);
+	}
+}
+
 public class Empire : MonoBehaviour {
 
 	public static List<Empire> AllEmpires = new List<Empire>();
@@ -26,7 +67,7 @@ public class Empire : MonoBehaviour {
 	static System.Random rnd = new System.Random();
 	public FAC Faction;
 	public Eras Era;
-	public string Name;
+	public string EmpireName;
 	public Government Gov = new Government();
 
 	public  int StartingOfficers = 100;
@@ -36,6 +77,7 @@ public class Empire : MonoBehaviour {
 	public bool Player = true;
 
 	public TechTree EmpireTechTree;
+	public DesignerToken Token;
 	public List<Tech> AvailableTechs = new List<Tech> ();
 	public List<string> DebugAvailableTechNames = new List<string>();
 
@@ -46,6 +88,36 @@ public class Empire : MonoBehaviour {
 	public List<StrategicShipyard> Yards = new List<StrategicShipyard> ();
 	public List<GroundUnit>GroundUnits = new List<GroundUnit>();
 	int GroundUnitIndex = 0;
+
+	public Dictionary<string,List<EmpireLogEntry>>Logbook = new Dictionary<string, List<EmpireLogEntry>>();
+
+	public void AddLog(EmpireLogEntry Entry = null){
+		try{
+			if(Entry != null){
+		if (Logbook.ContainsKey (Entry.Date)) {
+			Logbook [Entry.Date].Add (Entry);
+		} else {
+			Logbook.Add(Entry.Date,new List<EmpireLogEntry>());
+			Logbook [Entry.Date].Add (Entry);
+		}
+			}
+			else{
+				if (!Logbook.ContainsKey (StrategicClock.GetDate())){
+					Logbook.Add(Entry.Date,new List<EmpireLogEntry>());
+				}
+			}
+		}
+		catch{
+			Debug.Log (Entry.Date + "  Key: ");
+		}
+	}
+
+	public List<EmpireLogEntry> GetLogs(string Date){
+		List<EmpireLogEntry> Entries = new List<EmpireLogEntry>();
+		if (Logbook.ContainsKey (Date))
+			Entries = Logbook [Date];
+		return Entries;
+	}
 
 	public Dictionary<Theme,float>EmpireThemes = new Dictionary<Theme, float>();
 
@@ -107,14 +179,13 @@ public class Empire : MonoBehaviour {
 	public void DistributeOfficers(){
 		foreach (StrategicShip s in Ships) {
 			if (s.Executive == null || s.Captain == null) {
-				if(s.Captain ==null){
-					Character prospect = Unassigned.OrderByDescending (x => x.Rank) [0];
+				if (s.Captain == null) {
+					Character prospect = Unassigned.OrderByDescending (x => x.Rank).ToList() [0];
 					prospect.MoveTo (s);
 				}
-				if(s.Executive ==null){
-					Character prospect = Unassigned.OrderBy (x => x.Rank) [0];
+				if (s.Executive == null) {
+					Character prospect = Unassigned.OrderBy (x => x.Rank).ToList() [0];
 					prospect.MoveTo (s);
-					}
 				}
 			}
 		}
@@ -366,6 +437,7 @@ public class Empire : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		AllEmpires.Add (this);
+		Token = new DesignerToken (EmpireName);
 //		Debug.Log (EmpireTechTree.TechByID.Count);
 		AvailableTechs = EmpireTechTree.GetAvailableTech ();
 	//	Debug.Log (AvailableTechs.Count);
@@ -373,10 +445,12 @@ public class Empire : MonoBehaviour {
 		foreach (Tech t in AvailableTechs) {
 			DebugAvailableTechNames.Add (t.Name);
 		}
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,1,this,"NOTHING BUT THE RAIN",string.Format("**//nothing but the rain-"));
+
 	}
 
 	void BuildTechTree(){
-		EmpireTechTree = new TechTree ();
+		EmpireTechTree = new TechTree (this);
 		string[] TechTreeText = File.ReadAllLines (System.IO.Path.Combine (Application.streamingAssetsPath, "Tech/TechTree.txt"));
 		for (int i = 0; i < TechTreeText.Count(); i++) {
 			if (TechTreeText [i].Contains ("Tech Name:")) {

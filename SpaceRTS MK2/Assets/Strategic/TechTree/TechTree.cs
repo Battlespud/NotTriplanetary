@@ -67,6 +67,12 @@ public struct ResearchProject{
 
 public class TechTree{
 
+	public Empire empire;
+
+	public TechTree(Empire e){
+		empire = e;
+	}
+
 	public List<Tech> AllTechnologies = new List<Tech>();
 	public Dictionary<string,Tech>TechByID = new Dictionary<string, Tech>();
 	public List<ResearchProject>ResearchProjects = new List<ResearchProject>();
@@ -115,6 +121,7 @@ public class TechTree{
 		}
 		if (NoPriorProject) {
 			ResearchProjects.Add (new ResearchProject (t, c, labs));
+			EmpireLogEntry E = new EmpireLogEntry(LogCategories.TECH,3,empire,"RESEARCH STARTED",string.Format("{0} has begun research into {1}.\nTech Description Follows:\n\t{2}",c.GetNameString(),t.Name,t.Description), new List<Character>(){c});
 		} else {
 			Debug.Log ("Project already exists or Scientist is already working on a project.");
 		}
@@ -130,6 +137,7 @@ public class TechTree{
 			}
 		}
 			foreach (ResearchProject rd in Completed) {
+			EmpireLogEntry E = new EmpireLogEntry(LogCategories.TECH,3,empire,"RESEARCH COMPLETED",string.Format("{0} has completed research into {1}.\nTech Description Follows:\n\t{2}",rd.Scientist.GetNameString(),rd.tech.Name,rd.tech.Description), new List<Character>(){rd.Scientist});
 				ResearchProjects.Remove (rd);
 		}
 	}
