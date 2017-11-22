@@ -53,6 +53,7 @@ public class StrategicShip : ILocation{
 		}
 		*/
 	}
+	#endregion
 
 	void UpdateCommand(){
 		List<Character> OnBoard = Emp.GetCharactersAtLocation (this, OfficerRoles.Navy);
@@ -74,7 +75,6 @@ public class StrategicShip : ILocation{
 		}
 	}
 
-	#endregion
 
 	public FAC Faction;
 	public Empire Emp;

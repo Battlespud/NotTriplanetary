@@ -8,7 +8,7 @@ Byung-Chul
 Byung-Joon 
 Byung-Suk 
 Chae-Ku 
-Chae-P'il 
+Chae-Pil 
 Chang-Hee 
 Chang-Hoi 
 Chang-Shik 
@@ -96,8 +96,8 @@ Jae-Yup
 Jan 
 Jang-Yop 
 Jeaki 
-Jee-Hoon J
-eong-Hwa 
+Jee-Hoon
+Jeong-Hwa 
 Ji-Won 
 Ji-Wook 
 Jin-Gui 
@@ -260,6 +260,5 @@ Young-Woo
 Young-Yi 
 Young 
 Youngha 
-Yun-Bok 
-Yun-man 
+Yun-Bok  
 Yung-Ho 

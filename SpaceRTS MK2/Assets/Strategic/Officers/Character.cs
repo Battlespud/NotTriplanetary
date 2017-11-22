@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Text;
 using System.IO;
 
+
 public enum OfficerRoles{
 	Research=3,
 	Government=2,
@@ -72,6 +73,17 @@ public struct Trait{
 	}
 }
 
+public enum TeamTypes{
+	Survey,
+	Research,
+	Diplomatic,
+	Intelligence,
+	Expedition //for dealing with primitives
+}
+
+
+
+
 public class Medal{
 	public static Dictionary<int, Sprite> MedalImages = new Dictionary<int, Sprite> ();
 	public string Name;
@@ -103,6 +115,46 @@ public enum NavalCommanderRole{
 	XO=2,
 	CMD=1,
 	NONE=0
+}
+
+public class RelationshipModifier{
+	public string Date;
+	public string Description;
+	public int Amount;
+	public Character Other;
+	public RelationshipModifier(Character c, int a, string desc){
+		Other = c;
+		Amount = a;
+		Description = desc;
+		Date = StrategicClock.GetDate ();
+	}
+}
+
+public class Relationship{
+	public Character Other;
+	List<RelationshipModifier> Modifiers = new List<RelationshipModifier>();
+
+	public int GetRelationshipValue(){
+		int Total = 0;
+		Modifiers.ForEach (x => {
+			Total += x.Amount;
+		});
+		return Total;
+	}
+
+	public void AddMod(RelationshipModifier M){
+		Modifiers.Add (M);
+	}
+
+	public List<RelationshipModifier> GetList(){
+		return Modifiers;
+	}
+
+	public Relationship(Character o){
+		Other = o;
+		Modifiers.Add(new RelationshipModifier(o,0,"<color=red>-START-</color>"));
+	}
+
 }
 
 public class Character {
@@ -177,6 +229,7 @@ public class Character {
 		RolesAbbrev.Add (OfficerRoles.Army, "MN");
 		RolesAbbrev.Add (OfficerRoles.Government, "GV");
 		RolesAbbrev.Add (OfficerRoles.Research, "RD");
+
 	}
 
 	public string CharName;
@@ -188,7 +241,39 @@ public class Character {
 	public int HP = 100;
 	public ILocation Location;
 
-	public Sprite Portrait;
+	Dictionary<Character,Relationship> Relationships = new Dictionary<Character, Relationship> ();
+
+	public T GetRelationship<T>(Character Other){
+		if (!Relationships.ContainsKey (Other)) {
+			Relationships.Add (Other, new Relationship (Other));
+		}
+		T t = default(T);
+		if (typeof(T) == typeof(int)) {
+			return  (T)(object)Relationships [Other].GetRelationshipValue ();
+		} else if (typeof(T) == typeof(Relationship)) {
+			return (T)(object)Relationships [Other];
+		} else if (typeof(T) == typeof(List<RelationshipModifier>)) {
+			return (T)(object)Relationships [Other].GetList ();
+		}
+		Debug.Log (typeof(T).ToString() + " is unsupported.");
+		return t;
+	}
+
+	public void AddRelationship(RelationshipModifier mod){
+		if (!Relationships.ContainsKey (mod.Other)) {
+			Relationships.Add (mod.Other, new Relationship (mod.Other));
+		}
+		Relationships [mod.Other].AddMod (mod);
+	}
+
+
+
+	Sprite portrait;
+	public Sprite GetPortrait(){
+		if(portrait == null && GetValidPortraits(this).Count > 1)
+			portrait = GetValidPortraits (this) [rnd.Next(0,GetValidPortraits (this).Count)];
+		return portrait;
+	}
 
 	public List<int> PersonalityAspects = new List<int>(){0,0,0,0,0,0};
 
@@ -223,6 +308,21 @@ public class Character {
 	StringBuilder sb;
 
 	public string History;
+
+	public void SetAssigned(bool MakeAssigned = true){
+		switch (MakeAssigned) {
+		case (true):{
+				if (empire.Unassigned.Contains (this))
+					empire.Unassigned.Remove (this);
+				break;
+			}
+		case (false):{
+				if (!empire.Unassigned.Contains (this))
+					empire.Unassigned.Add (this);
+				break;
+			}
+		}
+	}
 
 	public string GetNameString( bool isShortened = false, bool NobleOnly = false){
 		if(NobleOnly)
@@ -286,6 +386,7 @@ public class Character {
 			Location.MoveCharacterFromThis (this);
 			FormerLoc = Location.GetLocationName ();
 		}
+		SetAssigned (false);
 		Location = loc;
 		string st = string.Format("{0}: {1} <color=yellow>transfers</color> from <color=white>{2}</color> to <color=white>{3}</color>.",StrategicClock.GetDate(), GetNameString(true), FormerLoc, Location.GetLocationName());
 		AddHistory (st);
@@ -297,17 +398,26 @@ public class Character {
 		string st = string.Format("{0}: {1} enlists at the rank of <color=yellow>{2}</color>.",StrategicClock.GetDate(), CharName, GetJobTitle());
 		CommissionDate = StrategicClock.GetDate ();
 		AddHistory (st);
-		if(GetValidPortraits(this).Count > 1)
-			Portrait = GetValidPortraits (this) [rnd.Next(0,GetValidPortraits (this).Count)];
+		SetAssigned (false);
 		for (int d = 0; d < PersonalityAspects.Count; d++) {
 			PersonalityAspects[d] += rnd.Next (-50, 50);
 		}
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,5,empire,"OFFICER RECIEVES COMMISSION",st,new List<Character>{this});
+
+	}
+
+	public void JoinsTeam(Team t){
+		SetAssigned (true);
+		string st = string.Format("{0}: {1} join <color=magenta>{2}</color>.",StrategicClock.GetDate(), CharName, t.TeamName);
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.DEFAULT,5,empire,"OFFICER JOINS TEAM",st,new List<Character>{this});
+		CommissionDate = StrategicClock.GetDate ();
+		AddHistory (st);
 	}
 
 	public void AppointCaptain(StrategicShip s){
 		if (s.Captain == this)
 			return;
-		empire.Unassigned.Remove (this);
+		SetAssigned (true);
 		MoveTo (s);
 		shipPosting = s;
 		s.AssignOfficer (this, NavalCommanderRole.CMD);
@@ -319,7 +429,7 @@ public class Character {
 	public void AppointXO(StrategicShip s){
 		if (s.Executive == this)
 			return;
-		empire.Unassigned.Remove (this);
+		SetAssigned (true);
 		MoveTo (s);
 		shipPosting = s;
 		s.AssignOfficer (this, NavalCommanderRole.XO);
@@ -328,7 +438,7 @@ public class Character {
 		AddHistory (st);
 	}
 	public void StepDownCaptain(StrategicShip s){
-		empire.Unassigned.Add (this);
+		SetAssigned (false);
 		MoveTo (s);
 	//	s.AssignOfficer (this, NavalCommanderRole.CMD);
 		NavalRole = NavalCommanderRole.NONE;
@@ -337,7 +447,7 @@ public class Character {
 	}
 
 	public void StepDownXO(StrategicShip s){
-		empire.Unassigned.Remove (this);
+		SetAssigned (false);
 		MoveTo (s);
 	//	s.AssignOfficer (this, NavalCommanderRole.XO);
 		NavalRole = NavalCommanderRole.NONE;
@@ -348,7 +458,7 @@ public class Character {
 		if(Location != s)
 			MoveTo (s.Location);
 		NavalRole = NavalCommanderRole.CMD;
-		empire.Unassigned.Remove (this);
+		SetAssigned (true);
 		shipPosting = null;
 		Location = s.Location;
 		string st = string.Format("{0}: {1} is <color=green>appointed</color> the <color=cyan>Commander</color> of <color=grey>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.UnitName);
@@ -357,7 +467,7 @@ public class Character {
 
 	public void StepDownCommander(GroundUnit s){
 		NavalRole = NavalCommanderRole.NONE;
-		empire.Unassigned.Add (this);
+		SetAssigned (false);
 		shipPosting = null;
 		Location = s.Location;
 		string st = string.Format("{0}: {1} <color=orange>steps down</color> as the <color=cyan>Commander</color> of <color=grey>{2}</color?.",StrategicClock.GetDate(),GetNameString(), s.UnitName);
@@ -369,7 +479,7 @@ public class Character {
 			MoveTo (s);
 		s.SeniorOfficer = this;
 		NavalRole = NavalCommanderRole.CMD;
-		empire.Unassigned.Remove (this);
+		SetAssigned (true);
 		shipPosting = null;
 		Location = s;
 		string st = string.Format("{0}: {1} is <color=green>appointed</color> the <color=cyan>Senior Officer</color> aboard <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
@@ -380,7 +490,7 @@ public class Character {
 		if(Location != s)
 			MoveTo (s);
 		NavalRole = NavalCommanderRole.NONE;
-		empire.Unassigned.Add (this);
+		SetAssigned (false);
 		shipPosting = null;
 		Location = s;
 		string st = string.Format("{0}: {1} <color=orange>steps down</color> as the <color=cyan>Senior Officer</color> aboard {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
@@ -389,7 +499,7 @@ public class Character {
 
 	public void Unassign(){
 		NavalRole = NavalCommanderRole.NONE;
-		empire.Unassigned.Add (this);
+		SetAssigned (false);
 		shipPosting = null;
 		string st = string.Format("{0}: {1} has <color=red>no current assignment</color>.",StrategicClock.GetDate(),GetNameString(true));
 		AddHistory (st);
@@ -410,11 +520,13 @@ public class Character {
 	}
 
 	public void StartResearch(string TechName){
+		SetAssigned (true);
 		string st = string.Format("{0}: {1} begins <color=blue>research</color> into {2}.",StrategicClock.GetDate(),GetNameString(true), TechName);
 		AddHistory (st);
 	}
 
 	public void DidResearch(string TechName){
+		SetAssigned (false);
 		string st = string.Format("{0}: {1} <color=green>completes</color> <color=blue>research</color> into {2}.",StrategicClock.GetDate(),GetNameString(true), TechName);
 		AddHistory (st);
 	}
@@ -467,12 +579,14 @@ public class Character {
 
 	public void Retire(bool Forced){
 		string st = "";
+		SetAssigned (true);
 		if (Forced) {
 			 st = string.Format ("{0}: {1} was <color=red>dishonorably discharged</color> from the service.", StrategicClock.GetDate (), GetNameString ());
 		
 		} else {
 			st = string.Format ("{0}: {1} {2} has <color=green>retired honorably</color> from the service.", StrategicClock.GetDate (),GetNobleTitle(), GetNameString ());
 		}
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,empire,"OFFICER RETIRES",st,new List<Character>{this});
 		AddHistory (st);
 		shipPosting = null;
 		empire.Characters.Remove (this);
@@ -514,13 +628,19 @@ public class Character {
 	}
 
 	public void Die(){
-		string st = string.Format("{0}: {1} was <color=red>killed</color> in the destruction of the <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), shipPosting.ShipName);
+		string st = "";
+		SetAssigned (true);
+		if(shipPosting != null)
+			st = string.Format("{0}: {1} was <color=red>killed</color> in the destruction of the <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), shipPosting.ShipName);
+		else
+			st = string.Format("{0}: {1} was <color=red>killed</color> at.",StrategicClock.GetDate(),GetNameString(),Location.GetLocationName());
 		AddHistory (st);
 		shipPosting = null;
 		empire.Characters.Remove (this);
-		empire.Unassigned.Remove (this);
 		empire.Dead.Add (this);
 		OutputDeath ();
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,empire,"OFFICER DIES",st,new List<Character>{this});
+
 	}
 		
 	public void Output(){
@@ -567,8 +687,8 @@ public class Character {
 		JoinsUp ();
 	}
 
-	public Character(int i, OfficerRoles r){
-
+	public Character(int i, OfficerRoles r, Empire e){
+		empire = e;
 
 		Role = r;
 
@@ -579,8 +699,8 @@ public class Character {
 		JoinsUp ();
 	}
 
-	public Character(int i, Theme t, OfficerRoles r){
-
+	public Character(int i, Theme t, OfficerRoles r, Empire e){
+		empire = e;
 		Role = r;
 		Rank = i;
 		ID = GetNextID();

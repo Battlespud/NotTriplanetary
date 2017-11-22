@@ -16,6 +16,8 @@ public class ThemeManager : MonoBehaviour{
 
 	public static bool Initialized = false;
 
+	public bool DebugSuppressPortraitLoading = true;
+
 	public void GenerateThemes(){
 		List<string> paths = new List<string> ();
 		paths.AddRange(Directory.GetDirectories (System.IO.Path.Combine (Application.streamingAssetsPath, "Themes")));
@@ -44,12 +46,14 @@ public class ThemeManager : MonoBehaviour{
 				string FieldName = string.Format ("{1}{0}",splitPath[splitPath.Count-2] , splitPath[splitPath.Count-1]);
 				List<Sprite> reflected = (List<Sprite>)typeof(Character).GetField(FieldName).GetValue(null);
 				string[] FilePaths = Directory.GetFiles (modPath);
+					
 				yield return Ninja.JumpToUnity;
 				foreach (string p in FilePaths) {
-					Texture2D preSprite = LoadTextureFromFile (p);
-					Sprite s = Sprite.Create (preSprite, new Rect (0f, 0f, preSprite.width, preSprite.height), new Vector2 (.5f, .5f), 100f);
-					reflected.Add (s);
-					g++;
+					if (!p.Contains (".meta")) {
+						StartCoroutine(LoadTexFromFile("file://"+p,reflected));
+						yield return null;
+						g++;
+					}
 				}
 //				Debug.Log(string.Format("Loading {0} {1}",((Sex)i).ToString(),splitPath[splitPath.Count-2]));
 				yield return Ninja.JumpBack;	
@@ -61,10 +65,23 @@ public class ThemeManager : MonoBehaviour{
 
 	//image dictionary via index, input when coroutine finishes and use initialization variable plus while loop to wait before loading;
 
+	IEnumerator LoadTexFromFile(string filename, List<Sprite> reflected){
+//		Debug.Log (filename);
+		WWW laughsinchinese = new WWW (filename);
+		yield return laughsinchinese;
+		Texture2D preSprite = new Texture2D (4, 4, TextureFormat.DXT1, false);;
+		laughsinchinese.LoadImageIntoTexture (preSprite);
+		yield return null;
+		Sprite s = Sprite.Create (preSprite, new Rect (0f, 0f, preSprite.width, preSprite.height), new Vector2 (.5f, .5f), 100f);
+		reflected.Add (s);
+	}
+
+/*
 	public static Texture2D LoadTextureFromFile(string filename)
 	{
+
 		// "Empty" texture. Will be replaced by LoadImage
-		Texture2D texture = new Texture2D(64, 64,TextureFormat.RGB24,false);
+		Texture2D texture = new Texture2D(4, 4,TextureFormat.RGB24,false);
 		FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
 		byte[] imageData = new byte[fs.Length];
 		fs.Read(imageData, 0, (int)fs.Length);
@@ -72,7 +89,17 @@ public class ThemeManager : MonoBehaviour{
 		if (texture.format == null)
 			Debug.LogError ("Something went wrong with loading the texture");
 		return texture;
+
+		Texture2D tex = new Texture2D (4, 4, TextureFormat.DXT1, false);
+		Debug.Log (filename);
+		WWW laughsinchinese = new WWW (filename);
+		while (!laughsinchinese.isDone) {
+			
+		}
+		laughsinchinese.LoadImageIntoTexture (tex);
+		return tex;
 	}
+*/
 
 	#region CharacterNames
 	public static string GenerateCharName(Theme t, Sex s){
@@ -131,7 +158,8 @@ public class ThemeManager : MonoBehaviour{
 		Trait.Load ();
 		Manager = this;
 		GenerateThemes ();
-		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,ImportPortraits());
+		if(!DebugSuppressPortraitLoading)
+			ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(this,ImportPortraits());
 	}
 
 }

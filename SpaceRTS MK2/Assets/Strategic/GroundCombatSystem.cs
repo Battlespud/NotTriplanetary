@@ -2,26 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundCombat
-{
-	public static List<GroundCombat> AllGroundCombats = new List<GroundCombat>();
+public class Battlefield{
+	public static List<Battlefield> AllBattlefields = new List<Battlefield>();
+
 	const int NumTurns = 5;
 
-	public List<GroundUnit> Attackers;
-	public List<GroundUnit> Defenders;
+	public readonly ILocation Location; //The parent location. IE a planet or whatever
+	public string BattlefieldName = "";
 
-	public GroundCombat(List<GroundUnit> atk, List<GroundUnit> def)
+	public List<GroundUnit> Attackers = new List<GroundUnit>();
+	public List<GroundUnit> Defenders = new List<GroundUnit>();
+
+	public bool Active = false;
+
+	public Battlefield(ILocation loc)
 	{
+		Location = loc;
+		BattlefieldName = loc.GetLocationName ();
 		StrategicClock.PhaseChange.AddListener(PhaseManager);
-		AllGroundCombats.Add(this);
-		Attackers = atk;
-		Defenders = def;
+		AllBattlefields.Add(this);
 	}
 
-	void End()
-	{
-		AllGroundCombats.Remove(this);
-	}
 
 void PhaseManager(Phase p){
 	switch (p) {
@@ -31,6 +32,7 @@ void PhaseManager(Phase p){
 		}
 	case(Phase.GO):
 		{
+			CheckActivity ();
 			ProgressCombat();
 			break;
 		}
@@ -45,12 +47,24 @@ void PhaseManager(Phase p){
 	}
 }
 
-void ProgressCombat()
-{
-	bool isDefender = true;
-	ApplyDamage(isDefender ? Attackers : Defenders, GetCombatStats(isDefender ? Defenders : Attackers));
-}
+	void CheckActivity(){
+		if (Attackers.Count > 0)
+			Active = true;
+	}
 
+	void ProgressCombat()
+		{
+		if (!Active)
+			return;
+		bool isDefender = true;
+		ApplyDamage(isDefender ? Attackers : Defenders, GetCombatStats(isDefender ? Defenders : Attackers));
+		CheckResult ();
+		}
+
+
+	void CheckResult(){
+
+	}
 
 KeyValuePair<float,int> GetCombatStats(List<GroundUnit> force)
 {
@@ -158,18 +172,39 @@ public class GroundUnit : ILocation{
 		if (CombatEffective && NumberTroops < MaxNumberTroops / 2) {
 			if (Commander != null) {
 				if (rand.Next (-25, 25 + (1 - NumberTroops / MaxNumberTroops) * 100) > Commander.GetDiscipline () + Commander.GetCourage ()) {
-					CombatEffective = false;
+			//		CombatEffective = false;
 				}
 			} else {
 				if(rand.Next (-25, 25 + (1 - NumberTroops / MaxNumberTroops) * 100) > rand.Next(-35,40)){
-					CombatEffective = false;
+				//	CombatEffective = false;
 				}
 			}
 		}
 	}
 
-	public GroundUnit(Empire e, int num, float h, float cr){
+	public void DestroyUnit(ILocation LossLocation){
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,empire,"Unit Lost",string.Format("<color=orange>{0}</color> has been <color=red>Destroyed</color at <color=blue>{1}</color>.",UnitName,Location.GetLocationName()),new List<Character>(){Commander});
+		if (Commander != null) {
+			Commander.AddHistory (string.Format("<color=orange>{0}</color> was <color=red>Destroyed</color at <color=blue>{1}</color> under the command of {2}.",UnitName,Location.GetLocationName(),Commander.GetNameString(true)));
+			Commander.MoveTo (LossLocation);
+			CleanseReferences (this);
+
+		}
+	}
+
+	static void CleanseReferences(GroundUnit G){
+		G.empire.GroundUnits.Remove (G);
+		foreach (Battlefield B in Battlefield.AllBattlefields) {
+			if (B.Attackers.Contains (G))
+				B.Attackers.Remove (G);
+			if (B.Defenders.Contains(G))
+				B.Defenders.Remove(G);
+		}
+	}
+
+	public GroundUnit(Empire e, int num, float h, float cr, ILocation location){
 		empire = e;
+		Location = location;
 		empire.GroundUnits.Add (this);
 		UnitName = empire.GetName (this);
 		MaxNumberTroops = num;

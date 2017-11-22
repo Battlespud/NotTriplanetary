@@ -72,11 +72,11 @@ public class OfficerManagerUI : MonoBehaviour {
 		Role.text = SelectedChar.Role.ToString ();
 		if (SelectedChar.Role == OfficerRoles.Navy)
 			RoleImage.color = Color.blue;
-		if (SelectedChar.Role == OfficerRoles.Army)
+		else if (SelectedChar.Role == OfficerRoles.Army)
 			RoleImage.color = Color.green;
-		if (SelectedChar.Role == OfficerRoles.Government)
+		else if (SelectedChar.Role == OfficerRoles.Government)
 			RoleImage.color = Color.cyan;
-		if (SelectedChar.Role == OfficerRoles.Research)
+		else if (SelectedChar.Role == OfficerRoles.Research)
 			RoleImage.color = Color.yellow;
 		PP.text = string.Format("PP: {0}",SelectedChar.PromotionPoints);
 		DateComm.text = SelectedChar.CommissionDate;
@@ -84,20 +84,17 @@ public class OfficerManagerUI : MonoBehaviour {
 		Color HealthColor = Color.green;
 		if (SelectedChar.HP <= 0)
 			HealthColor = Color.black;
-		if (SelectedChar.HP > 0 && SelectedChar.HP < 26)
+		else if (SelectedChar.HP > 0 && SelectedChar.HP < 26)
 			HealthColor = Color.red;
-		if (SelectedChar.HP >25 && SelectedChar.HP < 76)
+		else if (SelectedChar.HP >25 && SelectedChar.HP < 76)
 			HealthColor = Color.yellow;
 		HealthImage.color = HealthColor;
 		RankNum.text = string.Format("{0}-{1}",Character.RolesAbbrev[SelectedChar.Role],SelectedChar.Rank);
 		RankName.text = SelectedChar.GetJobTitle ();
 		Nobility.text = SelectedChar.GetNobleTitle ();
 		Historytext.text = SelectedChar.History;
-		if (SelectedChar.Portrait != null) {
-			Portrait.sprite = SelectedChar.Portrait;
-		} else {
-			Portrait.sprite = DefaultPortrait;
-		}
+		Portrait.sprite = SelectedChar.GetPortrait();
+
 		Location.text = "";
 		if (SelectedChar.Location != null) {
 			System.Type t = SelectedChar.Location.GetLocType ();
@@ -168,7 +165,7 @@ public class OfficerManagerUI : MonoBehaviour {
 			}
 		}
 
-		int yOff = -45;
+		int yOff = -75;
 		int interval = 1;
 		foreach (ILocation d in Locs) {
 						GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;

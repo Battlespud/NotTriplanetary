@@ -1,7 +1,7 @@
 Achaia 
 Achradina 
-Acta? 
-Act?
+Acta 
+Act
 Ada 
 Adeia 
 Aedon 
@@ -14,7 +14,7 @@ Aganippe
 Agape 
 Agapia 
 Agarista 
-Agath?
+Agath
 Agathonice 
 Agave 
 Aglaia 
@@ -69,7 +69,7 @@ Astera
 Astyoche 
 Astyocheia 
 Atalanta 
-At?
+At
 Athis 
 Auge 
 Augo 
@@ -93,7 +93,7 @@ Castianiera
 Charis 
 Chione 
 Chiore 
-Chlo?
+Chlo
 Chloris 
 Chryse 
 Chryseis 
@@ -119,7 +119,7 @@ Cythereia
 Cytheris 
 Damaris 
 Damia 
-Dana?
+Dana
 Deianeira 
 Deineira 
 Deiphobe 
@@ -227,7 +227,7 @@ Kleio
 Kleopatra 
 Klymene 
 Klytemnestra 
-Kor?
+Kor
 Koritto 
 Kydilla 
 Kynna 
@@ -250,7 +250,7 @@ Leda
 Lede 
 Leto 
 Leucothea 
-Leucotho?
+Leucotho
 Limnoreia 
 Lois 
 Lyra 
@@ -387,7 +387,7 @@ Thessala
 Thessalonike 
 Thetis 
 Thisbe 
-Tho?
+Tho
 Thoösa 
 Thyia 
 Timandra 

@@ -61,11 +61,13 @@ public class EmpireLogEntry{
 public class Empire : MonoBehaviour {
 
 	public static List<Empire> AllEmpires = new List<Empire>();
-
+	//public static ILocation DeadLocation = new ILocation ();
 
 	//Essentially our version of a faction.  Multiple empires of the same FAC can exist, representing
 	//political groups within the whole.   Each will have its own officer core, but can share everything else.
 	static System.Random rnd = new System.Random();
+	public static DeadLocation DeadLoc = new DeadLocation();
+
 	public FAC Faction;
 	public Eras Era;
 	public string EmpireName;
@@ -82,13 +84,16 @@ public class Empire : MonoBehaviour {
 	public List<Tech> AvailableTechs = new List<Tech> ();
 	public List<string> DebugAvailableTechNames = new List<string>();
 
+	public List<Team> Teams = new List<Team>();
 	public List<Character>Characters = new List<Character>();
 	public List<Character> Unassigned = new List<Character>();
 	public List<Character> Dead = new List<Character>();
 	public List<StrategicShip> Ships = new List<StrategicShip> ();
 	public List<StrategicShipyard> Yards = new List<StrategicShipyard> ();
 	public List<GroundUnit>GroundUnits = new List<GroundUnit>();
-	int GroundUnitIndex = 0;
+	int GroundUnitCounter = 0;
+
+
 
 	public Dictionary<string,List<EmpireLogEntry>>Logbook = new Dictionary<string, List<EmpireLogEntry>>();
 
@@ -271,7 +276,7 @@ public class Empire : MonoBehaviour {
 		return ch;
 	}
 
-	public List<Character> GetCharactersAtLocation(ILocation loc, OfficerRoles? rNullable = null){
+	public List<Character> GetCharactersAtLocation(ILocation loc, OfficerRoles? rNullable = null, bool softReq = true){
 		List<Character> Output = new List<Character> ();
 		foreach (Character c in Characters) {
 			if (c.Location == loc)
@@ -280,8 +285,8 @@ public class Empire : MonoBehaviour {
 		if (rNullable != null && Output.Count > 0) {
 			OfficerRoles r = rNullable.Value;
 			Output = GetCharactersByType (r, Output);
-			if (Output.Count < 1) {
-				Debug.LogError ("No valid characters found, finding all other characters in order to prevent exception!");
+			if (Output.Count < 1 && softReq) {
+				//Debug.LogError ("No valid characters found, finding all other characters in order to prevent exception!");
 				foreach (Character c in Characters) {
 					if (c.Location == loc)
 						Output.Add (c);
@@ -306,11 +311,10 @@ public class Empire : MonoBehaviour {
 		float NobilityChance = .2f;
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
-				Character c = new Character(index,OfficerRoles.Navy);
+				Character c = new Character(index,OfficerRoles.Navy,this);
 				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.25f,3f));
 				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance + index/100*5f);
-				c.empire = this;
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
 					int b = rnd.Next (0, 3);
@@ -332,11 +336,10 @@ public class Empire : MonoBehaviour {
 		index = 0;
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
-				Character c = new Character(index,OfficerRoles.Army);
+				Character c = new Character(index,OfficerRoles.Army,this);
 				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.45f,4f));
 				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance/2 + (index-2f)/100*5f);
-				c.empire = this;
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
 					int b = rnd.Next (0, 3);
@@ -366,11 +369,10 @@ public class Empire : MonoBehaviour {
 		float NobilityChance = .1f;
 		foreach (float f in Distribution) {
 			for (int d = (int)(i * f); d > 0; d--) {
-				Character c = new Character(index, OfficerRoles.Research);
+				Character c = new Character(index, OfficerRoles.Research,this);
 				c.Age = (int)(rnd.Next (26, 32) + index/100*rnd.Next(1.85f,7.75f));
 				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance + index/100f*5f);
-				c.empire = this;
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
 					int b = rnd.Next (0, 3);
@@ -393,11 +395,10 @@ public class Empire : MonoBehaviour {
 		Distribution = new List<float>(){.3f,.25f,.2f,.1f,.1f,.05f};
 		foreach (float f in Distribution) {
 			for (int d = (int)(i*1.5f * f); d > 0; d--) {
-				Character c = new Character(index, OfficerRoles.Government);
+				Character c = new Character(index, OfficerRoles.Government,this);
 				c.Age = (int)(rnd.Next (22, 32) + index*rnd.Next(2.85f,3.75f));
 				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance*2 + (index - 2.5f)/100*15f);
-				c.empire = this;
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
 					int b = rnd.Next (0, 3);
@@ -547,7 +548,7 @@ public class Empire : MonoBehaviour {
 		} else {
 
 		}
-		name = GroundUnitIndex + ". Mobile Infanterie";
+		name = GroundUnitCounter + ". Mobile Infanterie";
 		return name;
 	}
 

@@ -22,11 +22,11 @@ Amphicleia
 Amphipolis 
 Amphissa 
 Ancona 
-Antioch on the Maeander 
-Antioch, Mygdonia 
-Antioch on the Orontes 
-Antioch, Pisidia 
-Antiochia ad Taurum 
+Antioch 
+Mygdonia 
+Orontes 
+Pisidia 
+ad Taurum 
 Andros 
 Aphidnae 
 Apollonia 
@@ -34,9 +34,9 @@ Apollonia Pontica
 Argos 
 Artanes 
 Argyroupoli 
-Asine of Argolis 
-Asine of Messenia 
-Asine of Laconia 
+Argolis 
+Messenia 
+Laconia 
 Aspendos 
 Assus 
 Astacus 
@@ -73,7 +73,6 @@ Dodona
 Dorylaion 
 Dyme 
 Edessa 
-Edessa, Mesopotamia 
 Elateia 
 Elea 
 Eleusis 
@@ -92,13 +91,13 @@ Gythium
 Halicarnassus 
 Helike 
 Heraclea 
-Heraclea Lucania 
-Heraclea by Latmus 
-Heraclea Cybistra 
-Heraclea Lyncestis 
-Heraclea Minoa 
-Heraclea Pontica 
-Heraclea Sintica 
+Lucania 
+Latmus 
+Cybistra 
+Lyncestis 
+Minoa 
+Pontica 
+Sintica 
 Hermione 
 Hermonassa 
 Hierapolis 
@@ -108,7 +107,7 @@ Ialysos
 Iasus 
 Imbros 
 Iolkos 
-Iskila modern day Iskilip 
+Iskila 
 Ithaca 
 Kallipolis 
 Katane 
@@ -128,14 +127,14 @@ Leontini
 Lepreum 
 Lindus 
 Locri 
-Magnesia on the Maeander 
-Magnesia on the Sipylum 
+Magnesia 
+Sipylum 
 Mantinea 
 Marathon 
 Massilia 
 Megalopolis 
 Megara 
-Megara Hyblaea 
+Hyblaea 
 Mesembria 
 Messene 
 Metapontum 
@@ -159,8 +158,8 @@ Nysa
 Naxos 
 Oenoe 
 Odessos 
-Odessos, Thrace 
-Olbia, Sardinia 
+Thracia 
+Sardinia 
 Olbia 
 Olympia 
 Olympus 
@@ -170,9 +169,9 @@ Orestias
 Oreus 
 Oropus 
 Pagasae 
-Pandosia, Epirus 
-Pandosia, Bruttium 
-Pandosia, Lucania 
+Epirus 
+Bruttium 
+Pandosia 
 Panticapaeum 
 Paros 
 Patrae 
@@ -208,7 +207,8 @@ Rize
 Salamis 
 Same 
 Selinus 
-Seleucia Pieria 
+Seleucia
+Pieria 
 Semasus 
 Sestus 
 Seuthopolis 
