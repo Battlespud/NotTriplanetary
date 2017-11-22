@@ -3,7 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class DrawTest : MonoBehaviour {
-	static List<Pixel> Pixels = new List<Pixel> ();
+	static List<Pixel> OverlayPixels = new List<Pixel> ();
+	static List<Pixel> BackgroundPixels = new List<Pixel>();
+	static List<Pixel> GridPixels = new List<Pixel>();
+
+	static int gcf(int a, int b)
+	{
+		while (b != 0)
+		{
+			int temp = b;
+			b = a % b;
+			a = temp;
+		}
+		return a;
+	}
+
+	static int lcm(int a, int b)
+	{
+		return (a / gcf(a, b)) * b;
+	}
 
 	public enum RoomStatus{
 		NONE,
@@ -51,8 +69,10 @@ public class DrawTest : MonoBehaviour {
 	public static List<Room> Rooms = new List<Room> ();
 
 
-	public Image PlsWork;
-	public static string[] CompNames = new string[3]{"Laser","Missiles","Sensors"};
+	public Image RoomsOverlay;
+	public Image Grid;
+	public Image Background;
+	public static string[] CompNames = new string[3]{"W","U","D"};
 
 	void DrawQuad(Rect position, Color color) {
 		Texture2D texture = new Texture2D(1, 1);
@@ -62,61 +82,155 @@ public class DrawTest : MonoBehaviour {
 		GUI.Box(position, GUIContent.none);
 	}
 
-	const int RoomW = 120;
-	int RoomH = 50;
+	int RoomW = 50;
+	int RoomH = 25;
 
 	Texture2D Blueprint;
-
+	Texture2D BackgroundTex;
+	Texture2D GridTex;
 
 	public struct Pixel{
 		public int x;
 		public int y;
 		public Color c;
-		public Pixel(int a, int b, Color d ){
+		public Pixel(int a, int b, Color d,List<Pixel> list){
 			x = a;
 			y = b;
 			c = d;
-			DrawTest.Pixels.Add(this);
+			list.Add(this);
 		}
 	}
 
-	void DrawRectangle(Pixel start, int x, int y, Color c){
+	void DrawLetter(char ch, Color c, List<Pixel> list, Vector2 center){
+		if (ch == 'U') {
+			Pixel p = new Pixel ((int)center.x - 1, (int)center.y, c, list);
+			p = new Pixel ((int)center.x - 1, (int)center.y - 1, c, list);
+			p = new Pixel ((int)center.x - 1, (int)center.y + 1, c, list);
+
+			p = new Pixel ((int)center.x, (int)center.y - 1, c, list);
+
+			p = new Pixel ((int)center.x + 1, (int)center.y, c, list);
+			p = new Pixel ((int)center.x + 1, (int)center.y + 1, c, list);
+			p = new Pixel ((int)center.x + 1, (int)center.y - 1, c, list);
+		} else if (ch == 'D') {
+			Pixel p = new Pixel ((int)center.x - 1, (int)center.y, c, list);
+			p = new Pixel ((int)center.x - 1, (int)center.y - 1, c, list);
+			p = new Pixel ((int)center.x - 1, (int)center.y + 1, c, list);
+
+			p = new Pixel ((int)center.x, (int)center.y + 1, c, list);
+			p = new Pixel ((int)center.x, (int)center.y - 1, c, list);
+
+			p = new Pixel ((int)center.x+1, (int)center.y, c, list);
+		} else if (ch == 'W') {
+			Pixel	p = new Pixel ((int)center.x, (int)center.y, c, list);
+
+			p = new Pixel ((int)center.x - 1, (int)center.y - 1, c, list);
+			p = new Pixel ((int)center.x + 1, (int)center.y - 1, c, list);
+
+			p = new Pixel ((int)center.x+2, (int)center.y, c, list);
+			p = new Pixel ((int)center.x-2, (int)center.y, c, list);
+
+		}
+
+	}
+
+	void DrawRectangle(Pixel start, int x, int y, Color c, List<Pixel> list, bool fill = false, Color? fillColor = null){
+		if (fill) {
+			if(fillColor != null)
+				FillIn (new Rect (start.x, start.y, x, y), (Color)fillColor, list);
+			else
+				FillIn (new Rect (start.x, start.y, x, y), c, list);
+		}
 		for (int i = 0; i < x; i++) {
-			Pixel f = new Pixel (start.x + i, start.y, c);
-			Pixel u = new Pixel (start.x + i, start.y + y, c);
+			Pixel f = new Pixel (start.x + i, start.y, Color.black,list);
+			Pixel u = new Pixel (start.x + i, start.y + y, Color.black,list);
 		}
 		for (int i = 0; i < y; i++) {
-			Pixel f = new Pixel (start.x, start.y + i, c);
-			Pixel u = new Pixel (x+start.x, start.y + i, c);
+			Pixel f = new Pixel (start.x, start.y + i, c,list);
+			Pixel u = new Pixel (x+start.x, start.y + i, c,list);
 		}
 	}
 
+	void ColorBackground(Color c){
+		for (int x = 0; x < BackgroundTex.width; x++) {
+			for (int y = 0; y < BackgroundTex.height; y++) {
+				new Pixel (x, y, c,BackgroundPixels);
+			}
+		}
+	}
 
+	void ColorForeground(Color c){
+		for (int x = 0; x < Blueprint.width; x++) {
+			for (int y = 0; y < Blueprint.height; y++) {
+				new Pixel (x, y, c,OverlayPixels);
+			}
+		}
+	}
+
+	void DrawGrid(Color c){
+		int gridS = 25; //size of each side in pixels
+		for (int x = 0; x < BackgroundTex.width / gridS; x++) {
+			for (int y = 0; y < BackgroundTex.height / gridS; y++) {
+				DrawRectangle (new Pixel(x*gridS,y*gridS,Color.white,GridPixels),gridS,gridS, Color.white,GridPixels);
+			}
+		}
+	}
+
+	void FillIn(Rect r, Color c, List<Pixel> list){
+		for (int x = (int)r.x; x < r.x + r.width; x++) {
+			for (int y = (int)r.y; y < r.y + r.height; y++) {
+				Pixel p = new Pixel (x, y, c, list);
+			}
+		}
+	}
 
 	void DesignBlueprint(){
-		RoomH = (int)( .8 * Blueprint.height / (Rooms.Count / 2));
-
+		ColorBackground (Color.black);
+		ColorForeground (Color.clear);
+		DrawGrid (Color.white);
+		int offset = 0;
+		//RoomH = (int)( .8 * Blueprint.height / (Rooms.Count / 2));
+		FillIn (new Rect (0, 0, Blueprint.width, Blueprint.height), Color.grey, OverlayPixels);
 		for (int i = 0; i < Rooms.Count / 2; i++) {
-			Pixel h = new Pixel (0, (RoomH + 1) * i, Color.green);
-			GUI.Label(new Rect (h.x + .5f * RoomW, h.y + .5f * RoomH, RoomW * .75f, RoomH * .75f), Rooms [i].comp);
-			DrawRectangle (h,RoomW,RoomH,Rooms[i].c);
+			Pixel h = new Pixel (0, (RoomH + offset) * i, Color.green,OverlayPixels);
+			Vector2 center = new Vector2(h.x + .5f * RoomW, h.y + .5f * RoomH);
+			DrawRectangle (h,RoomW,RoomH,Rooms[i].c,OverlayPixels,true, Color.white);
+			DrawLetter (Rooms [i].comp [0], Color.black, OverlayPixels, center);
 		}
 		int secondIndexer = Rooms.Count / 2;
 		for (int i = 0; i < Rooms.Count / 2; i++) {
-			Pixel h = new Pixel (Blueprint.width - (RoomW + 1), (RoomH + 1) * i, Color.red);
-			GUI.Label (new Rect ( h.x + .5f * RoomW, h.y + .5f * RoomH, RoomW * .75f, RoomH * .75f), Rooms [i].comp);
+			Pixel h = new Pixel (Blueprint.width - (RoomW + offset), (RoomH + offset) * i, Color.red,OverlayPixels);
+		//	GUI.Label (new Rect ( h.x + .5f * RoomW, h.y + .5f * RoomH, RoomW * .75f, RoomH * .75f), Rooms [i].comp);
+			Vector2 center = new Vector2(h.x + .5f * RoomW, h.y + .5f * RoomH);
+			DrawRectangle (h,RoomW,RoomH,Rooms[i+secondIndexer].c,OverlayPixels,true,Color.white);
+			DrawLetter (Rooms [i+secondIndexer].comp [0], Color.black, OverlayPixels, center);
 
-			DrawRectangle (h,RoomW,RoomH,Rooms[i+secondIndexer].c);
 		}
 
-		foreach (Pixel p in Pixels) {
+		foreach (Pixel p in OverlayPixels) {
 			Blueprint.SetPixel (p.x, p.y, p.c);
 		}
 		Blueprint.Apply ();
-		Sprite s = Sprite.Create (Blueprint, new Rect (0f, 0f, Blueprint.width, Blueprint.height), new Vector2 (.5f, .5f), 100f);
-		PlsWork.sprite = s;
-		PlsWork.SetNativeSize ();
-		PlsWork.transform.localPosition = new Vector3 (0f, 0f, 0f);
+		foreach (Pixel p in BackgroundPixels) {
+			BackgroundTex.SetPixel (p.x, p.y, p.c);
+		}
+		foreach (Pixel p in GridPixels) {
+			GridTex.SetPixel (p.x, p.y, p.c);
+		}
+		GridTex.Apply ();
+		BackgroundTex.Apply ();
+		Sprite Over = Sprite.Create (Blueprint, new Rect (0f, 0f, Blueprint.width, Blueprint.height), new Vector2 (.5f, .5f), 100f);
+		RoomsOverlay.sprite = Over;
+		RoomsOverlay.SetNativeSize ();
+		RoomsOverlay.transform.localPosition = new Vector3 (0f, 0f, 0f);
+		Sprite Back = Sprite.Create (BackgroundTex, new Rect (0f, 0f, BackgroundTex.width, BackgroundTex.height), new Vector2 (.5f, .5f), 100f);
+		Background.sprite = Back;
+		Background.SetNativeSize ();
+		Background.transform.localPosition = new Vector3 (0f, 0f, 0f);
+		Sprite gridSprite = Sprite.Create (GridTex, new Rect (0f, 0f, GridTex.width, GridTex.height), new Vector2 (.5f, .5f), 100f);
+		Grid.sprite = gridSprite;
+		Grid.SetNativeSize ();
+		Grid.transform.localPosition = new Vector3 (0f, 0f, 0f);
 	}
 
 	Sprite Ship;
@@ -128,10 +242,38 @@ public class DrawTest : MonoBehaviour {
 		if (RenderNow) {
 			RenderNow = false;
 			Rooms.Clear ();
-			Pixels.Clear ();
-			Blueprint = new Texture2D (300, 900);
+			BackgroundPixels.Clear ();
+			OverlayPixels.Clear ();
+			GridPixels.Clear ();
+
+			MakeRooms ();
+
+			int height = Rooms.Count / 2 * RoomH + RoomH*4;
+			Blueprint = new Texture2D (150, height);
+
+			BackgroundTex = new Texture2D ((int)(Blueprint.width*1.5), (int)(Blueprint.height*1.5));
+			GridTex = new Texture2D (Blueprint.width, Blueprint.height);
 			MakeRooms ();
 			DesignBlueprint ();
+		}
+	}
+
+	void DrawConvergingTriangle(Pixel LB, Pixel RB, Color c, List<Pixel> list, bool fill = false){
+		//draw base line
+		int width = RB.x - LB.x;
+		int i = 0; //todo change this
+		int level = 0;
+		while (i != 0) {
+			DrawLine (LB.x + level, RB.x - level);
+			level++;
+		}
+
+
+	}
+
+	void DrawLine(int xStart, int xEnd, int y, Color c, List<Pixel> list){
+		for (int x = xStart; x <= xEnd; x++) {
+			Pixel p = new Pixel (x, y, c, list);
 		}
 	}
 
@@ -148,8 +290,10 @@ public class DrawTest : MonoBehaviour {
 	}
 
 
+
+
 	void MakeRooms(){
-		int numRooms = Random.Range (12, 50);
+		int numRooms = Random.Range (12, 26);
 		for (int i = 0; i < numRooms; i++) {
 			Room r = new Room ((RoomStatus)Random.Range (0, 4));
 		}
