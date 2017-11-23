@@ -57,7 +57,6 @@ public class EmpireLogManagerUI : MonoBehaviour {
 		ButtonPrefab = Resources.Load<GameObject>("Button") as GameObject;
 		UpdateYears ();
 		StrategicClock.PhaseChange.AddListener (PhaseManager);
-		gameObject.active = false;
 	}
 
 	void UpdateYears(){
@@ -179,9 +178,9 @@ public class EmpireLogManagerUI : MonoBehaviour {
 			StrategicClock.Unpause ();
 			gameObject.active = false;
 		} else {
+			gameObject.SetActive(true);
 			ResetScroll ();
 			StrategicClock.RequestPause ();
-			gameObject.active = true;
 			UpdateLog ();
 		}
 	}

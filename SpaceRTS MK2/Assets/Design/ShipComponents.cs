@@ -12,6 +12,7 @@ public enum CompCategory{
 	UTILITY
 };
 
+//probably ditch
 public enum CompClass{
 	SHIP = 0,
 	FIGHTER
@@ -27,7 +28,7 @@ public enum AbilityCats{
 	FUEL,	  //fuel storage. Rating = current. Rating 2 = Max, Rating 3 = Explosion chance 0.00-1.00
 	HANGAR,   //fighter/fac storage
 	MAINT,  //Engineering Space, rating is effective mass (at higher tech levels it may be more effective than its actual mass), rating2 is current Spare parts count. Rating 3 is Max spare parts count.
-
+	POW //rating is generates.  rating 1 is requires
 }
 
 public enum SENSORTYPES{
@@ -36,6 +37,7 @@ public enum SENSORTYPES{
 	ACTIVE = 2
 }
 
+//Adds functionality to a component.  Any number may be added without issue, but too many may not be balanced or make any sort of sense realistically.
 public class Ability{
 	public AbilityCats AbilityType;
 	public float Rating;
@@ -54,34 +56,61 @@ public class Ability{
 	}
 }
 
-public struct Emissions{
+//Contains all information about what a component or ship is putting out in terms of radiation.  Posesses basic utility functions.
+public class Emissions{
 	public float EM;
 	public float TH;
 	public float TCS;
+	public Emissions(float em, float th, float tcs){
+		EM = em;
+		TH = th;
+		TCS = tcs;
+	}
+	public Emissions Clone(){
+		return new Emissions (EM, TH, TCS);
+	}
+	public void Clear(){
+		EM = 0;
+		TH = 0;
+		TCS = 0;
+	}
+	public void Add(Emissions e){
+		EM += e.EM;
+		TH += e.TH;
+		TCS += e.TCS;
+	}
 }
 
+//Provides access to the Component Dictionary and is a general identifier for everything an empire or corporation involves itself in.
+	//it is possible to grant others use of an empire or corporations token.  Corps will provide access for a price, while empires generally share their tokens with alliance partners or overlords.
 public class DesignerToken{
-	//Used for identifying design owners and users
 	public string OwnerName;
 
 	public DesignerToken(string s){
 		OwnerName = s;
+		ShipComponents.RegisterToken (this);
 	}
 }
 
 public class ShipComponents {
-	public static List<ShipComponents> DesignedComponents = new List<ShipComponents> ();   //TODO: Make these dictionaries that take Empire and return a list
+
+	#region Static Component Storage and identities
 
 	static List<DesignerToken>MasterDesignerTokenList = new List<DesignerToken>();
-	public static Dictionary<DesignerToken,List<ShipComponents>> MasterComponentDictionary = new Dictionary<DesignerToken, List<ShipComponents>>();
+
+	//All designed components are added here in the list under their creators Designer Token.  Empire scan only build components in their own lists, or in those of whom they posess Tokens (protectorates, allies etc).
+	static Dictionary<DesignerToken,List<ShipComponents>> MasterComponentDictionary = new Dictionary<DesignerToken, List<ShipComponents>>();
+
+	//Public domain components are older components that through constant use have become common knowledge, they can be built by anyone with the appropriate tech.
 	static List<ShipComponents> PublicDomainComponents = new List<ShipComponents> ();
 
-	public void AddComponentToPublicDomain(ShipComponents c){
+	static public void AddComponentToPublicDomain(ShipComponents c){
 		PublicDomainComponents.Add (c);
 		UpdatePublicDomain ();
 	}
 
-	void UpdatePublicDomain(){
+	//todo, after adding a List<Empire> Contacted to each empire, add a check here that empires only get components from known others. just check tokens against contacted.
+	static void UpdatePublicDomain(){
 		foreach (List<ShipComponents> l in MasterComponentDictionary.Values) {
 			foreach (ShipComponents c in PublicDomainComponents) {
 				if (!l.Contains (c))
@@ -90,57 +119,66 @@ public class ShipComponents {
 		}
 	}
 
-	public void RegisterToken (DesignerToken T){
-		if(MasterComponentDictionary.ContainsKey(T)){
+	static public void RegisterToken (DesignerToken T){
+		if(!MasterComponentDictionary.ContainsKey(T)){
 			MasterComponentDictionary.Add (T, new List<ShipComponents> ());
 			MasterDesignerTokenList.Add (T);
 			UpdatePublicDomain ();
 		}
 	}
 
-	public void AddDesign(DesignerToken T, ShipComponents C){
+	static public void AddDesign(DesignerToken T, ShipComponents C){
 		if (!MasterComponentDictionary.ContainsKey (T)) 
 			RegisterToken (T);
 		MasterComponentDictionary [T].Add (C);
 	}
 
-	public static List<ShipComponents> DesignedFighterComponents = new List<ShipComponents> ();
-	public static List<int>UsedID = new List<int>();
-	public static Dictionary<int,ShipComponents> IDComp = new Dictionary<int, ShipComponents> ();
+	static public List<ShipComponents>GetComponents(DesignerToken T){
+		if (!MasterComponentDictionary.ContainsKey (T)) 
+			RegisterToken (T);
+		return MasterComponentDictionary [T];
+	}
 
-	public bool Obsolete = false; //Obsolete components will be hidden in UI
-	public bool Default = false;
+	#endregion
+
+	#region Fields
+	public bool Obsolete = false; //Obsolete components will be hidden in UI.  Only affects the parent component. Players should set this to true on older components they dont want to see anymore.
+	public bool Default = false;  //This component will be automatically added to all players available components list.  Used for required, basic stuff like crew quarters, life support and bridge.
 
 	public string Name;
-	public int ID; //unique identifier
-
-	public DesignerToken Designer;
-	public string DesignDate;
-	public string BuildDate;
-
 	public string Description;
 
-	public CompCategory Category = CompCategory.DEFAULT;
-	public CompClass compClass = CompClass.SHIP;
+	public ShipComponents OriginalReference; //This will be null for the original component design.  Its only so that built versions have a reference to the original if we need to check something.Also lets us implement an upgrade system later should we so choose.
 
-	public List<Ability> Abilities = new List<Ability> ();
+	public DesignerToken Designer;  //Contains information about who originally designed this component.
+
+	public string DesignDate; //set automatically when component is created and added to lists.
+	public string BuildDate;  //set when component is cloned
 
 
-	public int Mass; //tons
-	public int CrewRequired = 0;
-	public float powerReq;
-	public float ThermalSig;
-	public float EMSig;
+	public CompCategory Category = CompCategory.DEFAULT;  //Where the component will be categorized in the design view.
+	public CompClass compClass = CompClass.SHIP;          //Who can use this component.
+
+	public List<Ability> Abilities = new List<Ability> (); //What this component does.
+	public List<Tech> Requirements = new List<Tech> ();    //What techs are required for this component to be built
+
+	public int Mass; //Bigger components generally take more hits to destroy.
+	public int CrewRequired = 0; //Adds to the ships minimum crew requirement.
 	public float MaintReq; //How many spare parts needed.
 
-	public bool Enabled = true;
-	public bool toggleable = false;
+	public Emissions emissions;  //What type of radiation this component emits when active.
 
-	public bool Interior = true; //inside the ship, cant be targeted
+	public bool Enabled = true;   //will be checked for abilities and emissions when true
+	public bool Toggleable = false;  //component can be toggled enabled or not.  Most components are always enabled.
 
-	Dictionary<RawResources, float> Cost = new Dictionary<RawResources, float>();  //what it costs to buidl this
+	public bool Interior = true; //inside the ship, cant be targeted. External components, like weapons and sensors, can be targeted by fighters
+
+	public Dictionary<RawResources, float> Cost = new Dictionary<RawResources, float>();  //what it costs to build this
+	#endregion
 
 
+
+	//Used for the design UI buttons
 	public string GenerateDesignString(){
 		if (Category == CompCategory.ENGINE) {
 			return string.Format ("{0} {1}kt  {2}EP", Name, Mass, GetThrust());
@@ -148,34 +186,40 @@ public class ShipComponents {
 		return string.Format ("{0} {1}kt  {2}C", Name, Mass, CrewRequired); //todo
 	}
 
-	int HTK = 1;
+
+
+
+	#region Damage
+	//Hits To Kill.  An incoming shot of this damage or more is guarenteed to destroy the component if hit.  Anything lesser will cause a roll based on the disparity between damage and HTK.
+		//HTK of 0 is valid and will be destroyed by any damage.  HTK 0 components do not absorb damage, they pass it on.  This means a DAM 1 hit can destroy an infinite number of HTK 0 components.  Use this to prevent players from abusing spam to absorb obscene amounts of damage.
+	private int HTK = 1;
 	public int GetHTK(){
 		return HTK;
 	}
-	public void SetHTK(int i){
-		HTK = i;
+	public void SetHTK(int? i = null){
+		if(i==null)
+			HTK = Mass / 100;
+		else
+			HTK = (int)i;
 	}
 
-	public void AutoSetHTK(){
-		HTK = Mass / 100;
-	}
-
-	bool Damaged = false;   
+	//Components are either destroyed or undamaged, there is no inbetween.  Chances to damage are based on incoming damage vs HTK.
+	private bool Damaged = false; 
 	public bool isDamaged(){
 		return Damaged;
 	}
-
-
 	public void Damage(){
 		Debug.Log(Name + " has been damaged.");
 		Damaged = true;
 		SetSpareParts (0);
 	}
-
 	public void Fix(){
 		Damaged = false;
 	}
+	#endregion
 
+	//GETTERS
+	#region Ability Getters
 	public float GetThrust(){
 		foreach (Ability a in Abilities) {
 			if (a.AbilityType == AbilityCats.THRUST)
@@ -271,8 +315,10 @@ public class ShipComponents {
 		}
 		return 0;
 	}
+	#endregion
 
 
+	#region AddAbility //Use this to add abilities to the component, its dense but its the easiest way tbh.  To understand what each field stands for, check the enum at the top of this file.
 	/// <summary>
 	/// Adds the ability.
 	/// </summary>
@@ -287,23 +333,28 @@ public class ShipComponents {
 		a.Rating2 = rate2;
 		a.Rating3 = rate3;
 		if (a.AbilityType == AbilityCats.THRUST) {
-			Debug.Log ("Designing engine...");
+		//	Debug.Log ("Designing engine...");
 			a.thrust = (Mass / 50) * (1 + rate2 * rate);
 			Category = CompCategory.ENGINE;
 		}
 		Abilities.Add (a);
 	}
+	#endregion
 
+	#region ConstructorEquivalents
+	//Use this whenever adding a component to a ship.
 	public ShipComponents CloneProperties(){
 		ShipComponents dest = new ShipComponents ();
+		dest.OriginalReference = this;
 		dest.Mass = Mass;
 		foreach (Ability a in Abilities) {
 			Ability d;
 			d = a.DeepClone();
 			dest.Abilities.Add (d);
 		}
-		dest.ThermalSig = ThermalSig;
-		dest.EMSig = EMSig;
+		if(emissions != null)
+			dest.emissions = emissions.Clone ();
+
 		dest.CrewRequired = CrewRequired;
 
 		dest.HTK = HTK;
@@ -318,149 +369,11 @@ public class ShipComponents {
 	}
 
 
-	public void GetFields(){
-		List<FieldInfo> Fields = new List<FieldInfo> ();
-		Fields.AddRange (GetType ().GetFields ());
-		List<FieldInfo> AbilityFields = new List<FieldInfo> ();
-	//	Debug.Log ("Fields found: " + Fields.Count);
-		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + Name + "REFLECTED.txt"); 
-		using (StreamWriter writer = new StreamWriter (path)) {
-			foreach (FieldInfo f in Fields) {
-				//Debug.Log (f.GetValue(this));\
-				if (f.GetValue (this) != null) {
-					writer.WriteLine (
-						"Name: " + f.Name + ":\t" + f.GetValue (this).ToString ());
-				}
-			}
-			foreach (Ability a in Abilities) {
-				writer.Write ("\n");
-				AbilityFields.AddRange(a.GetType ().GetFields ());
-				foreach (FieldInfo g in AbilityFields) {
-//					Debug.Log(AbilityFields.Count + " fields per ability detected");
-					writer.WriteLine(
-						g.Name + ":\t" + g.GetValue (a).ToString());
-				}
-				AbilityFields.Clear ();
-			}
-		}
-	}
-
+	//Only use constructor for reference components built to be added to the appropriate empire lists.  Do not use for adding to ships.  Use clone instead.
 	public ShipComponents(){
 		DesignDate = StrategicClock.GetDate ();
 		BuildDate = DesignDate;
 	}
-	/*
+	#endregion
 
-
-	public static void Save(ShipComponents c){
-		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + c.Name + ".txt"); 
-		using (StreamWriter writer = new StreamWriter (path)) {
-			writer.WriteLine (c.Name ); //0
-			writer.WriteLine (((int)c.Category).ToString ());
-			writer.WriteLine (c.Mass);  //2
-			writer.WriteLine (c.toggleable);
-			writer.WriteLine (c.PassiveSig); //4
-			writer.WriteLine (c.CrewRequired);
-			writer.WriteLine (c.quarters ); //6
-			writer.WriteLine (c.lifeSupport);
-			writer.WriteLine (c.powerReq); //8
-			writer.WriteLine (c.control);
-			writer.WriteLine (c.flagControl ); //10
-			writer.WriteLine (c.HTK);
-			writer.WriteLine (c.isEngine); //12
-			writer.WriteLine (c.Thrust);
-			writer.WriteLine (c.TurnThrust); //14
-			writer.WriteLine (c.FuelConsumption); //15
-		}
-	}
-
-	static bool ToBool(string s){
-		if (s == "True")
-			return true;
-		return false;
-	}
-
-	//TODO add component ID, enginetype, power modifier 
-
-	public static ShipComponents LoadPath(string path, bool addToList){
-		ShipComponents c = new ShipComponents ();
-		string[] data = File.ReadAllLines (path);
-		c.Name = data [0];
-		c.Category = (CompCategory)(int.Parse(data [1] ));
-		c.Mass = int.Parse(data [2]);
-		c.toggleable = ToBool (data[3]);
-		c.PassiveSig = float.Parse(data[4]);
-		c.CrewRequired = int.Parse(data[5]);
-		c.quarters = int.Parse(data [6]);
-		c.lifeSupport = int.Parse(data [7]);
-		c.powerReq = float.Parse(data [8]);
-		c.control = ToBool(data[9]);
-		c.flagControl= ToBool(data[10]);
-		c.HTK = int.Parse(data[11]);
-		c.isEngine = ToBool(data[12]);
-		c.Thrust = float.Parse(data [13]);
-		c.TurnThrust = float.Parse(data [14]);
-		c.FuelConsumption = float.Parse(data [15]);
-		if (addToList) {
-			DesignedComponents.Add (c);
-		}
-		return c;
-	}
-
-	public static void LoadAllComponents(){
-		string[] filePaths = Directory.GetFiles (System.IO.Path.Combine (Application.streamingAssetsPath, "Components/"), "*.txt");
-		foreach (string s in filePaths) {
-			LoadPath (s, true);
-		}
-	}
-
-	public static ShipComponents Load(string name, bool addToList){
-		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + name + ".txt"); 
-		ShipComponents c = new ShipComponents ();
-		string[] data = File.ReadAllLines (path);
-		c.Name = data [0];
-		c.Category = (CompCategory)(int.Parse(data [1] ));
-		c.Mass = int.Parse(data [2]);
-		c.toggleable = ToBool (data[3]);
-		c.PassiveSig = float.Parse(data[4]);
-		c.CrewRequired = int.Parse(data[5]);
-		c.quarters = int.Parse(data [6]);
-		c.lifeSupport = int.Parse(data [7]);
-		c.powerReq = float.Parse(data [8]);
-		c.control = ToBool(data[9]);
-		c.flagControl= ToBool(data[10]);
-		c.HTK = int.Parse(data[11]);
-		c.isEngine = ToBool(data[12]);
-		c.Thrust = float.Parse(data [13]);
-		c.TurnThrust = float.Parse(data [14]);
-		c.FuelConsumption = float.Parse(data [15]);
-		if (addToList) {
-			DesignedComponents.Add (c);
-		}
-		return c;
-	}
-
-	public static void LoadAllComponentsReflection(){
-		string[] filePaths = Directory.GetFiles (System.IO.Path.Combine (Application.streamingAssetsPath, "Components/"), "*.txt");
-		foreach (string s in filePaths) {
-			LoadFields (s);
-		}
-	}
-
-
-
-	public static void LoadFields(string name){
-		List<FieldInfo> Fields = new List<FieldInfo> ();
-		ShipComponents c = new ShipComponents();
-		Fields.AddRange (c.GetType ().GetFields ());
-		Debug.Log ("Fields found: " + Fields.Count);
-		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Components/" + name + "REFLECTED.txt"); 
-		string[] data = File.ReadAllLines (path);
-		foreach (string s in data) {
-
-		}
-
-	}
-
-*/
 }

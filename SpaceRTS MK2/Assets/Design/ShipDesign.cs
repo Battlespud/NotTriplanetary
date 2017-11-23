@@ -90,6 +90,16 @@ public class ShipDesign {
 	}
 
 
+	public void CalculateCost(){
+		Components.ForEach (x => {
+			foreach(RawResources r in System.Enum.GetValues(typeof(RawResources))){
+				float f = 0;
+				x.Cost.TryGetValue(r,out f);
+				BuildCost += f;
+			}
+		});
+	}
+
 	public void Output(){
 		Debug.Log ("Printing blueprint of " + DesignName + " to text file..");
 		string path="Assets/Output/Designs/" + DesignName + ".txt";

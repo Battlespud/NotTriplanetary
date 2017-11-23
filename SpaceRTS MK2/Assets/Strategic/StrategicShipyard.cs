@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+//A Shipyard has multiple slipways.  Each slipway can build 1 ship at a time.
 public class Slipway{
 	public StrategicShipyard parent;
 	public float BuildCost;
 	public float TurnsToCompletion;
 	public string NameOverride; 
 	public bool InUse;
+	public ShipDesign Design;
 
-	public void Assign(){
+	public void Assign(ShipDesign des){
 		InUse = true;
-		BuildCost = parent.CurrentTooling.BuildCost;
+		BuildCost = des.BuildCost;
+		Design = des;
 	}
 
 	public void Cancel(){
@@ -31,11 +34,12 @@ public class Slipway{
 	}
 
 	public void Complete(){
-		parent.CompleteShip ();
+		parent.CompleteShip (Design);
 		InUse = false;
 	}
 }
 
+//Where ships are built
 public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 
 	//DEBUG
@@ -57,7 +61,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	public void MoveCharacterFromThis(Character c){
 		UpdateSeniorOfficer ();
 	}
-
+	//Called whenever someone transfers in or out.
 	void UpdateSeniorOfficer(){
 		List<Character> Here = empire.GetCharactersAtLocation (this,OfficerRoles.Navy);
 		if (Here[0] != null && Here [0] != SeniorOfficer) {
@@ -69,7 +73,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 		else if (Here[0] == null)
 			SeniorOfficer = null;
 	}
-
+	//The commander of the station, automatically updated whenever someone transfers in or out.
 	public Character SeniorOfficer;
 
 
@@ -80,6 +84,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 
 	public Empire empire;
 
+	//Constructed ships are added to this list so they can be moved to fleets and assigned officers.
 	public List<StrategicShip>DockedShips = new List<StrategicShip>();
 
 	public void Retool(ShipDesign newDes){
@@ -94,11 +99,10 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 		} 
 		return (int)(3+Mathf.Abs(currM - newDes.BuildCost)/Rate*3f);
 	}
-	public int TimeToNextTooling;
 
+	public int TimeToNextTooling;
 	public int MaxTonnage;
 	public int Berths;
-
 
 	//build rate
 	public float Rate = 1f;
@@ -126,24 +130,27 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 		return	CurrentTooling.BuildCost / Rate;
 	}
 
-	public void CompleteShip(){
-		StrategicShip s = new StrategicShip (CurrentTooling, empire);
+	//
+	public void CompleteShip(ShipDesign design){
+		StrategicShip s = new StrategicShip (design, empire);
 		EmpireLogEntry E = new EmpireLogEntry(LogCategories.TECH,4,empire,"STARSHIP CONSTRUCTED",string.Format("{0} has <color=green>finished construction</color> of a <color=silver>{1}</color>-Class {2}, the {3}.",ShipYardName,s.DesignClass.DesignName,s.DesignClass.HullDesignation.HullType,s.ShipName));
 		DockedShips.Add (s);
-		//TODO actually make the ship reference for the fleet list.
+		//TODO actually make the ship reference for the fleet list.  TODO is this still necessary?
 	}
 
+	//A slipway automatically starts working towards building a ship of type CurrentTooling.
 	public void AssignSlipway(){
 		bool done = false;
 		int i = 0;
 		while(!done && i < Slipways.Count){
 			if (!Slipways [i].InUse) {
 				done = true;
-				Slipways[i].Assign();
+				Slipways[i].Assign(CurrentTooling);
 			}
 		}
 	}
 
+	//Call each turn.  Updates all retooling and builds.
 	void Process(){
 		if (NextTooling != null) {
 			TimeToNextTooling -=1;

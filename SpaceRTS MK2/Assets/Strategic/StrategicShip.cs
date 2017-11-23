@@ -166,7 +166,7 @@ public class StrategicShip : ILocation{
 				color = "<color=red>";
 
 			}
-			string s = string.Format("{1}{2}{3} | {4}{5}{6}",color,stat,colorEnd,color,c.Name,colorEnd);
+			string s = string.Format("{0}{1}{2} | {3}{4}{5}",color,stat,colorEnd,color,c.Name,colorEnd);
 			ComponentStatus.Add(s);
 		}
 	}
@@ -207,13 +207,20 @@ public class StrategicShip : ILocation{
 		mCrew = template.CrewMin;
 		Crew = mCrew;
 		ChangeStats();
-		emissions = new Emissions();
 		ArmorType = template.ArmorType;
 		ChangeStats ();
 		UpdateMaint ();
 		AddHistory ("Launched", string.Format ("{0}: {1} is launched.", StrategicClock.GetDate (), ShipName));
 		ShipLog += string.Format ("{0}: {1} is launched.", StrategicClock.GetDate (), ShipName);
 		CommissionDate = StrategicClock.GetDate ();
+	}
+
+	void UpdateEmissions(){
+		foreach (ShipComponents c in Components) {
+			emissions.Clear ();
+			if (c.Enabled)
+				emissions.Add (c.emissions);
+		}
 	}
 
 	public string CommissionDate;

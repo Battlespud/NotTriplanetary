@@ -135,7 +135,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 	//
 
 
-
+	//TODO
 
 	public bool usingTemplate = false;
 	public void ImportDesign(ShipDesign template){
@@ -152,7 +152,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 		crew = mCrew;
 		SetupDAC ();
 		StartCoroutine(ChangeStats());
-		emissions = new Emissions();
+	//	emissions = new Emissions();
 		foreach (ShipComponents c in Components) {
 
 		}

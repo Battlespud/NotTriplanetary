@@ -7,8 +7,6 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Design test component
-		ShipComponents.DesignedComponents.Clear ();
-
 		ShipComponents c = new ShipComponents();
 		c.Name = "Heavy Test";
 		c.Mass = 500;
@@ -60,21 +58,19 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 		Engineering.AddAbility(AbilityCats.MAINT,Engineering.Mass,25f,25f);
 		Engineering.Category = CompCategory.UTILITY;
 
-		ShipComponents.DesignedComponents.Add (bridge);
-		ShipComponents.DesignedComponents.Add(smBerths);
-		ShipComponents.DesignedComponents.Add (Engineering);
-		ShipComponents.DesignedComponents.Add(berths);
-		ShipComponents.DesignedComponents.Add (turnThruster);
+		ShipComponents.AddComponentToPublicDomain (bridge);
+		ShipComponents.AddComponentToPublicDomain(smBerths);
+		ShipComponents.AddComponentToPublicDomain (Engineering);
+		ShipComponents.AddComponentToPublicDomain(berths);
+		ShipComponents.AddComponentToPublicDomain (turnThruster);
 
 
-		ShipComponents.DesignedComponents.Add (MilEngine);
-		ShipComponents.DesignedComponents.Add (c);
-		ShipComponents.DesignedComponents.Add (b);
+		ShipComponents.AddComponentToPublicDomain (MilEngine);
+		ShipComponents.AddComponentToPublicDomain (c);
+		ShipComponents.AddComponentToPublicDomain (b);
 
 		DesignScreenManager.LoadAllComponents = true;
-		foreach(ShipComponents ce in ShipComponents.DesignedComponents){
-		//	ce.GetFields();
-		}
+
 
 	}
 	

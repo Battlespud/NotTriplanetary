@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System.Text;
 using UnityEngine.Events;
 
+
+//NEEDS OVERHAUL TODO
 public class StrategicShipyardUIManager : MonoBehaviour {
 
 	public static StrategicShipyardUIManager Manager;
@@ -141,6 +143,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 	public void Retool(){
 		if(DropToShip() != Shipyard.CurrentTooling)
 			Shipyard.Retool (DropToShip ());
+		UpdateRetoolUI ();
 	}
 
 	public void SelectSlipway(SlipwayButtonUIManager s){
@@ -168,7 +171,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	public void BuildShip(){
 		if(SelectedSlipway)
-			SelectedSlipway.Slip.Assign ();
+			SelectedSlipway.Slip.Assign (Shipyard.CurrentTooling);
 		UpdateUI ();
 	}
 
