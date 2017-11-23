@@ -22,7 +22,7 @@ public class OfficerButtonManager : MonoBehaviour {
 		}
 		catch{
 		}
-		t.resizeTextForBestFit = true;
+		//t.resizeTextForBestFit = true;
 	}
 	Button b;
 

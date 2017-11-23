@@ -187,9 +187,9 @@ public class DrawTest : MonoBehaviour {
 	void DesignBlueprint(){
 		ColorBackground (Color.black);
 		ColorForeground (Color.clear);
+		DrawConvergingTriangle(new Pixel(0,0,Color.white,GridPixels),new Pixel(GridTex.width,0,Color.white,GridPixels),Color.green,GridPixels,false);
 		DrawGrid (Color.white);
 		int offset = 0;
-		//RoomH = (int)( .8 * Blueprint.height / (Rooms.Count / 2));
 		FillIn (new Rect (0, 0, Blueprint.width, Blueprint.height), Color.grey, OverlayPixels);
 		for (int i = 0; i < Rooms.Count / 2; i++) {
 			Pixel h = new Pixel (0, (RoomH + offset) * i, Color.green,OverlayPixels);
@@ -261,13 +261,11 @@ public class DrawTest : MonoBehaviour {
 	void DrawConvergingTriangle(Pixel LB, Pixel RB, Color c, List<Pixel> list, bool fill = false){
 		//draw base line
 		int width = RB.x - LB.x;
-		int i = 0; //todo change this
 		int level = 0;
-		while (i != 0) {
-			DrawLine (LB.x + level, RB.x - level);
+		while (LB.x + level != RB.x - level && level < 100) {
+			DrawLine (LB.x + level, RB.x - level,LB.y+level,Color.magenta,GridPixels);
 			level++;
 		}
-
 
 	}
 

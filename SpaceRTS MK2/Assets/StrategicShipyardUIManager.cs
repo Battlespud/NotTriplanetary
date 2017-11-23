@@ -68,15 +68,9 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 			e.Manager = this;
 			Slipways.Add (e);
 			d.transform.SetParent (SlipwaysContentParent.transform);
-		//	d.GetComponent<RectTransform>().localScale = new Vector3 (.8f, .3f, 1f);
-			d.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge (RectTransform.Edge.Left, 45f, d.GetComponent<RectTransform>().rect.width);
-			d.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval, d.GetComponent<RectTransform>().rect.height);
-			d.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (93f, interval * yOff, 0f);
+			d.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (0f, interval * yOff, 0f);
+			d.transform.localScale = new Vector3 (1f, 1f, 1f);
 			d.GetComponent<RectTransform> ().rotation = Camera.main.transform.rotation; // SlipwaysContentParent.GetComponent<RectTransform> ().rotation;
-
-	//		d.GetComponent<RectTransform>().localPosition = new Vector3 (93, interval * yOff, 0f);
-		//	d.transform.localPosition = new Vector3();
-
 			e.AssignSlip (c, interval.ToString() );
 			interval++;
 		}

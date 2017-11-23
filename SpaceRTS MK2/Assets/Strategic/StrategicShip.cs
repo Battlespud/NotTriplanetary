@@ -172,6 +172,17 @@ public class StrategicShip : ILocation{
 	}
 
 
+	public float GetFunctionality(){
+		int total = 0;
+		int damaged = 0;
+		foreach (ShipComponents c in Components) {
+			total += c.Mass;
+			if (c.isDamaged())
+				damaged += c.Mass;
+		}
+		return (total - damaged) / total;
+	}
+
 	public Fleet ParentFleet;
 
 	public void AssignFleet(Fleet f){
@@ -200,10 +211,12 @@ public class StrategicShip : ILocation{
 		ArmorType = template.ArmorType;
 		ChangeStats ();
 		UpdateMaint ();
+		AddHistory ("Launched", string.Format ("{0}: {1} is launched.", StrategicClock.GetDate (), ShipName));
 		ShipLog += string.Format ("{0}: {1} is launched.", StrategicClock.GetDate (), ShipName);
+		CommissionDate = StrategicClock.GetDate ();
 	}
 
-
+	public string CommissionDate;
 
 	public void UpdateMaint(){ //Call after damage
 		MaintDamage = Mass / 2000f;
