@@ -26,7 +26,7 @@ public enum AbilityCats{
 	SENSOR,  //type(0,1,2) cast from enum, sensitivity(1-100), hardening(0-1)
 	USEFUEL,  //uses this amount of fuel when active, per turn
 	FUEL,	  //fuel storage. Rating = current. Rating 2 = Max, Rating 3 = Explosion chance 0.00-1.00
-	HANGAR,   //fighter/fac storage
+	CARGO,   //Anything using ICargo
 	MAINT,  //Engineering Space, rating is effective mass (at higher tech levels it may be more effective than its actual mass), rating2 is current Spare parts count. Rating 3 is Max spare parts count.
 	POW //rating is generates.  rating 1 is requires
 }
@@ -145,8 +145,8 @@ public class ShipComponents {
 	public bool Obsolete = false; //Obsolete components will be hidden in UI.  Only affects the parent component. Players should set this to true on older components they dont want to see anymore.
 	public bool Default = false;  //This component will be automatically added to all players available components list.  Used for required, basic stuff like crew quarters, life support and bridge.
 
-	public string Name;
-	public string Description;
+	public string Name = "";
+	public string Description ="";
 
 	public ShipComponents OriginalReference; //This will be null for the original component design.  Its only so that built versions have a reference to the original if we need to check something.Also lets us implement an upgrade system later should we so choose.
 
@@ -315,6 +315,14 @@ public class ShipComponents {
 		}
 		return 0;
 	}
+
+	public float GetCargo(){
+		foreach (Ability a in Abilities) {
+			if (a.AbilityType == AbilityCats.CARGO)
+				return a.Rating;
+		}
+		return 0;
+	}
 	#endregion
 
 
@@ -359,7 +367,7 @@ public class ShipComponents {
 
 		dest.HTK = HTK;
 		dest.Name = Name;
-
+		dest.Description = Description;
 		dest.Obsolete = Obsolete;
 		dest.Category = Category;
 

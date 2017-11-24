@@ -50,7 +50,7 @@ public class EmpireLogButtonManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (gameObject.active && r!=null)
-			r.rotation = Camera.main.transform.rotation;
+	//	if (gameObject.active && r!=null)
+		//	r.rotation = Camera.main.transform.rotation;
 	}
 }

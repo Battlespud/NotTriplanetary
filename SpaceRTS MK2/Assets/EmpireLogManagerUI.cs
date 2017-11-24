@@ -19,7 +19,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 	public Dropdown Years;
 
 	public Dropdown Priority;
-	bool PriorityLowerOrEqual = false;
+	bool PriorityLowerOrEqual = true;
 
 	//Readout
 	public Text HeadlineReadout;
@@ -124,7 +124,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 			manager.Setup(d,this);
 			h.SetParent (EntriesContentParent.transform);
 			//	h.rotation = manager.GetComponent<RectTransform> ().rotation;
-			h.rotation = Camera.main.transform.rotation;
+			//h.rotation = Camera.main.transform.rotation;
 			//	g.transform.rotation = manager.transform.rotation;
 			h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
 			//	h.SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval,h.rect.height);

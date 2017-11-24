@@ -17,6 +17,7 @@ public enum Sex{
 	Male
 }
 
+//Traits modify a characters stats when they are added.  Any number can be added. Theres no protection against duplicates besides sheer numbers yet.
 public struct Trait{
 	public static List<Trait>Traits = new List<Trait>();
 	static char delimiter = '+';
@@ -73,6 +74,7 @@ public struct Trait{
 	}
 }
 
+//Teams are groups of characters with a type.  Survey teams are deployed to uncharted worlds to find stuff for example.
 public enum TeamTypes{
 	Survey,
 	Research,
@@ -83,7 +85,7 @@ public enum TeamTypes{
 
 
 
-
+//Characters are awarded medals which add to their promotion points and serve as fluff.  Medals can be designed at runtime once that ui is added.
 public class Medal{
 	public static Dictionary<int, Sprite> MedalImages = new Dictionary<int, Sprite> ();
 	public string Name;
@@ -111,17 +113,19 @@ public class Medal{
 	}
 }
 
+//XO is second in command. CMD is first in command.  This decides what the XP they gain goes towards. This system will probably be removed in favor of an iterator later. As its a nightmare to manage.
 public enum NavalCommanderRole{
 	XO=2,
 	CMD=1,
 	NONE=0
 }
 
+//Relationship Modifiers generally exist to indicate a single event that changed a characters perception of another.  
 public class RelationshipModifier{
-	public string Date;
-	public string Description;
-	public int Amount;
-	public Character Other;
+	public string Date;				//automatically set.
+	public string Description;	   //What the event was
+	public int Amount;             //How much this affects relationship.   Negative is bad. Positive is good.
+	public Character Other;			
 	public RelationshipModifier(Character c, int a, string desc){
 		Other = c;
 		Amount = a;
@@ -130,10 +134,12 @@ public class RelationshipModifier{
 	}
 }
 
+//Each character has a relationship with every other it has encountered.
 public class Relationship{
 	public Character Other;
 	List<RelationshipModifier> Modifiers = new List<RelationshipModifier>();
 
+	//Sums all the modifiers to get a final result. 
 	public int GetRelationshipValue(){
 		int Total = 0;
 		Modifiers.ForEach (x => {
@@ -170,10 +176,7 @@ public class Character {
 		return NextID;
 
 	}
-	public int ID;
-	public OfficerRoles Role = OfficerRoles.Navy;
-	public NavalCommanderRole NavalRole;
-	public int[] TimeInRole = new int[]{0,0,0};																						//Why doesnt this initialization work?
+
 	public static Dictionary<OfficerRoles,List<string>> JobTitlesDictLong = new Dictionary<OfficerRoles, List<string>> (); //{ {OfficerRoles.Navy,NavalRankNames}, {OfficerRoles.Army, ArmyRankNames}, {OfficerRoles.Gov, GovRankNames}, {OfficerRoles.Research, ResearchRankNames }};
 	public static Dictionary<OfficerRoles,List<string>> JobTitlesDictShort = new Dictionary<OfficerRoles, List<string>> ();
 	public static List<string>NavalRankNames = new List<string>(){"Ensign", "Lieutenant","Lt. Commander","Commander","Captain","List Captain","Commodore", "Rear Admiral", "Vice Admiral", "Admiral", "Admiral of the Fleet"}; //add more
@@ -240,6 +243,11 @@ public class Character {
 	public int Rank;
 	public int HP = 100;
 	public ILocation Location;
+
+	public int ID;
+	public OfficerRoles Role = OfficerRoles.Navy;
+	public NavalCommanderRole NavalRole;
+	public int[] TimeInRole = new int[]{0,0,0};		//Number of turns spent in each role. 
 
 	Dictionary<Character,Relationship> Relationships = new Dictionary<Character, Relationship> ();
 
@@ -493,7 +501,7 @@ public class Character {
 		SetAssigned (false);
 		shipPosting = null;
 		Location = s;
-		string st = string.Format("{0}: <color=navy>{1}</color> <color=orange>steps down</color> as the <color=cyan>Senior Officer</color> aboard {2}.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
+		string st = string.Format("{0}: <color=navy>{1}</color> <color=orange>steps down</color> as the <color=cyan>Senior Officer</color> aboard <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
 		AddHistory (st);
 	}
 

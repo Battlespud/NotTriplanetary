@@ -175,7 +175,7 @@ public class OfficerManagerUI : MonoBehaviour {
 						manager.Manager = this;
 						manager.Assign (d);
 						h.SetParent (LocationsParent.transform);
-						h.rotation = Camera.main.transform.rotation;
+					//	h.rotation = Camera.main.transform.rotation;
 						h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
 						h.sizeDelta = new Vector2 (600f, 35f);
 						h.localScale = new Vector3 (1f, 1f, 1f);
@@ -214,7 +214,7 @@ public class OfficerManagerUI : MonoBehaviour {
 						manager.Manager = this;
 						manager.Assign (d);
 						h.SetParent (OfficersParent.transform);
-						h.rotation = Camera.main.transform.rotation;
+					//	h.rotation = Camera.main.transform.rotation;
 						h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
 						h.sizeDelta = new Vector2 (800f, 35f);
 						h.localScale = new Vector3 (1f, 1f, 1f);

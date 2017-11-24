@@ -100,7 +100,7 @@ void ApplyDamage(List<GroundUnit> forceOne, KeyValuePair<float,int> forceTwo)
 	}
 }
 
-public class GroundUnit : ILocation{
+public class GroundUnit : ILocation, ICargo{
 	static System.Random rand = new System.Random();
 
 	#region Location
@@ -122,6 +122,32 @@ public class GroundUnit : ILocation{
 		}
 	}
 	#endregion
+	#region Cargo
+	public string GetCargoName(){
+		return UnitName;
+	}
+	public float GetSize(){
+		return (float)Size;
+	}
+	public object GetCargo(){
+		return (object)this;
+	}
+	public System.Type GetCargoType(){
+		return this.GetType();
+	}
+	public void SetLocation(ILocation Loc){
+		Location = Loc;
+	}
+	public void DestroyCargo (){
+		DestroyUnit ();
+	}
+	public bool Load (){
+		return true;
+	}
+	#endregion
+
+	//used for cargo
+	public int Size = 1;
 
 	public bool InCombat = false;
 	public Empire empire;
@@ -182,11 +208,11 @@ public class GroundUnit : ILocation{
 		}
 	}
 
-	public void DestroyUnit(ILocation LossLocation){
+	public void DestroyUnit(){
 		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,empire,"Unit Lost",string.Format("<color=orange>{0}</color> has been <color=red>Destroyed</color at <color=blue>{1}</color>.",UnitName,Location.GetLocationName()),new List<Character>(){Commander});
 		if (Commander != null) {
 			Commander.AddHistory (string.Format("<color=orange>{0}</color> was <color=red>Destroyed</color at <color=blue>{1}</color> under the command of {2}.",UnitName,Location.GetLocationName(),Commander.GetNameString(true)));
-			Commander.MoveTo (LossLocation);
+			Commander.MoveTo (Location);
 			CleanseReferences (this);
 
 		}

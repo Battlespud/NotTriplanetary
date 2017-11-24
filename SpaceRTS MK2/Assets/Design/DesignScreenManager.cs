@@ -45,6 +45,8 @@ public class DesignScreenManager : MonoBehaviour {
 
 	public List<ShipTemplate> ShipDesigns = new List<ShipTemplate>();
 
+	public List<RectTransform> ScrollViewRectTransforms = new List<RectTransform>();
+
 	//references
 	public InputField DesignName;
 	public Text ArmorText;
@@ -61,6 +63,7 @@ public class DesignScreenManager : MonoBehaviour {
 	public Text MassText;
 	public Text InstalledText;
 	public ScrollRect scrollview;
+
 
 	//we'll figure out how this figures in later.
 	public int IntendedDeploymentInTurns = 20;
@@ -105,7 +108,7 @@ public class DesignScreenManager : MonoBehaviour {
 
 
 	public void PopulateComponentList(){
-		List<ShipComponents> LoadedComponents = ShipComponents.GetComponents(ActiveEmpire.Token).OrderByDescending (x => x.Category).ToList ();
+		List<ShipComponents> LoadedComponents = ShipComponents.GetComponents(ActiveEmpire.Token).OrderBy (x => x.Category).ToList ();
 		Components.Clear();
 		if (HideObsolete) {
 			foreach (ShipComponents c in LoadedComponents) {
@@ -116,8 +119,8 @@ public class DesignScreenManager : MonoBehaviour {
 			Components.AddRange (LoadedComponents);
 		}
 	//	Debug.Log (Components.Count + " components loaded.");
-		float yOff = -7.5f;
-		int interval = 0;
+		float yOff = ShipComponentsUIButton.GetComponent<RectTransform>().sizeDelta.y * .65f*-1f;
+		int interval = 1;
 		foreach (GameObject g in UIObjects) {
 			Destroy (g);
 		}
@@ -127,7 +130,6 @@ public class DesignScreenManager : MonoBehaviour {
 		d.transform.SetParent (ContentParentScrollview);
 			d.GetComponent<RectTransform> ().rotation = Camera.main.transform.rotation;
 			d.GetComponent<RectTransform> ().transform.localScale = new Vector3 (1f, 1f, 1f);
-			d.GetComponent<RectTransform> ().sizeDelta = new Vector2 (1458, 10f);
 			d.GetComponent<RectTransform>().anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
 			ShipComponentUIManager s = d.GetComponent<ShipComponentUIManager> ();
 			s.Manager = this;
@@ -150,6 +152,8 @@ public class DesignScreenManager : MonoBehaviour {
 	//engines have some special rules so we add them using this.
 	public void AddEngine(ShipComponents engine){
 		Debug.Log("Adding " + engine.Name);
+		AddComponent (engine);
+		/*
 		if (EngineDesign == null) {
 			EngineDesign = engine;
 		}
@@ -171,6 +175,7 @@ public class DesignScreenManager : MonoBehaviour {
 		{
 			AddedComponents.Add (EngineDesign, EngineCount);
 		}
+		*/
 		OnChange ();
 	}
 
@@ -197,7 +202,7 @@ public class DesignScreenManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		ButtonPrefab = Resources.Load<GameObject> ("ButtonWide") as GameObject;
-		ShipComponentsUIButton= Resources.Load<GameObject> ("ShipComponentsUIButton") as GameObject;
+		ShipComponentsUIButton= Resources.Load<GameObject> ("ShipComponentButton") as GameObject;
 		SetupScreen ();
 	}
 
@@ -216,6 +221,11 @@ public class DesignScreenManager : MonoBehaviour {
 		if (LoadAllComponents) {
 			LoadAllComponents = false;
 			PopulateComponentList ();
+		}
+		foreach (RectTransform r in ScrollViewRectTransforms) {
+			if (r.localPosition.y < 0) {
+				r.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
 		}
 	}
 
@@ -246,10 +256,6 @@ public class DesignScreenManager : MonoBehaviour {
 		if (ShipDesign.DesignDictionary.ContainsKey (DesignName.text)) {
 			RequirementsMet = false;
 			OutstandingRequirements += DesignName.text + " is already being used as a class name.\n";
-		}
-		if (EngineCount < 1) {
-			RequirementsMet = false;
-			OutstandingRequirements += "Valid ship designs must contain at least one engine.\n";
 		}
 		if (ArmorThickness <= 0) {  //This shouldnt be possible outside of an error in the actual unity editor.
 			RequirementsMet = false;
@@ -288,10 +294,14 @@ public class DesignScreenManager : MonoBehaviour {
 
 	IEnumerator CalculateMass(){
 		int M = 0;
+		MaxCargo = 0;
+		MSP = 0;
 		foreach (ShipComponents c in Components) {
 			int number;
 			if (AddedComponents.TryGetValue (c, out number)) {
 				M += (c.Mass * number );
+				MaxCargo += c.GetCargo () * number;
+				MSP += c.GetMaxSpareParts () * number;
 			}
 		}
 		M += ArmorMass () * (ArmorLength * (ArmorThickness + (int)Mathf.Pow(ArmorThickness, .35f)));
@@ -299,6 +309,9 @@ public class DesignScreenManager : MonoBehaviour {
 		yield return Ninja.JumpToUnity;
 		MassText.text = "Mass: " + M + "kt";
 	}
+
+	public float MaxCargo;
+	public float MSP; //maint spare parts.
 
 	public void SetupMaint(){
 		float MaintMass = 0;
@@ -399,8 +412,17 @@ public class DesignScreenManager : MonoBehaviour {
 	}
 
 	string BuildDescription(){
-		string description = string.Format ("{0} Class {1}\t{2} KTons\t{3} Crew\t{4} BuildCost\n{5} km/s\nBFR: {6}%\tEFR: {7}%\tEngineering:{8}%",
-											DesignName.text, HullDesignation.options [HullDesignation.value].text, Mass, ReqCrew, "#",MaxSpeed, BaseFailRate*100f, EffectiveFailRate*100f, EngineeringPercent);
+		string description = string.Format ("{0} Class {1}\t{2} KTons\t{3} Crew\t{4} BuildCost\n{5} km/s\nBFR: {6}%\tEFR: {7}%\tEngineering:{8}%\tMSP:{9}\n",
+			DesignName.text, HullDesignation.options [HullDesignation.value].text, Mass, ReqCrew, "#",MaxSpeed, BaseFailRate*100f, EffectiveFailRate*100f, EngineeringPercent, MSP);
+		if (MaxCargo > 0)
+			description += "Max Cargo Space: " + MaxCargo + " Tons";
+		foreach (ShipComponents s in Components) {
+			if (s.GetThrust () > 0 && AddedComponents.ContainsKey(s)) {
+				float mSpeedOnly = s.GetThrust()*AddedComponents[s] / ((float)Mass/50f)*1000f;
+
+				description += string.Format ("Max speed on just {0}s: {1}\n", s.Name, mSpeedOnly);
+			}
+		}
 		return description;
 	}
 

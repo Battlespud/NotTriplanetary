@@ -72,7 +72,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 			d.transform.SetParent (SlipwaysContentParent.transform);
 			d.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (0f, interval * yOff, 0f);
 			d.transform.localScale = new Vector3 (1f, 1f, 1f);
-			d.GetComponent<RectTransform> ().rotation = Camera.main.transform.rotation; // SlipwaysContentParent.GetComponent<RectTransform> ().rotation;
+		//	d.GetComponent<RectTransform> ().rotation = Camera.main.transform.rotation; // SlipwaysContentParent.GetComponent<RectTransform> ().rotation;
 			e.AssignSlip (c, interval.ToString() );
 			interval++;
 		}
@@ -193,11 +193,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (gameObject.active) {
-			foreach (SlipwayButtonUIManager a in Slipways) {
-				a.transform.rotation = DockedShipsContentParent.transform.rotation;
-				//	a.transform.position = new Vector3 (93);
-			}
+
 			if (DockedShipsContentParentRect.localPosition.y < 0) {
 				DockedShipsContentParentRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
 			}
@@ -206,6 +202,4 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 			}
 		}
 	}
-
-
-}
+	

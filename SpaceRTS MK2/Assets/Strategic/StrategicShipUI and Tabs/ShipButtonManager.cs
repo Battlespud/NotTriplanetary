@@ -45,7 +45,7 @@ public class ShipButtonManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (gameObject.active)
-			t.rotation = Camera.main.transform.rotation;
+	//	if (gameObject.active)
+		//	t.rotation = Camera.main.transform.rotation;
 	}
 }

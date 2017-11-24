@@ -84,6 +84,7 @@ public class StrategicShip : ILocation{
 	public Character Executive;
 
 	public List<Character> CharactersAboard = new List<Character>();
+	public List<ICargo> Cargo = new List<ICargo> ();
 
 	public List<HistoryEvent> HistoryEvents = new List<HistoryEvent>();
 	public void AddHistory(string head, string desc = ""){
@@ -111,6 +112,12 @@ public class StrategicShip : ILocation{
 	public int mCrew;
 	public string CrewString;
 
+	public float MaxCargo;
+	public float CurrentCargo;
+
+	public float MaxMaintParts;
+	public float CurrMaintParts;
+
 	public int Mass;
 	public bool isControllable;
 
@@ -133,6 +140,8 @@ public class StrategicShip : ILocation{
 		Quarters = 0;
 		isControllable = false;
 		Thrust = 0;
+		CurrentCargo = 0;
+		MaxCargo = 0;
 		Mass = (int)DesignClass.mass;
 		isDamaged = false;
 		foreach (ShipComponents c in Components) {
@@ -141,6 +150,9 @@ public class StrategicShip : ILocation{
 				if (c.isControl ()) {
 					isControllable = true;
 				}
+				MaxMaintParts += c.GetMaxSpareParts ();
+				CurrMaintParts += c.GetCurrentSpareParts ();
+				MaxCargo += c.GetCargo ();
 				Thrust += c.GetThrust ();
 			} else {
 				isDamaged = true;
@@ -148,7 +160,54 @@ public class StrategicShip : ILocation{
 		}
 		CrewString = string.Format ("Crew: {0}/{1}", Crew, mCrew);
 		UpdateComponentStatusStrings ();
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,CalculateCargo()); //TODO Test this and make sure it works
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,BuildArmorString()); //TODO Test this and make sure it works
+	}
+
+	IEnumerator CalculateCargo(){
+		foreach (ICargo c in Cargo) {
+			CurrentCargo += c.GetSize ();
+		}
+		while (CurrentCargo > MaxCargo) {
+			int i = random.Next (0, Cargo.Count);
+			ICargo z = Cargo [i];
+			Cargo.Remove (z);
+			z.DestroyCargo ();
+			CurrentCargo = 0;
+			foreach (ICargo c in Cargo) {
+			CurrentCargo += c.GetSize ();
+			}
+		}
+		yield return null;
+	}
+
+	bool UseMaintParts(float amount){
+		ChangeStats ();
+		if (CurrMaintParts >= amount) {
+			foreach (ShipComponents c in Components) {
+				if (amount > 0) {
+					if (c.GetCurrentSpareParts() >= amount) {
+						c.UseSpareParts (amount);
+					} else {
+						amount -= c.GetCurrentSpareParts ();
+						c.UseSpareParts (c.GetCurrentSpareParts ());
+					}
+				} else {
+					break;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	void LoadCargo(ICargo c){
+		if (CurrentCargo + c.GetSize () <= MaxCargo) {
+			if (c.Load ()) {
+				Cargo.Add (c);
+				c.SetLocation (this);
+			}
+		}
 	}
 
 	void UpdateComponentStatusStrings(){
@@ -246,23 +305,7 @@ public class StrategicShip : ILocation{
 		EffectiveFailRate = BaseFailRate * (TimeBetweenRolls / 20);
 	}
 
-	public bool UseMaintParts(float amount){
-		if (CurrParts >= amount) {
-			foreach (ShipComponents c in Components) {
-				if (amount > c.GetCurrentSpareParts ()) {
-					amount -= (int)c.GetCurrentSpareParts ();
-					c.SetSpareParts(0f);
-				} else {
-					c.SetSpareParts(c.GetCurrentSpareParts() - amount);
-					amount = 0;
-				}
-				if (amount <= 0)
-					break;
-			}
-			return true;
-		}
-		return false;
-	}
+
 
 	float TimeSinceLastRoll = 0f;
 	public const float TimeBetweenRolls = 5; //in turns
@@ -288,7 +331,7 @@ public class StrategicShip : ILocation{
 				EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,4,Emp,"MAINTENANCE FAILURE",string.Format("{0} has experienced a maintenance failure. No damage reported.",ShipName),CharactersAboard,new List<StrategicShip>{this});
 			}
 		} else {
-			if (counter > 6) {
+			if (counter >= .85* Components.Count) {
 				DestroyShip ();
 				ShipLog += "<color=red>---Loss Resultant from Catastrophic Maintenance Failures---</color>";
 			}
@@ -337,6 +380,9 @@ public class StrategicShip : ILocation{
 		//TODO
 		ShipLog += string.Format("\n{0}: <color=red>---Contact Lost---</color> ",StrategicClock.GetDate());
 		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,2,Emp,"SHIP DESTROYED",string.Format("Contact has been lost with {0}.\nThe ships logs may contain more detailed information.",ShipName));
+		Cargo.ForEach (x => {
+			x.DestroyCargo();
+		});
 		Emp.Ships.Remove(this);
 		if(ParentFleet)
 			ParentFleet.Ships.Remove (this);
