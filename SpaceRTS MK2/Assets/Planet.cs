@@ -68,7 +68,46 @@ public class Planet : MonoBehaviour, IMineable
     public Dictionary<RawResources, ResourceDeposit> ResourceDeposits = new Dictionary<RawResources, ResourceDeposit>();
     public int[] composition;
 
-	public string Description;
+	Dictionary<Empire,Colony> Colonies = new Dictionary<Empire, Colony> ();
+
+	public Colony GetColony(Empire e){
+		Colony c = null;
+			Colonies.TryGetValue (e, out c);
+		return c;
+	}
+
+	public bool AddColony(Empire owner, Race r, int startingPop, string name){
+		if (Colonies.ContainsKey (owner))
+			return false;
+		Colony c = new Colony (owner, r, startingPop, name);
+		Colonies.Add (owner, c);
+		return true;
+	}
+
+	public string Description ="";
+
+	void PhaseManager(Phase p){
+		switch (p) {
+		case(Phase.ORDERS):
+			{
+				break;
+			}
+		case(Phase.GO):
+			{
+				break;
+			}
+		case (Phase.REVIEW):
+			{
+
+				break;
+			}
+		case (Phase.INTERRUPT):
+			{
+				break;
+			}
+
+		}	
+	}
 
     void AddDeposit(ResourceDeposit r)
     {
@@ -105,9 +144,11 @@ public class Planet : MonoBehaviour, IMineable
 
     void Start()
     {
-		
+		StrategicClock.PhaseChange.AddListener (PhaseManager);
         SetPlanetType(UnityEngine.Random.Range(0, 7));
     }
+
+
 
     // Update is called once per frame
     void Update()

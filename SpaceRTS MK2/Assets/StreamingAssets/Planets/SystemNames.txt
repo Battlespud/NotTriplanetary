@@ -1,0 +1,520 @@
+Alpha Centauri
+Sancere
+Sarandal
+Anahalt
+Baldur
+Dilawa
+Ixion
+Varandal
+Heradao
+Indras
+Prime
+Easir
+Unity
+Unity Alternate
+Grendel
+Mu Arae
+Gliese
+Librae
+Kepler-444
+Epsilon Eridani
+Castor
+Cervantes
+Chara
+Chertan
+Copernicus
+Cursa
+Canopus
+Capella
+Botein
+Brachium
+Bharani
+Acamar
+Achernar
+Achird
+Acrab
+Acrux
+Acubens
+Adhafera
+Adhara
+Adhil
+Ain
+Ainalrami
+Aladfar
+Alamak 
+Alathfar 
+Albaldah
+Albali
+Albireo
+Alchiba
+Alcor
+Alcyone
+Aldebaran
+Alderamin
+Aldhanab
+Aldhibain
+Aldulfin
+Alfirk
+Algedi
+Algenib
+Algieba
+Algol
+Algorab
+Alhena
+Alioth
+Aljanah
+Alkaid
+Al Kalb al Rai 
+Alkalurops
+Alkaphrah
+Alkarab
+Alkes
+Al Kurud 
+Almaaz
+Almach
+Al Minliar al Asad 
+Alnair
+Alnasl
+Alnilam
+Alnitak
+Alniyat
+Alphard
+Alphecca
+Alpheratz
+Alrakis
+Alrescha
+Alsafi
+Alsciaukat
+Alsephina
+Alshain
+Alshat
+Altair
+Altais
+Altarf 
+Alterf
+Aludra
+Alula Australis
+Alula Borealis
+Alya
+Alzirr
+Ancha
+Angetenar
+Ankaa
+Anser
+Antares
+Arcturus
+Arkab Prior
+Arkab Posterior
+Arneb
+Ascella
+Asellus Australis
+Asellus Borealis
+Asellus Primus 
+Asellus Secundus 
+Asellus Thertius 
+Asmidiske 
+Aspidiske
+Asterope
+Athebyne
+Atik
+Atlas
+Atria
+Avior
+Azelfafage
+Azha
+Barnard's Star
+Baten Kaitos
+Beid
+Bellatrix
+Betelgeuse
+Bharani
+Biham
+Botein
+Brachium
+Canopus
+Capella
+Caph
+Castor
+Castula
+Cebalrai
+Celaeno
+Cervantes
+Chalawan
+Chamukuy
+Chara
+Chertan
+Copernicus
+Cor Caroli
+Cujam
+Cursa
+Dabih
+Dalim
+Deneb
+Deneb Algedi
+Denebola
+Diadem
+Diphda
+Dschubba
+Dubhe
+Dziban
+Edasich
+Electra
+Elnath
+Eltanin
+Enif
+Errai
+Fafnir
+Fang
+Fum al Samakah 
+Fomalhaut
+Fulu
+Furud
+Fuyue
+Gacrux
+Garnet Star 
+Giausar
+Gienah
+Gomeisa
+Graffias 
+Grumium
+Haedus
+Haedus II
+Hadar
+Hamal
+Hassaleh
+Hatysa
+Helvetios
+Heze
+Homam
+Iklil
+Intercrus
+Izar
+Jabbah
+Jishui
+Kaffaljidhma
+Kang
+Kaus Australis
+Kaus Borealis
+Kaus Media
+Keid
+Khambalia
+Kitalpha
+Kochab
+Kornephoros
+Kraz 
+Kuma 
+Kurhah
+La Superba 
+Lesath
+Libertas
+Lilii Borea
+Maasym
+Mahasim
+Maia
+Marfark 
+Marfik
+Markab
+Markeb
+Marsic
+Matar
+Mebsuta
+Megrez
+Meissa
+Mekbuda
+Meleph
+Menkalinan
+Menkar
+Menkent
+Menkib
+Merak
+Merga
+Meridiana
+Merope
+Mesarthim
+Miaplacidus
+Mimosa
+Minchir
+Minelauva
+Mintaka
+Mira
+Mirach
+Miram
+Mirfak
+Mirzam
+Misam
+Mizar
+Mothallah
+Muliphein
+Muphrid
+Muscida
+Musica
+Naos
+Nashira
+Navi 
+Nekkar
+Nembus
+Nihal
+Nunki
+Nusakan
+Ogma
+Peacock
+Phact
+Phecda
+Pherkad
+Pipirima
+Pleione
+Polaris
+Polaris Australis
+Australis
+Duke
+Sigma Procyon
+Polis
+Pollux
+Porrima
+Praecipua
+Prima Hyadum
+Procyon
+Propus
+Proxima Centauri
+Ran
+Rana 
+Rasalgethi
+Rasalhague
+Rasalas
+Rastaban
+Regor
+Regulus
+Revati
+Rigel
+Rigil Kentaurus
+Rotanev
+Ruchbah
+Rukbat
+Sabik
+Sadachbia
+Sadalbari
+Sadalmelik
+Sadalsuud
+Sadr
+Saiph
+Salm
+Sargas
+Sarin
+Sarir 
+Sceptrum
+Scheat
+Schedar
+Secunda Hyadum
+Segin
+Seginus
+Sham
+Shaula
+Sheliak
+Sheratan
+Sirius
+Situla
+Skat
+Spica
+Sualocin
+Subra
+Suhail
+Sulafat
+Syrma
+Tabit
+Taiyangshou
+Taiyi
+Talitha
+Tania Australis
+Tania Borealis
+Tarazed
+Taygeta
+Tegmine
+Terebellum
+Tejat
+Thabit 
+Theemin
+Thuban
+Tiaki
+Tianyi
+Titawin
+Tonatiuh
+Torcular
+Tureis
+Unukalhai
+Unurgunite
+Vega
+Veritate
+Vindemiatrix
+Wasat
+Wazn
+Wezen
+Xamidimura
+Xuange
+Yed Prior
+Yed Posterior
+Yildun
+Zaniah
+Zaurak
+Zavijava
+Zhang
+Zibal
+Zosma
+Zubenelgenubi
+Zubenelhakrabi
+Zubeneschamali
+Parada
+Zeta Nova
+Alpha Draconis
+Thuban
+Alpha Corvi
+Alchiba
+Omnicron Rekonda
+Koo Sheliak
+Delta Velorum
+Zeconis
+Psi Luminar
+Ceilia
+Subra
+Pi Vendrizi
+Noreiga
+Pi Toriga
+Toriga
+Katerra
+Capuli
+Columbae
+Beta Columbae
+Woden
+Talis
+Alpha Onias
+Loki
+Lambda Maxia
+Maxia
+Vega
+Geminus
+Zariah
+Rukbat
+Alrami
+Alpha Sagitarii
+Marici
+Suden
+Delta Suden
+Manticore
+Imaga
+Theta Imaga
+Beta Imaga
+Onias
+Eta Onias
+Delta Onias
+Beta Onias
+Hades
+Sigma Hades
+Norma
+Capuli
+Capuli Core
+Sigma Capuli
+Capelli
+Sigma Capelli
+Aldan
+Arklite
+Ashadra
+Atull
+Bardron
+Baksha
+Bizzet
+Butukret
+Cephedri
+Cuyrok
+Cewandi
+Cretirk
+Devonshire
+Dertran
+Dussullet
+Dornot
+Ephandra
+Eurul
+Equandul
+Eskirk
+Fortunil
+Fwandrei
+Fezzran
+Forlon
+Galgamis
+Gretok
+Gergan
+Ghedran
+Hollifax
+Haphik
+Huju
+Hwansul
+Ikrod
+Ishantrissti
+Iolo
+Ibsunk
+Jubrup
+Jethanis
+Jokala
+Jinook
+Koltan
+Knoglam
+Kartogia
+Kinkarka
+Lenoltris
+Lezzari
+Lapzooli
+Lundra
+Mentocka
+Marjoram
+Mveloem
+Munjumb
+Narcisston
+Neckron
+Nizzarum
+Nooloom
+Olontra
+Organtrix
+Osshod
+Obotron
+Prenix
+Pantrissa
+Premius
+Pawtril
+Quikil
+Quesstris
+Qornor
+Qikiltrin
+Resshrak
+Rizzil
+Remnorak
+Regotha
+Sephandris
+Sillinta
+Sophenis
+Sutran
+Texrek
+Tudran
+Tesshana
+Tyrik
+Ushphada
+Ultrinox
+Utekra
+Uzara
+Vendrin
+Vartoxia
+Vintindrin
+Velocitas
+Welshrok
+Wertreken
+Wanduk
+Wurtuy
+Xillantha
+Xiria
+Xanthar
+Xiban
+Yukra
+Yoshri
+Yullado
+Yabdul
+Zezzis
+Zekrat
+Zanthris
+Zitrod

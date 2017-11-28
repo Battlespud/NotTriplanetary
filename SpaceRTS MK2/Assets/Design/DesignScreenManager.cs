@@ -104,6 +104,8 @@ public class DesignScreenManager : MonoBehaviour {
 	public int Mass;
 	ArmorTypes ArmorType = ArmorTypes.DURANIUM;
 
+	public float BuildCost;
+
 	public int Quarters;   //how much space for crew there is with current loadout.
 
 
@@ -236,12 +238,10 @@ public class DesignScreenManager : MonoBehaviour {
 		int bridgeCount = 0;
 		ShipComponents CommandComp = null;
 		foreach (ShipComponents c in AddedComponents.Keys.ToList()) {
-			foreach (Ability a in c.Abilities) {
-				if (a.AbilityType == AbilityCats.CONTROL) {
+			if (c.isControl()) {
 					CommandComp = c;
 					bridgeCount++;
 					break;
-					}
 				}
 			}
 			if (bridgeCount < 1) {
@@ -276,12 +276,7 @@ public class DesignScreenManager : MonoBehaviour {
 			int number;
 			if (AddedComponents.TryGetValue (c, out number)) {
 				minimum += (c.CrewRequired * number );
-				foreach (Ability a in c.Abilities) {
-					if (a.AbilityType == AbilityCats.CREW) {
-						quarter += ((int)a.Rating * number);
-
-					}
-				}
+				quarter += ((int)c.GetQuarters() * number);
 			}
 		}
 		Quarters = quarter;
@@ -302,6 +297,7 @@ public class DesignScreenManager : MonoBehaviour {
 				M += (c.Mass * number );
 				MaxCargo += c.GetCargo () * number;
 				MSP += c.GetMaxSpareParts () * number;
+				BuildCost += c.GetCost ();
 			}
 		}
 		M += ArmorMass () * (ArmorLength * (ArmorThickness + (int)Mathf.Pow(ArmorThickness, .35f)));
@@ -413,7 +409,7 @@ public class DesignScreenManager : MonoBehaviour {
 
 	string BuildDescription(){
 		string description = string.Format ("{0} Class {1}\t{2} KTons\t{3} Crew\t{4} BuildCost\n{5} km/s\nBFR: {6}%\tEFR: {7}%\tEngineering:{8}%\tMSP:{9}\n",
-			DesignName.text, HullDesignation.options [HullDesignation.value].text, Mass, ReqCrew, "#",MaxSpeed, BaseFailRate*100f, EffectiveFailRate*100f, EngineeringPercent, MSP);
+			DesignName.text, HullDesignation.options [HullDesignation.value].text, Mass, ReqCrew, BuildCost,MaxSpeed, BaseFailRate*100f, EffectiveFailRate*100f, EngineeringPercent, MSP);
 		if (MaxCargo > 0)
 			description += "Max Cargo Space: " + MaxCargo + " Tons";
 		foreach (ShipComponents s in Components) {

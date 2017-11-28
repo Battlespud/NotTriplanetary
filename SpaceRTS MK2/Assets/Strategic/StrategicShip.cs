@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using System.Linq;
 
 public class HistoryEvent{
 	public string Header;
@@ -105,8 +106,12 @@ public class StrategicShip : ILocation{
 	public ArmorTypes ArmorType;
 
 
+
+
 	public bool isDamaged = false;
 	public float Thrust;
+	public float MaxSpeed;
+
 	public int Quarters;
 	public int Crew;
 	public int mCrew;
@@ -123,6 +128,13 @@ public class StrategicShip : ILocation{
 
 	public Emissions emissions;
 
+	//Fuel
+	public float MaxFuel;
+	public float CurrFuel;
+
+
+
+
 	//Maint
 	public int MaxParts;
 	public int CurrParts;
@@ -136,16 +148,30 @@ public class StrategicShip : ILocation{
 	public bool InDrydock = true;
 	public bool IsDeployed = false;
 
-	void ChangeStats(){
+	//Combat
+	public int Shields = 0;
+	int MaxDAC = 0;
+	public Dictionary<int,ShipComponents> DAC = new Dictionary<int, ShipComponents> ();
+	public Dictionary<ShipComponents,Range>DACRanges = new Dictionary<ShipComponents, Range>();
+
+
+
+	public void ChangeStats(bool SuppressFuelCheck = false){
 		Quarters = 0;
 		isControllable = false;
 		Thrust = 0;
 		CurrentCargo = 0;
 		MaxCargo = 0;
+		Crew = 0;
+		mCrew = 0;
 		Mass = (int)DesignClass.mass;
+		MaxFuel = 0f;
+		Shields = 0;
 		isDamaged = false;
 		foreach (ShipComponents c in Components) {
-			if (!c.isDamaged ()) {
+			mCrew += c.CrewRequired;
+			Crew += c.CrewPresent;
+			if (!c.isDestroyed ()) {
 				Quarters += (int)c.GetQuarters ();
 				if (c.isControl ()) {
 					isControllable = true;
@@ -153,15 +179,77 @@ public class StrategicShip : ILocation{
 				MaxMaintParts += c.GetMaxSpareParts ();
 				CurrMaintParts += c.GetCurrentSpareParts ();
 				MaxCargo += c.GetCargo ();
-				Thrust += c.GetThrust ();
+				MaxFuel += c.GetFuelMax ();
+
+				if (c.Enabled) {
+					Thrust += c.GetThrust ();
+					Shields += (int)(c.GetMaxShield () * ParentFleet.ShieldStrength);
+				}
 			} else {
 				isDamaged = true;
 			}
 		}
+
+
+		MaxSpeed = Thrust / ((float)Mass / 50f);
+
 		CrewString = string.Format ("Crew: {0}/{1}", Crew, mCrew);
 		UpdateComponentStatusStrings ();
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,CalculateCargo()); //TODO Test this and make sure it works
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,BuildArmorString()); //TODO Test this and make sure it works
+	}
+
+	void CheckFuel(){
+		if (MaxFuel < CurrFuel)
+			CurrFuel = MaxFuel;
+		if (CurrFuel <= 0f) {
+			foreach (ShipComponents c in Components) {
+				if (c.GetFuelUse () > 0f)
+					c.Enabled = false;
+			}
+			ChangeStats (true);
+		} else {
+			foreach (ShipComponents c in Components) {
+				if (c.Category == CompCategory.ENGINE)
+					c.Enabled = true;
+			}
+		}
+	}
+
+
+	public void UseMovementFuel(float s){
+		if (ParentFleet != null) {
+		//	float s = ParentFleet.Speed;
+			List<ShipComponents> Sorted = Components.OrderBy (x => x.GetFuelUse ()).ToList();
+			foreach (ShipComponents c in Sorted) {
+				if (c.Category == CompCategory.ENGINE && !c.isDestroyed () && c.Enabled) {
+					float multiplier = 1f;
+					if (s < c.GetThrust () / ((float)Mass / 50f))
+						multiplier = c.GetThrust () / (Mass / 50f);
+					s -= c.GetThrust () / (((float)Mass / 50f));
+					CurrFuel -= c.GetFuelUse ()*multiplier;
+				}
+				if (s <= 0)
+					break;
+			}
+		}
+	}
+
+	public void UseShieldFuel(float Percent){
+		foreach (ShipComponents c in Components) {
+			if (c.Category == CompCategory.SHIELDS) {
+				//we can multiply by percent if we want to make shields cost fuel proportional to how charged they are.
+				CurrFuel -= c.GetFuelUse ();
+			}
+		}
+		CheckFuel ();
+	}
+
+	public void Refuel(float amount){
+		CurrFuel += amount;
+		if (CurrFuel > MaxFuel)
+			CurrFuel = MaxFuel;
+		ChangeStats ();
 	}
 
 	IEnumerator CalculateCargo(){
@@ -216,13 +304,13 @@ public class StrategicShip : ILocation{
 			string stat = "";
 			string color = "";
 			string colorEnd = "</color>";
-			if (c.isDamaged ()) {
+			if (c.isDestroyed ()) {
 				stat = "XX";
-				color = "<color=green>";
+				color = "<color=red>";
 			}
 			else {
 				stat = "OK";
-				color = "<color=red>";
+				color = "<color=green>";
 
 			}
 			string s = string.Format("{0}{1}{2} | {3}{4}{5}",color,stat,colorEnd,color,c.Name,colorEnd);
@@ -236,7 +324,7 @@ public class StrategicShip : ILocation{
 		int damaged = 0;
 		foreach (ShipComponents c in Components) {
 			total += c.Mass;
-			if (c.isDamaged())
+			if (c.isDestroyed())
 				damaged += c.Mass;
 		}
 		return (total - damaged) / total;
@@ -264,7 +352,6 @@ public class StrategicShip : ILocation{
 		UpdateComponentStatusStrings ();
 		SetupArmor (template.ArmorLength, template.ArmorLayers, (float)template.ArmorType);
 		mCrew = template.CrewMin;
-		Crew = mCrew;
 		ChangeStats();
 		ArmorType = template.ArmorType;
 		ChangeStats ();
@@ -292,7 +379,7 @@ public class StrategicShip : ILocation{
 		CurrParts = 0;
 		float MaintMass = 0;
 		foreach (ShipComponents c in Components) {
-			if (!c.isDamaged()) {
+			if (!c.isDestroyed()) {
 				MaintMass += c.getMaintMass ();
 				MaxParts += (int) c.GetMaxSpareParts();
 				CurrParts += (int) c.GetCurrentSpareParts();
@@ -320,7 +407,7 @@ public class StrategicShip : ILocation{
 
 	public void TakeInternalHit(float damage, int counter = 0){ //skips armor
 		ShipComponents c = Components [random.Next (0, Components.Count)];
-		if (!c.isDamaged ()) {
+		if (!c.isDestroyed ()) {
 			if (!UseMaintParts (c.MaintReq)) {
 				c.Damage ();
 				ShipLog += string.Format ("{0}: {1} experiences a maintenance failure with the {2}, repairs proved impossible with current supplies.", StrategicClock.GetDate (), ShipName,c.Name);
@@ -421,16 +508,144 @@ public class StrategicShip : ILocation{
 				else if (Armor[x,y] <= 0f) {
 					a.Append( "<color=red>□</color>");
 				}
-				//	float l =   Armor [x, y]/MaxArmor  ;
-				//	Color c = new Color (2.0f * l, 2.0f * (1 - l), 0);
-				//	a.Append( "<color=" + ColorUtility.ToHtmlStringRGBA(c) + ">□</color>");
-
-
 			}
 			a.AppendLine();
 		}
 		ArmorString = a.ToString();
 		yield return Ninja.JumpToUnity;
+	}
+
+
+
+
+
+
+	//Combat
+	public void SetupCombat(){
+		ChangeStats ();
+	}
+
+	public float Sturdiness = 0f;
+
+	public void TakeDamage(List<Int2> Pattern, float Damage){
+		if (Shields > Damage)
+			Shields -= Mathf.CeilToInt(Damage);
+		else {
+			Damage -= Shields;
+			Shields = 0;
+			DamageArmor (Pattern, Damage);
+		}
+	}
+
+
+	IEnumerator DamageArmor(List<Int2> pattern, float dam){
+			if (dam >= Mass / 1000) {
+				if (random.NextDouble () < dam / (Mass / (2 + 15 * (1 - Sturdiness)))) {
+					Debug.Log ("Shock Damage");
+					TakeComponentDamage (dam * random.NextFloat (.35f, .6f));
+			}
+		}
+		int startX = random.Next (0, Armor.GetLength (0) - 1);
+		int startY = 0;
+		for(startY = Armor.GetLength(1)-1; startY >= 0; startY--){
+			if (Armor [startX, startY] > 0f) {
+				break;
+			}
+		}
+		int HullBound = 0;
+		float counter = 0;
+		//adjust penetration profile by damage
+		for(int i = 0; dam > 0; i++) { //TODO REFACTOR PLS PLS PLS ITS SO BAD
+			if (i >= pattern.Count)
+				i = 0;
+			Int2 v = pattern[i]; 
+			if (startY + v.y < HullBound) {
+				if (dam >= 1f) {
+					counter++;
+					dam -= 1;
+				} else {
+					counter += dam;
+					dam = 0f;
+				}
+			}
+			if (startX + v.x < 0) {
+				v.x += Armor.GetLength (0)-1; 
+			}
+			if (startX + v.x > Armor.GetLength(0)-1) {
+				v.x -= Armor.GetLength (0)-1; 
+			}
+			if (startX + v.x >= 0 && startX + v.x < Armor.GetLength (0) && startY + v.y >= 0 && startY + v.y < Armor.GetLength (1)) {
+				try {
+					if(dam > Armor [startX + v.x, startY + v.y]){
+						dam -= Armor [startX + v.x, startY + v.y];
+						Armor [startX + v.x, startY + v.y] = 0f;
+					}
+					else{
+						Armor [startX + v.x, startY + v.y] -= dam;
+						dam = 0f;
+					}
+				} catch {
+					Debug.Log ("Invalid armor coords");
+				}
+			}
+		}
+		yield return Ninja.JumpToUnity;
+		Debug.Log ("Penetrating hits: " + counter);
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,TakeComponentDamage(counter));
+	}
+
+	IEnumerator TakeComponentDamage(float amount){
+		Debug.Log ("Component Damage");
+		int attempts = 0;
+		ShipComponents target;
+		while (amount > 0) {
+			target = RollDAC ();
+			while (target.isDestroyed ()) {
+				target = RollDAC ();
+				attempts++;
+				if (attempts > Components.Count*.4f) {
+					DestroyShip ();
+					break;
+				}
+			}
+			if (amount >= target.GetHTK ()) {
+				target.Damage ();
+				amount -= target.GetHTK ();
+			} else if (amount < target.GetHTK ()) {
+				float chance = amount / target.GetHTK ();
+				if (random.Next (0, 100)/100 < chance) {
+					target.Damage ();
+				} else {
+					target.DestroySubComponent ();
+				}
+
+				amount = 0;
+			}
+		}
+		yield return Ninja.JumpToUnity;
+		ChangeStats ();
+	}
+
+	public void SetupDAC(){
+		int curr = 0;
+		foreach (ShipComponents c in Components) {
+			int pCounter = 0;
+			int start = curr;
+			for (int i = 0; c.Mass > i; i += ShipDesign.Slot) {
+				DAC.Add (curr, c);
+				pCounter++;
+				curr++;
+			}
+			int end = curr-1;
+			DACRanges.Add(c,new Range(start,end));
+		}
+		MaxDAC = curr; //exclusive
+	}
+
+	public ShipComponents RollDAC(){
+		int i = random.Next (0, MaxDAC);
+		Debug.Log ("Rolled #" + i + " " + DAC[i].Name + " HTK: " + DAC[i].GetHTK());
+		return DAC [i];
 	}
 
 }

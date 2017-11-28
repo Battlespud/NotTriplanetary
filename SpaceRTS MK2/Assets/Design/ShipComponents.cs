@@ -9,7 +9,8 @@ public enum CompCategory{
 	REQUIRED,
 	ENGINE,
 	WEAPON,
-	UTILITY
+	UTILITY,
+	SHIELDS
 };
 
 //probably ditch
@@ -25,10 +26,12 @@ public enum AbilityCats{
 	CREW,    //Life support + quarters
 	SENSOR,  //type(0,1,2) cast from enum, sensitivity(1-100), hardening(0-1)
 	USEFUEL,  //uses this amount of fuel when active, per turn
-	FUEL,	  //fuel storage. Rating = current. Rating 2 = Max, Rating 3 = Explosion chance 0.00-1.00
+	FUEL,	  //fuel storage. Rating = Max. Rating 2 = Explosion chance 0.00-1.00
 	CARGO,   //Anything using ICargo
 	MAINT,  //Engineering Space, rating is effective mass (at higher tech levels it may be more effective than its actual mass), rating2 is current Spare parts count. Rating 3 is Max spare parts count.
-	POW //rating is generates.  rating 1 is requires
+	POW, //rating is generates.  rating 2 is requires, 
+	SHIELD,//Rating =  Max
+	EXPLODE, //Rating is chance 0-1.00 on destruction, rating 1 is damage to cause
 }
 
 public enum SENSORTYPES{
@@ -148,7 +151,7 @@ public class ShipComponents {
 	public string Name = "";
 	public string Description ="";
 
-	public ShipComponents OriginalReference; //This will be null for the original component design.  Its only so that built versions have a reference to the original if we need to check something.Also lets us implement an upgrade system later should we so choose.
+	public ShipComponents DesignReference; //This will be null for the original component design.  Its only so that built versions have a reference to the original if we need to check something.Also lets us implement an upgrade system later should we so choose.
 
 	public DesignerToken Designer;  //Contains information about who originally designed this component.
 
@@ -159,11 +162,15 @@ public class ShipComponents {
 	public CompCategory Category = CompCategory.DEFAULT;  //Where the component will be categorized in the design view.
 	public CompClass compClass = CompClass.SHIP;          //Who can use this component.
 
-	public List<Ability> Abilities = new List<Ability> (); //What this component does.
+	//public List<Ability> Abilities = new List<Ability> (); //What this component does.
+	public Dictionary<AbilityCats,Ability> Abilities = new Dictionary<AbilityCats, Ability>();
+
+
 	public List<Tech> Requirements = new List<Tech> ();    //What techs are required for this component to be built
 
 	public int Mass; //Bigger components generally take more hits to destroy.
 	public int CrewRequired = 0; //Adds to the ships minimum crew requirement.
+	public int CrewPresent;
 	public float MaintReq; //How many spare parts needed.
 
 	public Emissions emissions;  //What type of radiation this component emits when active.
@@ -176,6 +183,48 @@ public class ShipComponents {
 	public Dictionary<RawResources, float> Cost = new Dictionary<RawResources, float>();  //what it costs to build this
 	#endregion
 
+
+	//Subcomponents
+	List<SubComponent>SubComponents = new List<SubComponent>();
+	//triggered by subcomponent on destruction. Permanently modifies values. Can only be repaired by reset.
+	public void DestroySubComponent(){
+		if (SubComponents.Count == 0)
+			return;
+		int i = Random.Range (0, SubComponents.Count);
+		if(!SubComponents[i].isDamaged())
+			SubComponentDestroyed (SubComponents [i]);
+	}
+
+	void SubComponentDestroyed(SubComponent s){
+		s.Destroy ();
+		Ability ToModify;
+		Abilities.TryGetValue (s.AbilityType, out ToModify);
+		if (ToModify != null) {
+			int index = 0;
+			foreach(float f in s.Modifiers)  {
+				switch (index) {
+				case(0):
+					{
+						ToModify.Rating *= f;
+						break;
+					}
+				case(1):{
+						ToModify.Rating2 *= f;
+						break;
+					}
+				case(2):{
+						ToModify.Rating3 *= f;
+						break;
+					}
+				case(3):{
+						ToModify.thrust *= f;
+						break;
+					}
+				}
+				index++;
+			}
+		}
+	}
 
 
 	//Used for the design UI buttons
@@ -204,125 +253,129 @@ public class ShipComponents {
 	}
 
 	//Components are either destroyed or undamaged, there is no inbetween.  Chances to damage are based on incoming damage vs HTK.
-	private bool Damaged = false; 
+	private bool Damaged = false;
 	public bool isDamaged(){
-		return Damaged;
+		return Damaged || Destroyed;
+	}
+	private bool Destroyed = false; 
+	public bool isDestroyed(){
+		return Destroyed;
 	}
 	public void Damage(){
-		Debug.Log(Name + " has been damaged.");
-		Damaged = true;
+		Debug.Log(Name + " has been Destroyed.");
+		Destroyed = true;
 		SetSpareParts (0);
+		CrewPresent =(int) (CrewPresent*Random.Range (0f, .35f));
 	}
+
+
 	public void Fix(){
-		Damaged = false;
+		RestoreFields (this);
 	}
 	#endregion
 
 	//GETTERS
 	#region Ability Getters
 	public float GetThrust(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.THRUST)
-				return a.thrust;
-		}
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.THRUST,out a);
+		if (a!= null)	return a.thrust;
 		return 0f;
 	}
 	public float GetTurnThrust(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.TURN)
-				return a.Rating;
-		}
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.TURN, out a);
+		if (a!= null)	return a.Rating;
 		return 0f;
 	}
 	public float GetQuarters(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.CREW)
-				return a.Rating;
-		}
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.CREW, out a);
+		if (a!= null)return a.Rating;
 		return 0f;
 	}
 	public bool isControl(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.CONTROL)
-				return true;
-		}
-		return false;
+		return Abilities.ContainsKey (AbilityCats.CONTROL);
 	}
 	public bool isMaint(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.MAINT)
-				return true;
-		}
-		return false;
+		return Abilities.ContainsKey (AbilityCats.MAINT);
 	}
 	public float getMaintMass(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.MAINT)
-				return a.Rating;
-		}
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.MAINT, out a);
+		if (a!= null)return a.Rating;
 		return 0f;
 	}
 	public float GetCurrentSpareParts(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.MAINT)
-				return a.Rating2;
-			}
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.MAINT, out a);
+		if (a!= null)	return a.Rating2;
 		return 0f;
 	}
 	public float GetMaxSpareParts(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.MAINT)
-				return a.Rating3;
-		}
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.MAINT, out a);
+		if (a!= null)return a.Rating3;
 		return 0f;
 	}
 	public void UseSpareParts(float f){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.MAINT) {
-				a.Rating2 -= f;
-			}
-		}
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.MAINT, out a);
+		if (a!= null)	a.Rating2 -= f;
 		return;
 	}
 	public void SetSpareParts(float f){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.MAINT)
-				a.Rating2 = f;
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.MAINT, out a);
+		if (a != null) {
+			a.Rating2 = f;
 			if (a.Rating2 > a.Rating3)
 				a.Rating2 = a.Rating3;
 		}
 	}
 
 	public bool isFuel(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.FUEL)
-				return true;
-		}
-		return false;
+		return Abilities.ContainsKey (AbilityCats.FUEL);
 	}
-	public void SetFuel(float f){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.FUEL)
-				a.Rating = f;
-			if (a.Rating > a.Rating2)
-				a.Rating = a.Rating2;
-		}
+
+
+	public float GetFuelMax(){
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.FUEL, out a);
+		if (a!= null)return a.Rating;
+		return 0f;
 	}
 	public float GetFuelUse(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.USEFUEL)
-				return a.Rating;
-		}
-		return 0;
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.USEFUEL, out a);
+		if (a!= null)return a.Rating;
+		return 0f;
 	}
 
 	public float GetCargo(){
-		foreach (Ability a in Abilities) {
-			if (a.AbilityType == AbilityCats.CARGO)
-				return a.Rating;
-		}
-		return 0;
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.CARGO, out a);
+		if (a!= null)
+			return a.Rating;
+		return 0f;
 	}
+
+	public float GetMaxShield(){
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.SHIELD, out a);
+		if (a!= null)
+			return a.Rating;
+		return 0f;
+	}
+
+	public float GetCost(){
+		float x = 0;
+		foreach (float f in Cost.Values) {
+			x += f;
+		}
+		return x;
+	}
+
 	#endregion
 
 
@@ -345,7 +398,7 @@ public class ShipComponents {
 			a.thrust = (Mass / 50) * (1 + rate2 * rate);
 			Category = CompCategory.ENGINE;
 		}
-		Abilities.Add (a);
+		Abilities.Add(a.AbilityType,a);
 	}
 	#endregion
 
@@ -353,18 +406,22 @@ public class ShipComponents {
 	//Use this whenever adding a component to a ship.
 	public ShipComponents CloneProperties(){
 		ShipComponents dest = new ShipComponents ();
-		dest.OriginalReference = this;
+
+		dest.DesignReference = this;
+
+		foreach (SubComponent c in SubComponents) {
+			dest.SubComponents.Add (c.Clone ());
+		}
+
 		dest.Mass = Mass;
-		foreach (Ability a in Abilities) {
-			Ability d;
-			d = a.DeepClone();
-			dest.Abilities.Add (d);
+		foreach (Ability a in Abilities.Values) {
+			dest.Abilities.Add (a.AbilityType,a.DeepClone());
 		}
 		if(emissions != null)
-			dest.emissions = emissions.Clone ();
+		dest.emissions = emissions.Clone ();
 
 		dest.CrewRequired = CrewRequired;
-
+		dest.CrewPresent = CrewRequired;
 		dest.HTK = HTK;
 		dest.Name = Name;
 		dest.Description = Description;
@@ -377,6 +434,11 @@ public class ShipComponents {
 	}
 
 
+	public static void RestoreFields(ShipComponents damagedComponent){
+		damagedComponent = damagedComponent.DesignReference.CloneProperties ();
+	}
+
+
 	//Only use constructor for reference components built to be added to the appropriate empire lists.  Do not use for adding to ships.  Use clone instead.
 	public ShipComponents(){
 		DesignDate = StrategicClock.GetDate ();
@@ -384,4 +446,34 @@ public class ShipComponents {
 	}
 	#endregion
 
+}
+
+public enum DamageEventTypes{
+	Spalling,
+	CriticalFailure
+}
+
+public class SubComponent{
+	public string SubComponentName;
+
+	public AbilityCats AbilityType;
+	public List<float> Modifiers = new List<float>(); //Multiply by this
+
+	private bool Destroyed = false;
+	public bool isDamaged(){
+		return Destroyed;
+	}
+	public void Destroy(){
+		Destroyed = true;
+	}
+
+	public SubComponent Clone(){
+		return new SubComponent (SubComponentName, AbilityType,Modifiers);
+	}
+
+	public SubComponent(string name,AbilityCats ab, List<float> list){
+		SubComponentName = name;
+		AbilityType = ab;
+		Modifiers.AddRange (list);
+	}
 }

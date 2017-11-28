@@ -94,6 +94,7 @@ public class Fleet : MonoBehaviour {
 		case(Phase.GO):
 			{
 				CalculateFleetSpeed ();
+				StartCoroutine (FuelConsumption());
 				AllowMovement (true);
 				break;
 			}
@@ -130,14 +131,38 @@ public class Fleet : MonoBehaviour {
 	}
 
 
+	IEnumerator FuelConsumption(){
+		Ships.ForEach (x => {
+			x.UseShieldFuel(ShieldStrength);
+		});
+		float time = 1f;
+		int counter = 0;
+		while (Speed > 0f && counter < StrategicClock.strategicClock.GoTurnLength) {
+			time += Time.deltaTime;
+			if (time >= 1) {
+				time = 0f;
+				counter++;
+				Ships.ForEach (x => {
+					x.UseMovementFuel(Speed/StrategicClock.strategicClock.GoTurnLength);
+				});
+				CalculateFleetSpeed ();
+			}
+			yield return null;
+		}
+	}
+
 
 	//AT SPEED 10, acceleration 8, WILL MOVE 25 UNITS OVER 5 SECONDS
 	//threaded, so disregard performance cost for now
 	IEnumerator FleetSpeedIterator(){
-		float max = 1000f;
+		float max = 100000f;
 		if (Ships.Count > 0) {
 			foreach (StrategicShip s in Ships) {
-				float mS = s.Thrust / ((float)s.Mass / 50f);
+				//Ninja.JumpToUnity
+				s.ChangeStats();
+			//	Ninja.JumpBack;
+					//Fleet max is top speed of slowest ship
+				float mS = s.MaxSpeed;
 				if (mS < max)
 					max = mS;
 			}

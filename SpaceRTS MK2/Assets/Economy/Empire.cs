@@ -27,6 +27,14 @@ public enum LogCategories{
 public class EmpireLogEntry{
 	Empire empire;
 
+	static List<string> MeaninglessHeadlines = new List<string> () {"Nothing but the Rain", "See ya, Space Cowboy",
+		"Second Star to the Right", "Wait for the Wheel", "Code Zero Zero Zero. Destruct. Zero.",
+		"Authorization Alpha-Alpha 3-0-5.", "Situation Normal", "Protocol <3", "Fly, you fool.",
+		"In case of doubt, attack.", "Wrong us, shall we not revenge?", "Annie, get your gun.",
+		"Roll a hard six.", "Till all are one.","Boom, boom, boom."
+	};
+		
+
 	public int Priority = 5; //1 is highest
 
 	public List<StrategicShip> InvolvedShips = new List<StrategicShip> ();
@@ -84,6 +92,7 @@ public class Empire : MonoBehaviour {
 	public List<Tech> AvailableTechs = new List<Tech> ();
 	public List<string> DebugAvailableTechNames = new List<string>();
 
+	public List<Colony>Colonies = new List<Colony>();
 	public List<Team> Teams = new List<Team>();
 	public List<Character>Characters = new List<Character>();
 	public List<Character> Unassigned = new List<Character>();
@@ -95,6 +104,7 @@ public class Empire : MonoBehaviour {
 
 
 
+	#region Logs
 	public Dictionary<string,List<EmpireLogEntry>>Logbook = new Dictionary<string, List<EmpireLogEntry>>();
 
 	public void AddLog(EmpireLogEntry Entry = null){
@@ -124,8 +134,19 @@ public class Empire : MonoBehaviour {
 			Entries = Logbook [Date];
 		return Entries;
 	}
+	#endregion
 
 	public Dictionary<Theme,float>EmpireThemes = new Dictionary<Theme, float>();
+
+	public void AddColony(Colony c){
+		if(!Colonies.Contains(c))
+			Colonies.Add (c);
+	}
+
+	public void RemoveColony(Colony c){
+		if(Colonies.Contains(c))
+			Colonies.Remove (c);
+	}
 
 	void PhaseManager(Phase p){
 		switch (p) {

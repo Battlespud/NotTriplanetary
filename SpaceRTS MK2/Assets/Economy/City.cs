@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Text;
 using UnityEngine.Events;
+using System.Reflection;
 
 public class City : MonoBehaviour, IResources, IContext {
 
@@ -81,7 +82,7 @@ public class City : MonoBehaviour, IResources, IContext {
 
 	public List<Factory> Factories = new List<Factory> ();
 
-	string Name;
+	string CityName;
 	//Factions Faction;
 	public int population = 100;
 
@@ -97,9 +98,11 @@ public class City : MonoBehaviour, IResources, IContext {
 		population += amount;
 	}
 
+	FieldInfo field;
+
 	// Use this for initialization
 	void Start () {
-		Name = "city";
+		CityName = "city";
 		Collections.Cities.Add (this);
 		Collections.ResourceSources.Add (this);
 		controller = GameObject.FindGameObjectWithTag ("Controller");

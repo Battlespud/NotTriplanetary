@@ -94,7 +94,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 	void UpdateComponentStatusStrings(){
 		ComponentStatus.Clear();
 		foreach(ShipComponents c in Components){
-			string s = string.Format("{0} Functional: {1}",c.Name, c.isDamaged());
+			string s = string.Format("{0} Functional: {1}",c.Name, c.isDestroyed());
 			ComponentStatus.Add(s);
 		}
 	}
@@ -107,7 +107,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 		TurnThrust = 0;
 		Mass = (int)DesignTemplate.mass;
 		foreach (ShipComponents c in Components) {
-			if (!c.isDamaged()) {
+			if (!c.isDestroyed()) {
 				Quarters += (int)c.GetQuarters();
 				if (c.isControl()) {
 					Controllable = true;
@@ -232,7 +232,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 		ShipComponents target;
 		while (amount > 0) {
 			target = RollDAC ();
-			while (target.isDamaged ()) {
+			while (target.isDestroyed ()) {
 				target = RollDAC ();
 				attempts++;
 				if (attempts > MaxAttempts) {
@@ -299,7 +299,7 @@ public class ShipClass : MonoBehaviour, ICharSlot, IEmissions {
 			writer.WriteLine ( "\n" + HullDesignation.Prefix + " " + ShipName + "-Class "+  HullDesignation.HullType + "\nMass: " + DesignTemplate.mass + "KT\nArmor Thickness: " +DesignTemplate.ArmorLayers +"\n" + "Crew: " + DesignTemplate.CrewMin 
 				+ "\nSpare Berths: " + (DesignTemplate.CrewBerths - DesignTemplate.CrewMin) + "\n");
 			foreach (ShipComponents c in Components) {
-				writer.WriteLine (DACRanges[c].ToString() + " " + c.Name + ": " + c.isDamaged().ToString());
+				writer.WriteLine (DACRanges[c].ToString() + " " + c.Name + ": " + c.isDestroyed().ToString());
 			}
 			writer.WriteLine ("\nIntegrity: " + Integrity *100f + "%"); 
 			writer.Close ();
