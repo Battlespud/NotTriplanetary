@@ -26,6 +26,28 @@ public class Colony {
 		return i;
 	}
 
+	void PhaseManager(Phase p){
+		switch (p) {
+		case(Phase.ORDERS):
+			{
+				break;
+			}
+		case(Phase.GO):
+			{
+				break;
+			}
+		case (Phase.REVIEW):
+			{
+
+				break;
+			}
+		case (Phase.INTERRUPT):
+			{
+				break;
+			}
+		}	
+	}
+
 	public List<Race> GetRaces(){
 		List<Race> Present = new List<Race> ();
 		Race.AllRaces.ForEach (x => {
@@ -46,6 +68,7 @@ public class Colony {
 		empire.AddColony (this);
 		Population.Add (r, pop);
 		ColonyName = nam;
+		StrategicClock.PhaseChange.AddListener (PhaseManager);
 	}
 
 }

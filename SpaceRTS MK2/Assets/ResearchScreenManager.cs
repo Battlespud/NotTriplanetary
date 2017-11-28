@@ -74,12 +74,7 @@ public class ResearchScreenManager : MonoBehaviour {
 				manager.Manager = this;
 				manager.tech = d;
 				h.SetParent (TechsContent.transform);
-			//	h.rotation = manager.GetComponent<RectTransform> ().rotation;
-				h.rotation = Camera.main.transform.rotation;
-			//	g.transform.rotation = manager.transform.rotation;
 				h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
-
-			//	h.SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval,h.rect.height);
 				h.sizeDelta = new Vector2 (170f, 35f);
 				h.localScale = new Vector3(1f, 1f, 1f);
 				interval++;
@@ -110,11 +105,7 @@ public class ResearchScreenManager : MonoBehaviour {
 				manager.Manager = this;
 				manager.Assign (d);
 				h.SetParent (ScientistsContent.transform);
-				//	h.rotation = manager.GetComponent<RectTransform> ().rotation;
-				h.rotation = Camera.main.transform.rotation;
-				//	g.transform.rotation = manager.transform.rotation;
 				h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
-				//	h.SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval,h.rect.height);
 				h.sizeDelta = new Vector2 (180f, 35f);
 				h.localScale = new Vector3 (1f, 1f, 1f);
 				interval++;
@@ -137,11 +128,7 @@ public class ResearchScreenManager : MonoBehaviour {
 			ResearchProjectButtonManager manager = g.AddComponent<ResearchProjectButtonManager> ();
 			manager.Setup(d,this);
 			h.SetParent (ResearchProjectsParent.transform);
-			//	h.rotation = manager.GetComponent<RectTransform> ().rotation;
-			h.rotation = Camera.main.transform.rotation;
-			//	g.transform.rotation = manager.transform.rotation;
 			h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
-			//	h.SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval,h.rect.height);
 			h.sizeDelta = new Vector2 (190f, 35f);
 			h.localScale = new Vector3 (1f, 1f, 1f);
 			interval++;

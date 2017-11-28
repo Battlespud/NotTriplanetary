@@ -48,6 +48,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 		Priority.ClearOptions();
 		Priority.AddOptions(priorityStrings);
 		Priority.onValueChanged.AddListener(UpdateLog);
+		Priority.onValueChanged.AddListener(ResetScroll);
 		Months.onValueChanged.AddListener (ResetScroll);
 		Years.onValueChanged.AddListener (ResetScroll);
 		Months.onValueChanged.AddListener (UpdateLog);

@@ -84,8 +84,6 @@ public class Planet : MonoBehaviour, IMineable
 		return true;
 	}
 
-	public string Description ="";
-
 	void PhaseManager(Phase p){
 		switch (p) {
 		case(Phase.ORDERS):
@@ -105,9 +103,12 @@ public class Planet : MonoBehaviour, IMineable
 			{
 				break;
 			}
-
 		}	
 	}
+
+	public string Description ="";
+
+
 
     void AddDeposit(ResourceDeposit r)
     {
@@ -144,8 +145,9 @@ public class Planet : MonoBehaviour, IMineable
 
     void Start()
     {
-		StrategicClock.PhaseChange.AddListener (PhaseManager);
         SetPlanetType(UnityEngine.Random.Range(0, 7));
+		StrategicClock.PhaseChange.AddListener (PhaseManager);
+
     }
 
 
