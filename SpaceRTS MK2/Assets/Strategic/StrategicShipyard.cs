@@ -28,8 +28,9 @@ public class Slipway{
 			return;
 		BuildCost -= parent.Rate * (1 + (((parent.CurrentTooling.mass / 5000) - 1) / 2)); 
 		TurnsToCompletion = (int)System.Math.Ceiling(BuildCost / (1 + (((parent.CurrentTooling.mass / 5000) - 1) / 2)));
+		if (TurnsToCompletion <= 0)
+			TurnsToCompletion = 1;
 		if (BuildCost <= 0)
-			TurnsToCompletion = -1;
 			Complete ();
 	}
 
@@ -73,6 +74,31 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 		else if (Here[0] == null)
 			SeniorOfficer = null;
 	}
+
+	public void RequestDock(Fleet f){
+		Debug.LogError (f.FleetName + " Requests Docking Clearance (Not an Error)");
+		DockedShips.AddRange (f.Ships);
+		f.PerformDock ();
+	}
+	public void RequestUndock(Fleet f){
+		f.Ships.ForEach(x=>{
+			if(DockedShips.Contains(x))
+				DockedShips.Remove(x);
+		});
+		foreach (StrategicShip s in f.Ships) {
+			float amount;
+			if (s.GetFuelNeeded () < FuelSupply) {
+				amount = s.GetFuelNeeded ();
+			} else {
+				amount = FuelSupply;
+			}
+			s.Refuel (amount);
+			FuelSupply -= amount;
+		}
+		f.PerformUndock ();
+	}
+
+
 	//The commander of the station, automatically updated whenever someone transfers in or out.
 	public Character SeniorOfficer;
 
@@ -88,8 +114,13 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	public List<StrategicShip>DockedShips = new List<StrategicShip>();
 
 	public void Retool(ShipDesign newDes){
-		NextTooling = newDes;
-		TimeToNextTooling = CalcToolingTime (newDes);
+		if (CurrentTooling == null) {
+			CurrentTooling = newDes;
+		} else {
+			NextTooling = newDes;
+			//TimeToNextTooling = CalcToolingTime (newDes);
+			TimeToNextTooling = 1;
+		}
 	}
 
 	public int CalcToolingTime(ShipDesign newDes){
@@ -103,6 +134,8 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	public int TimeToNextTooling;
 	public int MaxTonnage;
 	public int Berths;
+
+	public float FuelSupply = 0f;
 
 	//build rate
 	public float Rate = 1f;
@@ -133,7 +166,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	//
 	public void CompleteShip(ShipDesign design){
 		StrategicShip s = new StrategicShip (design, empire);
-		EmpireLogEntry E = new EmpireLogEntry(LogCategories.TECH,4,empire,"STARSHIP CONSTRUCTED",string.Format("{0} has <color=green>finished construction</color> of a <color=silver>{1}</color>-Class {2}, the {3}.",ShipYardName,s.DesignClass.DesignName,s.DesignClass.HullDesignation.HullType,s.ShipName));
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,4,empire,"STARSHIP CONSTRUCTED",string.Format("{0} has <color=green>finished construction</color> of a <color=silver>{1}</color>-Class {2}, the {3}.",ShipYardName,s.DesignClass.DesignName,s.DesignClass.HullDesignation.HullType,s.ShipName));
 		DockedShips.Add (s);
 		//TODO actually make the ship reference for the fleet list.  TODO is this still necessary?
 	}

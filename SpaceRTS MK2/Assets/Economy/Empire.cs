@@ -574,7 +574,7 @@ public class Empire : MonoBehaviour {
 	}
 
 	public string GetName(StrategicShip unit, Theme theme = null){
-		string name = "NoValidThemeSet";
+		string name = "null";
 		List<Range> Ranges = new List<Range> ();
 		if (theme == null) {
 			float last=0f;
@@ -595,6 +595,8 @@ public class Empire : MonoBehaviour {
 		} else {
 			name = ThemeManager.Manager.GetName (unit, theme);
 		}
+		if (name == "null")
+			name = ThemeManager.Manager.GetName (unit, ThemeManager.ThemesDict ["Alliance"]);
 		return name;
 	}
 	#endregion

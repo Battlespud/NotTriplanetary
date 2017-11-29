@@ -44,7 +44,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 		CatColor.Add (LogCategories.ECONOMIC, "<color=green>");
 		CatColor.Add (LogCategories.EXPLORATION, "<color=magenta>");
 		CatColor.Add (LogCategories.MILITARY, "<color=red>");
-		CatColor.Add (LogCategories.TECH, "<color=cyan>");
+		CatColor.Add (LogCategories.TECH, "<color=blue>");
 		Priority.ClearOptions();
 		Priority.AddOptions(priorityStrings);
 		Priority.onValueChanged.AddListener(UpdateLog);
@@ -171,6 +171,7 @@ public class EmpireLogManagerUI : MonoBehaviour {
 			if (EntriesContentParentRect.localPosition.y < 0) {
 				ResetScroll ();
 			}
+
 		}
 	}
 
@@ -180,6 +181,8 @@ public class EmpireLogManagerUI : MonoBehaviour {
 			gameObject.active = false;
 		} else {
 			gameObject.SetActive(true);
+			Months.value = StrategicClock.month;
+			Years.value = StrategicClock.year;
 			ResetScroll ();
 			StrategicClock.RequestPause ();
 			UpdateLog ();

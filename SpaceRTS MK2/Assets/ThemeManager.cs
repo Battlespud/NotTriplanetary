@@ -26,6 +26,9 @@ public class ThemeManager : MonoBehaviour{
 		foreach (string path in paths) {
 			Theme t = new Theme (path);
 		}
+		foreach (Empire e in Empire.AllEmpires) {
+			e.EmpireThemes.Add(ThemesDict["Alliance"],1f);
+		}
 		Initialized = true;
 	}
 

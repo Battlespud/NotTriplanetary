@@ -40,9 +40,11 @@ public class StrategicShip : ILocation{
 	public void MoveCharacterToThis(Character c){
 		c.shipPosting = this;
 		CharactersAboard.Add (c);
+		UpdateCommand ();
 	}
 	public void MoveCharacterFromThis(Character c){
 		CharactersAboard.Remove (c);
+		UpdateCommand ();
 		/*
 		if (c.shipPosting == this)
 			c.shipPosting = null;
@@ -131,7 +133,9 @@ public class StrategicShip : ILocation{
 	//Fuel
 	public float MaxFuel;
 	public float CurrFuel;
-
+	public float GetFuelNeeded(){
+		return MaxFuel - CurrFuel;
+	}
 
 
 
@@ -183,7 +187,8 @@ public class StrategicShip : ILocation{
 
 				if (c.Enabled) {
 					Thrust += c.GetThrust ();
-					Shields += (int)(c.GetMaxShield () * ParentFleet.ShieldStrength);
+					if(ParentFleet != null)
+						Shields += (int)(c.GetMaxShield () * ParentFleet.ShieldStrength);
 				}
 			} else {
 				isDamaged = true;
@@ -440,7 +445,7 @@ public class StrategicShip : ILocation{
 
 		else if(role == NavalCommanderRole.CMD) {
 			Captain = c;
-			ShipLog += string.Format ("{0}: {1} is appointed as Commanding Officer.", StrategicClock.GetDate (), Executive.GetNameString());
+			ShipLog += string.Format ("{0}: {1} is appointed as Commanding Officer.", StrategicClock.GetDate (), Captain.GetNameString());
 		}
 	}
 

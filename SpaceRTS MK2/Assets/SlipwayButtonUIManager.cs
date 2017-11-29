@@ -31,7 +31,7 @@ public class SlipwayButtonUIManager : MonoBehaviour {
 	}
 
 	public void UpdateUI(){
-		
+
 		if(Slip.InUse){
 			InProgress.text = "In Progress: " + Slip.TurnsToCompletion; 
 		}

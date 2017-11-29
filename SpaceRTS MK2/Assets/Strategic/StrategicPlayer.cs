@@ -118,8 +118,16 @@ public class StrategicPlayer : MonoBehaviour {
 			if (Physics.Raycast (ray, out hit)) {
 
 				if (hit.collider.GetComponent<Fleet> ()) {
-					SelectedFleet.Intercept (hit.collider.GetComponent<Fleet> ());
+					SelectedFleet.OrderIntercept (hit.collider.GetComponent<Fleet> ());
 					Debug.Log ("Intercept Plotted");
+					return;
+				}
+				if (hit.collider.GetComponent<Planet> ()) {
+				//	SelectedFleet.EnterOrbit (hit.collider.GetComponent<Planet> ());
+					return;
+				}
+				if (hit.collider.GetComponent<StrategicShipyard> ()) {
+					SelectedFleet.OrderDock (hit.collider.GetComponent<StrategicShipyard> ());
 					return;
 				}
 			}

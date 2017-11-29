@@ -61,6 +61,8 @@ public class OfficerManagerUI : MonoBehaviour {
 
 	public void SelectChar(Character c){
 		SelectedChar = c;
+		HistoryRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+
 		UpdateOfficerUI ();
 	}
 
@@ -91,6 +93,10 @@ public class OfficerManagerUI : MonoBehaviour {
 		HealthImage.color = HealthColor;
 		RankNum.text = string.Format("{0}-{1}",Character.RolesAbbrev[SelectedChar.Role],SelectedChar.Rank);
 		RankName.text = SelectedChar.GetJobTitle ();
+		if (SelectedChar.Noble)
+			Nobility.GetComponentInParent<Image>().color = Color.yellow;
+		else
+			Nobility.GetComponentInParent<Image>().color = RankName.GetComponentInParent<Image>().color;
 		Nobility.text = SelectedChar.GetNobleTitle ();
 		Historytext.text = SelectedChar.History;
 		Portrait.sprite = SelectedChar.GetPortrait();
@@ -147,9 +153,11 @@ public class OfficerManagerUI : MonoBehaviour {
 			string tName = t.FullName;
 			string ShipT = typeof(StrategicShip).FullName;
 			string ShipyardT = typeof(StrategicShipyard).FullName;
+			string ColonyT = typeof(Colony).FullName;
 
 			StrategicShip ship;
 			StrategicShipyard yard;
+			Colony colony;
 			if (tName == ShipT) {
 				ship = (StrategicShip)obj;
 				if (ship.ParentFleet != null) {
@@ -157,11 +165,31 @@ public class OfficerManagerUI : MonoBehaviour {
 						Locs.Add (s);
 					}
 				}
-			} else if (tName == ShipyardT) {
+				foreach (StrategicShipyard s in ship.Emp.Yards) {
+					if (s.DockedShips.Contains (ship)) {
+						Locs.Add (s);
+						s.DockedShips.ForEach (x => {
+							Locs.Add(x);
+						});
+					}
+				}
+			} 
+			else if (tName == ShipyardT) {
 				yard = (StrategicShipyard)obj;
 				foreach (StrategicShip s in yard.DockedShips) {
 					Locs.Add (s);
 				}
+			}
+			else if (tName == ColonyT) {
+				colony = (Colony)obj;
+				foreach (Fleet f in colony.planet.OrbitingFleets) {
+					f.Ships.ForEach (x => {
+						Locs.Add(x);
+					});
+				}
+				colony.planet.GetColonyList ().ForEach (x => {
+					Locs.Add(x);
+				});
 			}
 		}
 
@@ -275,7 +303,7 @@ public class OfficerManagerUI : MonoBehaviour {
 		} else {
 			StrategicClock.RequestPause ();
 			ResetScroll ();
-			UpdateOfficerScroll (0);
+			UpdateOfficerScroll (RolesDrop.value);
 			gameObject.active = true;
 		}
 	}

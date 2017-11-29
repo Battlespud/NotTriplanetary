@@ -32,6 +32,7 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 		MilEngine.CrewRequired = 50;
 		MilEngine.Mass = 200;
 		MilEngine.AddAbility(AbilityCats.THRUST,(float)EngineTypes.MAGNETO,2f,1f);
+		MilEngine.AddAbility(AbilityCats.USEFUEL,(float)EngineTypes.MAGNETO*MilEngine.Mass*5f);
 		MilEngine.Description = "An engine designed for maximum thrust with minimum weight.";
 
 		ShipComponents CivEngine = new ShipComponents ();
@@ -39,6 +40,7 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 		CivEngine.CrewRequired = 125;
 		CivEngine.Mass = 500;
 		CivEngine.AddAbility(AbilityCats.THRUST,(float)EngineTypes.MAGNETO,.75f,1f);
+		CivEngine.AddAbility(AbilityCats.USEFUEL,(float)EngineTypes.MAGNETO*CivEngine.Mass);
 		CivEngine.Description = "An engine designed for efficiency.";
 
 		ShipComponents turnThruster = new ShipComponents ();
@@ -96,6 +98,25 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 		CargoHoldSmall.Category = CompCategory.UTILITY;
 		CargoHoldSmall.Description = "Empty space and the infrastructure needed to service it.";
 
+		ShipComponents FuelLarge = new ShipComponents();
+		FuelLarge.Name = "Fuel Cell";
+		FuelLarge.Mass = 150;
+		FuelLarge.CrewRequired = 0;
+		FuelLarge.AddAbility(AbilityCats.FUEL,10000f,0f,0f);
+		FuelLarge.Category = CompCategory.UTILITY;
+		FuelLarge.Description = "A refillable fuel cell used to power modern engines.";
+
+
+		ShipComponents FuelSmall = new ShipComponents();
+		FuelSmall.Name = "Fuel Cell (S)";
+		FuelSmall.Mass = 15;
+		FuelSmall.CrewRequired = 0;
+		FuelSmall.AddAbility(AbilityCats.FUEL,1000f,0f,0f);
+		FuelSmall.Category = CompCategory.UTILITY;
+		FuelSmall.Description = "A small fuel cell for lighter craft.";
+
+		ShipComponents.AddComponentToPublicDomain (FuelSmall);
+		ShipComponents.AddComponentToPublicDomain (FuelLarge);
 		ShipComponents.AddComponentToPublicDomain (CargoHoldSmall);
 		ShipComponents.AddComponentToPublicDomain (CargoHoldLarge);
 		ShipComponents.AddComponentToPublicDomain (SparePartsLocker);

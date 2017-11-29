@@ -36,7 +36,9 @@ public class OfficerButtonManager : MonoBehaviour {
 		cb.highlightedColor = Color.cyan;
 		t = GetComponent<RectTransform> ();
 		if (Officer.Noble) {
+			Color NobleColor = new Color (255f, 231f, 154f);
 			cb.normalColor = Color.yellow;
+
 		}
 		b.colors = cb;
 	}

@@ -35,7 +35,7 @@ public class StrategicClock : MonoBehaviour {
 
 	public static bool isPaused = false;
 	float TurnLengthBase = 2f; //30
-	public readonly float GoTurnLength = 10f; //10f
+	public readonly float GoTurnLength = 3f; //10f
 	float LengthMultiplier = 1f;
 	float TimeRemaining = 0f;
 
@@ -123,6 +123,7 @@ public class StrategicClock : MonoBehaviour {
 	}
 
 	void EndReview(){
+		TimedTurns = false;
 		EventInvoke (Phase.ORDERS);
 	}
 

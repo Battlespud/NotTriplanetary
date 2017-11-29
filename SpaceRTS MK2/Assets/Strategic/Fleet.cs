@@ -11,7 +11,9 @@ public enum MoveMode{
 	STATIONKEEPING,
 	INTERCEPT,
 	MISSILE,
-	BALLISTIC
+	BALLISTIC,
+	DOCK,
+	DOCKED
 }
 
 public class Fleet : MonoBehaviour {
@@ -28,6 +30,7 @@ public class Fleet : MonoBehaviour {
 	//intercepts
 	public NavMeshAgent TargetAgent;
 	public Fleet Target;
+	public StrategicShipyard TargetShipyard;
 
 	LineRenderer lr;
 	LineRenderer standlr;
@@ -47,6 +50,8 @@ public class Fleet : MonoBehaviour {
 	public float Speed;
 
 	public List<Vector3> Waypoints = new List<Vector3>();
+
+	public List<GameObject> NearbyGameObjects = new List<GameObject>();
 
 	//Combat
 	public List<Fleet>EnemyClose = new List<Fleet>();
@@ -128,27 +133,32 @@ public class Fleet : MonoBehaviour {
 		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync (this, FleetSpeedIterator ());
 		if (Speed > MaxSpeed)
 			Speed = MaxSpeed;
+		if (Mode == MoveMode.DOCKED)
+			Speed = 0f;
 	}
 
 
 	IEnumerator FuelConsumption(){
-		Ships.ForEach (x => {
-			x.UseShieldFuel(ShieldStrength);
-		});
-		float time = 1f;
-		int counter = 0;
-		while (Speed > 0f && counter < StrategicClock.strategicClock.GoTurnLength) {
-			time += Time.deltaTime;
-			if (time >= 1) {
-				time = 0f;
-				counter++;
-				Ships.ForEach (x => {
-					x.UseMovementFuel(Speed/StrategicClock.strategicClock.GoTurnLength);
-				});
-				CalculateFleetSpeed ();
+		if (Mode != MoveMode.DOCKED) {
+			Ships.ForEach (x => {
+				x.UseShieldFuel (ShieldStrength);
+			});
+			float time = 1f;
+			int counter = 0;
+			while (Speed > 0f && counter < StrategicClock.strategicClock.GoTurnLength) {
+				time += Time.deltaTime;
+				if (time >= 1) {
+					time = 0f;
+					counter++;
+					Ships.ForEach (x => {
+						x.UseMovementFuel (Speed / StrategicClock.strategicClock.GoTurnLength);
+					});
+					CalculateFleetSpeed ();
+				}
+				yield return null;
 			}
-			yield return null;
 		}
+		yield return null;
 	}
 
 
@@ -179,7 +189,7 @@ public class Fleet : MonoBehaviour {
 			max = Agent.speed;
 		}
 		else  if(Ships.Count <= 0 && Missiles.Count <= 0){
-			max = 5;
+			max = 15;
 		}
 
 		yield return Ninja.JumpToUnity;
@@ -200,6 +210,7 @@ public class Fleet : MonoBehaviour {
 		}
 		
 	}
+
 
 
 
@@ -243,7 +254,7 @@ public class Fleet : MonoBehaviour {
 	void Update () {
 		SetPaths ();
 		downlr.SetPositions(new Vector3[]{new Vector3(0f,0f,0f), new Vector3 (0f, StrategicExtensions.yLayer*-6.5f, 0f)});
-		if (Agent.speed > 0f && Mode != MoveMode.INTERCEPT) {
+		if (Agent.speed > 0f && Mode == MoveMode.NORMAL) {
 			WaypointProgress();
 		}
 		else if (Mode == MoveMode.INTERCEPT && Target != null) {
@@ -257,6 +268,28 @@ public class Fleet : MonoBehaviour {
 			}
 			Waypoints.Add (Agent.destination);
 		}
+		else if (Mode == MoveMode.DOCK && TargetShipyard != null) {
+			Waypoints.Clear ();
+			Agent.destination = TargetShipyard.transform.position;
+			if (NearbyGameObjects.Contains (TargetShipyard.gameObject)) {
+				TargetShipyard.RequestDock (this);
+			}
+			Waypoints.Add (Agent.destination);
+		}
+	}
+
+	public void PerformDock(){
+		Debug.LogError ("Fleet has docked.");
+		Mode = MoveMode.DOCKED;
+		ShieldsUp = false;
+		ShieldStrength = 0f;
+		Waypoints.Clear ();
+	}
+
+	public void PerformUndock(){
+		Mode = MoveMode.DOCKED;
+		ShieldsUp = false;
+		ShieldStrength = 0f;
 	}
 
 	public float TimeToIntercept;
@@ -282,12 +315,21 @@ public class Fleet : MonoBehaviour {
 			}
 	}
 
-	public void Intercept(Fleet t)
+	public void OrderIntercept(Fleet t)
 	{
 		Target = t;
 		TargetAgent = t.Agent;
 		Mode = MoveMode.INTERCEPT;
 		Waypoints.Clear ();
+		Agent.Stop ();
+		SetPaths ();
+	}
+
+	public void OrderDock(StrategicShipyard s){
+		TargetShipyard = s;
+		Mode = MoveMode.DOCK;
+		Waypoints.Clear ();
+		Waypoints.Add (s.transform.position);
 		Agent.Stop ();
 		SetPaths ();
 	}
@@ -411,6 +453,7 @@ public class Fleet : MonoBehaviour {
 			}
 
 		}
+		NearbyGameObjects.Add (col.gameObject);
 		StrategicUIManager.UpdateUI();
 
 	}
@@ -418,7 +461,14 @@ public class Fleet : MonoBehaviour {
 
 
 	void OnTriggerExit(Collider col){
-
+		NearbyGameObjects.Remove (col.gameObject);
+		if (col.GetComponent<Fleet> ()) {
+			Fleet f = col.GetComponent<Fleet> ();
+			if (EnemyClose.Contains (f))
+				EnemyClose.Remove (f);
+			if (FriendlyClose.Contains (f))
+				FriendlyClose.Remove (f);
+		}
 	}
 
 	void PromptAction(){

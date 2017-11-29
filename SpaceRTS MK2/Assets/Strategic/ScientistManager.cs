@@ -10,7 +10,7 @@ public class ScientistManager : MonoBehaviour {
 
 	public void Select(){
 		Manager.SelectedScientist = Scientist;
-		Debug.Log("Selecting " + Scientist.GetNameString());
+//		Debug.Log("Selecting " + Scientist.GetNameString());
 		Manager.UpdateUI ();
 	}
 

@@ -104,6 +104,8 @@ public class DesignScreenManager : MonoBehaviour {
 	public int Mass;
 	ArmorTypes ArmorType = ArmorTypes.DURANIUM;
 
+	float FuelMax = 0f;
+
 	public float BuildCost;
 
 	public int Quarters;   //how much space for crew there is with current loadout.
@@ -121,7 +123,7 @@ public class DesignScreenManager : MonoBehaviour {
 			Components.AddRange (LoadedComponents);
 		}
 	//	Debug.Log (Components.Count + " components loaded.");
-		float yOff = ShipComponentsUIButton.GetComponent<RectTransform>().sizeDelta.y * .65f*-1f;
+		float yOff = ShipComponentsUIButton.GetComponent<RectTransform>().sizeDelta.y * .75f*-1f;
 		int interval = 1;
 		foreach (GameObject g in UIObjects) {
 			Destroy (g);
@@ -130,7 +132,7 @@ public class DesignScreenManager : MonoBehaviour {
 			GameObject d = Instantiate (ShipComponentsUIButton) as GameObject;
 			UIObjects.Add (d);
 		d.transform.SetParent (ContentParentScrollview);
-			d.GetComponent<RectTransform> ().rotation = Camera.main.transform.rotation;
+		//	d.GetComponent<RectTransform> ().rotation = Camera.main.transform.rotation;
 			d.GetComponent<RectTransform> ().transform.localScale = new Vector3 (1f, 1f, 1f);
 			d.GetComponent<RectTransform>().anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
 			ShipComponentUIManager s = d.GetComponent<ShipComponentUIManager> ();
@@ -209,7 +211,9 @@ public class DesignScreenManager : MonoBehaviour {
 	}
 
 	void SetupScreen(){
-		Debug.Log ("Setting up design screen");
+//		Debug.Log ("Setting up design screen");
+		DesignName.onValueChanged.AddListener(BuildDescription);
+		HullDesignation.onValueChanged.AddListener (BuildDescription);
 		HullDesignation.ClearOptions ();
 		HullDesignation.AddOptions (HullDes.HullTypes);
 		ArmorThickness = 1;
@@ -291,13 +295,17 @@ public class DesignScreenManager : MonoBehaviour {
 		int M = 0;
 		MaxCargo = 0;
 		MSP = 0;
+		FuelMax = 0f;
+		BuildCost = 0f;
+
 		foreach (ShipComponents c in Components) {
 			int number;
 			if (AddedComponents.TryGetValue (c, out number)) {
 				M += (c.Mass * number );
 				MaxCargo += c.GetCargo () * number;
 				MSP += c.GetMaxSpareParts () * number;
-				BuildCost += c.GetCost ();
+				BuildCost += c.GetCost ()*number;
+				FuelMax += c.GetFuelMax () * number;
 			}
 		}
 		M += ArmorMass () * (ArmorLength * (ArmorThickness + (int)Mathf.Pow(ArmorThickness, .35f)));
@@ -334,8 +342,7 @@ public class DesignScreenManager : MonoBehaviour {
 		ArmorText.text = ArmorLength.ToString() + " x " +  ArmorThickness.ToString ();
 		SetupMaint ();
 		InstalledText.text = GenerateInstalledText();
-		Description.text = BuildDescription();
-
+		BuildDescription ();
 	}
 
 	string GenerateInstalledText(){
@@ -407,19 +414,29 @@ public class DesignScreenManager : MonoBehaviour {
 		yield return Ninja.JumpToUnity;
 	}
 
-	string BuildDescription(){
-		string description = string.Format ("{0} Class {1}\t{2} KTons\t{3} Crew\t{4} BuildCost\n{5} km/s\nBFR: {6}%\tEFR: {7}%\tEngineering:{8}%\tMSP:{9}\n",
-			DesignName.text, HullDesignation.options [HullDesignation.value].text, Mass, ReqCrew, BuildCost,MaxSpeed, BaseFailRate*100f, EffectiveFailRate*100f, EngineeringPercent, MSP);
+	void BuildDescription(string s =""){
+		BuildDescription ();
+	}
+	void BuildDescription(int s =0){
+		BuildDescription ();
+	}
+	void BuildDescription(){
+		string description = string.Format ("{0} Class {1}\t{2} KTons\t{3} Crew\t{4} BuildCost\n<color=blue>{5}</color> Astrons/Month\nBFR: {6}%\tEFR: {7}%\tEngineering:{8}%\tMSP:{9}\n",
+			DesignName.text, HullDesignation.options [HullDesignation.value].text, Mass, ReqCrew, BuildCost, MaxSpeed.ToString("##.##"), (BaseFailRate*100f).ToString("##.#"), (EffectiveFailRate*100f).ToString("##.#"), EngineeringPercent.ToString("##.#"), MSP);
 		if (MaxCargo > 0)
-			description += "Max Cargo Space: " + MaxCargo + " Tons";
+			description += "Max Cargo Space: " + MaxCargo + " Tons\n";
+		description += string.Format ("Total Fuel Capacity: <color=green>{0}</color> HON.\n", FuelMax);
+		float CompoundFuelUse = 0f;
 		foreach (ShipComponents s in Components) {
 			if (s.GetThrust () > 0 && AddedComponents.ContainsKey(s)) {
 				float mSpeedOnly = s.GetThrust()*AddedComponents[s] / ((float)Mass/50f)*1000f;
-
-				description += string.Format ("Max speed on just {0}s: {1}\n", s.Name, mSpeedOnly);
+				float TurnsOfFuel = FuelMax /( s.GetFuelUse () * AddedComponents [s]);
+				CompoundFuelUse += ( s.GetFuelUse () * AddedComponents [s]);
+				description += string.Format ("Max speed on just <color=grey>{0}s</color>: <color=blue>{1}</color>. (<color=orange>{2}</color> Months of fuel.)\n", s.Name, mSpeedOnly.ToString("##.##"), TurnsOfFuel.ToString("##.#"));
 			}
 		}
-		return description;
+		description += string.Format ("<color=green>{0}</color> Months of fuel in current configuration. Maximum Range: <color=magenta>{1}</color> Astrons.", (FuelMax/CompoundFuelUse).ToString("##.#"),(FuelMax/CompoundFuelUse * MaxSpeed).ToString("##.##"));
+		Description.text = description;
 	}
 
 }

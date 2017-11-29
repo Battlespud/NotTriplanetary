@@ -430,7 +430,7 @@ public class Character {
 		shipPosting = s;
 		s.AssignOfficer (this, NavalCommanderRole.CMD);
 		NavalRole = NavalCommanderRole.CMD;
-		string st = string.Format("{0}: <color=navy>{1}</color> is placed in <color=green>appointed</color> <color=cyan>Captain</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
+		string st = string.Format("{0}: <color=navy>{1}</color> is <color=green>made</color> <color=cyan>Captain</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
 		AddHistory (st);
 	}
 
@@ -502,6 +502,29 @@ public class Character {
 		shipPosting = null;
 		Location = s;
 		string st = string.Format("{0}: <color=navy>{1}</color> <color=orange>steps down</color> as the <color=cyan>Senior Officer</color> aboard <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
+		AddHistory (st);
+	}
+
+	public void AppointGovernor(Colony s){
+		if(Location != s)
+			MoveTo (s);
+		s.Governor = this;
+		NavalRole = NavalCommanderRole.CMD;
+		SetAssigned (true);
+		shipPosting = null;
+		Location = s;
+		string st = string.Format("{0}: <color=navy>{1}</color> is <color=green>appointed</color> the <color=cyan>Governor</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ColonyName);
+		AddHistory (st);
+	}
+
+	public void StepDownGovernor(Colony s){
+		if(Location != s)
+			MoveTo (s);
+		NavalRole = NavalCommanderRole.NONE;
+		SetAssigned (false);
+		shipPosting = null;
+		Location = s;
+		string st = string.Format("{0}: <color=navy>{1}</color> <color=orange>steps down</color> as the <color=cyan>Governor</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ColonyName);
 		AddHistory (st);
 	}
 

@@ -31,7 +31,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 	public Button BuildShipButton;
 	public Button CancelBuildButton;
 
-	public GameObject DockedShipPrefab;
+	public List<GameObject> DockedShipButtons = new List<GameObject>();
 	public GameObject DockedShipsContentParent;
 	public RectTransform DockedShipsContentParentRect;
 
@@ -52,6 +52,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 		foreach (SlipwayButtonUIManager s in Slipways) {
 			s.UpdateUI ();
 		}
+		SetupDockedShips ();
 	}
 
 	void SetupSlipways(){
@@ -78,38 +79,34 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 		}
 	}
 
-	/*
+
 	void SetupDockedShips(){
 
-		int yOff = -40;
-		int interval = 1;
-
-		foreach (DockedShipPrefab g in DockedShipPrefabs) {
-			Destroy (g.gameObject);
+		foreach (GameObject g in DockedShipButtons) {
+			Destroy (g);
 		}
-		DockedShipPrefabs.Clear();
+		DockedShipButtons.Clear ();
 
-		foreach (StrategicShip c in Shipyard.DockedShips) {
-			GameObject d = Instantiate (DockedShipPrefab) as GameObject;
-			DockedShipManager e = d.GetComponent<DockedShipManager> ();
-			e.Manager = this;
-			DockedShipsManager.Add (e);
-			d.transform.SetParent (DockedShipsContentParent.transform);
-			//	d.GetComponent<RectTransform>().localScale = new Vector3 (.8f, .3f, 1f);
-			d.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge (RectTransform.Edge.Left, 45f, d.GetComponent<RectTransform>().rect.width);
-			d.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge (RectTransform.Edge.Top, yOff*interval, d.GetComponent<RectTransform>().rect.height);
-			d.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (93f, interval * yOff, 0f);
-			d.GetComponent<RectTransform> ().rotation = DockedShipsContentParent.GetComponent<RectTransform> ().rotation;
-
-			//		d.GetComponent<RectTransform>().localPosition = new Vector3 (93, interval * yOff, 0f);
-			//	d.transform.localPosition = new Vector3();
-
-		//	e.AssignSlip (c, interval.ToString() );
+		int yOff = -20;
+		int interval = 1;
+		foreach (StrategicShip d in Shipyard.DockedShips) {
+			GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+			DockedShipButtons.Add (g);
+			RectTransform h = g.GetComponent<RectTransform> ();
+		//	ILocationButtonManager manager = g.AddComponent<ILocationButtonManager> ();
+		//	manager.Manager = this;
+		//	manager.Assign (d);
+			g.GetComponentInChildren<Text>().text = d.ShipName;
+			h.SetParent (DockedShipsContentParent.transform);
+			//	h.rotation = Camera.main.transform.rotation;
+			h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
+			h.sizeDelta = new Vector2 (300f, 15f);
+			h.localScale = new Vector3 (1f, 1f, 1f);
 			interval++;
 		}
 	}
 
-*/
+
 
 	//Resets the dropdown
 	void SetupRetoolUI(){
@@ -181,9 +178,11 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 		UpdateUI ();
 	}
 
+	GameObject ButtonPrefab;
 
 	// Use this for initialization
 	void Start () {
+		ButtonPrefab = Resources.Load<GameObject>("Button") as GameObject;
 		DesignsDrop.onValueChanged.AddListener (UpdateRetoolUI);
 		Manager = this;
 		if(!SlipwaysPrefab)

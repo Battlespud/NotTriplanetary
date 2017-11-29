@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 //valid planet compositions
 /* 
@@ -70,6 +71,21 @@ public class Planet : MonoBehaviour, IMineable
 
 	Dictionary<Empire,Colony> Colonies = new Dictionary<Empire, Colony> ();
 
+	public List<Fleet> OrbitingFleets = new List<Fleet>();
+	void OnTriggerEnter(Collider col){
+		Debug.LogError ("Fleet in orbit");
+		if (col.GetComponent<Fleet> ()) {
+			OrbitingFleets.Add (col.GetComponent<Fleet> ());
+		}
+
+	}
+	void OnTriggerExit(Collider col){
+		if (col.GetComponent<Fleet> ()) {
+			OrbitingFleets.Remove (col.GetComponent<Fleet> ());
+		}
+
+	}
+
 	public Colony GetColony(Empire e){
 		Colony c = null;
 			Colonies.TryGetValue (e, out c);
@@ -82,6 +98,10 @@ public class Planet : MonoBehaviour, IMineable
 		Colony c = new Colony (owner, r, startingPop, name);
 		Colonies.Add (owner, c);
 		return true;
+	}
+
+	public List<Colony> GetColonyList(){
+		return Colonies.Values.ToList();
 	}
 
 	void PhaseManager(Phase p){
@@ -106,6 +126,7 @@ public class Planet : MonoBehaviour, IMineable
 		}	
 	}
 
+	public string PlanetName = "Unnamed Planet";
 	public string Description ="";
 
 
