@@ -64,10 +64,12 @@ public class StrategicClock : MonoBehaviour {
 
 
 	public static void RequestPause(){
+		isPaused = true;
 		PauseEvent.Invoke (true);
 	}
 
 	public static void Unpause(){
+		isPaused = false;
 		PauseEvent.Invoke (false);
 	}
 

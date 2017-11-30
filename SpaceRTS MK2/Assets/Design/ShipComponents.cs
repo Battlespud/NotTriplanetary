@@ -277,6 +277,8 @@ public class ShipComponents {
 	//GETTERS
 	#region Ability Getters
 	public float GetThrust(){
+		if (Destroyed || Enabled == false)
+			return 0f;
 		Ability a;
 		Abilities.TryGetValue (AbilityCats.THRUST,out a);
 		if (a!= null)	return a.thrust;

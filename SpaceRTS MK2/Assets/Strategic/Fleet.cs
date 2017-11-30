@@ -31,6 +31,7 @@ public class Fleet : MonoBehaviour {
 	public NavMeshAgent TargetAgent;
 	public Fleet Target;
 	public StrategicShipyard TargetShipyard;
+	public StrategicShipyard DockedShipyard;
 
 	LineRenderer lr;
 	LineRenderer standlr;
@@ -60,6 +61,19 @@ public class Fleet : MonoBehaviour {
 	//shields are raised 
 	public bool ShieldsUp = false;
 	public float ShieldStrength = 0f;
+
+	public void AddShip(StrategicShip s){
+		if(!Ships.Contains(s))
+			Ships.Add (s);
+		s.ParentFleet = this;
+		RegenerateFleetShipNames ();
+	}
+	public void RemoveShip(StrategicShip s){
+		if(Ships.Contains(s))
+			Ships.Remove (s);
+		s.ParentFleet = null;
+		RegenerateFleetShipNames ();
+	}
 
 	void Pause(bool b){
 		pause = b;
@@ -144,18 +158,20 @@ public class Fleet : MonoBehaviour {
 				x.UseShieldFuel (ShieldStrength);
 			});
 			float time = 1f;
-			int counter = 0;
-			while (Speed > 0f && counter < StrategicClock.strategicClock.GoTurnLength) {
+			while (StrategicClock.GetPhase() == Phase.GO) {
+				while (StrategicClock.isPaused) {
+					yield return null;
+				}
 				time += Time.deltaTime;
 				if (time >= 1) {
 					time = 0f;
-					counter++;
 					Ships.ForEach (x => {
-						x.UseMovementFuel (Speed / StrategicClock.strategicClock.GoTurnLength);
+						x.UseMovementFuel (Agent.speed*1000 );
 					});
 					CalculateFleetSpeed ();
 				}
 				yield return null;
+
 			}
 		}
 		yield return null;
@@ -281,13 +297,17 @@ public class Fleet : MonoBehaviour {
 	public void PerformDock(){
 		Debug.LogError ("Fleet has docked.");
 		Mode = MoveMode.DOCKED;
+		DockedShipyard = TargetShipyard;
+		TargetShipyard = null;
 		ShieldsUp = false;
 		ShieldStrength = 0f;
 		Waypoints.Clear ();
 	}
 
 	public void PerformUndock(){
-		Mode = MoveMode.DOCKED;
+		Debug.LogError ("Fleet has undocked.");
+		DockedShipyard = null;
+		Mode = MoveMode.NORMAL;
 		ShieldsUp = false;
 		ShieldStrength = 0f;
 	}
@@ -317,6 +337,9 @@ public class Fleet : MonoBehaviour {
 
 	public void OrderIntercept(Fleet t)
 	{
+		if (Mode == MoveMode.DOCKED) {
+			DockedShipyard.RequestUndock (this);
+		}
 		Target = t;
 		TargetAgent = t.Agent;
 		Mode = MoveMode.INTERCEPT;
@@ -326,6 +349,9 @@ public class Fleet : MonoBehaviour {
 	}
 
 	public void OrderDock(StrategicShipyard s){
+		if (Mode == MoveMode.DOCKED) {
+			DockedShipyard.RequestUndock (this);
+		}
 		TargetShipyard = s;
 		Mode = MoveMode.DOCK;
 		Waypoints.Clear ();
@@ -380,7 +406,10 @@ public class Fleet : MonoBehaviour {
 	public void AddWaypoint(Vector3 targ,bool shift){
 		if (!AcceptsOrders())
 			return;
-		
+		if (Mode == MoveMode.DOCKED) {
+			DockedShipyard.RequestUndock (this);
+		}
+
 		if (shift) {
 			Waypoints.Add (targ);
 			IssueMovementCommand(Waypoints[0]);

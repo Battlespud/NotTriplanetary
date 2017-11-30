@@ -63,7 +63,7 @@ public class StrategicShip : ILocation{
 		if(OnBoard.Count > 0){
 			if (Captain != null && Captain != OnBoard [0]) {
 				Captain.StepDownCaptain (this);
-				ShipLog += string.Format ("{0}: {1} stands down as Captain.", StrategicClock.GetDate (), Captain.GetNameString());
+				ShipLog += string.Format ("\n{0}: {1} stands down as Captain.", StrategicClock.GetDate (), Captain.GetNameString());
 
 			}
 			OnBoard [0].AppointCaptain (this);
@@ -71,7 +71,7 @@ public class StrategicShip : ILocation{
 		if(OnBoard.Count > 1){
 			if (Executive != null && Executive != OnBoard [1]) {
 				Executive.StepDownXO (this);
-				ShipLog += string.Format ("{0}: {1} stands down as Exec.", StrategicClock.GetDate (), Executive.GetNameString());
+				ShipLog += string.Format ("\n{0}: {1} stands down as Exec.", StrategicClock.GetDate (), Executive.GetNameString());
 
 			}
 			OnBoard [1].AppointXO (this);
@@ -131,8 +131,13 @@ public class StrategicShip : ILocation{
 	public Emissions emissions;
 
 	//Fuel
-	public float MaxFuel;
-	public float CurrFuel;
+	 float MaxFuel;
+	 float CurrFuel;
+
+	public string GetFuelString(){
+		return string.Format ("{0}/{1}", CurrFuel, MaxFuel);
+	}
+
 	public float GetFuelNeeded(){
 		return MaxFuel - CurrFuel;
 	}
@@ -158,7 +163,27 @@ public class StrategicShip : ILocation{
 	public Dictionary<int,ShipComponents> DAC = new Dictionary<int, ShipComponents> ();
 	public Dictionary<ShipComponents,Range>DACRanges = new Dictionary<ShipComponents, Range>();
 
+	public void TransferToFleet(Fleet f){
+		if (f == ParentFleet)
+			return;
+		if (ParentFleet != null) {
+			ParentFleet.RemoveShip (this);
+			ParentFleet = null;
+		}
+		f.AddShip (this);
+		ShipLog += string.Format ("\n{0}: {1} is attached to {2}", StrategicClock.GetDate (), ShipName, f.FleetName);
+	}
 
+	public string GetCaptainName(){
+		if (Captain != null)
+			return Captain.GetNameString ();
+		return "None Assigned";
+	}
+	public string GetExecName(){
+		if (Executive != null)
+			return Executive.GetNameString ();
+		return "None Assigned";
+	}
 
 	public void ChangeStats(bool SuppressFuelCheck = false){
 		Quarters = 0;
@@ -200,8 +225,8 @@ public class StrategicShip : ILocation{
 
 		CrewString = string.Format ("Crew: {0}/{1}", Crew, mCrew);
 		UpdateComponentStatusStrings ();
-		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,CalculateCargo()); //TODO Test this and make sure it works
-		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,BuildArmorString()); //TODO Test this and make sure it works
+		CalculateCargo(); //TODO Test this and make sure it works
+		BuildArmorString(); //TODO Test this and make sure it works
 	}
 
 	void CheckFuel(){
@@ -222,22 +247,28 @@ public class StrategicShip : ILocation{
 	}
 
 
-	public void UseMovementFuel(float s){
-		if (ParentFleet != null) {
-		//	float s = ParentFleet.Speed;
+	public void UseMovementFuel(float speed){
+		Debug.LogError ("Checking fuel. This must be followed by a notification of how much fuel was used, or else no engines were found");
 			List<ShipComponents> Sorted = Components.OrderBy (x => x.GetFuelUse ()).ToList();
 			foreach (ShipComponents c in Sorted) {
-				if (c.Category == CompCategory.ENGINE && !c.isDestroyed () && c.Enabled) {
-					float multiplier = 1f;
-					if (s < c.GetThrust () / ((float)Mass / 50f))
-						multiplier = c.GetThrust () / (Mass / 50f);
-					s -= c.GetThrust () / (((float)Mass / 50f));
-					CurrFuel -= c.GetFuelUse ()*multiplier;
-				}
-				if (s <= 0)
+				if (c.Category == CompCategory.ENGINE) {
+
+					float original = CurrFuel;
+					float multiplier = 1f; //used if we're only using part of an engines full power to reduce fuel cost.
+					if (speed < SpeedFromThrust (c.GetThrust())) {
+						multiplier = speed / SpeedFromThrust (c.GetThrust());
+					}
+				speed -= SpeedFromThrust(c.GetThrust())*multiplier;
+				CurrFuel -= c.GetFuelUse ()*multiplier / StrategicClock.strategicClock.GoTurnLength;
+				Debug.LogError(ShipName + " has used " + (original - CurrFuel) + "fuel units");
+				if (speed <= 0)
 					break;
+				}
 			}
-		}
+	}
+
+	float SpeedFromThrust(float thrust){
+		return thrust / (Mass / 50f);
 	}
 
 	public void UseShieldFuel(float Percent){
@@ -255,9 +286,10 @@ public class StrategicShip : ILocation{
 		if (CurrFuel > MaxFuel)
 			CurrFuel = MaxFuel;
 		ChangeStats ();
+		CheckFuel ();
 	}
 
-	IEnumerator CalculateCargo(){
+	void CalculateCargo(){
 		foreach (ICargo c in Cargo) {
 			CurrentCargo += c.GetSize ();
 		}
@@ -271,7 +303,6 @@ public class StrategicShip : ILocation{
 			CurrentCargo += c.GetSize ();
 			}
 		}
-		yield return null;
 	}
 
 	bool UseMaintParts(float amount){
@@ -305,18 +336,21 @@ public class StrategicShip : ILocation{
 
 	void UpdateComponentStatusStrings(){
 		ComponentStatus.Clear();
-		foreach(ShipComponents c in Components){
+		List<ShipComponents> Sorted = Components.OrderBy (x => x.Category).ThenBy (x => x.Name).ThenBy(x=>x.isDamaged()).ThenBy(x=>x.isDestroyed()).ToList();
+		foreach(ShipComponents c in Sorted){
 			string stat = "";
 			string color = "";
 			string colorEnd = "</color>";
 			if (c.isDestroyed ()) {
 				stat = "XX";
 				color = "<color=red>";
+			} else if (c.isDamaged ()) {
+				stat = "OX";
+				color = "<color=orange>";
 			}
 			else {
 				stat = "OK";
 				color = "<color=green>";
-
 			}
 			string s = string.Format("{0}{1}{2} | {3}{4}{5}",color,stat,colorEnd,color,c.Name,colorEnd);
 			ComponentStatus.Add(s);
@@ -337,10 +371,7 @@ public class StrategicShip : ILocation{
 
 	public Fleet ParentFleet;
 
-	public void AssignFleet(Fleet f){
-		ShipLog += string.Format ("{0}: {1} is attached to {2}", StrategicClock.GetDate (), ShipName, f.FleetName);
-		ParentFleet = f;
-	}
+
 		
 
 	public void Save(Ship s){
@@ -362,7 +393,7 @@ public class StrategicShip : ILocation{
 		ChangeStats ();
 		UpdateMaint ();
 		AddHistory ("Launched", string.Format ("{0}: {1} is launched.", StrategicClock.GetDate (), ShipName));
-		ShipLog += string.Format ("{0}: {1} is launched.", StrategicClock.GetDate (), ShipName);
+		ShipLog += string.Format ("\n{0}: {1} is launched.", StrategicClock.GetDate (), ShipName);
 		CommissionDate = StrategicClock.GetDate ();
 	}
 
@@ -415,17 +446,17 @@ public class StrategicShip : ILocation{
 		if (!c.isDestroyed ()) {
 			if (!UseMaintParts (c.MaintReq)) {
 				c.Damage ();
-				ShipLog += string.Format ("{0}: {1} experiences a maintenance failure with the {2}, repairs proved impossible with current supplies.", StrategicClock.GetDate (), ShipName,c.Name);
+				ShipLog += string.Format ("\n{0}: {1} experiences a maintenance failure with the {2}, repairs proved impossible with current supplies.", StrategicClock.GetDate (), ShipName,c.Name);
 				EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,Emp,"MAINTENANCE FAILURE",string.Format("{0} has experienced a maintenance failure.",ShipName));
 				ChangeStats ();
 			} else {
-				ShipLog += string.Format ("{0}: {1} experiences a maintenance failure with the {2}, repairs were made with maintenance supplies.", StrategicClock.GetDate (), ShipName,c.Name);
+				ShipLog += string.Format ("\n{0}: {1} experiences a maintenance failure with the {2}, repairs were made with maintenance supplies.", StrategicClock.GetDate (), ShipName,c.Name);
 				EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,4,Emp,"MAINTENANCE FAILURE",string.Format("{0} has experienced a maintenance failure. No damage reported.",ShipName),CharactersAboard,new List<StrategicShip>{this});
 			}
 		} else {
 			if (counter >= .85* Components.Count) {
 				DestroyShip ();
-				ShipLog += "<color=red>---Loss Resultant from Catastrophic Maintenance Failures---</color>";
+				ShipLog += "\n<color=red>---Loss Resultant from Catastrophic Maintenance Failures---</color>";
 			}
 			TakeInternalHit (damage, counter++);
 		}
@@ -440,12 +471,12 @@ public class StrategicShip : ILocation{
 	public void AssignOfficer(Character c, NavalCommanderRole role ){
 		if (role == NavalCommanderRole.XO) {
 			Executive = c;
-			ShipLog += string.Format ("{0}: {1} is appointed as Executive Officer", StrategicClock.GetDate (), Executive.GetNameString());
+			ShipLog += string.Format ("\n{0}: {1} is appointed as Executive Officer", StrategicClock.GetDate (), Executive.GetNameString());
 		}
 
 		else if(role == NavalCommanderRole.CMD) {
 			Captain = c;
-			ShipLog += string.Format ("{0}: {1} is appointed as Commanding Officer.", StrategicClock.GetDate (), Captain.GetNameString());
+			ShipLog += string.Format ("\n{0}: {1} is appointed as Commanding Officer.", StrategicClock.GetDate (), Captain.GetNameString());
 		}
 	}
 
@@ -500,7 +531,7 @@ public class StrategicShip : ILocation{
 
 	public string ArmorString;
 
-	IEnumerator BuildArmorString(){
+	void BuildArmorString(){
 		StringBuilder a = new StringBuilder();
 		for (int y = 0; y < Armor.GetLength (1); y++) {
 			for (int x = 0; x < Armor.GetLength (0); x++) {
@@ -517,7 +548,6 @@ public class StrategicShip : ILocation{
 			a.AppendLine();
 		}
 		ArmorString = a.ToString();
-		yield return Ninja.JumpToUnity;
 	}
 
 

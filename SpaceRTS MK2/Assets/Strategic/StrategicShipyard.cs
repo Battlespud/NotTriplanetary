@@ -78,8 +78,10 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	public void RequestDock(Fleet f){
 		Debug.LogError (f.FleetName + " Requests Docking Clearance (Not an Error)");
 		DockedShips.AddRange (f.Ships);
+		DockedFleets.Add (f);
 		f.PerformDock ();
 	}
+
 	public void RequestUndock(Fleet f){
 		f.Ships.ForEach(x=>{
 			if(DockedShips.Contains(x))
@@ -95,6 +97,9 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 			s.Refuel (amount);
 			FuelSupply -= amount;
 		}
+		Debug.LogError ("Fleet refueled and cleared to depart.");
+
+		DockedFleets.Remove (f);
 		f.PerformUndock ();
 	}
 
@@ -112,6 +117,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 
 	//Constructed ships are added to this list so they can be moved to fleets and assigned officers.
 	public List<StrategicShip>DockedShips = new List<StrategicShip>();
+	public List<Fleet> DockedFleets = new List<Fleet> ();
 
 	public void Retool(ShipDesign newDes){
 		if (CurrentTooling == null) {
@@ -135,7 +141,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	public int MaxTonnage;
 	public int Berths;
 
-	public float FuelSupply = 0f;
+	public float FuelSupply = 1000000f;
 
 	//build rate
 	public float Rate = 1f;

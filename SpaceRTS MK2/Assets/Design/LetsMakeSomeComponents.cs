@@ -28,6 +28,7 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 		bridge.Description = "A command and control center for the ship's officers.";
 
 		ShipComponents MilEngine = new ShipComponents ();
+		MilEngine.Category = CompCategory.ENGINE;
 		MilEngine.Name = "MilEngine Mk1";
 		MilEngine.CrewRequired = 50;
 		MilEngine.Mass = 200;
@@ -37,6 +38,7 @@ public class LetsMakeSomeComponents : MonoBehaviour {
 
 		ShipComponents CivEngine = new ShipComponents ();
 		CivEngine.Name = "CivEngine Mk1";
+		CivEngine.Category = CompCategory.ENGINE;
 		CivEngine.CrewRequired = 125;
 		CivEngine.Mass = 500;
 		CivEngine.AddAbility(AbilityCats.THRUST,(float)EngineTypes.MAGNETO,.75f,1f);

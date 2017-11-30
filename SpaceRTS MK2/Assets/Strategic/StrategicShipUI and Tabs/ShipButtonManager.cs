@@ -33,7 +33,8 @@ public class ShipButtonManager : MonoBehaviour {
 		DefaultColor = b.colors.normalColor;
 		//	SelectedColor = Color.cyan;
 		ColorBlock cb = b.colors;
-		cb.highlightedColor = Color.cyan;
+		cb.highlightedColor = Color.yellow;
+		cb.normalColor = Color.grey;
 		t = GetComponent<RectTransform> ();
 		b.colors = cb;
 	}
