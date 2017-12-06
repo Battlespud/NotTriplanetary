@@ -16,6 +16,7 @@ public class KillMe : MonoBehaviour {
 		Timer -= Time.deltaTime;
 		if (Timer <= 0f) {
 			Destroy (gameObject);
+			//rip
 		}
 	}
 }

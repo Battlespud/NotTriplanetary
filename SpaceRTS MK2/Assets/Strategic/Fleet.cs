@@ -40,6 +40,8 @@ public class Fleet : MonoBehaviour {
 	public bool AI = false;
 
 
+	public bool EqualizeFuelPercent = true;
+
 	public FAC Faction;
 	public Empire empire;
 	public string FleetName = "Fleet";
@@ -108,6 +110,7 @@ public class Fleet : MonoBehaviour {
 			{
 				HandleShields ();
 				AllowMovement (false);
+				//DistributeFuel ();
 				break;
 			}
 		case(Phase.GO):
@@ -166,7 +169,7 @@ public class Fleet : MonoBehaviour {
 				if (time >= 1) {
 					time = 0f;
 					Ships.ForEach (x => {
-						x.UseMovementFuel (Agent.speed*1000 );
+						x.UseMovementFuel (Speed );
 					});
 					CalculateFleetSpeed ();
 				}
@@ -175,6 +178,43 @@ public class Fleet : MonoBehaviour {
 			}
 		}
 		yield return null;
+	}
+
+	void DistributeFuel(){
+		if (!EqualizeFuelPercent)
+			return;
+		float Max = 0f;
+		float Curr = 0f;
+		Ships.ForEach (x => {
+			Curr += x.CurrFuel;
+			Max += x.MaxFuel;
+		});
+		Debug.Log (FleetName + " Fuel Percent: " + Curr / Max);
+		float percent = Curr / Max;
+		int shipCount = Ships.Count;
+		foreach (StrategicShip s in Ships) {
+			float a = percent * s.MaxFuel;
+			Curr -= a;
+			Curr += s.DistributeFuel (a);
+		}
+		/*
+		while (Curr > 500f) {
+			foreach (StrategicShip s in Ships) {
+				Curr -= Curr / shipCount;
+				Curr += s.DistributeFuel (Curr / shipCount);
+				shipCount--;
+			}
+			shipCount = Ships.Count;
+		}
+		int i = 0;
+		while(Curr > 0f){
+			Curr = Ships [i].DistributeFuel (Curr);
+			i++;
+			if (i == Ships.Count)
+				break;
+		}
+		*/
+		Debug.Log (Curr + " is remainder");
 	}
 
 

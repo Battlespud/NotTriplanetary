@@ -63,7 +63,7 @@ public class StrategicShip : ILocation{
 		if(OnBoard.Count > 0){
 			if (Captain != null && Captain != OnBoard [0]) {
 				Captain.StepDownCaptain (this);
-				ShipLog += string.Format ("\n{0}: {1} stands down as Captain.", StrategicClock.GetDate (), Captain.GetNameString());
+				AddHistory("Captain Stands Down",string.Format ("\n{0}: {1} stands down as Captain.", StrategicClock.GetDate (), Captain.GetNameString()));
 
 			}
 			OnBoard [0].AppointCaptain (this);
@@ -71,7 +71,7 @@ public class StrategicShip : ILocation{
 		if(OnBoard.Count > 1){
 			if (Executive != null && Executive != OnBoard [1]) {
 				Executive.StepDownXO (this);
-				ShipLog += string.Format ("\n{0}: {1} stands down as Exec.", StrategicClock.GetDate (), Executive.GetNameString());
+				AddHistory("Exec Stands Down", string.Format ("\n{0}: {1} stands down as Exec.", StrategicClock.GetDate (), Executive.GetNameString()));
 
 			}
 			OnBoard [1].AppointXO (this);
@@ -131,8 +131,8 @@ public class StrategicShip : ILocation{
 	public Emissions emissions;
 
 	//Fuel
-	 float MaxFuel;
-	 float CurrFuel;
+	public float MaxFuel;
+	public float CurrFuel;
 
 	public string GetFuelString(){
 		return string.Format ("{0}/{1}", CurrFuel, MaxFuel);
@@ -171,7 +171,7 @@ public class StrategicShip : ILocation{
 			ParentFleet = null;
 		}
 		f.AddShip (this);
-		ShipLog += string.Format ("\n{0}: {1} is attached to {2}", StrategicClock.GetDate (), ShipName, f.FleetName);
+		AddHistory("Transferred to Fleet", string.Format ("\n{0}: {1} is attached to {2}", StrategicClock.GetDate (), ShipName, f.FleetName));
 	}
 
 	public string GetCaptainName(){
@@ -248,7 +248,7 @@ public class StrategicShip : ILocation{
 
 
 	public void UseMovementFuel(float speed){
-		Debug.LogError ("Checking fuel. This must be followed by a notification of how much fuel was used, or else no engines were found");
+	//	Debug.LogError ("Checking fuel. This must be followed by a notification of how much fuel was used, or else no engines were found");
 			List<ShipComponents> Sorted = Components.OrderBy (x => x.GetFuelUse ()).ToList();
 			foreach (ShipComponents c in Sorted) {
 				if (c.Category == CompCategory.ENGINE) {
@@ -260,7 +260,7 @@ public class StrategicShip : ILocation{
 					}
 				speed -= SpeedFromThrust(c.GetThrust())*multiplier;
 				CurrFuel -= c.GetFuelUse ()*multiplier / StrategicClock.strategicClock.GoTurnLength;
-				Debug.LogError(ShipName + " has used " + (original - CurrFuel) + "fuel units");
+				Debug.LogError(ShipName + " has used " + (original - CurrFuel) + " fuel units");
 				if (speed <= 0)
 					break;
 				}
@@ -287,6 +287,13 @@ public class StrategicShip : ILocation{
 			CurrFuel = MaxFuel;
 		ChangeStats ();
 		CheckFuel ();
+	}
+
+	public float DistributeFuel(float Amount){
+		CurrFuel = 0f;
+		CurrFuel = (MaxFuel > Amount) ? Amount : MaxFuel;
+		return Amount - CurrFuel; 
+
 	}
 
 	void CalculateCargo(){
@@ -393,7 +400,6 @@ public class StrategicShip : ILocation{
 		ChangeStats ();
 		UpdateMaint ();
 		AddHistory ("Launched", string.Format ("{0}: {1} is launched.", StrategicClock.GetDate (), ShipName));
-		ShipLog += string.Format ("\n{0}: {1} is launched.", StrategicClock.GetDate (), ShipName);
 		CommissionDate = StrategicClock.GetDate ();
 	}
 
@@ -446,11 +452,11 @@ public class StrategicShip : ILocation{
 		if (!c.isDestroyed ()) {
 			if (!UseMaintParts (c.MaintReq)) {
 				c.Damage ();
-				ShipLog += string.Format ("\n{0}: {1} experiences a maintenance failure with the {2}, repairs proved impossible with current supplies.", StrategicClock.GetDate (), ShipName,c.Name);
+				AddHistory("<color=yellow>Maintenance Failure</color>", string.Format ("\n{0}: {1} experiences a maintenance failure with the {2}, repairs proved impossible with current supplies.", StrategicClock.GetDate (), ShipName,c.Name));
 				EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,Emp,"MAINTENANCE FAILURE",string.Format("{0} has experienced a maintenance failure.",ShipName));
 				ChangeStats ();
 			} else {
-				ShipLog += string.Format ("\n{0}: {1} experiences a maintenance failure with the {2}, repairs were made with maintenance supplies.", StrategicClock.GetDate (), ShipName,c.Name);
+				AddHistory("<color=red>Maintenance Failure</color>", string.Format ("\n{0}: {1} experiences a maintenance failure with the {2}, repairs were made with maintenance supplies.", StrategicClock.GetDate (), ShipName,c.Name));
 				EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,4,Emp,"MAINTENANCE FAILURE",string.Format("{0} has experienced a maintenance failure. No damage reported.",ShipName),CharactersAboard,new List<StrategicShip>{this});
 			}
 		} else {
@@ -471,12 +477,12 @@ public class StrategicShip : ILocation{
 	public void AssignOfficer(Character c, NavalCommanderRole role ){
 		if (role == NavalCommanderRole.XO) {
 			Executive = c;
-			ShipLog += string.Format ("\n{0}: {1} is appointed as Executive Officer", StrategicClock.GetDate (), Executive.GetNameString());
+							AddHistory("Exec Appointed", string.Format ("\n{0}: {1} is appointed as Executive Officer", StrategicClock.GetDate (), Executive.GetNameString()));
 		}
 
 		else if(role == NavalCommanderRole.CMD) {
 			Captain = c;
-			ShipLog += string.Format ("\n{0}: {1} is appointed as Commanding Officer.", StrategicClock.GetDate (), Captain.GetNameString());
+							AddHistory("Captain Appointed", string.Format ("\n{0}: {1} is appointed as Commanding Officer.", StrategicClock.GetDate (), Captain.GetNameString()));
 		}
 	}
 
@@ -501,7 +507,7 @@ public class StrategicShip : ILocation{
 	public void DestroyShip(){
 	//	NameManager.RecycleName (this);
 		//TODO
-		ShipLog += string.Format("\n{0}: <color=red>---Contact Lost---</color> ",StrategicClock.GetDate());
+		AddHistory("Contact Lost",string.Format("\n{0}: <color=red>---Contact Lost---</color> ",StrategicClock.GetDate()));
 		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,2,Emp,"SHIP DESTROYED",string.Format("Contact has been lost with {0}.\nThe ships logs may contain more detailed information.",ShipName));
 		Cargo.ForEach (x => {
 			x.DestroyCargo();

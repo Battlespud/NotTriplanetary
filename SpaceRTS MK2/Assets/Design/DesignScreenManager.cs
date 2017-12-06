@@ -111,6 +111,16 @@ public class DesignScreenManager : MonoBehaviour {
 	public int Quarters;   //how much space for crew there is with current loadout.
 
 
+	public void ResetScreen(){
+		AddedComponents.Clear ();
+		ComponentNumbers.Clear ();
+		DesignName.text = "";
+		PopulateComponentList ();
+		ArmorLength = 1;
+		ArmorThickness = 1;
+		OnChange ();
+	}
+
 	public void PopulateComponentList(){
 		List<ShipComponents> LoadedComponents = ShipComponents.GetComponents(ActiveEmpire.Token).OrderBy (x => x.Category).ToList ();
 		Components.Clear();
@@ -131,8 +141,7 @@ public class DesignScreenManager : MonoBehaviour {
 		foreach (ShipComponents c in Components) {
 			GameObject d = Instantiate (ShipComponentsUIButton) as GameObject;
 			UIObjects.Add (d);
-		d.transform.SetParent (ContentParentScrollview);
-		//	d.GetComponent<RectTransform> ().rotation = Camera.main.transform.rotation;
+			d.transform.SetParent (ContentParentScrollview);
 			d.GetComponent<RectTransform> ().transform.localScale = new Vector3 (1f, 1f, 1f);
 			d.GetComponent<RectTransform>().anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
 			ShipComponentUIManager s = d.GetComponent<ShipComponentUIManager> ();
@@ -155,7 +164,7 @@ public class DesignScreenManager : MonoBehaviour {
 
 	//engines have some special rules so we add them using this.
 	public void AddEngine(ShipComponents engine){
-		Debug.Log("Adding " + engine.Name);
+	//	Debug.Log("Adding " + engine.Name);
 		AddComponent (engine);
 		/*
 		if (EngineDesign == null) {
@@ -263,11 +272,11 @@ public class DesignScreenManager : MonoBehaviour {
 		}
 		if (ArmorThickness <= 0) {  //This shouldnt be possible outside of an error in the actual unity editor.
 			RequirementsMet = false;
-			OutstandingRequirements += "Error, please change Armor to a positive value of at least 1.\n";
+			OutstandingRequirements += "Error, change Armor to a positive value of at least 1.\n";
 		}
 		if (Quarters < ReqCrew) {      //Quarters sums the crew quartering ability of all added components and compares it to the Required Number.
 			RequirementsMet = false;
-			OutstandingRequirements += string.Format("Quarters for only {0} of the {1} required crewmembers is present.\n",Quarters,ReqCrew);
+			OutstandingRequirements += string.Format("Quarters for only {0} of the {1} required crewmembers are present.\n",Quarters,ReqCrew);
 		}
 		yield return Ninja.JumpToUnity;
 		Requirements.text = OutstandingRequirements;
