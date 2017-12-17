@@ -1,6 +1,54 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+/// <summary>
+/// what can be mined/sown from the planet
+/// </summary>
+public enum RawResourceTypes
+{
+    Coal,
+    IronOre,
+    CopperOre,
+    TinOre,
+    LeadOre,
+    AluminumOre,
+    SilverOre,
+    GoldOre,
+    RawQuartz,
+    RawDiamond,
+    UraniumOre,
+    Crude,
+    Wood,
+    Soil,
+}
+
+/// <summary>
+/// what is processed from the mined/sown resources of the planet; these are used towards costs of anything; processing gets handled automatically
+/// </summary>
+public enum ResourceTypes
+{   
+    Carbon,
+    CarbonFibre,
+    Iron,
+    Steel,
+    Copper,
+    Tin,
+    Lead,
+    Aluminum,
+    Silver,
+    Gold,
+    Quartz,
+    Silicon,
+    Diamond,
+    Uranium,
+    Plutonium,
+    Alloys,
+    AdvancedAlloys,
+    Polymers,
+    AdvancedPolymers,
+    Fuels,
+    Lumber,
+    Crops,
+}
 
 public enum RawResources{
 	NONE = 0,
