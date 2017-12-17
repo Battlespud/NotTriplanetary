@@ -69,6 +69,7 @@ public class EmpireLogEntry{
 public class Empire : MonoBehaviour {
 
 	public static List<Empire> AllEmpires = new List<Empire>();
+	public static List<ILocation> AllLocations = new List<ILocation>();
 	//public static ILocation DeadLocation = new ILocation ();
 
 	//Essentially our version of a faction.  Multiple empires of the same FAC can exist, representing

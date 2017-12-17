@@ -259,7 +259,7 @@ public class StrategicShip : ILocation{
 						multiplier = speed / SpeedFromThrust (c.GetThrust());
 					}
 				speed -= SpeedFromThrust(c.GetThrust())*multiplier;
-				CurrFuel -= c.GetFuelUse ()*multiplier / StrategicClock.strategicClock.GoTurnLength;
+		//		CurrFuel -= c.GetFuelUse ()*multiplier / StrategicClock.strategicClock.GoTurnLength;
 				Debug.LogError(ShipName + " has used " + (original - CurrFuel) + " fuel units");
 				if (speed <= 0)
 					break;
@@ -492,7 +492,7 @@ public class StrategicShip : ILocation{
 		ShipName = emp.GetName (this);
 		Emp = emp;
 		Faction = emp.Faction;
-
+		Empire.AllLocations.Add (this);
 		Emp.Ships.Add (this);
 	}
 
@@ -501,6 +501,8 @@ public class StrategicShip : ILocation{
 		Emp = emp;
 		Faction = emp.Faction;
 		ShipName = name;	
+		Empire.AllLocations.Add (this);
+
 		Emp.Ships.Add (this);
 	}
 

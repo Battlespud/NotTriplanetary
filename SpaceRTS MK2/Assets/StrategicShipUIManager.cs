@@ -83,6 +83,8 @@ public class StrategicShipUIManager : MonoBehaviour {
 
 	//Gets list of nearby ships and fleets
 	void UpdateLocationScroll(int i = 0){
+		List<Fleet> Fleets = new List<Fleet>();
+		List<StrategicShip> Ships = new List<StrategicShip> ();
 		if (!Initialized)
 			Initialize ();
 
@@ -96,6 +98,7 @@ public class StrategicShipUIManager : MonoBehaviour {
 
 		if (SelectedShip.ParentFleet != null) {
 			GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+			Fleets.Add (SelectedShip.ParentFleet);
 			LocationButtons.Add (g);
 			RectTransform h = g.GetComponent<RectTransform> ();
 			FleetButtonManager manager = g.AddComponent<FleetButtonManager> ();
@@ -108,7 +111,7 @@ public class StrategicShipUIManager : MonoBehaviour {
 			interval++;
 
 			foreach (StrategicShip d in SelectedShip.ParentFleet.Ships) {
-
+				Ships.Add (d);
 				GameObject f = Instantiate<GameObject> (ButtonPrefab) as GameObject;
 				LocationButtons.Add (f);
 				RectTransform hk = f.GetComponent<RectTransform> ();
@@ -132,32 +135,36 @@ public class StrategicShipUIManager : MonoBehaviour {
 
 		if (yard != null) {
 			foreach (StrategicShip d in yard.DockedShips) {
-
-				GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
-				LocationButtons.Add (g);
-				RectTransform h = g.GetComponent<RectTransform> ();
-				ShipButtonManager manager = g.AddComponent<ShipButtonManager> ();
-				manager.Manager = this;
-				manager.Assign (d);
-				h.SetParent (LocationsScroll.transform);
-				h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
-				h.sizeDelta = new Vector2 (800f, 35f);
-				h.localScale = new Vector3 (1f, 1f, 1f);
-				interval++;
+				if (!Ships.Contains (d)) {
+					Ships.Add (d);
+					GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+					LocationButtons.Add (g);
+					RectTransform h = g.GetComponent<RectTransform> ();
+					ShipButtonManager manager = g.AddComponent<ShipButtonManager> ();
+					manager.Manager = this;
+					manager.Assign (d);
+					h.SetParent (LocationsScroll.transform);
+					h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
+					h.sizeDelta = new Vector2 (800f, 35f);
+					h.localScale = new Vector3 (1f, 1f, 1f);
+					interval++;
+				}
 			}
 			foreach (Fleet d in yard.DockedFleets) {
-
-				GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
-				LocationButtons.Add (g);
-				RectTransform h = g.GetComponent<RectTransform> ();
-				FleetButtonManager manager = g.AddComponent<FleetButtonManager> ();
-				manager.Manager = this;
-				manager.Assign (d);
-				h.SetParent (LocationsScroll.transform);
-				h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
-				h.sizeDelta = new Vector2 (800f, 35f);
-				h.localScale = new Vector3 (1f, 1f, 1f);
-				interval++;
+				if (!Fleets.Contains (d)) {
+					Fleets.Add (d);
+					GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+					LocationButtons.Add (g);
+					RectTransform h = g.GetComponent<RectTransform> ();
+					FleetButtonManager manager = g.AddComponent<FleetButtonManager> ();
+					manager.Manager = this;
+					manager.Assign (d);
+					h.SetParent (LocationsScroll.transform);
+					h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
+					h.sizeDelta = new Vector2 (800f, 35f);
+					h.localScale = new Vector3 (1f, 1f, 1f);
+					interval++;
+				}
 			}
 		}
 	}

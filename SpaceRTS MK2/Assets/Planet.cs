@@ -64,44 +64,119 @@ public class ResourceDeposit
     }
 }
 
+public enum RegionTypes{
+	Plain,
+	Coast,
+	Mountain,
+	Hill,
+	City,
+	Sea
+}
+
+public interface IRecieveCombatResult{
+	void ChangeOwner(Empire Victor);
+}
+
+public class PlanetRegion : ILocation, IRecieveCombatResult{
+	public Empire Owner;
+	public Colony RegionColony;
+
+	public string RegionName;
+	public int RegionSize;
+	public RegionTypes RegionType;
+	public bool Explored = false;
+
+
+
+	public PlanetRegion(){
+		RegionSize = Random.Range (2, 11);
+		RegionType = (RegionTypes)Random.Range (0, 6);
+		RegionName = "<Unexplored " + RegionType.ToString();
+	}
+
+	public void ChangeOwner(Empire e){
+		if (Owner != null) {
+			EmpireLogEntry log = new EmpireLogEntry (LogCategories.MILITARY, 2, Owner, "REGION LOST", string.Format ("{0} on {1} has fallen to the forces of {2}.", RegionName,Planet.RegionToPlanet[this].PlanetName,e.EmpireName));
+			EmpireLogEntry log2 = new EmpireLogEntry(LogCategories.MILITARY,2,e,"REGION CONQUERED",string.Format ("{0} on {1} has fallen to our forces.", RegionName,Planet.RegionToPlanet[this].PlanetName));
+
+		} else {
+			EmpireLogEntry log = new EmpireLogEntry(LogCategories.MILITARY,4,e,"REGION CONTROLLED",string.Format("{0} on {1} is now under our control.",RegionName,Planet.RegionToPlanet[this].PlanetName));
+		}
+		Owner = e;
+		if (RegionColony != null)
+			RegionColony.ChangeOwner (e);
+	}
+
+	public string GetLocationName(){
+		return RegionName;
+	}
+	public object GetLocation(){
+		return (object)this;
+	}
+	public System.Type GetLocType(){
+		return this.GetType ();
+	}
+	public void MoveCharacterToThis(Character c){
+		if (!Explored) {
+			Explored = true;
+			RegionName = string.Format("{0}'s {1}",c.CharName,RegionType.ToString() );
+			ChangeOwner(c.empire);
+			EmpireLogEntry log2 = new EmpireLogEntry(LogCategories.EXPLORATION,3,Owner,"REGION EXPLORED",string.Format ("{0} on {1} has been explored.", RegionName,Planet.RegionToPlanet[this].PlanetName));
+		}
+	}
+	public void MoveCharacterFromThis(Character c){
+	}
+}
+
 public class Planet : MonoBehaviour, IMineable
 {
+	public static Dictionary<PlanetRegion,Planet> RegionToPlanet = new Dictionary<PlanetRegion, Planet>();
+	public static Dictionary<Planet,List<PlanetRegion>> PlanetToRegions = new Dictionary<Planet, List<PlanetRegion>>();
+	public static List<Planet> AllPlanets = new List<Planet>();
+
     public Dictionary<RawResources, ResourceDeposit> ResourceDeposits = new Dictionary<RawResources, ResourceDeposit>();
     public int[] composition;
 
-	Dictionary<Empire,Colony> Colonies = new Dictionary<Empire, Colony> ();
+	public List<PlanetRegion> Regions = new List<PlanetRegion>();
+
+
 
 	public List<Fleet> OrbitingFleets = new List<Fleet>();
 	void OnTriggerEnter(Collider col){
 		Debug.LogError ("Fleet in orbit");
 		if (col.GetComponent<Fleet> ()) {
 			OrbitingFleets.Add (col.GetComponent<Fleet> ());
+			col.GetComponent<Fleet> ().NearbyPlanets.AddExclusive (this);
 		}
 
 	}
 	void OnTriggerExit(Collider col){
 		if (col.GetComponent<Fleet> ()) {
 			OrbitingFleets.Remove (col.GetComponent<Fleet> ());
+			col.GetComponent<Fleet> ().NearbyPlanets.Remove (this);
 		}
 
 	}
 
-	public Colony GetColony(Empire e){
-		Colony c = null;
-			Colonies.TryGetValue (e, out c);
-		return c;
+	public List<PlanetRegion> GetNeighbouringRegions(PlanetRegion start){
+		List<PlanetRegion> valid = new List<PlanetRegion> ();
+		int i = Regions.IndexOf (start);
+		if (!(i - 1 < 0)) 
+			valid.Add(Regions[i-1]);
+		if (i + 1 < Regions.Count)
+			valid.Add (Regions[i+1]);
+
+		return valid;
 	}
 
-	public bool AddColony(Empire owner, Race r, int startingPop, string name){
-		if (Colonies.ContainsKey (owner))
-			return false;
-		Colony c = new Colony (owner, r, startingPop, name);
-		Colonies.Add (owner, c);
-		return true;
-	}
 
 	public List<Colony> GetColonyList(){
-		return Colonies.Values.ToList();
+		List<Colony> colonies = new List<Colony> ();
+		Regions.ForEach (x => {
+			if(x.RegionColony != null)
+				colonies.Add(x.RegionColony);
+		});
+		return colonies;
 	}
 
 	void PhaseManager(Phase p){
@@ -167,9 +242,13 @@ public class Planet : MonoBehaviour, IMineable
     void Start()
     {
         SetPlanetType(UnityEngine.Random.Range(0, 7));
+		GenerateRegions (Random.Range(2,6));
 		StrategicClock.PhaseChange.AddListener (PhaseManager);
+		AllPlanets.Add (this);
+		PlanetToRegions.Add (this, Regions);
 
     }
+
 
 
 
@@ -177,6 +256,14 @@ public class Planet : MonoBehaviour, IMineable
     void Update()
     {
     }
+
+	private void GenerateRegions(int number){
+		for (int i = 0; i < number; i++) {
+			PlanetRegion r = new PlanetRegion ();
+			Regions.Add (r);
+			RegionToPlanet.Add (r, this);
+		}
+	}
 
     private void SetPlanetType(int planetType)
     {
@@ -231,7 +318,6 @@ public class Planet : MonoBehaviour, IMineable
             default:
                 break;
         }
-
         return new int[2] { pt, at };
     }
 }

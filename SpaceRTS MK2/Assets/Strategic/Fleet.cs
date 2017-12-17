@@ -39,6 +39,8 @@ public class Fleet : MonoBehaviour {
 
 	public bool AI = false;
 
+	public List<Planet> NearbyPlanets = new List<Planet>();
+
 
 	public bool EqualizeFuelPercent = true;
 

@@ -18,4 +18,9 @@ public static class SystemRandomExtensions {
 	public static float NextFloat(this System.Random random, double a, double b){
 		return (float)(random.NextDouble () * (b - a) + a);
 	}
+
+	public static void AddExclusive<T>(this List<T> list, T item){
+		if (!list.Contains (item))
+			list.Add (item);
+	}
 }

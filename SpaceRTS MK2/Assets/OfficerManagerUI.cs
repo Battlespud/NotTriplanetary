@@ -129,6 +129,8 @@ public class OfficerManagerUI : MonoBehaviour {
 	//valid transfers
 	public List<GameObject> LocationButtons = new List<GameObject>();
 
+
+	//Determines valid moves
 	void UpdateLocations(){
 		List<ILocation> Locs = new List<ILocation> ();
 
@@ -141,10 +143,10 @@ public class OfficerManagerUI : MonoBehaviour {
 //		Debug.Log (LocationButtons.Count + " Loc Count");
 		if (SelectedChar.Location == null) {
 			foreach (StrategicShip s in SelectedChar.empire.Ships) {
-				Locs.Add (s);
+				Locs.AddExclusive (s);
 			}
 			foreach (StrategicShipyard s in SelectedChar.empire.Yards) {
-				Locs.Add (s);
+				Locs.AddExclusive (s);
 			}
 		} else {
 			Locs.Add (SelectedChar.Location);
@@ -154,22 +156,40 @@ public class OfficerManagerUI : MonoBehaviour {
 			string ShipT = typeof(StrategicShip).FullName;
 			string ShipyardT = typeof(StrategicShipyard).FullName;
 			string ColonyT = typeof(Colony).FullName;
+			string RegionT = typeof(PlanetRegion).FullName;
 
 			StrategicShip ship;
 			StrategicShipyard yard;
 			Colony colony;
+			PlanetRegion r;
 			if (tName == ShipT) {
 				ship = (StrategicShip)obj;
 				if (ship.ParentFleet != null) {
 					foreach (StrategicShip s in ship.ParentFleet.Ships) {
-						Locs.Add (s);
+						if(s != ship)
+							Locs.AddExclusive (s);
+					}
+					if (ship.ParentFleet.NearbyPlanets.Count > 0) {
+						foreach (Planet p in ship.ParentFleet.NearbyPlanets) {
+							p.GetColonyList ().ForEach (x => {
+								Locs.AddExclusive(x);
+							});
+							p.Regions.ForEach (x => {
+								Locs.AddExclusive(x);
+							});
+							foreach (Fleet f in p.OrbitingFleets) {
+								foreach (StrategicShip s in f.Ships) {
+									Locs.AddExclusive (s);
+								}
+							}
+						}
 					}
 				}
 				foreach (StrategicShipyard s in ship.Emp.Yards) {
 					if (s.DockedShips.Contains (ship)) {
-						Locs.Add (s);
+						Locs.AddExclusive (s);
 						s.DockedShips.ForEach (x => {
-							Locs.Add(x);
+							Locs.AddExclusive(x);
 						});
 					}
 				}
@@ -177,18 +197,33 @@ public class OfficerManagerUI : MonoBehaviour {
 			else if (tName == ShipyardT) {
 				yard = (StrategicShipyard)obj;
 				foreach (StrategicShip s in yard.DockedShips) {
-					Locs.Add (s);
+					Locs.AddExclusive (s);
+				}
+			}
+			else if (tName == RegionT) {
+				r = (PlanetRegion)obj;
+				Planet p = Planet.RegionToPlanet [r];
+				p.GetColonyList ().ForEach (x => {
+					Locs.AddExclusive(x);
+				});
+				p.Regions.ForEach (x => {
+					Locs.AddExclusive(x);
+				});
+				foreach (Fleet f in p.OrbitingFleets) {
+					foreach (StrategicShip s in f.Ships) {
+						Locs.AddExclusive (s);
+					}
 				}
 			}
 			else if (tName == ColonyT) {
 				colony = (Colony)obj;
 				foreach (Fleet f in colony.planet.OrbitingFleets) {
 					f.Ships.ForEach (x => {
-						Locs.Add(x);
+						Locs.AddExclusive(x);
 					});
 				}
 				colony.planet.GetColonyList ().ForEach (x => {
-					Locs.Add(x);
+					Locs.AddExclusive(x);
 				});
 			}
 		}

@@ -155,6 +155,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	// Use this for initialization
 	void Start () {
 		empire.Yards.Add (this);
+		Empire.AllLocations.Add (this);
 	}
 	
 	// Update is called once per frame

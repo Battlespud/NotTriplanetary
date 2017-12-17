@@ -6,15 +6,17 @@ public class Colony :ILocation {
 
 	static float growth = .025f; //per minute
 
+	public string ColonyName;
+
+
 	public Empire empire;
+	public Planet planet;
+	public PlanetRegion region;
 
 	Dictionary<Race, int> Population = new Dictionary<Race, int> ();
 	public List<Character> Characters = new List<Character>();
 	public Character Governor;
 
-
-	public Planet planet;
-	public string ColonyName;
 
 	public float morale = 0f;
 	public float taxRate = .08f;
@@ -92,15 +94,19 @@ public class Colony :ILocation {
 	public void ChangeOwner(Empire newOwner){
 		empire.RemoveColony (this);
 		newOwner.AddColony (this);
+		EmpireLogEntry log = new EmpireLogEntry (LogCategories.MILITARY, 1, empire, "COLONY LOST", string.Format ("{0} on {1} has fallen to the forces of {2}.", ColonyName, planet.PlanetName,newOwner.EmpireName));
+		EmpireLogEntry log2 = new EmpireLogEntry(LogCategories.MILITARY,1,newOwner,"COLONY CONQUERED",string.Format ("{0} on {1} has fallen to our forces.", ColonyName,planet.PlanetName));
 		empire = newOwner;
 	}
 
-	public Colony(Empire emp, Race r, int pop, string nam = "Pinoy Land"){
+	public Colony(Empire emp, Race r, int pop, string nam = "Terra"){
 		empire = emp;
 		empire.AddColony (this);
 		Population.Add (r, pop);
 		ColonyName = nam;
+		Empire.AllLocations.Add (this);
 		StrategicClock.PhaseChange.AddListener (PhaseManager);
+		EmpireLogEntry log = new EmpireLogEntry (LogCategories.DEFAULT, 3, empire, "COLONY ESTABLISHED", string.Format ("{0} has been established on {1}.", ColonyName, planet.PlanetName));
 	}
 
 }
