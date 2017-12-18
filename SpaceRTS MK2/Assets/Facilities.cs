@@ -5,27 +5,28 @@ using UnityEngine;
 
 public enum FacilityType
 {
-    city = 0, //economic/research/planetary, kinda misc i guess
-    taxAgency,
-    commercialPort,
-    terraforming,
-    research,
-    mining = 100, //resource/construction
-    processing,
-    agriculture,
-    componentFactory,
-    fighterFactory,
-    ordinanceFactory,
-    militaryPort,
-    officer = 200, // units recruitment/building
-    troop,
-    cavalry,
-    crew,
-    forcefield = 300, //planetary def
-    bunker,
-    antiAir,
-    orbitalDefense,
-    earylWarning,
+	city = 0, //economic/research/planetary, kinda misc i guess
+	taxAgency,
+	commercialPort,
+	terraforming,
+	environmental,
+	research,
+	mining = 100, //resource/construction
+	processing,
+	agriculture,
+	componentFactory,
+	fighterFactory,
+	ordnanceFactory,
+	militaryPort,
+	officer = 200, // units recruitment/building
+	troop,
+	armor,
+	crew,
+	forcefield = 300, //planetary def
+	bunker,
+	antiAir,
+	orbitalDefense,
+	earlyWarning,
 }
 
 public static class Facilities
@@ -56,6 +57,8 @@ public static class Facilities
                     break;
                 case FacilityType.terraforming:
                     break;
+				case FacilityType.environmental:
+					break;
                 case FacilityType.research:
                     break;
                 case FacilityType.mining:
@@ -68,7 +71,7 @@ public static class Facilities
                     break;
                 case FacilityType.fighterFactory:
                     break;
-                case FacilityType.ordinanceFactory:
+				case FacilityType.ordnanceFactory:
                     break;
                 case FacilityType.militaryPort:
                     break;
@@ -98,7 +101,7 @@ public static class Facilities
 
     public static void ActivateFacility(Colony colony)
     {
-        switch (colony.facilities) //make sure to actually add the facilities field to the colony class, afaik it only needs to be a list of FacilityType
+        switch (colony.Facilities) //make sure to actually add the facilities field to the colony class, afaik it only needs to be a list of FacilityType
         {
             case FacilityType.city:
                 //income/econmics, population
@@ -142,7 +145,7 @@ public static class Facilities
             case FacilityType.troop:
                 //ground troop training
                 break;
-            case FacilityType.cavalry:
+            case FacilityType.armor:
                 //heavy armor unit training
                 break;
             case FacilityType.crew:
@@ -160,7 +163,7 @@ public static class Facilities
             case FacilityType.orbitalDefense:
                 //orbital... defense
                 break;
-            case FacilityType.earylWarning:
+            case FacilityType.earlyWarning:
                 //EA for inc ships
                 break;
             default:
