@@ -69,7 +69,7 @@ public class EmpireLogEntry{
 public class Empire : MonoBehaviour {
 
 	public static List<Empire> AllEmpires = new List<Empire>();
-	public static List<ILocation> AllLocations = new List<ILocation>();
+	public static List<ILocation> AllLocations = new List<ILocation>(); //This is for ALL empires
 	//public static ILocation DeadLocation = new ILocation ();
 
 	//Essentially our version of a faction.  Multiple empires of the same FAC can exist, representing
@@ -231,8 +231,8 @@ public class Empire : MonoBehaviour {
 						ch.Add (c);
 				} catch {
 					if (string.IsNullOrEmpty (c.CharName))
-						c.CharName = "Null";
-					Debug.LogError (c.CharName + " has failed to process");
+						//c.CharName = "Null";
+					Debug.LogError ("Name has failed to process");
 				}
 			} else {
 				imthenulls.Add (c);
@@ -256,8 +256,7 @@ public class Empire : MonoBehaviour {
 						ch.Add (c);
 				} catch {
 					if (string.IsNullOrEmpty (c.CharName))
-						c.CharName = "Null";
-					Debug.LogError (c.CharName + " has failed to process");
+					Debug.LogError ("Name has failed to process");
 				}
 			} else {
 				imthenulls.Add (c);
@@ -282,8 +281,7 @@ public class Empire : MonoBehaviour {
 						ch.Add (c);
 				} catch {
 					if (c.CharName == null)
-						c.CharName = "Null";
-					Debug.Log (c.CharName + " has failed to process");
+					Debug.LogError ("Name has failed to process");
 				}
 			}
 			else {
@@ -335,7 +333,6 @@ public class Empire : MonoBehaviour {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index,OfficerRoles.Navy,this);
 				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.25f,3f));
-				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance + index/100*5f);
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -360,7 +357,6 @@ public class Empire : MonoBehaviour {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index,OfficerRoles.Army,this);
 				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.45f,4f));
-				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance/2 + (index-2f)/100*5f);
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -603,113 +599,8 @@ public class Empire : MonoBehaviour {
 	#endregion
 }
 
-public enum GovernmentTypes{
-	Theocracy,
-	Republic,
-	Communist,
-	Corporatocracy,
-	Dictatorship,
-	Monarchy,
-	Empire,
-	StarKingdom,
-	Islamic
-}
-
-public class MilitaryStaff{
 
 
-}
 
 
-public class Government{
 
-	public GovernmentTypes GovType;
-
-	public Character Leader;
-	public string LeaderTitle;
-	 List<string> LeaderTitlesM = new List<string> () {
-		"High Priest",
-		"President",
-		"Chairman",
-		"Chief Executive",
-		"Generalissimo",
-		"King",
-		"Emperor",
-		"King",
-		"Caliph"
-	};
-	 List<string> LeaderTitlesF = new List<string> () {
-		"High Priestess",
-		"President",
-		"Chairwoman",
-		"Chief Executive",
-		"Generalissa",
-		"Queen",
-		"Empress",
-		"Queen",
-		"Caliphess"
-	};
-
-	public Character War;
-	public string WarTitle;
-	 List<string> WarTitleM = new List<string> () {
-		"Sword of the Faithful",
-		"Secretary of Defense",
-		"Defender of the People",
-		"Chief Security Officer",
-		"Warlord",
-		"Sword of the ",
-		"Right hand of the {0}",
-		"Sword of the {0}",
-		"Sword of Allah"
-	};
-	
-	static List<string> WarTitleF = new List<string> () {
-		"High Priestess",
-		"President",
-		"Chairwoman",
-		"Chief Executive",
-		"Generalissa",
-		"Queen",
-		"Empress",
-		"Queen",
-		"Sword of Allah"
-	};
-
-	public Character Economy;
-	public string EconomyTitle;
-	List<string> EconomyTitleM = new List<string> () {
-		"Sword of the Faithful",
-		"Secretary of Defense",
-		"Secretary of Production",
-		"Chief Economics Officer",
-		"Head Jew",
-		string.Format("Lord of the Exeqchuer"),
-		string.Format("Lord of the Exeqchuer"),
-		string.Format("Lord of the Exeqchuer"),
-		"Keeper of the Gold"
-	};
-	List<string> EconomyTitleF = new List<string> () {
-		"Sword of the Faithful",
-		"Secretary of Defense",
-		"Secretary of Production",
-		"Chief Economics Officer",
-		"Head Jew",
-		string.Format("Lord of the Exeqchuer"),
-		string.Format("Lord of the Exeqchuer"),
-		string.Format("Lord of the Exeqchuer"),
-		"Keeper of the Gold"
-	};
-
-	public bool HasNobleClass;
-	 List<string> NobleRanksM = new List<string> (){ "Peer", "Honor", "Baron", "Count", "Duke" };
-	 List<string> NobleRanksF = new List<string> (){ "Peer", "Honor", "Baron", "Count", "Duke" };
-	public Dictionary<Sex,List<string>>NobleRanks = new Dictionary<Sex, List<string>>();
-
-	public Government(){
-		NobleRanks.Add (Sex.Female, NobleRanksF);
-		NobleRanks.Add (Sex.Male, NobleRanksM);
-	}
-
-
-}

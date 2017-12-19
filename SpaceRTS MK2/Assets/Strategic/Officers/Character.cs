@@ -1,79 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using System.IO;
-
+using System.Linq;
 
 public enum OfficerRoles{
-	Research=3,
-	Government=2,
-	Army=1,
-	Navy=0
+	//Imperial, Imperial characters are those that will always fall solely under the governments, and thus usually the players, control. They work for the good of the empire.
+	Navy=0,
+	Army,
+	Government,
+	Research,
+	Intelligence,
+	Police,
+
+
+	//NonImperial, Nonimperial Characters do not work directly for the government, but are also generally beneficial or at least neutral. Civilians basically
+	Child=100,
+	Corporate, //works for a corporation from this faction
+	Social, //socialite
+	Merchant, //Independent or small time merchants, not from a corporation
+	Celebrity,
+	Scientist, //Independent scientist
+	Politician,
+	Media,
+	Engineer,
+	Noble,
+
+	//Criminal, Never under player control and generally always bad.
+	Terrorist = 200,
+	Hacker,
+	Rebel,
+	Spy,
+	Criminal, //major nonpolitical crime
+	Cartel
 }
 
 public enum Sex{
 	Female,
 	Male
 }
-
-//Traits modify a characters stats when they are added.  Any number can be added. Theres no protection against duplicates besides sheer numbers yet.
-public struct Trait{
-	public static List<Trait>Traits = new List<Trait>();
-	static char delimiter = '+';
-	public string Raw;
-	public string Name;
-	public string Description;
-	public List<int> PersonalityModifiers;
-	public string Summary;
-	public Trait(string s, string d, string r, List<int> modifiers = null ){
-		Name = s;
-		Description = d;
-		PersonalityModifiers = new List<int> ();
-		PersonalityModifiers.AddRange (modifiers);
-		string arraystring = "";
-		foreach (int i in PersonalityModifiers) {
-			arraystring += i.ToString() + ",";
-		}
-		Raw = r;
-		Summary = string.Format ("{0}:(<color=navy>{1}</color>) {2}",Name,arraystring,Description);
-		Traits.Add (this);
-
-//		Debug.Log (Summary);
-	}
-	public static void Load(){
-		//Load traits
-		Traits.Clear();
-		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Traits/" ); 
-		string[] traits = File.ReadAllLines(path+"Traits.txt");
-		//string[] descr=File.ReadAllLines(path+"Descriptions.txt");
-		int numTraits =0;
-
-		for (int i = 0; i < traits.Length; i++) {
-			List<int> mods = new List<int> ();
-			List<string> cut = new List<string> ();
-			cut.AddRange(traits [i].Split (delimiter));
-			//Debug.Log (cut.Count);
-			string traitName = cut [0];
-			string modsString = cut [1];
-			modsString = modsString.Replace ("(", "");
-			modsString =modsString.Replace (")", "");
-			modsString =modsString.Replace ("{", "");
-			modsString =modsString.Replace ("}", "");
-			modsString =modsString.Replace (" ", "");
-			char modsDelim = ',';
-			foreach (string s in modsString.Split (modsDelim)) {
-				mods.Add (int.Parse (s));
-			}
-			string desc = cut [2];
-
-			Trait t = new Trait (traitName, desc,traits[i], mods);
-			numTraits = i + 1;
-		}
-//		Debug.Log("Loaded " + numTraits + " traits.");
-	}
-}
-
+	
 //Teams are groups of characters with a type.  Survey teams are deployed to uncharted worlds to find stuff for example.
 public enum TeamTypes{
 	Survey,
@@ -85,33 +53,6 @@ public enum TeamTypes{
 
 
 
-//Characters are awarded medals which add to their promotion points and serve as fluff.  Medals can be designed at runtime once that ui is added.
-public class Medal{
-	public static Dictionary<int, Sprite> MedalImages = new Dictionary<int, Sprite> ();
-	public string Name;
-	public string Description;
-	public int Points = 50;
-	public string DateDesigned;
-	public int ImageIndex;
-	public static List<Medal> DesignedMedals = new List<Medal> ();
-
-	public Medal(string na,string desc,int p, int i ){
-		Name = na;
-		Description = desc;
-		Points = p;
-		DateDesigned = StrategicClock.GetDate ();
-		ImageIndex = i;
-		DesignedMedals.Add (this);
-	}
-	public Sprite GetImage(){
-		return MedalImages [ImageIndex];
-	}
-
-	static Medal(){
-		Medal Pioneer = new Medal ("Pioneer's Medallion", "An award commemorating this officer's role in early exploration efforts on the stellar frontier.", 50, 0);
-	
-	}
-}
 
 //XO is second in command. CMD is first in command.  This decides what the XP they gain goes towards. This system will probably be removed in favor of an iterator later. As its a nightmare to manage.
 public enum NavalCommanderRole{
@@ -120,50 +61,18 @@ public enum NavalCommanderRole{
 	NONE=0
 }
 
-//Relationship Modifiers generally exist to indicate a single event that changed a characters perception of another.  
-public class RelationshipModifier{
-	public string Date;				//automatically set.
-	public string Description;	   //What the event was
-	public int Amount;             //How much this affects relationship.   Negative is bad. Positive is good.
-	public Character Other;			
-	public RelationshipModifier(Character c, int a, string desc){
-		Other = c;
-		Amount = a;
-		Description = desc;
-		Date = StrategicClock.GetDate ();
+public class MonthYear{
+	public int Month;
+	public int Year;
+
+	public MonthYear(int m, int y){
+		Month = m;
+		Year = y;
 	}
-}
-
-//Each character has a relationship with every other it has encountered.
-public class Relationship{
-	public Character Other;
-	List<RelationshipModifier> Modifiers = new List<RelationshipModifier>();
-
-	//Sums all the modifiers to get a final result. 
-	public int GetRelationshipValue(){
-		int Total = 0;
-		Modifiers.ForEach (x => {
-			Total += x.Amount;
-		});
-		return Total;
-	}
-
-	public void AddMod(RelationshipModifier M){
-		Modifiers.Add (M);
-	}
-
-	public List<RelationshipModifier> GetList(){
-		return Modifiers;
-	}
-
-	public Relationship(Character o){
-		Other = o;
-		Modifiers.Add(new RelationshipModifier(o,0,"<color=red>-START-</color>"));
-	}
-
 }
 
 public class Character {
+	#region statics
 	public static string[] PersonalityAspectsStrings = new string[]{"Ambition","Courage","Extraversion","Intelligence","Discipline","Luck"};
 
 	public static System.Random rnd = new System.Random();
@@ -171,13 +80,41 @@ public class Character {
 	static StrategicClock clock = StrategicClock.strategicClock;
 
 	static int NextID = -1;
-	public int GetNextID(){
+	public static int GetNextID(){
 		NextID++;
 		return NextID;
 
 	}
 
-	public static Dictionary<OfficerRoles,List<string>> JobTitlesDictLong = new Dictionary<OfficerRoles, List<string>> (); //{ {OfficerRoles.Navy,NavalRankNames}, {OfficerRoles.Army, ArmyRankNames}, {OfficerRoles.Gov, GovRankNames}, {OfficerRoles.Research, ResearchRankNames }};
+	static void PhaseManager(Phase p){
+		switch (p) {
+		case(Phase.ORDERS):
+			{
+				ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,Turn());
+				break;
+			}
+		case(Phase.GO):
+			{
+				break;
+			}
+		case (Phase.REVIEW):
+			{
+				break;
+			}
+		case (Phase.INTERRUPT):
+			{
+				break;
+			}
+
+		}	
+	}
+
+
+
+	public static Dictionary<int,Character> AllCharacters = new Dictionary<int, Character>(); // by ID
+	public static Dictionary<Empire,List<Character>> CharactersByEmpire = new Dictionary<Empire, List<Character>>();
+
+	public static Dictionary<OfficerRoles,List<string>> JobTitlesDictLong = new Dictionary<OfficerRoles, List<string>> (); 
 	public static Dictionary<OfficerRoles,List<string>> JobTitlesDictShort = new Dictionary<OfficerRoles, List<string>> ();
 	public static List<string>NavalRankNames = new List<string>(){"Ensign", "Lieutenant","Lt. Commander","Commander","Captain","List Captain","Commodore", "Rear Admiral", "Vice Admiral", "Admiral", "Admiral of the Fleet"}; //add more
 	public static List<string>ResearchRankNames = new List<string>(){"Research Assistant","Associate Researcher","Researcher","Senior Researcher","Associate Director","Director", "Secretary of Science"};
@@ -187,15 +124,16 @@ public class Character {
 	public static List<string>NavalRankNamesS = new List<string>(){"En.", "Lt.","Lt. Cmdr.","Cmdr.","Cpt.","L. Cptn.","Como.", "R. Adm.", "V. Adm.", "Adm.", "F. Adm."}; //add more
 	public static List<string>ResearchRankNamesS = new List<string>(){"R.A.","Assoc.","R.","S.R.","A.Dir","Dir.", "Sec. Sci."};
 	public static List<string>GovRankNamesS = new List<string>(){"J. Clk.","Clk.","S. Clk.","Man.","S. Man.","J. Exec.", "Exec.", "USec.", "SecGov."};
-	public static List<string>ArmyRankNamesS = new List<string>(){"2nd. LT.","LT.","CPT.","MJR.","LT. COL.","COL.", "BRIG.", "MJR. GEN.", "GEN."};
+	public static List<string>ArmyRankNamesS = new List<string>(){"2nd. LT.","LT.","CPT.","MJR.","LT. COL.","COL.", "BRIG.", "MGEN.", "GEN."};
 
-	//public static List<string>RolesAbbrev = new List<string>(){"SCI","GOV","MA","FL"};
 	public static Dictionary<OfficerRoles,string>RolesAbbrev = new Dictionary<OfficerRoles, string>();
 
 	public static List<string>NavalComanderRoleNames = new List<string>(){"Executive Officer", "Commanding Officer"};
-	public int PromotionPoints;
-	public List<Medal> Medals = new List<Medal>();
-	public List<Trait> Traits = new List<Trait> ();
+
+	static List<string> NobleRanksM = new List<string> (){ "Esquire", "Viscount", "Count", "Marquess", "Prince", "Duke" };
+	static List<string> NobleRanksF = new List<string> (){ "Dame", "Viscountess", "Countess", "Margrave", "Princess", "Duchess" };
+	public static Dictionary<Sex,List<string>>NobleRanks = new Dictionary<Sex, List<string>>();
+
 
 	//Images
 	public static	List<Sprite>MNavy = new List<Sprite>();
@@ -215,40 +153,139 @@ public class Character {
 		string FieldName = string.Format ("{0}{1}", c.sex.ToString () [0], c.Role.ToString ());
 		return (List<Sprite>)typeof(Character).GetField(FieldName).GetValue(null);
 	}
+	#endregion
 
-	//im so sorry u exist
-	 static Character(){
-		JobTitlesDictLong.Add (OfficerRoles.Navy, NavalRankNames);
-		JobTitlesDictLong.Add (OfficerRoles.Army, ArmyRankNames);
-		JobTitlesDictLong.Add (OfficerRoles.Research, ResearchRankNames);
-		JobTitlesDictLong.Add (OfficerRoles.Government, GovRankNames);
-
-		JobTitlesDictShort.Add (OfficerRoles.Navy, NavalRankNamesS);
-		JobTitlesDictShort.Add (OfficerRoles.Army, ArmyRankNamesS);
-		JobTitlesDictShort.Add (OfficerRoles.Research, ResearchRankNamesS);
-		JobTitlesDictShort.Add (OfficerRoles.Government, GovRankNamesS);
-
-		RolesAbbrev.Add (OfficerRoles.Navy, "OF");
-		RolesAbbrev.Add (OfficerRoles.Army, "MN");
-		RolesAbbrev.Add (OfficerRoles.Government, "GV");
-		RolesAbbrev.Add (OfficerRoles.Research, "RD");
-
-	}
-
-	public string CharName;
-	public int Age;
-	public Sex sex;
-	public StrategicShip shipPosting;
+	#region Fields
+	//Who this character is a member of
 	public Empire empire;
-	public int Rank;
-	public int HP = 100;
-	public ILocation Location;
+
+	public string CharName {get {
+			 return MiddleName != null ? FirstName + " " + MiddleName[0] + " " + LastName : FirstName + " " + LastName;}}
+
+	public string FirstName;
+	public string MiddleName;
+	public string LastName;
+	public int Age;
+	public MonthYear Birthday; //Month, Year
+	public Sex sex;
+
+	public bool Alive = true;
 
 	public int ID;
 	public OfficerRoles Role = OfficerRoles.Navy;
 	public NavalCommanderRole NavalRole;
 	public int[] TimeInRole = new int[]{0,0,0};		//Number of turns spent in each role. 
 
+	public int Rank;
+	public int HP = 100;
+	public ILocation Location;
+
+	public string CommissionDate;
+
+	//Full log of everything that has been done to or by this character
+	public string History;
+
+	public bool Noble;
+	public int NobleRank = 0;
+
+	public int PromotionPoints;
+
+	public List<Medal> Medals = new List<Medal>();
+	public List<Trait> Traits = new List<Trait> ();
+
+
+	#region Family
+	public Dynasty dynasty;
+
+	public Character Mother;
+	public Character Father;
+
+	public Character Spouse;
+
+	public List<Character> Children = new List<Character>();
+
+	public List<Character> GetChildrenBy(Character other){
+		List<Character> relevant = new List<Character> ();
+		Children.ForEach (x => {
+			if(x.Mother == other || x.Father == other)
+				relevant.Add(x);
+		});
+		return relevant;
+	}
+
+	public static void HaveChild(Character a, Character b){
+		if (a.sex == b.sex)
+			return;
+		Character c;
+		if (a.sex == Sex.Female) {
+			c = new Character (a.empire);
+			c.Father = b;
+			c.dynasty = a.dynasty;
+			c.LastName = b.LastName;
+			c.Mother = a;
+		} else {
+			c = new Character (b.empire);
+			c.Father = a;
+			c.dynasty = b.dynasty;
+			c.LastName = a.LastName;
+			c.Mother = b;
+		}
+		a.Children.Add (c);	b.Children.Add (c);
+
+		c.empire = c.Mother.empire;
+		c.Role = OfficerRoles.Child;
+		c.Birthday = new MonthYear (StrategicClock.month, StrategicClock.year);
+		c.Rank = 0;
+		c.ID = GetNextID ();
+
+
+		c.sex = (Sex)rnd.Next (0, 2);
+		if (rnd.NextFloat (0f, 1f) < .075f) {
+			if (c.sex == Sex.Male)
+				c.FirstName = c.Father.FirstName;
+			else
+				c.FirstName = c.Mother.FirstName;
+		}
+
+
+		c.AddRelationship( new RelationshipModifier(c.Mother,100,"Mother"));
+		c.AddRelationship( new RelationshipModifier(c.Father,100,"Father"));
+
+		string s ="Son";
+		if (c.sex == Sex.Female)
+			s = "Daughter";
+
+		c.Mother.AddRelationship( new RelationshipModifier(c.Mother,100,s));
+		c.Father.AddRelationship( new RelationshipModifier(c.Father,100,s));
+
+	}
+
+	#endregion
+
+
+
+	#region Story
+	public bool SwarmAgent;
+	public Empire Loyalty;
+	#endregion
+
+	#endregion
+
+	#region Job Specific Fields
+		#region  Navy
+	public StrategicShip GetShipPosting(){
+		if(IsOnType<StrategicShip>())
+			return (StrategicShip)Location.GetLocation ();
+		return null;
+	}
+		#endregion
+	#region  Navy
+
+	#endregion
+
+	#endregion
+
+	#region Relationships
 	Dictionary<Character,Relationship> Relationships = new Dictionary<Character, Relationship> ();
 
 	public T GetRelationship<T>(Character Other){
@@ -273,23 +310,20 @@ public class Character {
 		}
 		Relationships [mod.Other].AddMod (mod);
 	}
+	#endregion
 
-
-
+		#region Sprite
 	Sprite portrait;
 	public Sprite GetPortrait(){
 		if(portrait == null && GetValidPortraits(this).Count > 1)
 			portrait = GetValidPortraits (this) [rnd.Next(0,GetValidPortraits (this).Count)];
 		return portrait;
 	}
+	#endregion
 
+	#region Personality
 	public List<int> PersonalityAspects = new List<int>(){0,0,0,0,0,0};
 
-
-	//extra floof
-	public string CommissionDate;
-
-	#region PersonalityAspectGetters
 	public int GetAmbition(){
 		return PersonalityAspects [0];
 	}
@@ -308,15 +342,37 @@ public class Character {
 	public int GetLuck(){
 		return PersonalityAspects [5];
 	}
+
+	public string GetPersonalitySummary(bool inline = true){
+		StringBuilder sb = new StringBuilder ();
+		if (inline) {
+			for (int i = 0; i < 6; i++) {
+				string c="";
+				if (PersonalityAspects [i] > 74)
+					c = "<color=green>";
+				if (PersonalityAspects [i] > 24 && PersonalityAspects [i] < 75)
+					c = "<color=teal>";
+				else if (PersonalityAspects [i] > -25 && PersonalityAspects [i] < 25)
+					c = "<color=white>";
+				else if (PersonalityAspects [i] > -75 && PersonalityAspects [i] <= -25)
+					c = "<color=orange>";
+				else if (PersonalityAspects [i] <= -75)
+					c = "<color=red>";
+				sb.Append (c + PersonalityAspectsStrings [i]+"</color>     ");
+			}
+		} else {
+			for (int i = 0; i < 6; i++) {
+				sb.AppendLine (PersonalityAspectsStrings [i] + ": " + PersonalityAspects [i]);
+			}
+		}
+		return sb.ToString ().Trim();
+	}
 	#endregion
 
-	public bool Noble;
-	public int NobleRank = 0;
-
+	#region Utilities
 	StringBuilder sb;
 
-	public string History;
-
+	//Probably deprecated
 	public void SetAssigned(bool MakeAssigned = true){
 		switch (MakeAssigned) {
 		case (true):{
@@ -331,7 +387,7 @@ public class Character {
 			}
 		}
 	}
-
+	#region NameGetters
 	public string GetNameString( bool isShortened = false, bool NobleOnly = false){
 		if(NobleOnly)
 			return string.Format ("{0} {1}", GetNobleTitle(), CharName);
@@ -344,9 +400,7 @@ public class Character {
 
 	public string GetNobleTitle(){
 		if(Noble)
-			return  empire.Gov.NobleRanks[sex][NobleRank];
-		if (empire.Gov.HasNobleClass)
-			return "Commoner";
+			return  NobleRanks[sex][NobleRank];
 		return "Citizen";
 	}
 
@@ -361,6 +415,7 @@ public class Character {
 		}
 		return JobTitlesDictShort [Role] [Rank];
 	}
+	#endregion
 
 	public void UpdateTimeInRole(){
 		if (NavalRole != NavalCommanderRole.NONE) {
@@ -369,14 +424,6 @@ public class Character {
 		}
 	}
 
-	public void AddHistory(string s){
-		sb = new StringBuilder ();
-		sb.Append(History);
-		sb.AppendLine (s);
-		sb.AppendLine("-----------------------------------------------"); 	
-
-		History = sb.ToString ();
-	}
 
 	public void ModHP(int i){
 		HP += i;
@@ -384,6 +431,22 @@ public class Character {
 			Die ();
 			HP = 0;
 		}
+	}
+
+	public bool IsOnType<T>(){
+		return	Location.GetType () == typeof(T);
+	}
+	#endregion
+
+
+	#region Logging
+	public void AddHistory(string s){
+		sb = new StringBuilder ();
+		sb.Append(History);
+		sb.AppendLine (s);
+		sb.AppendLine("-----------------------------------------------"); 	
+
+		History = sb.ToString ();
 	}
 
 	public void MoveTo(ILocation loc){
@@ -399,9 +462,8 @@ public class Character {
 		string st = string.Format("{0}: <color=navy>{1}</color> <color=yellow>transfers</color> from <color=white>{2}</color> to <color=white>{3}</color>.",StrategicClock.GetDate(), GetNameString(true), FormerLoc, Location.GetLocationName());
 		AddHistory (st);
 		Location.MoveCharacterToThis (this);
-
 	}
-
+		
 	public void JoinsUp(){
 		string st = string.Format("{0}: <color=navy><color=navy>{1}</color></color> enlists at the rank of <color=yellow>{2}</color>.",StrategicClock.GetDate(), CharName, GetJobTitle());
 		CommissionDate = StrategicClock.GetDate ();
@@ -427,7 +489,7 @@ public class Character {
 			return;
 		SetAssigned (true);
 		MoveTo (s);
-		shipPosting = s;
+	//	shipPosting = s;
 		s.AssignOfficer (this, NavalCommanderRole.CMD);
 		NavalRole = NavalCommanderRole.CMD;
 		string st = string.Format("{0}: <color=navy>{1}</color> is <color=green>made</color> <color=cyan>Captain</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
@@ -439,7 +501,7 @@ public class Character {
 			return;
 		SetAssigned (true);
 		MoveTo (s);
-		shipPosting = s;
+	//	shipPosting = s;
 		s.AssignOfficer (this, NavalCommanderRole.XO);
 		NavalRole = NavalCommanderRole.XO;
 		string st = string.Format("{0}: <color=navy>{1}</color> is <color=green>appointed</color> <color=cyan>Executive Officer</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipName);
@@ -467,7 +529,7 @@ public class Character {
 			MoveTo (s.Location);
 		NavalRole = NavalCommanderRole.CMD;
 		SetAssigned (true);
-		shipPosting = null;
+	//	shipPosting = null;
 		Location = s.Location;
 		string st = string.Format("{0}: <color=navy>{1}</color> is <color=green>appointed</color> the <color=cyan>Commander</color> of <color=grey>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.UnitName);
 		AddHistory (st);
@@ -476,7 +538,7 @@ public class Character {
 	public void StepDownCommander(GroundUnit s){
 		NavalRole = NavalCommanderRole.NONE;
 		SetAssigned (false);
-		shipPosting = null;
+	//	shipPosting = null;
 		Location = s.Location;
 		string st = string.Format("{0}: <color=navy>{1}</color> <color=orange>steps down</color> as the <color=cyan>Commander</color> of <color=grey>{2}</color?.",StrategicClock.GetDate(),GetNameString(), s.UnitName);
 		AddHistory (st);
@@ -488,7 +550,7 @@ public class Character {
 		s.SeniorOfficer = this;
 		NavalRole = NavalCommanderRole.CMD;
 		SetAssigned (true);
-		shipPosting = null;
+	//	shipPosting = null;
 		Location = s;
 		string st = string.Format("{0}: <color=navy>{1}</color> is <color=green>appointed</color> the <color=cyan>Senior Officer</color> aboard <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
 		AddHistory (st);
@@ -499,7 +561,7 @@ public class Character {
 			MoveTo (s);
 		NavalRole = NavalCommanderRole.NONE;
 		SetAssigned (false);
-		shipPosting = null;
+	//	shipPosting = null;
 		Location = s;
 		string st = string.Format("{0}: <color=navy>{1}</color> <color=orange>steps down</color> as the <color=cyan>Senior Officer</color> aboard <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ShipYardName);
 		AddHistory (st);
@@ -511,9 +573,16 @@ public class Character {
 		s.Governor = this;
 		NavalRole = NavalCommanderRole.CMD;
 		SetAssigned (true);
-		shipPosting = null;
+//		shipPosting = null;
 		Location = s;
 		string st = string.Format("{0}: <color=navy>{1}</color> is <color=green>appointed</color> the <color=cyan>Governor</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ColonyName);
+		AddHistory (st);
+	}
+
+	public void AppointPoliticalOffice(PoliticalOffice pol, bool appointedNotRemoved = true){
+		SetAssigned (true);
+		string st = appointedNotRemoved ? string.Format("{0}: <color=navy>{1}</color> is <color=green>appointed</color> the <color=cyan>Director</color> of the <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), pol.OfficeName)
+			: string.Format("{0}: <color=navy>{1}</color> is <color=red>removed</color> as the <color=cyan>Director</color> of the <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), pol.OfficeName);
 		AddHistory (st);
 	}
 
@@ -522,7 +591,7 @@ public class Character {
 			MoveTo (s);
 		NavalRole = NavalCommanderRole.NONE;
 		SetAssigned (false);
-		shipPosting = null;
+	//	shipPosting = null;
 		Location = s;
 		string st = string.Format("{0}: <color=navy>{1}</color> <color=orange>steps down</color> as the <color=cyan>Governor</color> of <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), s.ColonyName);
 		AddHistory (st);
@@ -531,7 +600,7 @@ public class Character {
 	public void Unassign(){
 		NavalRole = NavalCommanderRole.NONE;
 		SetAssigned (false);
-		shipPosting = null;
+//		shipPosting = null;
 		string st = string.Format("{0}: <color=navy>{1}</color> has <color=red>no current assignment</color>.",StrategicClock.GetDate(),GetNameString(true));
 		AddHistory (st);
 	}
@@ -600,7 +669,7 @@ public class Character {
 	}
 
 	public void PromoteNoble(){
-		if (NobleRank == empire.Gov.NobleRanks.Count - 1)
+		if (NobleRank == NobleRanks.Count - 1)
 			return;
 		Noble = true;
 		NobleRank++;
@@ -619,67 +688,222 @@ public class Character {
 		}
 		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,empire,"OFFICER RETIRES",st,new List<Character>{this});
 		AddHistory (st);
-		shipPosting = null;
+	//	shipPosting = null;
 		empire.Characters.Remove (this);
 		empire.Unassigned.Remove (this);
 		OutputDeath ();
 	}
 
 	public void AddTrait(Trait t){
+		if (Traits.Contains (t))
+			return;
 		Traits.Add (t);
 		for(int i = 0; i < 6; i++){
 			PersonalityAspects [i] += t.PersonalityModifiers [i];
 		}
 	}
 
-	public string GetPersonalitySummary(bool inline = true){
-		StringBuilder sb = new StringBuilder ();
-		if (inline) {
-			for (int i = 0; i < 6; i++) {
-				string c="";
-				if (PersonalityAspects [i] > 74)
-					c = "<color=green>";
-				if (PersonalityAspects [i] > 24 && PersonalityAspects [i] < 75)
-					c = "<color=teal>";
-				else if (PersonalityAspects [i] > -25 && PersonalityAspects [i] < 25)
-					c = "<color=white>";
-				else if (PersonalityAspects [i] > -75 && PersonalityAspects [i] <= -25)
-					c = "<color=orange>";
-				else if (PersonalityAspects [i] <= -75)
-					c = "<color=red>";
-				sb.Append (c + PersonalityAspectsStrings [i]+"</color>     ");
-			//	sb.Append (c + PersonalityAspectsStrings [i] + ": " + PersonalityAspects [i]+"</color>\t");
+	#endregion
+
+	#region Static Processing
+
+	static IEnumerator Turn(){
+		foreach (Character c in AllCharacters.Values) {
+			CheckBirthday(c);
+			if (c.Role == OfficerRoles.Child) HandleChild (c);
+			foreach (ILocation Loc in Empire.AllLocations) {
+				ProcessLocationEvents (Loc);
 			}
-		} else {
-			for (int i = 0; i < 6; i++) {
-				sb.AppendLine (PersonalityAspectsStrings [i] + ": " + PersonalityAspects [i]);
+
+		}
+		yield return null;
+	}
+
+	static void CheckBirthday(Character c){
+		if(c.Birthday == null)
+			c.Birthday = new MonthYear(rnd.Next(0,StrategicClock.Months.Count), StrategicClock.year-c.Age);
+		if (c.Birthday.Month == StrategicClock.month) {
+				c.Age++;
+				if (rnd.Next (0, 15) < 2)
+					c.AddTrait (Trait.Traits[rnd.Next(0,c.Traits.Count)]);
+				if (c.Age == 18) {
+					c.Role = 	SystemRandomExtensions.RandomEnum <OfficerRoles>();
+					if (c.Role == OfficerRoles.Child)
+						c.Role = OfficerRoles.Navy;
+					if ((int)c.Role < 100)
+						c.JoinsUp ();
+				}
+				else if (c.Age > 65)
+					c.Retire (false);
+			}
+	}
+
+
+	static void HandleChild(Character c){
+		if (c.Mother.Alive)
+			c.MoveTo (c.Mother.Location);
+		else if (c.Father.Alive)
+			c.MoveTo (c.Father.Location);
+		else
+			c.Die ();
+	}
+
+	static void ProcessLocationEvents(ILocation L){
+		Dictionary<OfficerRoles,List<Character>> CharactersByRole = new Dictionary<OfficerRoles, List<Character>>();
+		List<Character> CharactersAtLocation = GetCharactersAtLocation (L,CharactersByRole);
+		List<Character> Criminals = new List<Character>();
+		
+		CharactersAtLocation.ForEach (x => {
+			switch (x.Role)
+			{
+				case OfficerRoles.Navy:
+					break;
+				case OfficerRoles.Army:
+					break;
+				case OfficerRoles.Government:
+					break;
+				case OfficerRoles.Research:
+					break;
+				case OfficerRoles.Intelligence:
+					break;
+				case OfficerRoles.Police:
+					if (CharactersByRole.ContainsKey(OfficerRoles.Cartel))
+				{
+					Character target = CharactersByRole[OfficerRoles.Cartel][rnd.Next(0, CharactersByRole[OfficerRoles.Cartel].Count)];
+					if (rnd.Next(0, 100) < x.Rank + 2 - target.Rank)
+					{
+						Debug.Log(string.Format("{0} successfully apprehends {1} on {2}", x.GetNameString(), target.GetNameString(), L.GetLocationName()));
+						x.PromotionPoints += (int)(.25 * target.PromotionPoints + 25);
+					}
+					else
+						Debug.Log(string.Format("{0} fails to apprehend {1} on {2}", x.GetNameString(), target.GetNameString(),
+							L.GetLocationName()));
+				}
+					else if (CharactersByRole.ContainsKey(OfficerRoles.Criminal))
+					{
+						Character target = CharactersByRole[OfficerRoles.Criminal][rnd.Next(0, CharactersByRole[OfficerRoles.Criminal].Count)];
+						if (rnd.Next(0, 100) < x.Rank + 6 - target.Rank)
+						{
+							Debug.Log(string.Format("{0} successfully apprehends {1} on {2}", x.GetNameString(), target.GetNameString(), L.GetLocationName()));
+							x.PromotionPoints += (int)(.25 * target.PromotionPoints + 25);
+						}
+						else
+							Debug.Log(string.Format("{0} fails to apprehend {1} on {2}", x.GetNameString(), target.GetNameString(),
+								L.GetLocationName()));
+					}
+					break;
+				case OfficerRoles.Child:
+					break;
+				case OfficerRoles.Corporate:
+					break;
+				case OfficerRoles.Social:
+					break;
+				case OfficerRoles.Merchant:
+					break;
+				case OfficerRoles.Celebrity:
+					break;
+				case OfficerRoles.Scientist:
+					break;
+				case OfficerRoles.Politician:
+					break;
+				case OfficerRoles.Media:
+					break;
+				case OfficerRoles.Engineer:
+					break;
+				case OfficerRoles.Noble:
+					break;
+				case OfficerRoles.Terrorist:
+					break;
+				case OfficerRoles.Hacker:
+					break;
+				case OfficerRoles.Rebel:
+					break;
+				case OfficerRoles.Spy:
+					break;
+				case OfficerRoles.Criminal:
+					break;
+				case OfficerRoles.Cartel:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+			});
+	}
+
+	static List<Character> GetCharactersAtLocation(ILocation loc, Dictionary<OfficerRoles,List<Character>> dict, OfficerRoles? rNullable = null, bool softReq = false){
+		List<Character> Output = new List<Character> ();
+		foreach (Character c in AllCharacters.Values) {
+			if (c.Location == loc)
+			{
+				if (dict.ContainsKey(c.Role))
+				{
+					dict[c.Role].Add(c);
+				}
+				else
+				{
+					dict.Add(c.Role, new List<Character>{c});
+				}
+				Output.Add(c);
 			}
 		}
-		return sb.ToString ().Trim();
+		if (rNullable != null && Output.Count > 0) {
+			OfficerRoles r = rNullable.Value;
+			Output = GetCharactersByTypeAndRank (r, Output);
+		}
+		if (rNullable == null) {
+			Output = Output.OrderByDescending (x => x.Rank).ThenByDescending (x => x.Noble).ThenByDescending (x => x.NobleRank).ToList ();
+		} else {
+			Output = Output.OrderBy (x => x.Role).ThenByDescending (x => x.Rank).ThenByDescending (x => x.Noble).ThenByDescending (x => x.NobleRank).ToList ();
+		}
+		return Output;
 	}
+
+	public static List<Character>GetCharactersByTypeAndRank(OfficerRoles r, List<Character> Set, int rank = -1){
+		List<Character> ch = new List<Character> ();
+		List<Character> imthenulls = new List<Character> ();
+
+		foreach (Character c in Set) {
+			if (c != null) {
+				if (c.Role == r && (c.Rank == rank || rank == -1))
+						ch.Add (c);
+			}
+			else {
+				imthenulls.Add (c);
+			}
+		}
+		foreach (Character c in imthenulls) {
+			//Do Nothing
+		}
+		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
+		return ch;
+	}
+	#endregion
+
 
 	public void Die(){
 		string st = "";
 		SetAssigned (true);
-		if(shipPosting != null)
-			st = string.Format("{0}: <color=navy>{1}</color> was <color=red>killed</color> in the destruction of the <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), shipPosting.ShipName);
+		if(GetShipPosting() != null)
+			st = string.Format("{0}: <color=navy>{1}</color> was <color=red>killed</color> in the destruction of the <color=white>{2}</color>.",StrategicClock.GetDate(),GetNameString(), GetShipPosting().ShipName);
 		else
 			st = string.Format("{0}: <color=navy>{1}</color> was <color=red>killed</color> at.",StrategicClock.GetDate(),GetNameString(),Location.GetLocationName());
 		AddHistory (st);
-		shipPosting = null;
+	//	shipPosting = null;
 		empire.Characters.Remove (this);
 		empire.Dead.Add (this);
 		OutputDeath ();
-		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,empire,"OFFICER DIES",st,new List<Character>{this});
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,empire,"OFFICER DEATH",st,new List<Character>{this});
 
 	}
-		
+
+	#region Output (Deprecated)
+
 	public void Output(){
 		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Characters/" + CharName + ".txt"); 
 		using (StreamWriter writer = new StreamWriter (path)) {
 			writer.WriteLine ("Name: " + CharName + "\t Age: " + Age);
-			if(shipPosting != null)
-			writer.WriteLine ("Posting: " + shipPosting.ShipName);
+			if(GetShipPosting() != null)
+				writer.WriteLine ("Posting: " + GetShipPosting().ShipName);
 			writer.Write (History + "\n\nAwards:\n");
 			foreach (Medal m in Medals) {
 				writer.WriteLine (m.Name);
@@ -694,8 +918,8 @@ public class Character {
 		string path = System.IO.Path.Combine (Application.streamingAssetsPath, "Characters/Fallen" + CharName + ".txt"); 
 		using (StreamWriter writer = new StreamWriter (path)) {
 			writer.WriteLine ("Name: " + CharName + "\t Age: " + Age);
-			if(shipPosting != null)
-				writer.WriteLine ("Posting: " + shipPosting.ShipName);
+			if(GetShipPosting() != null)
+				writer.WriteLine ("Posting: " + GetShipPosting().ShipName);
 			writer.Write (History + "\n\nAwards:\n");
 			foreach (Medal m in Medals) {
 				writer.WriteLine (m.Name);
@@ -706,38 +930,58 @@ public class Character {
 			}
 		}
 	}
+	#endregion
 
-	// Use this for initialization
-	public Character(){
+	#region Constructors
+	// TODO Check which ones are up to date and which arent, then cut it down to a single one.
 
-		Role = OfficerRoles.Navy;
-		sex = (Sex)rnd.Next (0, 2);
-		CharName = ThemeManager.GenerateCharName (sex); //todo
-		Rank = 0;
-		ID = GetNextID();
-		JoinsUp ();
-	}
-
-	public Character(int i, OfficerRoles r, Empire e){
+	//Only for use at game start
+	public Character(int i, OfficerRoles r, Empire e, Theme t = null){
 		empire = e;
-
-		Role = r;
-
-		Rank = i;
-		ID = GetNextID();
-		sex = (Sex)rnd.Next (0, 2);
-		CharName = ThemeManager.GenerateCharName (sex); //todo
-		JoinsUp ();
-	}
-
-	public Character(int i, Theme t, OfficerRoles r, Empire e){
-		empire = e;
+		empire.Characters.Add (this);
 		Role = r;
 		Rank = i;
 		ID = GetNextID();
 		sex = (Sex)rnd.Next (0, 2);
-
-		CharName = ThemeManager.GenerateCharName(t,sex); //todo
+		if(t!= null)
+			ThemeManager.GenerateCharName(this,t); //todo
+		else
+			ThemeManager.GenerateCharName(this); //todo
+		AllCharacters.Add(ID,this);
 		JoinsUp ();
+	}
+
+	public Character (Empire e){
+		empire = e;
+		empire.Characters.Add (this);
+		ID = GetNextID();
+		AllCharacters.Add(ID,this);
+
+	}
+	#endregion
+
+	//im so sorry u exist
+	//Sets up our dictionaries
+	static Character(){
+		StrategicClock.PhaseChange.AddListener (PhaseManager);
+
+
+		JobTitlesDictLong.Add (OfficerRoles.Navy, NavalRankNames);
+		JobTitlesDictLong.Add (OfficerRoles.Army, ArmyRankNames);
+		JobTitlesDictLong.Add (OfficerRoles.Research, ResearchRankNames);
+		JobTitlesDictLong.Add (OfficerRoles.Government, GovRankNames);
+
+		JobTitlesDictShort.Add (OfficerRoles.Navy, NavalRankNamesS);
+		JobTitlesDictShort.Add (OfficerRoles.Army, ArmyRankNamesS);
+		JobTitlesDictShort.Add (OfficerRoles.Research, ResearchRankNamesS);
+		JobTitlesDictShort.Add (OfficerRoles.Government, GovRankNamesS);
+
+		RolesAbbrev.Add (OfficerRoles.Navy, "OF");
+		RolesAbbrev.Add (OfficerRoles.Army, "MN");
+		RolesAbbrev.Add (OfficerRoles.Government, "GV");
+		RolesAbbrev.Add (OfficerRoles.Research, "RD");
+
+		NobleRanks.Add (Sex.Female, NobleRanksF);
+		NobleRanks.Add (Sex.Male, NobleRanksM);
 	}
 }

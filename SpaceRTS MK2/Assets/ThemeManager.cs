@@ -105,27 +105,32 @@ public class ThemeManager : MonoBehaviour{
 */
 
 	#region CharacterNames
-	public static string GenerateCharName(Theme t, Sex s){
-		if (s == Sex.Female) {
+	public static void GenerateCharName(Character c, Theme t = null){
+		if(t==null)
+			t = Themes [rnd.Next (0, Themes.Count)];
+		
+		if (c.sex == Sex.Female) {
 			try{
-			return t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count )] + " " + t.CharacterLastNames [rnd.Next(0, t.CharacterLastNames.Count)];
+				c.FirstName = t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count )]; 
+				c.LastName = t.CharacterLastNames [rnd.Next(0, t.CharacterLastNames.Count)];
 			}
 			catch{
 				Debug.LogError ("Failed to Assign Name Properly.");
-				return null;
+				return;
 			}
 		} else {
 			try{
-			return t.CharacterFirstNamesM [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
+				c.FirstName = t.CharacterFirstNamesM [rnd.Next (0, t.CharacterFirstNamesF.Count)];
+				c.LastName = t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
 			}
 			catch{
 				Debug.LogError ("Failed to Assign Name Properly.");
-				return null;
+				return;
 			}
 		}
 
 	}
-
+	/* This shouldnt be needed anymore
 	public static string GenerateCharName(Sex s){
 		Theme t = Themes [rnd.Next (0, Themes.Count)];
 //		Debug.Log (t.ThemeName);
@@ -144,7 +149,7 @@ public class ThemeManager : MonoBehaviour{
 				return NameManager.GenerateCharName();
 			}
 		}
-	}
+	}*/
 	#endregion
 
 	#region Naming

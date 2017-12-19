@@ -38,7 +38,7 @@ public class StrategicShip : ILocation{
 		return this.GetType ();
 	}
 	public void MoveCharacterToThis(Character c){
-		c.shipPosting = this;
+	//	c.GetShipPosting() = this;
 		CharactersAboard.Add (c);
 		UpdateCommand ();
 	}

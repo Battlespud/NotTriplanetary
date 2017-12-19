@@ -79,7 +79,7 @@ public static class Facilities
                     break;
                 case FacilityType.troop:
                     break;
-                case FacilityType.cavalry:
+				case FacilityType.armor:
                     break;
                 case FacilityType.crew:
                     break;
@@ -91,7 +91,7 @@ public static class Facilities
                     break;
                 case FacilityType.orbitalDefense:
                     break;
-                case FacilityType.earylWarning:
+			case FacilityType.earlyWarning:
                     break;
                 default:
                     break;
@@ -101,73 +101,74 @@ public static class Facilities
 
     public static void ActivateFacility(Colony colony)
     {
-        switch (colony.Facilities) //make sure to actually add the facilities field to the colony class, afaik it only needs to be a list of FacilityType
-        {
-            case FacilityType.city:
+		colony.Facilities.ForEach (x => {
+			switch (x) { //make sure to actually add the facilities field to the colony class, afaik it only needs to be a list of FacilityType
+			case FacilityType.city:
                 //income/econmics, population
-                break;
-            case FacilityType.taxAgency:
+				break;
+			case FacilityType.taxAgency:
                 //new tax bill 2017
-                break;
-            case FacilityType.commercialPort:
+				break;
+			case FacilityType.commercialPort:
                 //io for commericial logistics
-                break;
-            case FacilityType.terraforming:
+				break;
+			case FacilityType.terraforming:
                 //terraform planet
-                break;
-            case FacilityType.research:
+				break;
+			case FacilityType.research:
                 //advance percentage of research
-                break;
-            case FacilityType.mining:
+				break;
+			case FacilityType.mining:
                 //mine resources
-                break;
-            case FacilityType.processing:
+				break;
+			case FacilityType.processing:
                 //raw resources processing
-                break;
-            case FacilityType.agriculture:
+				break;
+			case FacilityType.agriculture:
                 //feed the peeps
-                break;
-            case FacilityType.componentFactory:
+				break;
+			case FacilityType.componentFactory:
                 //build ship components
-                break;
-            case FacilityType.fighterFactory:
+				break;
+			case FacilityType.fighterFactory:
                 //build fighters for the ships
-                break;
-            case FacilityType.ordinanceFactory:
+				break;
+			case FacilityType.ordnanceFactory:
                 //build the explody things
-                break;
-            case FacilityType.militaryPort:
+				break;
+			case FacilityType.militaryPort:
                 //military related io, checkpoints
-                break;
-            case FacilityType.officer:
+				break;
+			case FacilityType.officer:
                 //officer training
-                break;
-            case FacilityType.troop:
+				break;
+			case FacilityType.troop:
                 //ground troop training
-                break;
-            case FacilityType.armor:
+				break;
+			case FacilityType.armor:
                 //heavy armor unit training
-                break;
-            case FacilityType.crew:
+				break;
+			case FacilityType.crew:
                 //space marines
-                break;
-            case FacilityType.forcefield:
+				break;
+			case FacilityType.forcefield:
                 //planetary forcefield
-                break;
-            case FacilityType.bunker:
+				break;
+			case FacilityType.bunker:
                 //group units' defense augmentation
-                break;
-            case FacilityType.antiAir:
+				break;
+			case FacilityType.antiAir:
                 //invasion defense
-                break;
-            case FacilityType.orbitalDefense:
+				break;
+			case FacilityType.orbitalDefense:
                 //orbital... defense
-                break;
-            case FacilityType.earlyWarning:
+				break;
+			case FacilityType.earlyWarning:
                 //EA for inc ships
-                break;
-            default:
-                break;
-        }
+				break;
+			default:
+				break;
+			}
+		});
     }
 }
