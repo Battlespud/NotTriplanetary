@@ -447,6 +447,15 @@ public class DesignScreenManager : MonoBehaviour {
 		description += string.Format ("<color=green>{0}</color> Months of fuel in current configuration. Maximum Range: <color=magenta>{1}</color> Astrons.", (FuelMax/CompoundFuelUse).ToString("##.#"),(FuelMax/CompoundFuelUse * MaxSpeed).ToString("##.##"));
 		Description.text = description;
 	}
+	
+	public void ToggleDesignUI(){
+		gameObject.active = !gameObject.active;
+		if (!gameObject.active) {
+			StrategicClock.Unpause ();
+		} else {
+			StrategicClock.RequestPause ();
+		}
+	}
 
 }
 /*

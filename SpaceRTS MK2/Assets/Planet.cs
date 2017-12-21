@@ -73,7 +73,7 @@ public enum RegionTypes{
 	Sea
 }
 
-public interface IRecieveCombatResult{
+public interface IReceiveCombatResult{
 	void ChangeOwner(Empire Victor);
 }
 
@@ -210,7 +210,7 @@ public class Planet : MonoBehaviour, IMineable
 
 	private void GenerateRegions(int number){
 		for (int i = 0; i < number; i++) {
-			PlanetRegion r = new PlanetRegion ();
+			PlanetRegion r = new PlanetRegion (this);
 			Regions.Add (r);
 			RegionToPlanet.Add (r, this);
 		}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,6 +54,7 @@ public class OfficerManagerUI : MonoBehaviour {
 	bool UnassignedOnly(){
 		return NobilityFilter.isOn;
 	}
+	
 	public InputField NameFilter;
 
 
@@ -264,28 +266,33 @@ public class OfficerManagerUI : MonoBehaviour {
 		foreach (GameObject g in OfficerButtons) {
 			Destroy (g);
 		}
-
+	
+		List<Character> ToScreen = new List<Character>();
 		OfficerButtons.Clear ();
 		foreach (Character d in ActiveEmpire.GetCharactersByType (r)) {
 			if (string.IsNullOrEmpty (NameFilter.text)  || d.GetNameString().IndexOf(NameFilter.text.Trim(),System.StringComparison.InvariantCultureIgnoreCase) > -1 ||(d.Location != null && d.Location.GetLocationName().IndexOf(NameFilter.text.Trim(),System.StringComparison.InvariantCultureIgnoreCase) > -1))  {
 				if (!NoblesOnly () || (NoblesOnly () && d.Noble)) {
 					if (!UnassignedOnly () || r != OfficerRoles.Navy || (UnassignedOnly () && d.NavalRole == NavalCommanderRole.NONE)) {
-						GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
-						OfficerButtons.Add (g);
-						RectTransform h = g.GetComponent<RectTransform> ();
-						OfficerButtonManager manager = g.AddComponent<OfficerButtonManager> ();
-						manager.Manager = this;
-						manager.Assign (d);
-						h.SetParent (OfficersParent.transform);
-					//	h.rotation = Camera.main.transform.rotation;
-						h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
-						h.sizeDelta = new Vector2 (800f, 35f);
-						h.localScale = new Vector3 (1f, 1f, 1f);
-						interval++;
+						ToScreen.AddExclusive(d);
 					}
 				}
 			}
 		}
+		ToScreen.ForEach(x =>
+		{
+			GameObject g = Instantiate<GameObject> (ButtonPrefab) as GameObject;
+			OfficerButtons.Add (g);
+			RectTransform h = g.GetComponent<RectTransform> ();
+			OfficerButtonManager manager = g.AddComponent<OfficerButtonManager> ();
+			manager.Manager = this;
+			manager.Assign (x);
+			h.SetParent (OfficersParent.transform);
+			//	h.rotation = Camera.main.transform.rotation;
+			h.anchoredPosition3D = new Vector3 (0f, yOff * interval, 0f);
+			h.sizeDelta = new Vector2 (800f, 35f);
+			h.localScale = new Vector3 (1f, 1f, 1f);
+			interval++;
+		});
 	}
 
 	void UpdateOfficerScrollBoolProxy(bool b){
@@ -344,7 +351,7 @@ public class OfficerManagerUI : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 		if (gameObject.active) {
 			if (LocationsParentRect.localPosition.y < 0) {
 				LocationsParentRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
@@ -354,6 +361,13 @@ public class OfficerManagerUI : MonoBehaviour {
 			}
 			if (HistoryRect.localPosition.y < 0) {
 				HistoryRect.transform.localPosition = new Vector3 (0f, 0f, 0f);
+			}
+			if (Input.GetKeyDown(KeyCode.Space) && SelectedChar != null)
+			{
+				OfficerRoles original = SelectedChar.Role;
+				SelectedChar.Role = SystemRandomExtensions.RandomEnum<OfficerRoles>();
+				Debug.LogError(original.ToString() + "=>" + SelectedChar.Role.ToString());
+
 			}
 		}
 	}

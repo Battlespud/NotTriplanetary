@@ -95,9 +95,9 @@ public class Empire : MonoBehaviour {
 
 	public List<Colony>Colonies = new List<Colony>();
 	public List<Team> Teams = new List<Team>();
-	public List<Character>Characters = new List<Character>();
+//	public List<Character>Characters = new List<Character>();
 	public List<Character> Unassigned = new List<Character>();
-	public List<Character> Dead = new List<Character>();
+//	public List<Character> Dead = new List<Character>();
 	public List<StrategicShip> Ships = new List<StrategicShip> ();
 	public List<StrategicShipyard> Yards = new List<StrategicShipyard> ();
 	public List<GroundUnit>GroundUnits = new List<GroundUnit>();
@@ -223,7 +223,7 @@ public class Empire : MonoBehaviour {
 		List<Character> ch = new List<Character> ();
 		List<Character> imthenulls = new List<Character> ();
 		if (CharSet.Count < 1)
-			CharSet.AddRange (Characters);
+			CharSet.AddRange (Character.CharactersByEmpire[this]);
 		foreach (Character c in CharSet) {
 			if (c != null) {
 				try {
@@ -240,7 +240,7 @@ public class Empire : MonoBehaviour {
 			}
 		}
 		foreach (Character c in imthenulls) {
-			Characters.Remove (c);
+			Character.CharactersByEmpire[this].Remove (c);
 		}
 		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
@@ -249,7 +249,7 @@ public class Empire : MonoBehaviour {
 	public List<Character>GetCharactersByType(OfficerRoles r){
 		List<Character> ch = new List<Character> ();
 		List<Character> imthenulls = new List<Character> ();
-		foreach (Character c in Characters) {
+		foreach (Character c in Character.CharactersByEmpire[this]) {
 			if (c != null) {
 				try {
 					if (c.Role == r)
@@ -264,7 +264,7 @@ public class Empire : MonoBehaviour {
 			}
 		}
 		foreach (Character c in imthenulls) {
-			Characters.Remove (c);
+			Character.CharactersByEmpire[this].Remove (c);
 		}
 		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
@@ -274,7 +274,7 @@ public class Empire : MonoBehaviour {
 		List<Character> ch = new List<Character> ();
 		List<Character> imthenulls = new List<Character> ();
 
-		foreach (Character c in Characters) {
+		foreach (Character c in Character.CharactersByEmpire[this]) {
 			if (c != null) {
 				try {
 					if (c.Role == r && c.Rank == rank)
@@ -290,7 +290,7 @@ public class Empire : MonoBehaviour {
 			}
 		}
 		foreach (Character c in imthenulls) {
-			Characters.Remove (c);
+			Character.CharactersByEmpire[this].Remove (c);
 		}
 		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
@@ -298,7 +298,7 @@ public class Empire : MonoBehaviour {
 
 	public List<Character> GetCharactersAtLocation(ILocation loc, OfficerRoles? rNullable = null, bool softReq = true){
 		List<Character> Output = new List<Character> ();
-		foreach (Character c in Characters) {
+		foreach (Character c in Character.CharactersByEmpire[this]) {
 			if (c.Location == loc)
 				Output.Add (c);
 		}
@@ -307,7 +307,7 @@ public class Empire : MonoBehaviour {
 			Output = GetCharactersByType (r, Output);
 			if (Output.Count < 1 && softReq) {
 				//Debug.LogError ("No valid characters found, finding all other characters in order to prevent exception!");
-				foreach (Character c in Characters) {
+				foreach (Character c in Character.CharactersByEmpire[this]) {
 					if (c.Location == loc)
 						Output.Add (c);
 				}
@@ -376,7 +376,6 @@ public class Empire : MonoBehaviour {
 			}
 			index++;
 		}
-		Unassigned.AddRange (Characters);
 		yield return Ninja.JumpToUnity;
 	}
 
@@ -389,7 +388,6 @@ public class Empire : MonoBehaviour {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index, OfficerRoles.Research,this);
 				c.Age = (int)(rnd.Next (26, 32) + index/100*rnd.Next(1.85f,7.75f));
-				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance + index/100f*5f);
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -415,7 +413,6 @@ public class Empire : MonoBehaviour {
 			for (int d = (int)(i*1.5f * f); d > 0; d--) {
 				Character c = new Character(index, OfficerRoles.Government,this);
 				c.Age = (int)(rnd.Next (22, 32) + index*rnd.Next(2.85f,3.75f));
-				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance*2 + (index - 2.5f)/100*15f);
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -435,7 +432,6 @@ public class Empire : MonoBehaviour {
 			}
 			index++;
 		}
-		Unassigned.AddRange (Characters);
 		yield return Ninja.JumpToUnity;
 	}
 	public bool DistributeCaptains = false;
@@ -521,7 +517,7 @@ public class Empire : MonoBehaviour {
 			DistributeOfficers ();
 			DistributeCaptains = false;
 		}
-		CurrentOfficers = Characters.Count;
+	//	CurrentOfficers = Character.CharactersByEmpire[this].Count;
 	}
 
 

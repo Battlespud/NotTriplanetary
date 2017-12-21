@@ -157,6 +157,16 @@ public class GroundUnit : ILocation, ICargo{
 	public Character Commander;
 	public ILocation Location;
 
+	public Vector3 GetPosition()
+	{
+		return Location.GetPosition();
+	}
+
+	public string GetSearchableString()
+	{
+		return UnitName + " Army" + " Troops";
+	}
+
 	public bool CombatEffective = true;
 
 	public int NumberTroops;

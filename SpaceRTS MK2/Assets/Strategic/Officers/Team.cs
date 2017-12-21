@@ -1,14 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 public class Team : ILocation{
 	const int MaxTeamMembers = 5;
 
 	public string TeamName = "Team";
 
+	public TeamTypes TeamType;
+	
 	public ILocation Location;
+	public Vector3 GetPosition()
+	{
+		return Location.GetPosition();
+	}
 
+	public string GetSearchableString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.Append("Team" + TeamType.ToString());
+		Members.ForEach(x =>
+		{
+			sb.Append(x.GetNameString());
+		});
+		return sb.ToString();
+	}
 	public Empire empire;
 
 	public List<Character> Members = new List<Character>();

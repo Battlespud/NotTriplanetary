@@ -152,7 +152,6 @@ G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEditor.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.UI.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.Networking.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.TestRunner.xml
-G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\nunit.framework.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.Timeline.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.UIAutomation.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml

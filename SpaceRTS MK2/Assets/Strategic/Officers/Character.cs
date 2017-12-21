@@ -27,6 +27,7 @@ public enum OfficerRoles{
 	Media,
 	Engineer,
 	Noble,
+	Retired,
 
 	//Criminal, Never under player control and generally always bad.
 	Terrorist = 200,
@@ -71,7 +72,7 @@ public class MonthYear{
 	}
 }
 
-public class Character {
+public class Character : ISearchable {
 	#region statics
 	public static string[] PersonalityAspectsStrings = new string[]{"Ambition","Courage","Extraversion","Intelligence","Discipline","Luck"};
 
@@ -155,6 +156,9 @@ public class Character {
 	}
 	#endregion
 
+	
+	
+	
 	#region Fields
 	//Who this character is a member of
 	public Empire empire;
@@ -194,6 +198,11 @@ public class Character {
 	public List<Trait> Traits = new List<Trait> ();
 
 
+	public string GetSearchableString()
+	{
+		return GetNameString() + Role.ToString() + dynasty.DynastyName;
+	}
+	
 	#region Family
 	public Dynasty dynasty;
 
@@ -688,10 +697,8 @@ public class Character {
 		}
 		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,empire,"OFFICER RETIRES",st,new List<Character>{this});
 		AddHistory (st);
-	//	shipPosting = null;
-		empire.Characters.Remove (this);
-		empire.Unassigned.Remove (this);
-		OutputDeath ();
+	//	shipPosting = null
+		Role = OfficerRoles.Retired;
 	}
 
 	public void AddTrait(Trait t){
@@ -710,7 +717,6 @@ public class Character {
 	static IEnumerator Turn(){
 		foreach (Character c in AllCharacters.Values) {
 			CheckBirthday(c);
-			if (c.Role == OfficerRoles.Child) HandleChild (c);
 			foreach (ILocation Loc in Empire.AllLocations) {
 				ProcessLocationEvents (Loc);
 			}
@@ -727,7 +733,7 @@ public class Character {
 				if (rnd.Next (0, 15) < 2)
 					c.AddTrait (Trait.Traits[rnd.Next(0,c.Traits.Count)]);
 				if (c.Age == 18) {
-					c.Role = 	SystemRandomExtensions.RandomEnum <OfficerRoles>();
+					c.Role = SystemRandomExtensions.RandomEnum<OfficerRoles>();
 					if (c.Role == OfficerRoles.Child)
 						c.Role = OfficerRoles.Navy;
 					if ((int)c.Role < 100)
@@ -739,19 +745,10 @@ public class Character {
 	}
 
 
-	static void HandleChild(Character c){
-		if (c.Mother.Alive)
-			c.MoveTo (c.Mother.Location);
-		else if (c.Father.Alive)
-			c.MoveTo (c.Father.Location);
-		else
-			c.Die ();
-	}
 
 	static void ProcessLocationEvents(ILocation L){
 		Dictionary<OfficerRoles,List<Character>> CharactersByRole = new Dictionary<OfficerRoles, List<Character>>();
 		List<Character> CharactersAtLocation = GetCharactersAtLocation (L,CharactersByRole);
-		List<Character> Criminals = new List<Character>();
 		
 		CharactersAtLocation.ForEach (x => {
 			switch (x.Role)
@@ -767,32 +764,28 @@ public class Character {
 				case OfficerRoles.Intelligence:
 					break;
 				case OfficerRoles.Police:
-					if (CharactersByRole.ContainsKey(OfficerRoles.Cartel))
-				{
-					Character target = CharactersByRole[OfficerRoles.Cartel][rnd.Next(0, CharactersByRole[OfficerRoles.Cartel].Count)];
-					if (rnd.Next(0, 100) < x.Rank + 2 - target.Rank)
-					{
-						Debug.Log(string.Format("{0} successfully apprehends {1} on {2}", x.GetNameString(), target.GetNameString(), L.GetLocationName()));
-						x.PromotionPoints += (int)(.25 * target.PromotionPoints + 25);
-					}
-					else
-						Debug.Log(string.Format("{0} fails to apprehend {1} on {2}", x.GetNameString(), target.GetNameString(),
-							L.GetLocationName()));
-				}
-					else if (CharactersByRole.ContainsKey(OfficerRoles.Criminal))
+				 if (CharactersByRole.ContainsKey(OfficerRoles.Criminal))
 					{
 						Character target = CharactersByRole[OfficerRoles.Criminal][rnd.Next(0, CharactersByRole[OfficerRoles.Criminal].Count)];
 						if (rnd.Next(0, 100) < x.Rank + 6 - target.Rank)
 						{
-							Debug.Log(string.Format("{0} successfully apprehends {1} on {2}", x.GetNameString(), target.GetNameString(), L.GetLocationName()));
-							x.PromotionPoints += (int)(.25 * target.PromotionPoints + 25);
+							Debug.Log(string.Format("{0} successfully apprehends {1} on {2}", x.GetNameString(), target.GetNameString(),
+								L.GetLocationName()));
+							x.PromotionPoints += (int) (.25 * target.PromotionPoints + 25);
 						}
 						else
-							Debug.Log(string.Format("{0} fails to apprehend {1} on {2}", x.GetNameString(), target.GetNameString(),
-								L.GetLocationName()));
+						{
+							Debug.Log(string.Format("{0} fails to apprehend {1} on {2}", x.GetNameString(), target.GetNameString(),L.GetLocationName()));
+						}
 					}
 					break;
 				case OfficerRoles.Child:
+					if (x.Mother.Alive)
+						x.MoveTo (x.Mother.Location);
+					else if (x.Father.Alive)
+						x.MoveTo (x.Father.Location);
+					else
+						x.Die ();
 					break;
 				case OfficerRoles.Corporate:
 					break;
@@ -825,6 +818,7 @@ public class Character {
 				case OfficerRoles.Cartel:
 					break;
 				default:
+					Debug.LogError("Unsupported Character Role.");
 					throw new ArgumentOutOfRangeException();
 			}
 			});
@@ -889,8 +883,7 @@ public class Character {
 			st = string.Format("{0}: <color=navy>{1}</color> was <color=red>killed</color> at.",StrategicClock.GetDate(),GetNameString(),Location.GetLocationName());
 		AddHistory (st);
 	//	shipPosting = null;
-		empire.Characters.Remove (this);
-		empire.Dead.Add (this);
+		Alive = false;
 		OutputDeath ();
 		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,3,empire,"OFFICER DEATH",st,new List<Character>{this});
 
@@ -938,7 +931,6 @@ public class Character {
 	//Only for use at game start
 	public Character(int i, OfficerRoles r, Empire e, Theme t = null){
 		empire = e;
-		empire.Characters.Add (this);
 		Role = r;
 		Rank = i;
 		ID = GetNextID();
@@ -947,19 +939,29 @@ public class Character {
 			ThemeManager.GenerateCharName(this,t); //todo
 		else
 			ThemeManager.GenerateCharName(this); //todo
-		AllCharacters.Add(ID,this);
+		Register(this);
 		JoinsUp ();
 	}
 
 	public Character (Empire e){
 		empire = e;
-		empire.Characters.Add (this);
 		ID = GetNextID();
-		AllCharacters.Add(ID,this);
+		Register(this);
 
 	}
 	#endregion
 
+	public static void Register(Character c)
+	{
+		if(CharactersByEmpire.ContainsKey(c.empire))
+			CharactersByEmpire[c.empire].Add(c);
+		else
+		{
+			CharactersByEmpire.Add(c.empire,new List<Character>(){c});
+		}
+		AllCharacters.Add(c.ID,c);
+	}
+	
 	//im so sorry u exist
 	//Sets up our dictionaries
 	static Character(){

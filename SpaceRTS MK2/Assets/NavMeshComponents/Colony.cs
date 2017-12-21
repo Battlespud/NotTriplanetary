@@ -72,6 +72,16 @@ public class Colony :ILocation {
 		UpdateSeniorOfficer ();
 	}
 
+	public string GetSearchableString()
+	{
+		return planet.PlanetName + ColonyName;
+	}
+
+	public Vector3 GetPosition()
+	{
+		return planet.transform.position;
+	}
+
 	//Called whenever someone transfers in or out.
 	void UpdateSeniorOfficer(){
 		List<Character> Here = empire.GetCharactersAtLocation (this,OfficerRoles.Government);

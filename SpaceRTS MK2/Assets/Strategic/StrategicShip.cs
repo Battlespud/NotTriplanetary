@@ -27,6 +27,19 @@ public class StrategicShip : ILocation{
 	
 	public static System.Random random = new System.Random ();
 
+
+	public IShipLocation Location;
+	
+	public Vector3 GetPosition()
+	{
+		return Location.GetPosition();
+	}
+
+	public string GetSearchableString()
+	{
+		return ShipName + DesignClass.DesignName + DesignClass.HullDesignation.Prefix + DesignClass.HullDesignation.HullType;
+	}
+	
 	#region ILocation
 	public string GetLocationName(){
 		return ShipName;

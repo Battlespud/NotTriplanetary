@@ -5,9 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 public class StrategicUIManager : MonoBehaviour {
 
-	public static void ZoomTo(Vector3 pos){
-		Camera.main.gameObject.transform.position = new Vector3 (pos.x, 120f, pos.z - 50f);
-	}
+
 
 	public static StrategicUIManager Manager;
 	public static UnityEvent UpdateUIEvent = new UnityEvent ();

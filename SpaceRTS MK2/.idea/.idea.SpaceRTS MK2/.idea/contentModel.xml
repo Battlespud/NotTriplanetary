@@ -98,6 +98,109 @@
         </e>
         <e p="GenerateGalaxy.cs" t="Include" />
         <e p="GravitySource.cs" t="Include" />
+        <e p="Holo UI for UGUI" t="Include">
+          <e p="Changelog.txt" t="Include" />
+          <e p="Readme.txt" t="Include" />
+          <e p="Scripts" t="Include">
+            <e p="Demo Scripts" t="Include">
+              <e p="DeskManagement.cs" t="Include" />
+            </e>
+            <e p="Editor" t="Include">
+              <e p="Enums, Structs and Serializables" t="Include">
+                <e p="AnimationTriggersExtendedDrawer.cs" t="Include" />
+                <e p="ColorBlockExtendedDrawer.cs" t="Include" />
+                <e p="SpriteStateExtendedDrawer.cs" t="Include" />
+              </e>
+              <e p="Miscellaneous" t="Include">
+                <e p="BitMaskEditor.cs" t="Include" />
+                <e p="ColorPropertyDrawer.cs" t="Include" />
+                <e p="UIAnimatorControllerGenerator.cs" t="Include" />
+              </e>
+              <e p="Raycast Filters" t="Include">
+                <e p="UICircularRaycastFilterEditor.cs" t="Include" />
+                <e p="UIRectangularRaycastFilterEditor.cs" t="Include" />
+              </e>
+              <e p="Tools" t="Include">
+                <e p="NavigationTools.cs" t="Include" />
+              </e>
+              <e p="UI" t="Include">
+                <e p="Select Field" t="Include">
+                  <e p="UISelectField_ArrowEditor.cs" t="Include" />
+                  <e p="UISelectField_LabelEditor.cs" t="Include" />
+                  <e p="UISelectField_ListEditor.cs" t="Include" />
+                  <e p="UISelectFieldEditor.cs" t="Include" />
+                </e>
+                <e p="UIButtonExtended_TargetEditor.cs" t="Include" />
+                <e p="UIButtonExtendedEditor.cs" t="Include" />
+                <e p="UIDragObjectEditor.cs" t="Include" />
+                <e p="UIHighlightTransitionEditor.cs" t="Include" />
+                <e p="UISliderExtendedEditor.cs" t="Include" />
+                <e p="UITabEditor.cs" t="Include" />
+                <e p="UIWindowEditor.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Effects" t="Include">
+              <e p="Gradient.cs" t="Include" />
+              <e p="NicerOutline.cs" t="Include" />
+            </e>
+            <e p="Enums, Structs and Serializables" t="Include">
+              <e p="AnimationTriggersExtended.cs" t="Include" />
+              <e p="ColorBlockExtended.cs" t="Include" />
+              <e p="SpriteStateExtended.cs" t="Include" />
+              <e p="UIWindowID.cs" t="Include" />
+            </e>
+            <e p="Miscellaneous" t="Include">
+              <e p="BitMaskAttribute.cs" t="Include" />
+              <e p="BreakPrefabConnection.cs" t="Include" />
+              <e p="CommonColorBuffer.cs" t="Include" />
+              <e p="LetterSpacing.cs" t="Include" />
+              <e p="NameAppendIndex.cs" t="Include" />
+              <e p="UITextSetValue.cs" t="Include" />
+              <e p="UIToggleWindowAndTab.cs" t="Include" />
+              <e p="UIUtility.cs" t="Include" />
+            </e>
+            <e p="Raycast Filters" t="Include">
+              <e p="UICircularRaycastFilter.cs" t="Include" />
+              <e p="UIIgnoreRaycast.cs" t="Include" />
+              <e p="UIMaskRaycastFilter.cs" t="Include" />
+              <e p="UIRectangularRaycastFilter.cs" t="Include" />
+            </e>
+            <e p="Test Scripts" t="Include">
+              <e p="Test_Fill.cs" t="Include" />
+            </e>
+            <e p="Tweening" t="Include">
+              <e p="ColorTween.cs" t="Include" />
+              <e p="FloatTween.cs" t="Include" />
+              <e p="ITweenValue.cs" t="Include" />
+              <e p="TweenEasing.cs" t="Include" />
+              <e p="TweenEasingHandler.cs" t="Include" />
+              <e p="TweenRunner.cs" t="Include" />
+              <e p="Vector2Tween.cs" t="Include" />
+              <e p="Vector3Tween.cs" t="Include" />
+            </e>
+            <e p="UI" t="Include">
+              <e p="Select Field" t="Include">
+                <e p="UISelectField.cs" t="Include" />
+                <e p="UISelectField_Arrow.cs" t="Include" />
+                <e p="UISelectField_Label.cs" t="Include" />
+                <e p="UISelectField_List.cs" t="Include" />
+                <e p="UISelectField_Option.cs" t="Include" />
+              </e>
+              <e p="UIButtonExtended.cs" t="Include" />
+              <e p="UIButtonExtended_Target.cs" t="Include" />
+              <e p="UIDragObject.cs" t="Include" />
+              <e p="UIFlippable.cs" t="Include" />
+              <e p="UIHighlightTransition.cs" t="Include" />
+              <e p="UIPagination.cs" t="Include" />
+              <e p="UIScrollingProxy.cs" t="Include" />
+              <e p="UISliderExtended.cs" t="Include" />
+              <e p="UISpriteAnimation.cs" t="Include" />
+              <e p="UITab.cs" t="Include" />
+              <e p="UIWindow.cs" t="Include" />
+              <e p="UIWindowManager.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="IContext.cs" t="Include" />
         <e p="ILocation.cs" t="Include" />
         <e p="ILocationButtonManager.cs" t="Include" />
@@ -150,6 +253,7 @@
         <e p="ShipEvent.cs" t="Include" />
         <e p="ShipTemplate.cs" t="Include" />
         <e p="ShipUIManager.cs" t="Include" />
+        <e p="SlideOutSearchBar.cs" t="Include" />
         <e p="SlipwayButtonUIManager.cs" t="Include" />
         <e p="Spaceyard" t="Include">
           <e p="Berth.cs" t="Include" />
@@ -236,6 +340,8 @@
           <e p="ICargo.cs" t="Include" />
           <e p="IGroundCombatLocation.cs" t="Include" />
           <e p="Intercept.cs" t="Include" />
+          <e p="IPosition.cs" t="Include" />
+          <e p="ISearchable.cs" t="Include" />
           <e p="IShipLocation.cs" t="Include" />
           <e p="MissileDesign.cs" t="Include" />
           <e p="OfficerButtonManager.cs" t="Include" />
