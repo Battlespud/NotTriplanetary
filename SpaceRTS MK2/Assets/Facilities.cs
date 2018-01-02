@@ -27,23 +27,39 @@ public enum FacilityType
     orbitalDefense,
     earylWarning,
 }
-
+/*
+    public enum ResourceTypes
+    {   
+    Carbon, 0
+    CarbonFibre, 1
+    Iron, 2
+    Steel, 3
+    Copper, 4
+    Tin, 5
+    Lead, 6
+    Aluminum, 7
+    Silver, 8
+    Gold, 9
+    Quartz, 10
+    Silicon, 11
+    Diamond, 12
+    Uranium, 13
+    Plutonium, 14
+    Alloys, 15
+    AdvancedAlloys, 16
+    Polymers, 17
+    AdvancedPolymers, 18
+    Fuels, 19
+    Lumber, 20
+    Crops, 21
+    }
+ */
 public static class Facilities
 {
     public static Dictionary<FacilityType, string> FacilityNames;
-    public static Dictionary<FacilityType, float> BaseCosts;
     public static Dictionary<FacilityType, float> BaseValues;
-    /*
-     	NONE = 0,
-	    METAL=1,
-	    LUMBER=2,
-	    OIL=3,
-	    CROPS=4,
-	    GOLD=5
-     */
     static Facilities()
     {
-        int[] resourceCode;
         foreach (FacilityType type in Enum.GetValues(typeof(FacilityType)))
         {
             switch (type)
