@@ -62,6 +62,15 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	public void MoveCharacterFromThis(Character c){
 		UpdateSeniorOfficer ();
 	}
+	public Vector3 GetPosition()
+	{
+		return transform.position;
+	}
+
+	public string GetSearchableString()
+	{
+		return ShipYardName + " Shipyard" + "Spaceyard" + "Build";
+	}
 	//Called whenever someone transfers in or out.
 	void UpdateSeniorOfficer(){
 		List<Character> Here = empire.GetCharactersAtLocation (this,OfficerRoles.Navy);

@@ -22,8 +22,8 @@ public class ContextMenu : MonoBehaviour
     float ySize = 25f;
     float xSize = 100f;
 
-    bool destroy = false;
-    int dTime = 0;
+    bool destroy = true;
+    float dTime = 3f;
 
     // Update is called once per frame
     void Update()
@@ -71,13 +71,10 @@ public class ContextMenu : MonoBehaviour
                     bgo.transform.position = new Vector3(c.transform.position.x + xSize * i, c.transform.position.y - ySize * j, c.transform.position.z);
                     //button.OnClick(action);
                     bgo.GetComponent<Button>().onClick.AddListener(action);
-					ColorBlock co = new ColorBlock ();
-					co.highlightedColor = Color.cyan;
-					co.pressedColor = Color.green;
-					bgo.GetComponent<Button> ().colors = co;
+
 
                     string name = action.Method.ToString().Substring(5);
-                    bgo.GetComponentInChildren<Text>().text = name.Substring(0, name.Length - 2);
+                    bgo.GetComponentInChildren<Text>().text = "<color=black>"+ name.Substring(0, name.Length - 2) +"</color>";
                     j++;
                 }
                 i++;
@@ -85,13 +82,13 @@ public class ContextMenu : MonoBehaviour
         }
         if (destroy)
         {
-            dTime++;
-            if (dTime >= 5)
+            dTime-= Time.deltaTime;
+            if (dTime <= 0f)
             {
-                dTime = 0;
+                dTime = 3f;
                 Destroy(c);
-                c = new GameObject();
-                destroy = false;
+            //    c = new GameObject();
+         //       destroy = false;
             }
         }
 

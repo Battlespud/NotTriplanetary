@@ -1,8 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
-public class PlanetRegion : ILocation, IRecieveCombatResult{
+
+public enum POITypes
+{
+	AbandonedShip,
+	Obelisk,
+	AbandonedCity,
+	StrangeAnimals,
+	StrangePlants,
+	Aurora
+}
+
+public class PointOfInterest
+{
+	public POITypes PoiType;
+	public string Name;
+	public string Description;
+
+	public static Dictionary<POITypes,List<string>> LoadedDescriptionsByType = new Dictionary<POITypes, List<string>>();
+	
+	public PointOfInterest(POITypes typ, string n, string d = null)
+	{
+		PoiType = typ;
+		Name = n;
+		if (d == null)
+		{
+			Description = LoadedDescriptionsByType[PoiType].GetRandom();
+		}
+		else
+		{
+			Description = d;
+		}
+
+	}
+}
+
+public class PlanetRegion : ILocation, IReceiveCombatResult
+{
+	public Planet planet;
+	
 	public Empire Owner;
 	public Colony RegionColony;
 
@@ -10,8 +49,29 @@ public class PlanetRegion : ILocation, IRecieveCombatResult{
 	public int RegionSize;
 	public RegionTypes RegionType;
 	public bool Explored = false;
+	
+	public List<PointOfInterest> PointsOfInterest = new List<PointOfInterest>();
 
-	public PlanetRegion(){
+	
+	//Development
+	public float UrbanizedPercent = 0f;
+
+	public bool Colonizable
+	{
+		get
+		{
+			if (RegionColony == null)
+				return Colonizable;
+			return false;
+		}
+		set { Colonizable = value; }
+	}
+	
+	
+	
+	public PlanetRegion(Planet p)
+	{
+		planet = p;
 		RegionSize = Random.Range (2, 11);
 		RegionType = (RegionTypes)Random.Range (0, 6);
 		RegionName = "<Unexplored " + RegionType.ToString();
@@ -30,6 +90,8 @@ public class PlanetRegion : ILocation, IRecieveCombatResult{
 			RegionColony.ChangeOwner (e);
 	}
 
+	#region ILocation
+	
 	public string GetLocationName(){
 		return RegionName;
 	}
@@ -49,4 +111,15 @@ public class PlanetRegion : ILocation, IRecieveCombatResult{
 	}
 	public void MoveCharacterFromThis(Character c){
 	}
+
+	public Vector3 GetPosition()
+	{
+		return planet.transform.position;
+	}
+
+	public string GetSearchableString()
+	{
+		return planet.PlanetName + RegionName + RegionType.ToString();
+	}
+	#endregion
 }

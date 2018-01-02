@@ -20,6 +20,16 @@ public class DeadLocation : ILocation {
 	public void MoveCharacterFromThis(Character c){
 	}
 
+	public string GetSearchableString()
+	{
+		return "";
+	}
+
+	public Vector3 GetPosition()
+	{
+		return new Vector3();
+	}
+	
 	public DeadLocation(){
 		Loc = this;
 	}

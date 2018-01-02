@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Colony :ILocation {
 
 	static float growth = .025f; //per minute
 
 	public string ColonyName;
 
+	public List<FacilityType> Facilities;
 
 	public Empire empire;
 	public Planet planet;
@@ -67,6 +70,16 @@ public class Colony :ILocation {
 	}
 	public void MoveCharacterFromThis(Character c){
 		UpdateSeniorOfficer ();
+	}
+
+	public string GetSearchableString()
+	{
+		return planet.PlanetName + ColonyName;
+	}
+
+	public Vector3 GetPosition()
+	{
+		return planet.transform.position;
 	}
 
 	//Called whenever someone transfers in or out.

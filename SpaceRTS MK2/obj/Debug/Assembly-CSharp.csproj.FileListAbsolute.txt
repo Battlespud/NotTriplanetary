@@ -152,7 +152,6 @@ G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEditor.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.UI.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.Networking.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.TestRunner.xml
-G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\nunit.framework.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.Timeline.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.UIAutomation.xml
 G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
@@ -233,3 +232,9 @@ C:\Users\CJ\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.UIAutomation
 C:\Users\CJ\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
 C:\Users\CJ\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\UnityEngine.HoloLens.xml
 C:\Users\CJ\NotTriplanetary\SpaceRTS MK2\obj\Debug\Assembly-CSharp.pdb
+G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\mscorlib.dll
+G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\normidna.nlp
+G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\normnfc.nlp
+G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\normnfd.nlp
+G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\normnfkc.nlp
+G:\Unity\NotTriplanetary\SpaceRTS MK2\Temp\bin\Debug\normnfkd.nlp

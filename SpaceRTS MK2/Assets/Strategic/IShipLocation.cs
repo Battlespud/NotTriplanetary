@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IShipLocation {
-
+public interface IShipLocation : ISearchable, IPosition {
+    string GetLocationName();
+    object GetLocation();
+    System.Type GetLocType();
 }

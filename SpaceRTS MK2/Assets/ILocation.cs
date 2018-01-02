@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 //Places a character can go, replaces the old Icharacter interface
-public interface ILocation  {
+public interface ILocation : IPosition, ISearchable  {
 
 	string GetLocationName();
 	object GetLocation();

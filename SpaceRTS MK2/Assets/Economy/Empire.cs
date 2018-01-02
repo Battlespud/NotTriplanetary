@@ -69,7 +69,7 @@ public class EmpireLogEntry{
 public class Empire : MonoBehaviour {
 
 	public static List<Empire> AllEmpires = new List<Empire>();
-	public static List<ILocation> AllLocations = new List<ILocation>();
+	public static List<ILocation> AllLocations = new List<ILocation>(); //This is for ALL empires
 	//public static ILocation DeadLocation = new ILocation ();
 
 	//Essentially our version of a faction.  Multiple empires of the same FAC can exist, representing
@@ -95,9 +95,9 @@ public class Empire : MonoBehaviour {
 
 	public List<Colony>Colonies = new List<Colony>();
 	public List<Team> Teams = new List<Team>();
-	public List<Character>Characters = new List<Character>();
+//	public List<Character>Characters = new List<Character>();
 	public List<Character> Unassigned = new List<Character>();
-	public List<Character> Dead = new List<Character>();
+//	public List<Character> Dead = new List<Character>();
 	public List<StrategicShip> Ships = new List<StrategicShip> ();
 	public List<StrategicShipyard> Yards = new List<StrategicShipyard> ();
 	public List<GroundUnit>GroundUnits = new List<GroundUnit>();
@@ -223,7 +223,7 @@ public class Empire : MonoBehaviour {
 		List<Character> ch = new List<Character> ();
 		List<Character> imthenulls = new List<Character> ();
 		if (CharSet.Count < 1)
-			CharSet.AddRange (Characters);
+			CharSet.AddRange (Character.CharactersByEmpire[this]);
 		foreach (Character c in CharSet) {
 			if (c != null) {
 				try {
@@ -231,8 +231,8 @@ public class Empire : MonoBehaviour {
 						ch.Add (c);
 				} catch {
 					if (string.IsNullOrEmpty (c.CharName))
-						c.CharName = "Null";
-					Debug.LogError (c.CharName + " has failed to process");
+						//c.CharName = "Null";
+					Debug.LogError ("Name has failed to process");
 				}
 			} else {
 				imthenulls.Add (c);
@@ -240,7 +240,7 @@ public class Empire : MonoBehaviour {
 			}
 		}
 		foreach (Character c in imthenulls) {
-			Characters.Remove (c);
+			Character.CharactersByEmpire[this].Remove (c);
 		}
 		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
@@ -249,15 +249,14 @@ public class Empire : MonoBehaviour {
 	public List<Character>GetCharactersByType(OfficerRoles r){
 		List<Character> ch = new List<Character> ();
 		List<Character> imthenulls = new List<Character> ();
-		foreach (Character c in Characters) {
+		foreach (Character c in Character.CharactersByEmpire[this]) {
 			if (c != null) {
 				try {
 					if (c.Role == r)
 						ch.Add (c);
 				} catch {
 					if (string.IsNullOrEmpty (c.CharName))
-						c.CharName = "Null";
-					Debug.LogError (c.CharName + " has failed to process");
+					Debug.LogError ("Name has failed to process");
 				}
 			} else {
 				imthenulls.Add (c);
@@ -265,7 +264,7 @@ public class Empire : MonoBehaviour {
 			}
 		}
 		foreach (Character c in imthenulls) {
-			Characters.Remove (c);
+			Character.CharactersByEmpire[this].Remove (c);
 		}
 		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
@@ -275,15 +274,14 @@ public class Empire : MonoBehaviour {
 		List<Character> ch = new List<Character> ();
 		List<Character> imthenulls = new List<Character> ();
 
-		foreach (Character c in Characters) {
+		foreach (Character c in Character.CharactersByEmpire[this]) {
 			if (c != null) {
 				try {
 					if (c.Role == r && c.Rank == rank)
 						ch.Add (c);
 				} catch {
 					if (c.CharName == null)
-						c.CharName = "Null";
-					Debug.Log (c.CharName + " has failed to process");
+					Debug.LogError ("Name has failed to process");
 				}
 			}
 			else {
@@ -292,7 +290,7 @@ public class Empire : MonoBehaviour {
 			}
 		}
 		foreach (Character c in imthenulls) {
-			Characters.Remove (c);
+			Character.CharactersByEmpire[this].Remove (c);
 		}
 		ch = ch.OrderByDescending (x => x.Rank).ThenByDescending(x => x.Noble).ThenByDescending(x => x.NobleRank).ToList ();
 		return ch;
@@ -300,7 +298,7 @@ public class Empire : MonoBehaviour {
 
 	public List<Character> GetCharactersAtLocation(ILocation loc, OfficerRoles? rNullable = null, bool softReq = true){
 		List<Character> Output = new List<Character> ();
-		foreach (Character c in Characters) {
+		foreach (Character c in Character.CharactersByEmpire[this]) {
 			if (c.Location == loc)
 				Output.Add (c);
 		}
@@ -309,7 +307,7 @@ public class Empire : MonoBehaviour {
 			Output = GetCharactersByType (r, Output);
 			if (Output.Count < 1 && softReq) {
 				//Debug.LogError ("No valid characters found, finding all other characters in order to prevent exception!");
-				foreach (Character c in Characters) {
+				foreach (Character c in Character.CharactersByEmpire[this]) {
 					if (c.Location == loc)
 						Output.Add (c);
 				}
@@ -335,7 +333,6 @@ public class Empire : MonoBehaviour {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index,OfficerRoles.Navy,this);
 				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.25f,3f));
-				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance + index/100*5f);
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -360,7 +357,6 @@ public class Empire : MonoBehaviour {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index,OfficerRoles.Army,this);
 				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.45f,4f));
-				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance/2 + (index-2f)/100*5f);
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -380,7 +376,6 @@ public class Empire : MonoBehaviour {
 			}
 			index++;
 		}
-		Unassigned.AddRange (Characters);
 		yield return Ninja.JumpToUnity;
 	}
 
@@ -393,7 +388,6 @@ public class Empire : MonoBehaviour {
 			for (int d = (int)(i * f); d > 0; d--) {
 				Character c = new Character(index, OfficerRoles.Research,this);
 				c.Age = (int)(rnd.Next (26, 32) + index/100*rnd.Next(1.85f,7.75f));
-				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance + index/100f*5f);
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -419,7 +413,6 @@ public class Empire : MonoBehaviour {
 			for (int d = (int)(i*1.5f * f); d > 0; d--) {
 				Character c = new Character(index, OfficerRoles.Government,this);
 				c.Age = (int)(rnd.Next (22, 32) + index*rnd.Next(2.85f,3.75f));
-				Characters.Add (c);
 				c.Noble = MakeNobleChance (NobilityChance*2 + (index - 2.5f)/100*15f);
 				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
 				if (RandomTraits) {
@@ -439,7 +432,6 @@ public class Empire : MonoBehaviour {
 			}
 			index++;
 		}
-		Unassigned.AddRange (Characters);
 		yield return Ninja.JumpToUnity;
 	}
 	public bool DistributeCaptains = false;
@@ -525,7 +517,7 @@ public class Empire : MonoBehaviour {
 			DistributeOfficers ();
 			DistributeCaptains = false;
 		}
-		CurrentOfficers = Characters.Count;
+	//	CurrentOfficers = Character.CharactersByEmpire[this].Count;
 	}
 
 
@@ -603,113 +595,8 @@ public class Empire : MonoBehaviour {
 	#endregion
 }
 
-public enum GovernmentTypes{
-	Theocracy,
-	Republic,
-	Communist,
-	Corporatocracy,
-	Dictatorship,
-	Monarchy,
-	Empire,
-	StarKingdom,
-	Islamic
-}
-
-public class MilitaryStaff{
 
 
-}
 
 
-public class Government{
 
-	public GovernmentTypes GovType;
-
-	public Character Leader;
-	public string LeaderTitle;
-	 List<string> LeaderTitlesM = new List<string> () {
-		"High Priest",
-		"President",
-		"Chairman",
-		"Chief Executive",
-		"Generalissimo",
-		"King",
-		"Emperor",
-		"King",
-		"Caliph"
-	};
-	 List<string> LeaderTitlesF = new List<string> () {
-		"High Priestess",
-		"President",
-		"Chairwoman",
-		"Chief Executive",
-		"Generalissa",
-		"Queen",
-		"Empress",
-		"Queen",
-		"Caliphess"
-	};
-
-	public Character War;
-	public string WarTitle;
-	 List<string> WarTitleM = new List<string> () {
-		"Sword of the Faithful",
-		"Secretary of Defense",
-		"Defender of the People",
-		"Chief Security Officer",
-		"Warlord",
-		"Sword of the ",
-		"Right hand of the {0}",
-		"Sword of the {0}",
-		"Sword of Allah"
-	};
-	
-	static List<string> WarTitleF = new List<string> () {
-		"High Priestess",
-		"President",
-		"Chairwoman",
-		"Chief Executive",
-		"Generalissa",
-		"Queen",
-		"Empress",
-		"Queen",
-		"Sword of Allah"
-	};
-
-	public Character Economy;
-	public string EconomyTitle;
-	List<string> EconomyTitleM = new List<string> () {
-		"Sword of the Faithful",
-		"Secretary of Defense",
-		"Secretary of Production",
-		"Chief Economics Officer",
-		"Head Jew",
-		string.Format("Lord of the Exeqchuer"),
-		string.Format("Lord of the Exeqchuer"),
-		string.Format("Lord of the Exeqchuer"),
-		"Keeper of the Gold"
-	};
-	List<string> EconomyTitleF = new List<string> () {
-		"Sword of the Faithful",
-		"Secretary of Defense",
-		"Secretary of Production",
-		"Chief Economics Officer",
-		"Head Jew",
-		string.Format("Lord of the Exeqchuer"),
-		string.Format("Lord of the Exeqchuer"),
-		string.Format("Lord of the Exeqchuer"),
-		"Keeper of the Gold"
-	};
-
-	public bool HasNobleClass;
-	 List<string> NobleRanksM = new List<string> (){ "Peer", "Honor", "Baron", "Count", "Duke" };
-	 List<string> NobleRanksF = new List<string> (){ "Peer", "Honor", "Baron", "Count", "Duke" };
-	public Dictionary<Sex,List<string>>NobleRanks = new Dictionary<Sex, List<string>>();
-
-	public Government(){
-		NobleRanks.Add (Sex.Female, NobleRanksF);
-		NobleRanks.Add (Sex.Male, NobleRanksM);
-	}
-
-
-}
