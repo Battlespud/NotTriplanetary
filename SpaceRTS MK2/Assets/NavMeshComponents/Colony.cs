@@ -21,8 +21,10 @@ public class Colony :ILocation {
 	public Character Governor;
 
 
-	public float morale = 0f;
-	public float taxRate = .08f;
+	public float Morale = 0f;
+	public float TaxRate = .08f;
+
+	public float Wealth;
 
 	public string Description ="";
 
@@ -121,5 +123,13 @@ public class Colony :ILocation {
 		StrategicClock.PhaseChange.AddListener (PhaseManager);
 		EmpireLogEntry log = new EmpireLogEntry (LogCategories.DEFAULT, 3, empire, "COLONY ESTABLISHED", string.Format ("{0} has been established on {1}.", ColonyName, planet.PlanetName));
 	}
+
+}
+
+public class Pop
+{
+	public Race race;
+	public int Happiness; //0 - 100
+	
 
 }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\CJ\.Rider2017.2\system\resharper-host\local\Transient\ReSharperHost\v10\SolutionCaches\_SpaceRTS MK2.1036720642.00" t="ExcludeRecursive" />
-    <e p="G:\Unity\NotTriplanetary\SpaceRTS MK2" t="IncludeRecursive">
+    <e p="C:\Unity\NotTriplanetary\SpaceRTS MK2" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -227,6 +226,7 @@
         </e>
         <e p="ParticleSystemMultiplier.cs" t="Include" />
         <e p="Planet.cs" t="Include" />
+        <e p="PlanetUIManager.cs" t="Include" />
         <e p="Player.cs" t="Include" />
         <e p="Plugins" t="Include">
           <e p="Editor" t="Include">
@@ -401,6 +401,28 @@
             <e p="PlanetDescriptions.txt" t="Include" />
             <e p="SystemNames.txt" t="Include" />
           </e>
+          <e p="Roles" t="Include">
+            <e p="Army.txt" t="Include" />
+            <e p="Child.txt" t="Include" />
+            <e p="Corporate.txt" t="Include" />
+            <e p="Criminal.txt" t="Include" />
+            <e p="Engineer.txt" t="Include" />
+            <e p="Government.txt" t="Include" />
+            <e p="Intelligence.txt" t="Include" />
+            <e p="Media.txt" t="Include" />
+            <e p="Merchant.txt" t="Include" />
+            <e p="Navy.txt" t="Include" />
+            <e p="Noble.txt" t="Include" />
+            <e p="Police.txt" t="Include" />
+            <e p="Politician.txt" t="Include" />
+            <e p="Rebel.txt" t="Include" />
+            <e p="Research.txt" t="Include" />
+            <e p="Retired.txt" t="Include" />
+            <e p="Scientist.txt" t="Include" />
+            <e p="Social.txt" t="Include" />
+            <e p="Spy.txt" t="Include" />
+            <e p="Terrorist.txt" t="Include" />
+          </e>
           <e p="Tech" t="Include">
             <e p="TechTree.txt" t="Include" />
           </e>
@@ -546,5 +568,6 @@
         <e p="bin" t="ExcludeRecursive" />
       </e>
     </e>
+    <e p="C:\Users\CJ\.Rider2017.2\system\resharper-host\local\Transient\ReSharperHost\v10\SolutionCaches\_SpaceRTS MK2.-715317370.00" t="ExcludeRecursive" />
   </component>
 </project>

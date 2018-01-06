@@ -11,7 +11,11 @@ public enum POITypes
 	AbandonedCity,
 	StrangeAnimals,
 	StrangePlants,
-	Aurora
+	Aurora,
+	Ruins,
+	AncientLab,
+	Pyramid,
+	BurialMounds
 }
 
 public class PointOfInterest
@@ -44,7 +48,11 @@ public class PlanetRegion : ILocation, IReceiveCombatResult
 	
 	public Empire Owner;
 	public Colony RegionColony;
-
+	
+	public KeyValuePair<float,float> TempRange = new KeyValuePair<float, float>();
+	public float BiosphereCapacity = 100f;
+	
+	
 	public string RegionName;
 	public int RegionSize;
 	public RegionTypes RegionType;

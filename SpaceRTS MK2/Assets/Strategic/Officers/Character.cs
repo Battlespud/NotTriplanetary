@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Text;
 using System.IO;
 using System.Linq;
+using UnityEngine.Networking;
 
 public enum OfficerRoles{
 	//Imperial, Imperial characters are those that will always fall solely under the governments, and thus usually the players, control. They work for the good of the empire.
@@ -21,7 +22,6 @@ public enum OfficerRoles{
 	Corporate, //works for a corporation from this faction
 	Social, //socialite
 	Merchant, //Independent or small time merchants, not from a corporation
-	Celebrity,
 	Scientist, //Independent scientist
 	Politician,
 	Media,
@@ -31,16 +31,15 @@ public enum OfficerRoles{
 
 	//Criminal, Never under player control and generally always bad.
 	Terrorist = 200,
-	Hacker,
 	Rebel,
 	Spy,
 	Criminal, //major nonpolitical crime
-	Cartel
 }
 
 public enum Sex{
 	Female,
-	Male
+	Male,
+	Either
 }
 	
 //Teams are groups of characters with a type.  Survey teams are deployed to uncharted worlds to find stuff for example.
@@ -115,6 +114,60 @@ public class Character : ISearchable {
 	public static Dictionary<int,Character> AllCharacters = new Dictionary<int, Character>(); // by ID
 	public static Dictionary<Empire,List<Character>> CharactersByEmpire = new Dictionary<Empire, List<Character>>();
 
+
+
+	public static bool TitlesLoaded = false;
+	public static Dictionary<KeyValuePair<OfficerRoles,int>, KeyValuePair<string,string>> RoleTitlesDict = new Dictionary<KeyValuePair<OfficerRoles, int>, KeyValuePair<string, string>>();
+	static Dictionary<OfficerRoles, int>MaxRanks = new Dictionary<OfficerRoles, int>();
+	public static int GetMaxRank(OfficerRoles r)
+	{
+		return MaxRanks[r];
+	} 
+	static IEnumerator LoadTitles()
+	{
+		while (String.IsNullOrEmpty(ThemeManager.StreamingPath))
+		{
+			Console.WriteLine("Characters Waiting...");
+			yield return null;
+		}
+		Console.WriteLine("Characters Proceeding.");
+		List<string> paths = new List<string> ();
+		paths.AddRange(Directory.GetDirectories (System.IO.Path.Combine (ThemeManager.StreamingPath, "Roles")));
+		char splitter = ':';
+		paths.ForEach(p =>
+		{
+			//For each file
+			int index = -1;
+			List<string> Lines = new List<string>();
+			Lines.AddRange(File.ReadAllLines(p));
+			OfficerRoles target = OfficerRoles.Army;
+			Debug.LogWarning(Lines.Count + " Linecount in " + p);
+			Lines.ForEach(l =>
+			{
+				//For each line in that file
+				//Should look Like//    
+				//Rank:TitleAbbrev:Title
+				Debug.LogAssertion(l);
+				if (index == -1)
+				{
+					target = (OfficerRoles)Enum.Parse(typeof(OfficerRoles),l);
+					index++;
+				}
+				else
+				{
+					List<string> rankTitle = l.Split(splitter).ToList();
+					KeyValuePair<OfficerRoles, int>key = new KeyValuePair<OfficerRoles, int>(target,int.Parse(rankTitle[0]));
+					KeyValuePair<string,string>value = new KeyValuePair<string, string>(rankTitle[1],rankTitle[2]);
+					RoleTitlesDict.Add(key,value);
+					Debug.LogWarning(value.Key + " " + value.Value);
+					index++;
+				}
+			});
+			MaxRanks.Add(target,index-1);
+		});
+		TitlesLoaded = true;
+	}
+	
 	public static Dictionary<OfficerRoles,List<string>> JobTitlesDictLong = new Dictionary<OfficerRoles, List<string>> (); 
 	public static Dictionary<OfficerRoles,List<string>> JobTitlesDictShort = new Dictionary<OfficerRoles, List<string>> ();
 	public static List<string>NavalRankNames = new List<string>(){"Ensign", "Lieutenant","Lt. Commander","Commander","Captain","List Captain","Commodore", "Rear Admiral", "Vice Admiral", "Admiral", "Admiral of the Fleet"}; //add more
@@ -156,6 +209,119 @@ public class Character : ISearchable {
 	}
 	#endregion
 
+	#region Generators
+
+
+
+
+
+	public static void GenerateCharacters(Empire e, Dictionary<OfficerRoles, KeyValuePair<int, List<float>>> Input)
+	{
+		foreach (OfficerRoles role in Enum.GetValues(typeof(OfficerRoles)))
+		{
+			if (Input.ContainsKey(role))
+			{
+				ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock,GenerateCharactersCoroutine(e, role, Input[role].Value, Input[role].Key));
+			}
+		}
+		
+	}
+
+	static IEnumerator GenerateCharactersCoroutine(Empire e, OfficerRoles r, List<float> dist, int MaxNumber)
+	{
+		while (!TitlesLoaded)
+		{
+			Debug.LogError("Waiting");
+			yield return null;
+		}
+		int rankIndex = 0;
+		foreach (var f in dist)
+		{
+			int i = (int)(MaxNumber * f);
+			while (i >= 0)
+			{
+				i--;
+				Character c = new Character(rankIndex, r, e);
+			}
+			rankIndex++;
+		}
+		yield return null;
+	}
+	
+
+	
+	
+	bool RollNoble(OfficerRoles r){
+		float odds = .015f;
+		switch (r)
+		{
+			case OfficerRoles.Navy:
+				odds = .1f;
+				break;
+			case OfficerRoles.Army:
+				odds = .03f;
+				break;
+			case OfficerRoles.Government:
+				odds = .4f;
+				break;
+			case OfficerRoles.Research:
+				odds = .02f;
+				break;
+			case OfficerRoles.Intelligence:
+				odds = 0f;
+				break;
+			case OfficerRoles.Police:
+				odds = 0f;
+				break;
+			case OfficerRoles.Child:
+				break;
+			case OfficerRoles.Corporate:
+				odds = .025f;
+				break;
+			case OfficerRoles.Social:
+				odds = .75f;
+				break;
+			case OfficerRoles.Merchant:
+				odds = 0f;
+				break;
+			case OfficerRoles.Scientist:
+				odds = .02f;
+				break;
+			case OfficerRoles.Politician:
+				odds = .6f;
+				break;
+			case OfficerRoles.Media:
+				odds = .05f;
+				break;
+			case OfficerRoles.Engineer:
+				odds = .02f;
+				break;
+			case OfficerRoles.Noble:
+				odds = 1f;
+				break;
+			case OfficerRoles.Retired:
+				break;
+			case OfficerRoles.Terrorist:
+				odds = .01f;
+				break;
+			case OfficerRoles.Rebel:
+				odds = .01f;
+				break;
+			case OfficerRoles.Spy:
+				odds = .01f;
+				break;
+			case OfficerRoles.Criminal:
+				odds = .01f;
+				break;
+			default:
+				throw new ArgumentOutOfRangeException("r", r, null);
+		}
+		return rnd.NextFloat(0, 1f) < odds;
+	}
+	
+	
+	
+	#endregion
 	
 	
 	
@@ -170,6 +336,7 @@ public class Character : ISearchable {
 	public string MiddleName;
 	public string LastName;
 	public int Age;
+	public int BiologicalAge;
 	public MonthYear Birthday; //Month, Year
 	public Sex sex;
 
@@ -413,17 +580,29 @@ public class Character : ISearchable {
 		return "Citizen";
 	}
 
-	public string GetJobTitle(bool Full = true){
-		if (Full) {
-			try{
-			return JobTitlesDictLong [Role] [Rank];
+	public string GetJobTitle(bool Full = true)
+	{
+		if (Full)
+		{
+			try
+			{
+				return RoleTitlesDict[new KeyValuePair<OfficerRoles,int>(Role,Rank) ].Key;
 			}
-			catch{
-				Debug.LogError ("Integer: " + Rank + " is invalid with Role: " + Role.ToString ());
+			catch
+			{
+				Debug.LogError("Rank: " + Rank + " is invalid with Role: " + Role.ToString());
 			}
 		}
-		return JobTitlesDictShort [Role] [Rank];
+		try
+		{
+			return RoleTitlesDict[new KeyValuePair<OfficerRoles,int>(Role,Rank) ].Value;
+		}
+		catch
+		{
+			return "ErrorTitle";
+		}
 	}
+
 	#endregion
 
 	public void UpdateTimeInRole(){
@@ -793,8 +972,6 @@ public class Character : ISearchable {
 					break;
 				case OfficerRoles.Merchant:
 					break;
-				case OfficerRoles.Celebrity:
-					break;
 				case OfficerRoles.Scientist:
 					break;
 				case OfficerRoles.Politician:
@@ -807,15 +984,11 @@ public class Character : ISearchable {
 					break;
 				case OfficerRoles.Terrorist:
 					break;
-				case OfficerRoles.Hacker:
-					break;
 				case OfficerRoles.Rebel:
 					break;
 				case OfficerRoles.Spy:
 					break;
 				case OfficerRoles.Criminal:
-					break;
-				case OfficerRoles.Cartel:
 					break;
 				default:
 					Debug.LogError("Unsupported Character Role.");
@@ -929,22 +1102,42 @@ public class Character : ISearchable {
 	// TODO Check which ones are up to date and which arent, then cut it down to a single one.
 
 	//Only for use at game start
-	public Character(int i, OfficerRoles r, Empire e, Theme t = null){
+	public Character(int rnk, OfficerRoles r, Empire e, Theme t = null){
 		empire = e;
 		Role = r;
-		Rank = i;
+		Rank = rnk;
 		ID = GetNextID();
+		Age = (int)(rnd.Next (24, 29) + Rank*rnd.Next(1.65f,2.5f));
+		BiologicalAge = Age;
 		sex = (Sex)rnd.Next (0, 2);
+		Noble = RollNoble(Role);
+		int TraitCount = rnd.Next (2, 6);
+		while (TraitCount > 0){
+			int ind = rnd.Next(0,Trait.Traits.Count);
+				TraitCount--;
+				AddTrait (Trait.Traits [ind]);
+		}
 		if(t!= null)
 			ThemeManager.GenerateCharName(this,t); //todo
 		else
 			ThemeManager.GenerateCharName(this); //todo
 		Register(this);
-		JoinsUp ();
+		if((int)Role < 5)
+			JoinsUp ();
 	}
 
 	public Character (Empire e){
 		empire = e;
+		Age = (int) (rnd.Next(24, 29));
+		BiologicalAge = Age;
+		Rank = 0;
+		int TraitCount = rnd.Next (2, 6);
+		while (TraitCount > 0){
+			int ind = rnd.Next(0,Trait.Traits.Count);
+			TraitCount--;
+			AddTrait (Trait.Traits [ind]);
+		}
+		ThemeManager.GenerateCharName(this);
 		ID = GetNextID();
 		Register(this);
 
@@ -957,7 +1150,14 @@ public class Character : ISearchable {
 			CharactersByEmpire[c.empire].Add(c);
 		else
 		{
-			CharactersByEmpire.Add(c.empire,new List<Character>(){c});
+			try
+			{
+				CharactersByEmpire.Add(c.empire, new List<Character>() {c});
+			}
+			catch
+			{
+				CharactersByEmpire[c.empire].Add(c);
+			}
 		}
 		AllCharacters.Add(c.ID,c);
 	}
@@ -985,5 +1185,7 @@ public class Character : ISearchable {
 
 		NobleRanks.Add (Sex.Female, NobleRanksF);
 		NobleRanks.Add (Sex.Male, NobleRanksM);
+
+		ThreadNinjaMonoBehaviourExtensions.StartCoroutineAsync(StrategicClock.strategicClock, LoadTitles());
 	}
 }

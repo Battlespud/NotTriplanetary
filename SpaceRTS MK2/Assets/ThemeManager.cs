@@ -79,31 +79,6 @@ public class ThemeManager : MonoBehaviour{
 		reflected.Add (s);
 	}
 
-/*
-	public static Texture2D LoadTextureFromFile(string filename)
-	{
-
-		// "Empty" texture. Will be replaced by LoadImage
-		Texture2D texture = new Texture2D(4, 4,TextureFormat.RGB24,false);
-		FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
-		byte[] imageData = new byte[fs.Length];
-		fs.Read(imageData, 0, (int)fs.Length);
-		texture.LoadImage(imageData);
-		if (texture.format == null)
-			Debug.LogError ("Something went wrong with loading the texture");
-		return texture;
-
-		Texture2D tex = new Texture2D (4, 4, TextureFormat.DXT1, false);
-		Debug.Log (filename);
-		WWW laughsinchinese = new WWW (filename);
-		while (!laughsinchinese.isDone) {
-			
-		}
-		laughsinchinese.LoadImageIntoTexture (tex);
-		return tex;
-	}
-*/
-
 	#region CharacterNames
 	public static void GenerateCharName(Character c, Theme t = null){
 		if(t==null)
@@ -116,6 +91,8 @@ public class ThemeManager : MonoBehaviour{
 			}
 			catch{
 				Debug.LogError ("Failed to Assign Name Properly.");
+				c.FirstName = "Error";
+				c.LastName = "Error";
 				return;
 			}
 		} else {
@@ -125,31 +102,14 @@ public class ThemeManager : MonoBehaviour{
 			}
 			catch{
 				Debug.LogError ("Failed to Assign Name Properly.");
+				c.FirstName = "Error";
+				c.LastName = "Error";
 				return;
 			}
 		}
 
 	}
-	/* This shouldnt be needed anymore
-	public static string GenerateCharName(Sex s){
-		Theme t = Themes [rnd.Next (0, Themes.Count)];
-//		Debug.Log (t.ThemeName);
-		if (s == Sex.Female) {
-			try{
-			return t.CharacterFirstNamesF [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
-			}
-			catch{
-				return NameManager.GenerateCharName();
-			}
-		} else {
-			try{
-			return t.CharacterFirstNamesM [rnd.Next (0, t.CharacterFirstNamesF.Count)] + " " + t.CharacterLastNames [rnd.Next (0, t.CharacterLastNames.Count)];
-			}
-			catch{
-				return NameManager.GenerateCharName();
-			}
-		}
-	}*/
+
 	#endregion
 
 	#region Naming
@@ -159,7 +119,14 @@ public class ThemeManager : MonoBehaviour{
 	//TODO add companies,s pace stations, ground units, etc
 	#endregion
 
-	void Awake(){
+	public static string StreamingPath;
+	
+	void Awake()
+	{
+		Species s = new Species("Poof");
+
+		StreamingPath = Application.streamingAssetsPath;
+		Debug.LogError("Streaming path loaded into string. Proceed.");
 		if (Manager != null) {
 			Debug.Log ("Error, multiple ThemeManagers present");
 		}

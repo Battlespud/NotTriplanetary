@@ -151,15 +151,24 @@ public class DesignScreenManager : MonoBehaviour {
 		}
 	}
 
-	public void AddComponent(ShipComponents comp){
-		Debug.Log("Adding " + comp.Name);
+	public void AddComponent(ShipComponents comp, int number = 1){
 		if(AddedComponents.ContainsKey(comp)){
-			AddedComponents[comp] += 1;
+			AddedComponents[comp] += number;
 		}
 		else{
-			AddedComponents.Add (comp, 1);
+			AddedComponents.Add (comp, number);
 		}
 		OnChange ();
+	}
+
+	public void RemoveComponent(ShipComponents comp, int number = 1)
+	{
+		if(AddedComponents.ContainsKey(comp)){
+			AddedComponents[comp] -= number;
+			if (AddedComponents[comp] <= 0)
+				AddedComponents.Remove(comp);
+		}
+		OnChange();
 	}
 
 	//engines have some special rules so we add them using this.

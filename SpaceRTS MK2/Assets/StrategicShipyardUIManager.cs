@@ -7,12 +7,16 @@ using UnityEngine.Events;
 
 
 //NEEDS OVERHAUL TODO
-public class StrategicShipyardUIManager : MonoBehaviour {
+public class StrategicShipyardUIManager : MonoBehaviour
+{
 
+	public Empire empire;
+	
 	public static StrategicShipyardUIManager Manager;
 
 	public StrategicShipyard Shipyard;
 
+	public Dropdown ShipyardDropdown;
 
 	public SlipwayButtonUIManager SelectedSlipway;
 
@@ -28,6 +32,8 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	public Text SelectedSlipwayText;
 
+	public Text ShipyardNameText;
+	
 	public Button BuildShipButton;
 	public Button CancelBuildButton;
 
@@ -42,12 +48,16 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 		Shipyard = s;
 		SetupRetoolUI ();
 		UpdateUI ();
-
+	}
+	
+	void AssignShipyard(int s){
+		Open(empire.Yards[s]);
 	}
 
 	void UpdateUI(){
 		if (!Shipyard)
 			return;
+		ShipyardNameText.text = Shipyard.ShipYardName;
 		UpdateRetoolUI ();
 		foreach (SlipwayButtonUIManager s in Slipways) {
 			s.UpdateUI ();
@@ -149,7 +159,6 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 	}
 
 	public void Close(){
-		Shipyard = null;
 		ResetUI();
 		gameObject.SetActive (false);
 		StrategicClock.Unpause ();
@@ -157,6 +166,28 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 
 	public void Open(StrategicShipyard s){
 		AssignShipyard (s);
+		ShipyardDropdown.ClearOptions();
+		List<string>YardNames = new List<string>();
+		empire.Yards.ForEach(x =>
+		{
+			YardNames.Add(x.ShipYardName);
+		});
+		ShipyardDropdown.AddOptions(YardNames);
+		gameObject.SetActive (true);
+		StrategicClock.RequestPause ();
+		SetupSlipways ();
+	}
+	
+	public void Open(){
+		ShipyardDropdown.ClearOptions();
+		List<string>YardNames = new List<string>();
+		empire.Yards.ForEach(x =>
+		{
+			YardNames.Add(x.ShipYardName);
+		});
+		ShipyardDropdown.AddOptions(YardNames);
+		if(!Shipyard)
+			AssignShipyard(0);
 		gameObject.SetActive (true);
 		StrategicClock.RequestPause ();
 		SetupSlipways ();
@@ -187,6 +218,7 @@ public class StrategicShipyardUIManager : MonoBehaviour {
 		Manager = this;
 		if(!SlipwaysPrefab)
 		SlipwaysPrefab= Resources.Load<GameObject> ("SlipwayUIButton") as GameObject;
+		ShipyardDropdown.onValueChanged.AddListener(AssignShipyard);
 		Close ();
 	}
 	

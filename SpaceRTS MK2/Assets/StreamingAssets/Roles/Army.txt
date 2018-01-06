@@ -1,0 +1,10 @@
+Army
+0:2nd. LT.:Second Lieutenant
+1:LT.:Lieutenant
+2:CPT.:Captain
+3:MJR:Major
+4:LTCOL.:Lt. Colonel
+5:COL.:Colonel
+6:BRIG.:Brigadier
+7:MGEN.:Major General
+8:GEN.:General

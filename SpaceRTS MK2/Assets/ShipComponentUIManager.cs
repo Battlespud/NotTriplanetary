@@ -55,11 +55,18 @@ public class ShipComponentUIManager : MonoBehaviour {
 		comp = s;
 	}
 
-	public void AddShipComponent(){
-		if (comp.Category == CompCategory.ENGINE) {
-			Manager.AddEngine (comp);
-		} else {
-			Manager.AddComponent (comp);
+	public void AddShipComponent()
+	{
+		int numberOfTimes = 1;
+		if (Input.GetKey(KeyCode.LeftShift))
+			numberOfTimes = 5;
+		if (Input.GetKey(KeyCode.S))
+		{
+			Manager.RemoveComponent(comp, numberOfTimes);
+		}
+		else
+		{
+				Manager.AddComponent(comp , numberOfTimes);
 		}
 	}
 

@@ -21,6 +21,7 @@ public enum CompClass{
 
 public enum AbilityCats{
 	THRUST,  //rating is enginetype as int, rating 2 is power modifier, .25 = 1.25, -.25 = .75 etc, Thermal reduction, 0-.95
+	STRATEGICMOVE, //rating is enginetype as int.  Move Points = enginetype*mass / 50. 1 Movement Point = 1000 Tons 1 Space per turn.
 	TURN,    //*/s
 	CONTROL, //rating is # of ships in fleet. default is not fleet command ship.
 	CREW,    //Life support + quarters
@@ -399,6 +400,10 @@ public class ShipComponents {
 		//	Debug.Log ("Designing engine...");
 			a.thrust = (Mass / 50) * (1 + rate2 * rate);
 			Category = CompCategory.ENGINE;
+		}
+		else if (a.AbilityType == AbilityCats.STRATEGICMOVE)
+		{
+			a.thrust = (Mass / 50) * a.Rating;
 		}
 		Abilities.Add(a.AbilityType,a);
 	}

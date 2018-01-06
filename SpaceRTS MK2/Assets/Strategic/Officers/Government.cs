@@ -61,8 +61,33 @@ public class PoliticalOffice{
 		}
 	}
 
+	public enum FactionTypes
+	{
+		Supremacist,
+		Religious,
+		Xenophobe,
+		Reactionary,
+		Militarist,
+		Conservative,
+		Liberal,
+		Progressive,
+		Xenophile,
+		Socialist,
+		Communist,
+		Green,
+		Pacifist
+		
+		
+	}
+
+	public class Faction
+	{
+		public Empire FactionEmpire;
+		public string FactionName;
+		
 
 
+	}
 
 
 

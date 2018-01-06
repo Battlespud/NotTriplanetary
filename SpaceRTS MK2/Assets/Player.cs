@@ -39,7 +39,7 @@ public class Player : MonoBehaviour {
 		empire = gameObject.AddComponent<Empire> ();
 		empire.EmpireName = "Federal Star Republic";
 		empire.Faction = FAC.PLAYER;
-		empire.GenerateStartingOfficerCorps (35);
+		//empire.GenerateStartingOfficerCorps ();
 		Trait.Load ();
 		Debug.Log(Trait.Traits.Count);
 		SetMousePositioner ();

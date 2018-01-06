@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using NUnit.Framework;
+using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 //valid planet compositions
 /* 
@@ -90,7 +95,7 @@ public class Planet : MonoBehaviour, IMineable
 
 	public List<PlanetRegion> Regions = new List<PlanetRegion>();
 
-
+	public PlanetHistory planetHistory;
 
 	public List<Fleet> OrbitingFleets = new List<Fleet>();
 	void OnTriggerEnter(Collider col){
@@ -271,4 +276,212 @@ public class Planet : MonoBehaviour, IMineable
         }
         return new int[2] { pt, at };
     }
+}
+
+public class PlanetHistory
+{
+	
+	
+	
+}
+
+public class Species
+{
+	
+	System.Random rng = new System.Random();
+	
+	public string SpeciesName;
+	public int SpeciesNumbers;
+
+	public int GeneCount = 48;
+	public List<Gene> Baseline = new List<Gene>();
+	
+	public List<KeyValuePair<PlanetRegion,int>> Regions = new List<KeyValuePair<PlanetRegion,int>>();
+	public List<RegionTypes> PreferredRegions = new List<RegionTypes>();
+
+	public List<Individual> Members = new List<Individual>();
+	
+	
+	
+	public int MutationPropensity = 48;
+	
+	public float AvgMass;
+
+	public Species(string n)
+	{
+		SpeciesName = n;
+
+
+
+		for (int i = 0; i < GeneCount; i++)
+		{
+			Sex s = Sex.Either;
+			s.RandomEitherSex();
+			Baseline.Add(new Gene((byte) rng.Next(0, 256), s));
+		}
+		Debug.LogError(Baseline.Count);
+
+		for (int i = 0; i < 40; i++)
+		{
+			Individual x = new Individual(this);
+		}
+
+		for (int generation = 0; generation < 15; generation++)
+		{
+			int count = Members.Count;
+			int sanityLimit = 1000;
+			int sanity = 0;
+			for (int i = 0; i < count / 2; i++)
+			{
+				Individual a = Members.GetRandom();
+				Debug.LogWarning(a.Generation + " A Generation");
+				Individual b = Members.GetRandom();
+				while ((b.sex == a.sex || a == b) && sanity < sanityLimit)
+				{
+					b = Members.GetRandom();
+					sanity++;
+				}
+				if(sanity > sanityLimit)
+					Debug.LogError("Sanity limit reached");
+				if (a.sex == Sex.Male)
+					Individual.Reproduce(a, b);
+				else
+				{
+					Individual.Reproduce(b, a);
+				}
+			}
+
+		}
+	}
+
+	static Species()
+	{
+	}
+
+}
+
+
+public class Gene
+{
+	public byte val;
+	public Sex carrier;
+
+	public void SetVal(byte b)
+	{
+		val = b;
+	}
+	
+	public Gene(byte b, Sex s = Sex.Either)
+	{
+		val = b;
+		carrier = s;
+	}
+
+	
+	public Gene Clone()
+	{
+		return new Gene(val, carrier);
+	}
+
+	public void Clone(Gene source)
+	{
+		val = source.val;
+		carrier = source.carrier;
+	}
+}
+
+public class Individual
+{
+	static System.Random rng = new System.Random();
+
+	static float CalculateDivergence(Individual i)
+	{
+		int index = 0;
+		int diverged = 0;
+		foreach (var g in i.Genes)
+		{
+			if (g.val != i.species.Baseline[index].val)
+				diverged++;
+			index++;
+		}
+		return diverged / i.species.Baseline.Count;
+	}
+	public Sex sex;
+	public Species species;
+	public float Divergence;
+	public int Generation = 0;
+	public List<Gene> Genes = new List<Gene>();
+
+	public static void Reproduce(Individual m, Individual f)
+	{
+		Individual c = new Individual(m, f, f.species);
+		Individual d = new Individual(m, f, f.species);
+
+	}
+
+	public Individual(Species s)
+	{
+		species = s;
+		s.Members.Add(this);
+		Genes.AddRange(s.Baseline);
+		Divergence = 0;
+		sex.RandomSex();
+		Generation = 0;
+	}
+	
+	public Individual(Individual M, Individual F, Species s)
+	{
+		if (M.Generation > F.Generation)
+			Generation = M.Generation + 1;
+		else
+			Generation = F.Generation + 1;
+		s.Baseline.ForEach(g =>
+		{
+			Genes.Add(g.Clone());
+		});
+		int index = 0;
+		foreach (var x in Genes)
+		{
+			switch (x.carrier)
+			{
+				case Sex.Female:
+					x.Clone(F.Genes[index]);
+					break;
+				case Sex.Male:
+					x.Clone(M.Genes[index]);
+					break;
+				case Sex.Either:
+					if (rng.NextBool())
+						x.Clone(F.Genes[index]);
+					else
+						x.Clone(M.Genes[index]);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+			if (rng.NextFloat(0, s.MutationPropensity) < 1)
+			{
+				byte n = (byte) rng.Next(0, 256);
+			//	Debug.LogWarning( x.val + " is now " + n);
+				x.SetVal(n);
+			}
+			index++;
+
+		}
+
+		species = s;		
+		s.Members.Remove(M);
+		s.Members.Remove(F);
+		s.Members.Add(this);
+		
+		Divergence = CalculateDivergence(this);
+		sex.RandomSex();
+		string GenesString ="";
+		foreach (var g in Genes)
+		{
+			GenesString += " " + g.val;
+		}
+		Debug.LogWarning("Gen: " + Generation + " | Div: " + Divergence + "% Genes: " + GenesString);
+	}
+
 }

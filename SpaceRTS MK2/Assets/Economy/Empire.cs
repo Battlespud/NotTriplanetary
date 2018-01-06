@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -68,6 +69,8 @@ public class EmpireLogEntry{
 
 public class Empire : MonoBehaviour {
 
+	public static Dictionary<OfficerRoles, KeyValuePair<int, List<float>>> StartingOfficersDict = new Dictionary<OfficerRoles, KeyValuePair<int, List<float>>>();
+	
 	public static List<Empire> AllEmpires = new List<Empire>();
 	public static List<ILocation> AllLocations = new List<ILocation>(); //This is for ALL empires
 	//public static ILocation DeadLocation = new ILocation ();
@@ -190,19 +193,23 @@ public class Empire : MonoBehaviour {
 	}
 
 
-	public IEnumerator GenerateStartingOfficerCorps(int i){
-		Debug.Log ("Generating starting officers: " + i);
+	public IEnumerator GenerateStartingOfficerCorps()
+	{
+		Dictionary<OfficerRoles, KeyValuePair<int, List<float>>> all = new Dictionary<OfficerRoles, KeyValuePair<int, List<float>>>();
+		foreach (OfficerRoles v in Enum.GetValues(typeof(OfficerRoles)))
+		{
+			all.Add(v, StartingByRole(v));
+		}
 		int t = 0;
-		while (ThemeManager.Initialized != true) {
+		while (ThemeManager.Initialized != true)
+		{
 			t++;
-			Debug.Log (t + " Officers waiting for theme manager..." );
 			yield return null;
 		}
-			StartCoroutine(GenerateCorps (StartingOfficers));
-			StartCoroutine(GenerateScientists (15));
+		Character.GenerateCharacters(this,all);
 
 	}
-		
+
 
 	public void DistributeOfficers(){
 		foreach (StrategicShip s in Ships) {
@@ -324,123 +331,10 @@ public class Empire : MonoBehaviour {
 	public static bool RandomTraits = true;
 
 
-	IEnumerator GenerateCorps(int i){
-		//Max rank starting  = 6
-		int index = 0;
-		List<float> Distribution = new List<float>(){.40f,.2f,.15f,.1f,.075f,.05f,.035f,.025f};
-		float NobilityChance = .2f;
-		foreach (float f in Distribution) {
-			for (int d = (int)(i * f); d > 0; d--) {
-				Character c = new Character(index,OfficerRoles.Navy,this);
-				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.25f,3f));
-				c.Noble = MakeNobleChance (NobilityChance + index/100*5f);
-				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
-				if (RandomTraits) {
-					int b = rnd.Next (0, 3);
-					for(b=b;b >= 0; b--){
-						int ind = rnd.Next(0,Trait.Traits.Count);
-						try{
-						c.AddTrait (Trait.Traits [ind]);
-						}
-						catch{
-						}
-					}
-				}
-				yield return Ninja.JumpToUnity;
-			//	c.Output ();
-				yield return Ninja.JumpBack;
-			}
-			index++;
-		}
-		index = 0;
-		foreach (float f in Distribution) {
-			for (int d = (int)(i * f); d > 0; d--) {
-				Character c = new Character(index,OfficerRoles.Army,this);
-				c.Age = (int)(rnd.Next (24, 29) + index*rnd.Next(1.45f,4f));
-				c.Noble = MakeNobleChance (NobilityChance/2 + (index-2f)/100*5f);
-				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
-				if (RandomTraits) {
-					int b = rnd.Next (0, 3);
-					for(b=b;b >= 0; b--){
-						int ind = rnd.Next(0,Trait.Traits.Count);
-						try{
-							c.AddTrait (Trait.Traits [ind]);
-						}
-						catch{
-						}
-					}
-				}
-				yield return Ninja.JumpToUnity;
-			//	c.Output ();
-				yield return Ninja.JumpBack;
-			}
-			index++;
-		}
-		yield return Ninja.JumpToUnity;
-	}
 
-	IEnumerator GenerateScientists(int i){
-		//Max rank starting  = 6
-		int index = 0;
-		List<float> Distribution = new List<float>(){.55f,.2f,.15f,.1f,.05f,.025f};
-		float NobilityChance = .1f;
-		foreach (float f in Distribution) {
-			for (int d = (int)(i * f); d > 0; d--) {
-				Character c = new Character(index, OfficerRoles.Research,this);
-				c.Age = (int)(rnd.Next (26, 32) + index/100*rnd.Next(1.85f,7.75f));
-				c.Noble = MakeNobleChance (NobilityChance + index/100f*5f);
-				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
-				if (RandomTraits) {
-					int b = rnd.Next (0, 3);
-					for(b=b;b >= 0; b--){
-						int ind = rnd.Next(0,Trait.Traits.Count);
-						try{
-							c.AddTrait (Trait.Traits [ind]);
-						}
-						catch{
-						}
-					}
-				}
-				yield return Ninja.JumpToUnity;
-			//	c.Output ();
-				yield return Ninja.JumpBack;
-			}
-			index++;
-		}
-		index = 0;
-		Distribution = new List<float>(){.3f,.25f,.2f,.1f,.1f,.05f};
-		foreach (float f in Distribution) {
-			for (int d = (int)(i*1.5f * f); d > 0; d--) {
-				Character c = new Character(index, OfficerRoles.Government,this);
-				c.Age = (int)(rnd.Next (22, 32) + index*rnd.Next(2.85f,3.75f));
-				c.Noble = MakeNobleChance (NobilityChance*2 + (index - 2.5f)/100*15f);
-				c.AwardMedal(Medal.DesignedMedals[0]); //All starting characters recieve a pioneer medal to show their seniority.
-				if (RandomTraits) {
-					int b = rnd.Next (0, 3);
-					for(b=b;b >= 0; b--){
-						int ind = rnd.Next(0,Trait.Traits.Count);
-						try{
-							c.AddTrait (Trait.Traits [ind]);
-						}
-						catch{
-						}
-					}
-				}
-				yield return Ninja.JumpToUnity;
-			//	c.Output ();
-				yield return Ninja.JumpBack;
-			}
-			index++;
-		}
-		yield return Ninja.JumpToUnity;
-	}
 	public bool DistributeCaptains = false;
 
-	bool MakeNobleChance(float f){
-		if (rnd.NextFloat (0, 1f) < f)
-			return true;
-		return false;
-	}
+
 
 	void Awake(){
 		BuildTechTree ();
@@ -462,11 +356,11 @@ public class Empire : MonoBehaviour {
 //		Debug.Log (EmpireTechTree.TechByID.Count);
 		AvailableTechs = EmpireTechTree.GetAvailableTech ();
 	//	Debug.Log (AvailableTechs.Count);
-		StartCoroutine( GenerateStartingOfficerCorps (StartingOfficers));
 		foreach (Tech t in AvailableTechs) {
 			DebugAvailableTechNames.Add (t.Name);
 		}
 		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,1,this,"NOTHING BUT THE RAIN",string.Format("**//nothing but the rain-"));
+		StartCoroutine(GenerateStartingOfficerCorps());
 
 	}
 
@@ -593,6 +487,87 @@ public class Empire : MonoBehaviour {
 		return name;
 	}
 	#endregion
+
+
+	static KeyValuePair<int,List<float>> StartingByRole(OfficerRoles r)
+	{
+		int num = 100;
+		List<float> dist = new List<float>(){.40f,.2f,.15f,.1f,.075f,.05f,.035f,.025f};
+
+		switch (r)
+		{
+			case OfficerRoles.Navy:
+				num = 50;
+				break;
+			case OfficerRoles.Army:
+				num = 30;
+				break;
+			case OfficerRoles.Government:
+				num = 20;
+				break;
+			case OfficerRoles.Research:
+				num = 15;
+				break;
+			case OfficerRoles.Intelligence:
+				dist= new List<float>(){.50f,4f,.1f};
+				num = 5;
+				break;
+			case OfficerRoles.Police:
+				dist= new List<float>(){.50f,4f,.1f};
+				num = 12;
+				break;
+			case OfficerRoles.Child:
+				num = 0;
+				break;
+			case OfficerRoles.Corporate:
+				dist= new List<float>(){.50f,.3f,.2f};
+				num = 5;
+				break;
+			case OfficerRoles.Social:
+				num = 40;
+				break;
+			case OfficerRoles.Merchant:
+				num = 40;
+				break;
+			case OfficerRoles.Scientist:
+				num = 15;
+				break;
+			case OfficerRoles.Politician:
+				num = 30;
+				break;
+			case OfficerRoles.Media:
+				num = 7;
+				break;
+			case OfficerRoles.Engineer:
+				num = 10;
+				break;
+			case OfficerRoles.Noble:
+				dist= new List<float>(){1f};
+				num = 30;
+				break;
+			case OfficerRoles.Retired:
+				num = 15;
+				break;
+			case OfficerRoles.Terrorist:
+				num = 5;
+				break;
+			case OfficerRoles.Rebel:
+				num = 10;
+				break;
+			case OfficerRoles.Spy:
+				dist= new List<float>(){.50f,.3f,.2f,.1f};
+				num = 3;
+				break;
+			case OfficerRoles.Criminal:
+				num = 40;
+				break;
+			default:
+				throw new ArgumentOutOfRangeException("r", r, null);
+		}
+		KeyValuePair<int, List<float>> result =  new KeyValuePair<int, List<float>>(num,dist);
+		return result;
+	}
+	
 }
 
 

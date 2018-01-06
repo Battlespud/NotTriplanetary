@@ -86,7 +86,15 @@ public static class SystemRandomExtensions {
 			}
 		}
 	}
-	
+
+	public static void RandomSex(this Sex sex)
+	{
+		sex = (Sex)RNG.Next(0, 2);
+	}
+	public static void RandomEitherSex(this Sex sex)
+	{
+		sex = (Sex)RNG.Next(0, 3);
+	}
 	/*
 /// <summary>
 /// Randomize an enum to another valid value.
