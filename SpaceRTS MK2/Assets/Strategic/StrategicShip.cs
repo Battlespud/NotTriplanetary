@@ -58,16 +58,6 @@ public class StrategicShip : ILocation{
 	public void MoveCharacterFromThis(Character c){
 		CharactersAboard.Remove (c);
 		UpdateCommand ();
-		/*
-		if (c.shipPosting == this)
-			c.shipPosting = null;
-		if (Captain == c) {
-			Captain = null;
-		}
-		if (Executive == c) {
-			Executive = null;
-		}
-		*/
 	}
 	#endregion
 
@@ -111,6 +101,7 @@ public class StrategicShip : ILocation{
 	public ShipDesign DesignClass;
 
 	public List<ShipComponents> Components = new List<ShipComponents> ();
+	public List<ShipComponents> StrategicEngines = new List<ShipComponents>();
 	public List<string>ComponentStatus = new List<string>();
 
 	ShipPrefabTypes VisualPrefab;
@@ -147,6 +138,9 @@ public class StrategicShip : ILocation{
 	public float MaxFuel;
 	public float CurrFuel;
 
+	//calculated at the beginning of the turn and after battles.
+	public int MovementPoints;
+	
 	public string GetFuelString(){
 		return string.Format ("{0}/{1}", CurrFuel, MaxFuel);
 	}
@@ -209,6 +203,7 @@ public class StrategicShip : ILocation{
 		Mass = (int)DesignClass.mass;
 		MaxFuel = 0f;
 		Shields = 0;
+		
 		isDamaged = false;
 		foreach (ShipComponents c in Components) {
 			mCrew += c.CrewRequired;
@@ -222,7 +217,6 @@ public class StrategicShip : ILocation{
 				CurrMaintParts += c.GetCurrentSpareParts ();
 				MaxCargo += c.GetCargo ();
 				MaxFuel += c.GetFuelMax ();
-
 				if (c.Enabled) {
 					Thrust += c.GetThrust ();
 					if(ParentFleet != null)
@@ -240,6 +234,12 @@ public class StrategicShip : ILocation{
 		UpdateComponentStatusStrings ();
 		CalculateCargo(); //TODO Test this and make sure it works
 		BuildArmorString(); //TODO Test this and make sure it works
+	}
+
+	void CalcMovementPoints()
+	{
+		
+		
 	}
 
 	void CheckFuel(){
@@ -481,6 +481,24 @@ public class StrategicShip : ILocation{
 		}
 	}
 
+	public void Turn()
+	{
+		if (IsDeployed) {
+			MaintClock += .1f;
+			RollMaint ();
+		}
+		if (InDrydock) {
+			MaintClock -= OverhaulMulti * .1f;
+		}
+		if (MaintClock <= 0f) {
+			MaintClock = 0f;
+		}
+
+		MovementPoints = 0;
+		StrategicEngines.ForEach(x => { MovementPoints += (int)x.GetMovePoints(); });
+		MovementPoints = (int)(MovementPoints/ (Mass / 1000));
+	}
+
 	public void CreateShip(GameObject g){
 		Ship s = g.AddComponent<Ship> ();
 		s.shipClass.ImportDesign (DesignClass);
@@ -507,6 +525,7 @@ public class StrategicShip : ILocation{
 		Faction = emp.Faction;
 		Empire.AllLocations.Add (this);
 		Emp.Ships.Add (this);
+		ShipConstructor();
 	}
 
 	public StrategicShip(ShipDesign template, string name, Empire emp){
@@ -517,6 +536,17 @@ public class StrategicShip : ILocation{
 		Empire.AllLocations.Add (this);
 
 		Emp.Ships.Add (this);
+		ShipConstructor();
+	}
+
+	void ShipConstructor()
+	{
+		Components.ForEach(x =>
+		{
+			if(x.GetMovePoints() != 0)
+				StrategicEngines.AddExclusive(x);
+		});
+		
 	}
 
 	public void DestroyShip(){

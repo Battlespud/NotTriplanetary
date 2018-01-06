@@ -285,6 +285,14 @@ public class ShipComponents {
 		if (a!= null)	return a.thrust;
 		return 0f;
 	}
+	public float GetMovePoints(){
+		if (Destroyed || !Enabled)
+			return 0f;
+		Ability a;
+		Abilities.TryGetValue (AbilityCats.STRATEGICMOVE,out a);
+		if (a!= null)	return a.thrust;
+		return 0f;
+	}
 	public float GetTurnThrust(){
 		Ability a;
 		Abilities.TryGetValue (AbilityCats.TURN, out a);
@@ -403,7 +411,7 @@ public class ShipComponents {
 		}
 		else if (a.AbilityType == AbilityCats.STRATEGICMOVE)
 		{
-			a.thrust = (Mass / 50) * a.Rating;
+			a.thrust =(int)((Mass / 50) * a.Rating);
 		}
 		Abilities.Add(a.AbilityType,a);
 	}
