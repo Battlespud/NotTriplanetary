@@ -7,6 +7,10 @@ public class StarSystem : MonoBehaviour {
 
 	public string SystemName;
 
+	public static GameObject HexPrefab;
+
+	public GameObject HexSystem;
+	
 	static List<string> AvailableNames = new List<string> ();
 	public Dictionary<string,StarSystem> SystemByName = new Dictionary<string, StarSystem>();
 
@@ -25,7 +29,12 @@ public class StarSystem : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+		if(!HexPrefab)
+			HexPrefab = Resources.Load<GameObject>("HexPrefab") as GameObject;
+		HexSystem = Instantiate(HexPrefab, gameObject.transform);
+		HexSystem.transform.localPosition = new Vector3();
 		SystemName = AvailableNames [Random.Range (0, AvailableNames.Count)];
 		AvailableNames.Remove (SystemName);
 		SystemByName.Add (SystemName, this);

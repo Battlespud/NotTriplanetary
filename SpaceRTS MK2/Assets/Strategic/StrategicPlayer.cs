@@ -71,8 +71,13 @@ public class StrategicPlayer : MonoBehaviour {
 		if(SelectedFleet)SelectedFleet.DeselectColor ();
 		if (Physics.Raycast (ray, out hit)) {
 
-			if (hit.collider.GetComponent<Fleet> ()) {
+			if (hit.collider.GetComponent<Fleet>())
+			{
 				Select(hit.collider.GetComponent<Fleet>());
+			}
+			else if(hit.collider.GetComponentInParent<HexGrid>())
+			{
+				hit.collider.GetComponentInParent<HexGrid>().TouchCell(hit.point);
 			}
 		}
 	}

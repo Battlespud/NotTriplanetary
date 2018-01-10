@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+    <e p="C:\Unity\NotTriplanetary\SpaceRTS MK2" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -337,6 +337,14 @@
           </e>
           <e p="GridOverlay.cs" t="Include" />
           <e p="GroundCombatSystem.cs" t="Include" />
+          <e p="Hex" t="Include">
+            <e p="HexCell.cs" t="Include" />
+            <e p="HexCoordinates.cs" t="Include" />
+            <e p="HexGrid.cs" t="Include" />
+            <e p="HexMapEditor.cs" t="Include" />
+            <e p="HexMesh.cs" t="Include" />
+            <e p="HexMetrics.cs" t="Include" />
+          </e>
           <e p="ICargo.cs" t="Include" />
           <e p="IGroundCombatLocation.cs" t="Include" />
           <e p="Intercept.cs" t="Include" />
@@ -568,6 +576,6 @@
         <e p="bin" t="ExcludeRecursive" />
       </e>
     </e>
-    <e p="$USER_HOME$/Library/Caches/Rider2017.3/resharper-host/local/Transient/ReSharperHost/v11/SolutionCaches/_SpaceRTS MK2.-1598859761.00" t="ExcludeRecursive" />
+    <e p="C:\Users\CJ\.Rider2017.2\system\resharper-host\local\Transient\ReSharperHost\v10\SolutionCaches\_SpaceRTS MK2.-715317370.00" t="ExcludeRecursive" />
   </component>
 </project>

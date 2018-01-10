@@ -16,8 +16,12 @@ public enum MoveMode{
 	DOCKED
 }
 
-public class Fleet : MonoBehaviour {
+public class Fleet : MonoBehaviour
+{
 
+	[SerializeField]
+	public HexCoordinates HexLoc;
+	
 	const float TurnsToRaiseShields = 4;
 	static bool pause = false;
 
@@ -309,7 +313,9 @@ public class Fleet : MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+		CheckLocation();
 		SetPaths ();
 		downlr.SetPositions(new Vector3[]{new Vector3(0f,0f,0f), new Vector3 (0f, StrategicExtensions.yLayer*-6.5f, 0f)});
 		if (Agent.speed > 0f && Mode == MoveMode.NORMAL) {
@@ -336,6 +342,23 @@ public class Fleet : MonoBehaviour {
 		}
 	}
 
+	void CheckLocation()
+	{
+		
+		Ray down = new Ray();
+		down.direction = Vector3.down*100f;
+		down.origin = transform.position;
+		RaycastHit[] hits = Physics.RaycastAll(down);
+		foreach (RaycastHit hit in hits)
+		{
+			HexGrid grid = hit.collider.GetComponentInParent<HexGrid>();
+			if (grid)
+			{
+				HexLoc = grid.GetCell(transform.position).coordinates;
+			}
+		}
+	}
+	
 	public void PerformDock(){
 		Debug.LogError ("Fleet has docked.");
 		Mode = MoveMode.DOCKED;
