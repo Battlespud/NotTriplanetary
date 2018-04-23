@@ -76,6 +76,9 @@ public class DesignScreenManager : MonoBehaviour {
 
 	public bool HideObsolete = false;
 
+	//Hull
+	public ShipHull Hull;
+	
 	//Components selectable by the player go in Components
 	public List<ShipComponents> Components = new List<ShipComponents> ();
 	public List<GameObject> UIObjects = new List<GameObject>();
@@ -392,7 +395,6 @@ public class DesignScreenManager : MonoBehaviour {
 		ShipDesign design = new ShipDesign(DesignName.text);
 		design.HullDesignation = HullDes.DesDictionary[HullDesignation.options [HullDesignation.value].text];
 		design.ArmorLayers = ArmorThickness;
-		design.ArmorLength = ArmorLength;
 		design.CrewMin = ReqCrew;
 		design.CrewBerths = Quarters;
 		design.mass = Mass;

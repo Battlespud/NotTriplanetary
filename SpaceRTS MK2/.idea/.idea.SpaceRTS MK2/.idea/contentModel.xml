@@ -35,6 +35,7 @@
           <e p="ComponentPassThrough.cs" t="Include" />
           <e p="DesignScreenManager.cs" t="Include" />
           <e p="FuelTank.cs" t="Include" />
+          <e p="Hardpoint.cs" t="Include" />
           <e p="HullDes.cs" t="Include" />
           <e p="IEmissions.cs" t="Include" />
           <e p="Int2.cs" t="Include" />
@@ -49,6 +50,7 @@
           <e p="ShipAbstract.cs" t="Include" />
           <e p="ShipComponents.cs" t="Include" />
           <e p="ShipDesign.cs" t="Include" />
+          <e p="ShipHull.cs" t="Include" />
           <e p="ShipIndexer.cs" t="Include" />
           <e p="Utilities" t="Include">
             <e p="ComponentDesigner.cs" t="Include" />
