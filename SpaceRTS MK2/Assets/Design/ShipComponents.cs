@@ -33,6 +33,7 @@ public enum AbilityCats{
 	POW, //rating is generates.  rating 2 is requires, 
 	SHIELD,//Rating =  Max
 	EXPLODE, //Rating is chance 0-1.00 on destruction, rating 1 is damage to cause
+	ARMOR, //Rating is layers
 }
 
 public enum SENSORTYPES{
@@ -163,6 +164,8 @@ public class ShipComponents {
 	public CompCategory Category = CompCategory.DEFAULT;  //Where the component will be categorized in the design view.
 	public CompClass compClass = CompClass.SHIP;          //Who can use this component.
 
+	public bool Armored = false;
+	
 	//public List<Ability> Abilities = new List<Ability> (); //What this component does.
 	public Dictionary<AbilityCats,Ability> Abilities = new Dictionary<AbilityCats, Ability>();
 
@@ -277,6 +280,7 @@ public class ShipComponents {
 
 	//GETTERS
 	#region Ability Getters
+
 	public float GetThrust(){
 		if (Destroyed || Enabled == false)
 			return 0f;
@@ -412,6 +416,10 @@ public class ShipComponents {
 		else if (a.AbilityType == AbilityCats.STRATEGICMOVE)
 		{
 			a.thrust =(int)((Mass / 50) * a.Rating);
+		}
+		else if (a.AbilityType == AbilityCats.ARMOR)
+		{
+			Armored = true;
 		}
 		Abilities.Add(a.AbilityType,a);
 	}

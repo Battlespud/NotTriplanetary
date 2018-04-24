@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using System.Threading;
 using System.Linq;
 
-
+/*
 public enum ArmorTypes{
 	STEEL = 1,
 	SMARTSTEEL = 3,
@@ -20,6 +20,18 @@ public enum ArmorTypes{
 	CRYSTALLINECOMPOSITE=21,
 	SUPERDENSE=25,
 	BONDEDSUPERDENSE=30
+}
+*/
+public enum ArmorTypes{
+	STEEL = 10,
+	DURANIUM=14,
+	COMPOSITE=17,
+	CERAMICCOMPOSITE=19,
+	COMPRESSEDCARBON=22,
+	BIPHASECARBIDE=25,
+	CRYSTALLINECOMPOSITE=29,
+	SUPERDENSE=32,
+	BONDEDSUPERDENSE=40
 }
 
 public enum EngineTypes{

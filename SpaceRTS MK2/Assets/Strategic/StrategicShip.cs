@@ -164,9 +164,11 @@ public class StrategicShip : ILocation{
 	public bool InDrydock = true;
 	public bool IsDeployed = false;
 
+	
 	//Combat
 	public int Shields = 0;
 	int MaxDAC = 0;
+	public bool Armored = false;
 	public Dictionary<int,ShipComponents> DAC = new Dictionary<int, ShipComponents> ();
 	public Dictionary<ShipComponents,Range>DACRanges = new Dictionary<ShipComponents, Range>();
 
@@ -406,7 +408,9 @@ public class StrategicShip : ILocation{
 			Components.Add (copy);
 		}
 		UpdateComponentStatusStrings ();
-		SetupArmor (template.ArmorLength, template.ArmorLayers, (float)template.ArmorType);
+		SetupArmor (template.ArmorLength, template.ArmorLayers, (float)template.ArmorType/10);
+		if (template.ArmorLayers < 0)
+			Armored = true;
 		mCrew = template.CrewMin;
 		ChangeStats();
 		ArmorType = template.ArmorType;
@@ -583,22 +587,34 @@ public class StrategicShip : ILocation{
 	public string ArmorString;
 
 	void BuildArmorString(){
-		StringBuilder a = new StringBuilder();
-		for (int y = 0; y < Armor.GetLength (1); y++) {
-			for (int x = 0; x < Armor.GetLength (0); x++) {
-				if (Armor [x, y] == (float)ArmorType) {
-					a.Append( "<color=green>□</color>");
+		if (Armored)
+		{
+			StringBuilder a = new StringBuilder();
+			for (int y = 0; y < Armor.GetLength(1); y++)
+			{
+				for (int x = 0; x < Armor.GetLength(0); x++)
+				{
+					if (Armor[x, y] == (float) ArmorType)
+					{
+						a.Append("<color=green>□</color>");
+					}
+					else if (Armor[x, y] > 0f && Armor[x, y] < (float) ArmorType)
+					{
+						a.Append("<color=yellow>□</color>");
+					}
+					else if (Armor[x, y] <= 0f)
+					{
+						a.Append("<color=red>□</color>");
+					}
 				}
-				else if (Armor[x,y] > 0f && Armor[x,y] < (float)ArmorType) {
-					a.Append( "<color=yellow>□</color>");
-				}
-				else if (Armor[x,y] <= 0f) {
-					a.Append( "<color=red>□</color>");
-				}
+				a.AppendLine();
 			}
-			a.AppendLine();
+			ArmorString = a.ToString();
 		}
-		ArmorString = a.ToString();
+		else
+		{
+			ArmorString = "UNARMORED";
+		}
 	}
 
 
@@ -631,47 +647,68 @@ public class StrategicShip : ILocation{
 					TakeComponentDamage (dam * random.NextFloat (.35f, .6f));
 			}
 		}
-		int startX = random.Next (0, Armor.GetLength (0) - 1);
-		int startY = 0;
-		for(startY = Armor.GetLength(1)-1; startY >= 0; startY--){
-			if (Armor [startX, startY] > 0f) {
-				break;
-			}
-		}
-		int HullBound = 0;
-		float counter = 0;
-		//adjust penetration profile by damage
-		for(int i = 0; dam > 0; i++) { //TODO REFACTOR PLS PLS PLS ITS SO BAD
-			if (i >= pattern.Count)
-				i = 0;
-			Int2 v = pattern[i]; 
-			if (startY + v.y < HullBound) {
-				if (dam >= 1f) {
-					counter++;
-					dam -= 1;
-				} else {
-					counter += dam;
-					dam = 0f;
+		float counter = dam;  //Counter is how much damage will be passed on to components. Set to max in case the ship isnt armored.
+		if (Armored)
+		{
+			int startX = random.Next(0, Armor.GetLength(0) - 1);
+			int startY = 0;
+			for (startY = Armor.GetLength(1) - 1; startY >= 0; startY--)
+			{
+				if (Armor[startX, startY] > 0f)
+				{
+					break;
 				}
 			}
-			if (startX + v.x < 0) {
-				v.x += Armor.GetLength (0)-1; 
-			}
-			if (startX + v.x > Armor.GetLength(0)-1) {
-				v.x -= Armor.GetLength (0)-1; 
-			}
-			if (startX + v.x >= 0 && startX + v.x < Armor.GetLength (0) && startY + v.y >= 0 && startY + v.y < Armor.GetLength (1)) {
-				try {
-					if(dam > Armor [startX + v.x, startY + v.y]){
-						dam -= Armor [startX + v.x, startY + v.y];
-						Armor [startX + v.x, startY + v.y] = 0f;
+			int HullBound = 0;
+			counter = 0;  //reset counter to 0, we'll calculate it using the armor since this ship has armor.
+			//adjust penetration profile by damage
+			for (int i = 0; dam > 0; i++)
+			{
+				//
+				if (i >= pattern.Count)
+					i = 0;
+				Int2 v = pattern[i];
+				if (startY + v.y < HullBound)
+				{
+					if (dam >= 1f)
+					{
+						counter++; 
+						dam -= 1;
 					}
-					else{
-						Armor [startX + v.x, startY + v.y] -= dam;
+					else
+					{
+						counter += dam;
 						dam = 0f;
 					}
-				} catch {
-					Debug.Log ("Invalid armor coords");
+				}
+				if (startX + v.x < 0)
+				{
+					v.x += Armor.GetLength(0) - 1;
+				}
+				if (startX + v.x > Armor.GetLength(0) - 1)
+				{
+					v.x -= Armor.GetLength(0) - 1;
+				}
+				if (startX + v.x >= 0 && startX + v.x < Armor.GetLength(0) && startY + v.y >= 0 &&
+				    startY + v.y < Armor.GetLength(1))
+				{
+					try
+					{
+						if (dam > Armor[startX + v.x, startY + v.y])
+						{
+							dam -= Armor[startX + v.x, startY + v.y];
+							Armor[startX + v.x, startY + v.y] = 0f;
+						}
+						else
+						{
+							Armor[startX + v.x, startY + v.y] -= dam;
+							dam = 0f;
+						}
+					}
+					catch
+					{
+						Debug.Log("Invalid armor coords");
+					}
 				}
 			}
 		}
@@ -694,19 +731,27 @@ public class StrategicShip : ILocation{
 					break;
 				}
 			}
-			if (amount >= target.GetHTK ()) {
-				target.Damage ();
-				amount -= target.GetHTK ();
-			} else if (amount < target.GetHTK ()) {
-				float chance = amount / target.GetHTK ();
-				if (random.Next (0, 100)/100 < chance) {
-					target.Damage ();
-				} else {
-					target.DestroySubComponent ();
+			if (target.Armored) //Armored component reduces incoming damage by 1
+				amount--;
+			if (amount >= target.GetHTK())
+				{
+					target.Damage();
+					amount -= target.GetHTK();
 				}
+				else if (amount < target.GetHTK())
+				{
+					float chance = amount / target.GetHTK();
+					if (random.Next(0, 100) / 100 < chance)
+					{
+						target.Damage();
+					}
+					else
+					{
+						target.DestroySubComponent();
+					}
 
-				amount = 0;
-			}
+					amount = 0;
+				}
 		}
 		yield return Ninja.JumpToUnity;
 		ChangeStats ();
