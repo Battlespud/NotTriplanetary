@@ -62,7 +62,7 @@ public class HullDesignManager : MonoBehaviour
 	
 	void CalculateArmorRequirements()
 	{
-		MinimumArmorLayers = Mathf.FloorToInt(DesiredDisplacement/1000);
+		MinimumArmorLayers = Mathf.FloorToInt(DesiredDisplacement/2000);
 		if (MinimumArmorLayers <= 0)
 			MinimumArmorLayers = 1;
 		MinimumArmorLayers--;

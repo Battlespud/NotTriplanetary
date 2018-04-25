@@ -98,8 +98,9 @@ public class StrategicShip : ILocation{
 	}
 
 
-	public ShipDesign DesignClass;
-
+	public ShipDesign DesignClass;  //DO NOT USE OR MODIFY, THIS IS A READ ONLY REFERENCE TO THE ORIGINAL DESIGN.
+	public ShipHull Hull; //You can modify this, its a clone of the original.
+	
 	public List<ShipComponents> Components = new List<ShipComponents> ();
 	public List<ShipComponents> StrategicEngines = new List<ShipComponents>();
 	public List<string>ComponentStatus = new List<string>();
@@ -409,7 +410,7 @@ public class StrategicShip : ILocation{
 		}
 		UpdateComponentStatusStrings ();
 		SetupArmor (template.ArmorLength, template.ArmorLayers, (float)template.ArmorType/10);
-		if (template.ArmorLayers < 0)
+		if (template.ArmorLayers > 0)
 			Armored = true;
 		mCrew = template.CrewMin;
 		ChangeStats();
@@ -418,6 +419,7 @@ public class StrategicShip : ILocation{
 		UpdateMaint ();
 		AddHistory ("Launched", string.Format ("{0}: {1} is launched.", StrategicClock.GetDate (), ShipName));
 		CommissionDate = StrategicClock.GetDate ();
+		Hull = template.Hull.Clone();
 	}
 
 	void UpdateEmissions(){

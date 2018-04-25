@@ -23,11 +23,13 @@ public class Slipway{
 		BuildCost = 0f;
 	}
 
+	//Progresses ship building by 1 turn
 	public void Progress(){
 		if (!InUse)
 			return;
-		BuildCost -= parent.Rate * (1 + (((parent.CurrentTooling.mass / 5000) - 1) / 2)); 
-		TurnsToCompletion = (int)System.Math.Ceiling(BuildCost / (1 + (((parent.CurrentTooling.mass / 5000) - 1) / 2)));
+		float BuildRate = (parent.Rate * parent.empire.Stats.ShipyardBuildRate);
+		BuildCost -= BuildRate ;   //TODO
+		TurnsToCompletion = Mathf.CeilToInt(BuildCost / BuildRate) ;
 		if (TurnsToCompletion <= 0)
 			TurnsToCompletion = 1;
 		if (BuildCost <= 0)
@@ -119,8 +121,8 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 
 	public string ShipYardName = "Imperial Yardworks";
 
-	public ShipDesign CurrentTooling;
-	public ShipDesign NextTooling;
+	public ShipHull CurrentTooling;
+	public ShipHull NextTooling;
 
 	public Empire empire;
 
@@ -128,27 +130,21 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	public List<StrategicShip>DockedShips = new List<StrategicShip>();
 	public List<Fleet> DockedFleets = new List<Fleet> ();
 
-	public void Retool(ShipDesign newDes){
-		if (CurrentTooling == null) {
-			CurrentTooling = newDes;
-		} else {
-			NextTooling = newDes;
-			//TimeToNextTooling = CalcToolingTime (newDes);
-			TimeToNextTooling = 1;
-		}
+	public void Retool(ShipHull newHull)
+	{
+			NextTooling = newHull;
+			TimeToNextTooling = CalcToolingTime (newHull);
 	}
 
-	public int CalcToolingTime(ShipDesign newDes){
-		int currM = 0;
-		if (CurrentTooling != null) {
-			currM = (int)CurrentTooling.BuildCost;
-		} 
-		return (int)(3+Mathf.Abs(currM - newDes.BuildCost)/Rate*3f);
+	public int CalcToolingTime(ShipHull newHull)
+	{
+		int currSize = 0;
+		if (CurrentTooling != null)
+			currSize = CurrentTooling.Size;
+		return (Mathf.CeilToInt(System.Math.Abs(currSize - newHull.Size) / empire.Stats.ShipyardToolRate));
 	}
 
 	public int TimeToNextTooling;
-	public int MaxTonnage;
-	public int Berths;
 
 	public float FuelSupply = 1000000f;
 
@@ -175,11 +171,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 		}
 	}
 
-	float CalculateTime(){
-		return	CurrentTooling.BuildCost / Rate;
-	}
-
-	//
+	//Creates the actual ship
 	public void CompleteShip(ShipDesign design){
 		StrategicShip s = new StrategicShip (design, empire);
 		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,4,empire,"STARSHIP CONSTRUCTED",string.Format("{0} has <color=green>finished construction</color> of a <color=silver>{1}</color>-Class {2}, the {3}.",ShipYardName,s.DesignClass.DesignName,s.DesignClass.HullDesignation.HullType,s.ShipName));
@@ -200,7 +192,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	}
 
 	//Call each turn.  Updates all retooling and builds.
-	void Process(){
+	void ProcessToolingandBuilding(){
 		if (NextTooling != null) {
 			TimeToNextTooling -=1;
 			if (TimeToNextTooling <= 0) {
@@ -217,7 +209,7 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 		switch (p) {
 		case(Phase.ORDERS):
 			{
-				Process ();
+				ProcessToolingandBuilding(); 
 				break;
 			}
 		case(Phase.GO):
@@ -256,4 +248,14 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	public GameObject getGameObject(){
 		return gameObject;
 	}
+	
+	
+	//UI Interfacing
+
+	public List<ShipDesign> GetValidDesigns()
+	{
+		List<ShipDesign> ValidDesigns = new List<ShipDesign>();
+	}
+	
+	
 }

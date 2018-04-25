@@ -68,7 +68,6 @@
         <e p="DrawTest.cs" t="Include" />
         <e p="Economy" t="Include">
           <e p="City.cs" t="Include" />
-          <e p="Empire.cs" t="Include" />
           <e p="Factory.cs" t="Include" />
           <e p="Freighter.cs" t="Include" />
           <e p="IMineable.cs" t="Include" />
@@ -86,7 +85,6 @@
           <e p="NavMeshModifierVolumeEditor.cs" t="Include" />
           <e p="NavMeshSurfaceEditor.cs" t="Include" />
         </e>
-        <e p="EmpireLogManagerUI.cs" t="Include" />
         <e p="EscapePod.cs" t="Include" />
         <e p="ExplosionFireAndDebris.cs" t="Include" />
         <e p="ExplosionPhysicsForce.cs" t="Include" />
@@ -328,8 +326,14 @@
         </e>
         <e p="Strategic" t="Include">
           <e p="DeadLocation.cs" t="Include" />
-          <e p="EmpireLog" t="Include">
-            <e p="EmpireLogButtonManager.cs" t="Include" />
+          <e p="Empire" t="Include">
+            <e p="Empire.cs" t="Include" />
+            <e p="EmpireLog" t="Include">
+              <e p="EmpireLogButtonManager.cs" t="Include" />
+              <e p="EmpireLogEntry.cs" t="Include" />
+              <e p="EmpireLogManagerUI.cs" t="Include" />
+            </e>
+            <e p="EmpireStats.cs" t="Include" />
           </e>
           <e p="Fleet.cs" t="Include" />
           <e p="FleetButtonManager.cs" t="Include" />

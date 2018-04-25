@@ -27,6 +27,7 @@ public class StrategicShipyardUIManager : MonoBehaviour
 	public RectTransform SlipwaysContentParentRect;
 
 	public Dropdown DesignsDrop;
+	public Dropdown HullsDrop;
 	public Button RetoolButton;
 	public Text RetoolSummaryText;
 
@@ -133,9 +134,9 @@ public class StrategicShipyardUIManager : MonoBehaviour
 			return;
 		if (Shipyard.CurrentTooling != null) {
 			if (DropToShip () != Shipyard.CurrentTooling) {
-				RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}", Shipyard.CalcToolingTime (DropToShip ()), Shipyard.CurrentTooling.DesignName, DropToShip ().DesignName);
+				RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}", Shipyard.CalcToolingTime (DropToShip ()), Shipyard.CurrentTooling.HullName, DropToShip ().DesignName);
 			} else {
-				RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}", "Already Tooled", Shipyard.CurrentTooling.DesignName, DropToShip ().DesignName);
+				RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}", "Already Tooled", Shipyard.CurrentTooling.HullName, DropToShip ().DesignName);
 			}
 		} else {
 			RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}",  Shipyard.CalcToolingTime(DropToShip()), "None", DropToShip ().DesignName);
@@ -199,7 +200,7 @@ public class StrategicShipyardUIManager : MonoBehaviour
 
 	public void BuildShip(){
 		if(SelectedSlipway)
-			SelectedSlipway.Slip.Assign (Shipyard.CurrentTooling);
+			SelectedSlipway.Slip.Assign (Shipyard.SelectedDesign);
 		UpdateUI ();
 	}
 

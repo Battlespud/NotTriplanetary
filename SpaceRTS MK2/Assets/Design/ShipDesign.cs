@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Linq;
 
 public enum DesignTypes{
 
@@ -37,7 +38,23 @@ public class ShipDesign {
 	public static List<ShipDesign> Designs = new List<ShipDesign>();
 	public static List<string> DesignNames = new List<string> ();
 	public static Dictionary<string, ShipDesign> DesignDictionary = new Dictionary<string, ShipDesign>();
+	public static Dictionary<ShipHull,List<ShipDesign>> DesignsByHullDictionary = new Dictionary<ShipHull, List<ShipDesign>>();
 
+	public static void AddToDesignsByHullDictionary(ShipDesign s)
+	{
+		if (DesignsByHullDictionary.ContainsKey(s.Hull))
+		{
+			DesignsByHullDictionary[s.Hull].AddExclusive(s);
+		}
+		else
+		{
+			DesignsByHullDictionary.Add(s.Hull, new List<ShipDesign>());
+			DesignsByHullDictionary[s.Hull].AddExclusive(s);
+		}
+	}
+	
+
+	public ShipHull Hull;  //The hull this design is for.
 
 	public string DesignName;
 	public HullDes HullDesignation;
@@ -87,6 +104,7 @@ public class ShipDesign {
 		DesignName = d;
 		DesignNames.Add (this.DesignName);
 		DesignDictionary.Add (this.DesignName, this);
+		AddToDesignsByHullDictionary(this);
 	}
 
 
