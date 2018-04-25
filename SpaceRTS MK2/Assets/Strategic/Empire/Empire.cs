@@ -8,6 +8,7 @@ using System.IO;
 using UnityEngine.UI;
 
 
+//TODO this will probably be removed later. Just leave for now.
 public enum Eras{
 	Primitive,
 	Classical,
@@ -21,34 +22,22 @@ public enum Eras{
 
 public class Empire : MonoBehaviour {
 
-	public static Dictionary<OfficerRoles, KeyValuePair<int, List<float>>> StartingOfficersDict = new Dictionary<OfficerRoles, KeyValuePair<int, List<float>>>();
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//STATICS 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static Dictionary<OfficerRoles, KeyValuePair<int, List<float>>> StartingOfficersDict = new Dictionary<OfficerRoles, KeyValuePair<int, List<float>>>();
 	public static List<Empire> AllEmpires = new List<Empire>();
 	public static List<ILocation> AllLocations = new List<ILocation>(); //This is for ALL empires
 	//public static ILocation DeadLocation = new ILocation ();
 
-	//Essentially our version of a faction.  Multiple empires of the same FAC can exist, representing
-	//political groups within the whole.   Each will have its own officer core, but can share everything else.
 	static System.Random rnd = new System.Random();
-	public static DeadLocation DeadLoc = new DeadLocation();
+	public static DeadLocation DeadLoc = new DeadLocation(); //TODO i forgot what this is
 
-	public FAC Faction;
-	public Eras Era;
-	public string EmpireName;
-	public Government Gov = new Government();
-	public EmpireStats Stats;
 
-	public  int StartingOfficers = 100;
-
-	public int CurrentOfficers;
-
-	public bool Player = true;
-
-	public TechTree EmpireTechTree;
-	public DesignerToken Token;
-	public List<Tech> AvailableTechs = new List<Tech> ();
-	public List<string> DebugAvailableTechNames = new List<string>();
-
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//COLLECTIONS 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 	public List<Colony>Colonies = new List<Colony>();
 	public List<Team> Teams = new List<Team>();
 //	public List<Character>Characters = new List<Character>();
@@ -57,10 +46,33 @@ public class Empire : MonoBehaviour {
 	public List<StrategicShip> Ships = new List<StrategicShip> ();
 	public List<StrategicShipyard> Yards = new List<StrategicShipyard> ();
 	public List<GroundUnit>GroundUnits = new List<GroundUnit>();
-	int GroundUnitCounter = 0;
+	public TechTree EmpireTechTree;
+	public DesignerToken Token;
+	public List<Tech> AvailableTechs = new List<Tech> ();
+	public List<string> DebugAvailableTechNames = new List<string>();
 
-
-
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//REFERENCES 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	public FAC Faction;
+	public Eras Era;
+	public string EmpireName;
+	public Government Gov = new Government();
+	public EmpireStats Stats;
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//SETTINGS 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static bool RandomTraits = true;
+	int GroundUnitCounter = 0; //Just used in naming ground units. Fluff
+	public bool DistributeCaptains = false;
+	public int StartingOfficers = 100;
+	public int CurrentOfficers;
+	public bool Player = true;
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//LOGS 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 	#region Logs
 	public Dictionary<string,List<EmpireLogEntry>>Logbook = new Dictionary<string, List<EmpireLogEntry>>();
 
@@ -95,6 +107,10 @@ public class Empire : MonoBehaviour {
 
 	public Dictionary<Theme,float>EmpireThemes = new Dictionary<Theme, float>();
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//COLONY 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	#region Colony
 	public void AddColony(Colony c){
 		if(!Colonies.Contains(c))
 			Colonies.Add (c);
@@ -104,7 +120,48 @@ public class Empire : MonoBehaviour {
 		if(Colonies.Contains(c))
 			Colonies.Remove (c);
 	}
+	#endregion
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//UNITY 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	void Awake(){
+		BuildTechTree ();
+		Stats = new EmpireStats();
+		ResearchScreenManager.ActiveEmpire = this;
+		OfficerManagerUI.ActiveEmpire = this;
+		StrategicClock.PhaseChange.AddListener (PhaseManager);
+	}
+
+	// Use this for initialization
+	void Start () {
+		AllEmpires.Add (this);
+		for(int i = 0; i < 12; i++){
+			if (Logbook.ContainsKey (StrategicClock.strategicClock.GetFutureDate (i))) {
+				Logbook.Add (StrategicClock.strategicClock.GetFutureDate (i), new List<EmpireLogEntry> ());
+			}
+		}
+		Token = new DesignerToken (EmpireName);
+//		Debug.Log (EmpireTechTree.TechByID.Count);
+		AvailableTechs = EmpireTechTree.GetAvailableTech ();
+		//	Debug.Log (AvailableTechs.Count);
+		foreach (Tech t in AvailableTechs) {
+			DebugAvailableTechNames.Add (t.Name);
+		}
+		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,1,this,"NOTHING BUT THE RAIN",string.Format("**//nothing but the rain-"));
+		StartCoroutine(GenerateStartingOfficerCorps());
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if (DistributeCaptains) {
+			DistributeOfficers ();
+			DistributeCaptains = false;
+		}
+		//	CurrentOfficers = Character.CharactersByEmpire[this].Count;
+	}
+	
 	void PhaseManager(Phase p){
 		switch (p) {
 		case(Phase.ORDERS):
@@ -138,7 +195,92 @@ public class Empire : MonoBehaviour {
 		}
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//CHARACTERS 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	#region Characters
+	
+	//How many of each type of character an empire starts with.
+	static KeyValuePair<int,List<float>> StartingByRole(OfficerRoles r)
+	{
+		int num = 100;
+		//Default Rank distribution.
+		List<float> dist = new List<float>(){.40f,.2f,.15f,.1f,.075f,.05f,.035f,.025f};
 
+		switch (r)
+		{
+			case OfficerRoles.Navy:
+				num = 50;
+				break;
+			case OfficerRoles.Army:
+				num = 30;
+				break;
+			case OfficerRoles.Government:
+				num = 20;
+				break;
+			case OfficerRoles.Research:
+				num = 15;
+				break;
+			case OfficerRoles.Intelligence:
+				dist= new List<float>(){.50f,4f,.1f};
+				num = 5;
+				break;
+			case OfficerRoles.Police:
+				dist= new List<float>(){.50f,4f,.1f};
+				num = 12;
+				break;
+			case OfficerRoles.Child:
+				num = 0;
+				break;
+			case OfficerRoles.Corporate:
+				dist= new List<float>(){.50f,.3f,.2f};
+				num = 5;
+				break;
+			case OfficerRoles.Social:
+				num = 40;
+				break;
+			case OfficerRoles.Merchant:
+				num = 40;
+				break;
+			case OfficerRoles.Scientist:
+				num = 15;
+				break;
+			case OfficerRoles.Politician:
+				num = 30;
+				break;
+			case OfficerRoles.Media:
+				num = 7;
+				break;
+			case OfficerRoles.Engineer:
+				num = 10;
+				break;
+			case OfficerRoles.Noble:
+				dist= new List<float>(){1f};
+				num = 30;
+				break;
+			case OfficerRoles.Retired:
+				num = 15;
+				break;
+			case OfficerRoles.Terrorist:
+				num = 5;
+				break;
+			case OfficerRoles.Rebel:
+				num = 10;
+				break;
+			case OfficerRoles.Spy:
+				dist= new List<float>(){.50f,.3f,.2f,.1f};
+				num = 3;
+				break;
+			case OfficerRoles.Criminal:
+				num = 40;
+				break;
+			default:
+				throw new ArgumentOutOfRangeException("r", r, null);
+		}
+		KeyValuePair<int, List<float>> result =  new KeyValuePair<int, List<float>>(num,dist);
+		return result;
+	}
+	
 	public IEnumerator GenerateStartingOfficerCorps()
 	{
 		Dictionary<OfficerRoles, KeyValuePair<int, List<float>>> all = new Dictionary<OfficerRoles, KeyValuePair<int, List<float>>>();
@@ -156,9 +298,13 @@ public class Empire : MonoBehaviour {
 
 	}
 
-
-	public void DistributeOfficers(){
-		foreach (StrategicShip s in Ships) {
+	//Sends unassigned officers to unmanned ships, with highest rank officers going to largest ships.
+	public void DistributeOfficers()
+	{
+		
+		List<StrategicShip> ShipsBySize = new List<StrategicShip>();
+		ShipsBySize = Ships.OrderByDescending(x => x.Hull.Size).ToList();
+		foreach (StrategicShip s in ShipsBySize) {
 			if (s.Executive == null || s.Captain == null) {
 				if (s.Captain == null) {
 					Character prospect = Unassigned.OrderByDescending (x => x.Rank).ToList() [0];
@@ -259,7 +405,6 @@ public class Empire : MonoBehaviour {
 			OfficerRoles r = rNullable.Value;
 			Output = GetCharactersByType (r, Output);
 			if (Output.Count < 1 && softReq) {
-				//Debug.LogError ("No valid characters found, finding all other characters in order to prevent exception!");
 				foreach (Character c in Character.CharactersByEmpire[this]) {
 					if (c.Location == loc)
 						Output.Add (c);
@@ -273,44 +418,13 @@ public class Empire : MonoBehaviour {
 		}
 		return Output;
 	}
+	#endregion
 
-	public static bool RandomTraits = true;
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//TECH 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-	public bool DistributeCaptains = false;
-
-
-
-	void Awake(){
-		BuildTechTree ();
-		Stats = new EmpireStats();
-		ResearchScreenManager.ActiveEmpire = this;
-		OfficerManagerUI.ActiveEmpire = this;
-		StrategicClock.PhaseChange.AddListener (PhaseManager);
-
-	}
-
-	// Use this for initialization
-	void Start () {
-		AllEmpires.Add (this);
-		for(int i = 0; i < 12; i++){
-			if (Logbook.ContainsKey (StrategicClock.strategicClock.GetFutureDate (i))) {
-				Logbook.Add (StrategicClock.strategicClock.GetFutureDate (i), new List<EmpireLogEntry> ());
-			}
-		}
-		Token = new DesignerToken (EmpireName);
-//		Debug.Log (EmpireTechTree.TechByID.Count);
-		AvailableTechs = EmpireTechTree.GetAvailableTech ();
-	//	Debug.Log (AvailableTechs.Count);
-		foreach (Tech t in AvailableTechs) {
-			DebugAvailableTechNames.Add (t.Name);
-		}
-		EmpireLogEntry E = new EmpireLogEntry(LogCategories.MILITARY,1,this,"NOTHING BUT THE RAIN",string.Format("**//nothing but the rain-"));
-		StartCoroutine(GenerateStartingOfficerCorps());
-
-	}
-
+//Called at star tto setup the tech tree.
 	void BuildTechTree(){
 		EmpireTechTree = new TechTree (this);
 		string[] TechTreeText = File.ReadAllLines (System.IO.Path.Combine (Application.streamingAssetsPath, "Tech/TechTree.txt"));
@@ -344,7 +458,7 @@ public class Empire : MonoBehaviour {
 			}
 		}
 	}
-
+	//Just a little utility to take care of any missed spaces in the techtree files.  
 	string SpaceTrim(string s){
 		string o = s.Trim (new char[] { ' ' });
 		return o;
@@ -352,16 +466,11 @@ public class Empire : MonoBehaviour {
 
 
 
-	// Update is called once per frame
-	void Update () {
-		if (DistributeCaptains) {
-			DistributeOfficers ();
-			DistributeCaptains = false;
-		}
-	//	CurrentOfficers = Character.CharactersByEmpire[this].Count;
-	}
 
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//NAMING 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	#region Naming
 
@@ -436,84 +545,7 @@ public class Empire : MonoBehaviour {
 	#endregion
 
 
-	static KeyValuePair<int,List<float>> StartingByRole(OfficerRoles r)
-	{
-		int num = 100;
-		List<float> dist = new List<float>(){.40f,.2f,.15f,.1f,.075f,.05f,.035f,.025f};
-
-		switch (r)
-		{
-			case OfficerRoles.Navy:
-				num = 50;
-				break;
-			case OfficerRoles.Army:
-				num = 30;
-				break;
-			case OfficerRoles.Government:
-				num = 20;
-				break;
-			case OfficerRoles.Research:
-				num = 15;
-				break;
-			case OfficerRoles.Intelligence:
-				dist= new List<float>(){.50f,4f,.1f};
-				num = 5;
-				break;
-			case OfficerRoles.Police:
-				dist= new List<float>(){.50f,4f,.1f};
-				num = 12;
-				break;
-			case OfficerRoles.Child:
-				num = 0;
-				break;
-			case OfficerRoles.Corporate:
-				dist= new List<float>(){.50f,.3f,.2f};
-				num = 5;
-				break;
-			case OfficerRoles.Social:
-				num = 40;
-				break;
-			case OfficerRoles.Merchant:
-				num = 40;
-				break;
-			case OfficerRoles.Scientist:
-				num = 15;
-				break;
-			case OfficerRoles.Politician:
-				num = 30;
-				break;
-			case OfficerRoles.Media:
-				num = 7;
-				break;
-			case OfficerRoles.Engineer:
-				num = 10;
-				break;
-			case OfficerRoles.Noble:
-				dist= new List<float>(){1f};
-				num = 30;
-				break;
-			case OfficerRoles.Retired:
-				num = 15;
-				break;
-			case OfficerRoles.Terrorist:
-				num = 5;
-				break;
-			case OfficerRoles.Rebel:
-				num = 10;
-				break;
-			case OfficerRoles.Spy:
-				dist= new List<float>(){.50f,.3f,.2f,.1f};
-				num = 3;
-				break;
-			case OfficerRoles.Criminal:
-				num = 40;
-				break;
-			default:
-				throw new ArgumentOutOfRangeException("r", r, null);
-		}
-		KeyValuePair<int, List<float>> result =  new KeyValuePair<int, List<float>>(num,dist);
-		return result;
-	}
+	
 	
 }
 

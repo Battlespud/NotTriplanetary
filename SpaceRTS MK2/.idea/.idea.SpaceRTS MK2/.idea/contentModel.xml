@@ -375,6 +375,10 @@
           <e p="ScientistManager.cs" t="Include" />
           <e p="ScrollUV.cs" t="Include" />
           <e p="ShipModule.cs" t="Include" />
+          <e p="Shipyard" t="Include">
+            <e p="Slipway.cs" t="Include" />
+            <e p="StrategicShipyard.cs" t="Include" />
+          </e>
           <e p="StrategicClock.cs" t="Include" />
           <e p="StrategicExtensions.cs" t="Include" />
           <e p="StrategicMissile.cs" t="Include" />
@@ -383,7 +387,6 @@
           <e p="StrategicShipUI and Tabs" t="Include">
             <e p="ShipButtonManager.cs" t="Include" />
           </e>
-          <e p="StrategicShipyard.cs" t="Include" />
           <e p="TechTree" t="Include">
             <e p="TechButtonManager.cs" t="Include" />
             <e p="TechTree.cs" t="Include" />

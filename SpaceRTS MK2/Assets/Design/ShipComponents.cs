@@ -265,6 +265,8 @@ public class ShipComponents {
 	public bool isDestroyed(){
 		return Destroyed;
 	}
+	
+	
 	public void Damage(){
 		Debug.Log(Name + " has been Destroyed.");
 		Destroyed = true;
@@ -272,7 +274,7 @@ public class ShipComponents {
 		CrewPresent =(int) (CrewPresent*Random.Range (0f, .35f));
 	}
 
-
+	//"Repairs" the component by restoring all field values to the originals set in the reference component.
 	public void Fix(){
 		RestoreFields (this);
 	}
