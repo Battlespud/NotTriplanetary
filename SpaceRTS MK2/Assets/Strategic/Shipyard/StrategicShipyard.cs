@@ -224,13 +224,16 @@ public class StrategicShipyard : MonoBehaviour, IContext, ILocation{
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//A slipway automatically starts working towards building a ship of type CurrentTooling. Triggered by UI.
-	public void AssignSlipway(){
+	public void AssignSlipway(ShipDesign des)
+	{
+		if (!GetValidDesigns().Contains(des))
+			return;
 		bool done = false;
 		int i = 0;
 		while(!done && i < Slipways.Count){
 			if (!Slipways [i].InUse) {
 				done = true;
-				Slipways[i].Assign(CurrentTooling);
+				Slipways[i].Assign(des);
 			}
 		}
 	}

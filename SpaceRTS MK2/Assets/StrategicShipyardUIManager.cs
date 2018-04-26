@@ -132,6 +132,7 @@ public class StrategicShipyardUIManager : MonoBehaviour
 	void UpdateRetoolUI(int doesNothingJustHereBecauseOfDumbUnityEventRequirements = 0){
 		if (ShipDesign.Designs.Count <= 0)
 			return;
+		/*
 		if (Shipyard.CurrentTooling != null) {
 			if (DropToShip () != Shipyard.CurrentTooling) {
 				RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}", Shipyard.CalcToolingTime (DropToShip ()), Shipyard.CurrentTooling.HullName, DropToShip ().DesignName);
@@ -141,18 +142,22 @@ public class StrategicShipyardUIManager : MonoBehaviour
 		} else {
 			RetoolSummaryText.text = string.Format ("Time Required: {0}\nCurrent: {1}\nTarget: {2}",  Shipyard.CalcToolingTime(DropToShip()), "None", DropToShip ().DesignName);
 		}
+		*/
 	}
 
+	
 	//Returns the dropdown selection as a shipdesign
 	ShipDesign DropToShip(){
 		return ShipDesign.Designs [DesignsDrop.value];
 	}
 
-	public void Retool(){
-		if(DropToShip() != Shipyard.CurrentTooling)
-			Shipyard.Retool (DropToShip ());
+	public void ChangeShipDesign(){
+		///if(DropToShip() != Shipyard.
+			//Shipyard.Retool (DropToShip ());
 		UpdateRetoolUI ();
 	}
+	
+	
 
 	public void SelectSlipway(SlipwayButtonUIManager s){
 		SelectedSlipway = s;
@@ -200,7 +205,7 @@ public class StrategicShipyardUIManager : MonoBehaviour
 
 	public void BuildShip(){
 		if(SelectedSlipway)
-			SelectedSlipway.Slip.Assign (Shipyard.SelectedDesign);
+		//	SelectedSlipway.Slip.Assign (Shipyard.SelectedDesign);
 		UpdateUI ();
 	}
 

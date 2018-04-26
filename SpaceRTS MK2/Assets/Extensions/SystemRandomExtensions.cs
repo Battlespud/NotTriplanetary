@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using NUnit.Framework.Internal;
+using UnityEngine.UI;
 
 public static class SystemRandomExtensions {
 
@@ -60,6 +61,19 @@ public static class SystemRandomExtensions {
 	{
 		Vector3 pos = g.transform.position;
 		Camera.main.gameObject.transform.position = new Vector3 (pos.x, 120f, pos.z - 50f);
+	}
+	
+	//Dropdown
+	public static void LoadEnum(this Dropdown drop, Type e)
+	{
+		List<string>Names = new List<string>();
+
+		foreach (var v in Enum.GetValues(e))
+		{
+			Names.Add(v.ToString());
+		}
+		drop.ClearOptions();
+		drop.AddOptions(Names);
 	}
 
 	//Collections

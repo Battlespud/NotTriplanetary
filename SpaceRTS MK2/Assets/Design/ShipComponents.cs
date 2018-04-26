@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Linq.Expressions;
 using System.Reflection;
 
 public enum CompCategory{
@@ -99,6 +100,28 @@ public class DesignerToken{
 
 public class ShipComponents {
 
+	
+	public static Dictionary<AbilityCats, List<string>> AbilityDescriptions = new Dictionary<AbilityCats, List<string>>();
+
+	static ShipComponents()
+	{
+		AbilityDescriptions.Add(AbilityCats.THRUST, new List<string>(){"EngineType as Int", "Power Modifier [0-1]", "Thermal Reduction [0-1]", "-"});
+		AbilityDescriptions.Add(AbilityCats.STRATEGICMOVE, new List<string>(){"EngineType as Int", "-", "-", "-"});
+		AbilityDescriptions.Add(AbilityCats.TURN, new List<string>(){"Degrees per second", "-", "-", "-"});
+		AbilityDescriptions.Add(AbilityCats.CONTROL, new List<string>(){"# of Ships in Fleet, set 0 for just ship (ie a Bridge)", "-", "-", "-"});
+		AbilityDescriptions.Add(AbilityCats.CREW, new List<string>(){"# of crew supported", "None", "None", "None"});
+		AbilityDescriptions.Add(AbilityCats.SENSOR, new List<string>(){"Type (cast from Enum) [0,1,2]", "Sensitivity [1-100]", "Hardening against EMP [0-1]", "-"});
+		AbilityDescriptions.Add(AbilityCats.USEFUEL, new List<string>(){"Uses this amount of fuel per turn when active", "-", "-", "-"});
+		AbilityDescriptions.Add(AbilityCats.FUEL, new List<string>(){"Amount of Fuel Storage", "Chance of exploding when hit [0-1]", "-", "-"});
+		AbilityDescriptions.Add(AbilityCats.CARGO, new List<string>(){"Amount of Cargo Storage", "-", "-", "-"});
+		AbilityDescriptions.Add(AbilityCats.MAINT, new List<string>(){"Effective Mass Multiplier", "Current Maint Parts (todo)", "Maximum Maint Parts (todo)", "-"});
+		AbilityDescriptions.Add(AbilityCats.POW, new List<string>(){"Power Generated per 50KT (todo)", "Power Required (todo)", "-", "-"});
+		AbilityDescriptions.Add(AbilityCats.SHIELD, new List<string>(){"Maximum Strength", "-", "-", "-"});
+		AbilityDescriptions.Add(AbilityCats.EXPLODE, new List<string>(){"Chance on Destruction to Explode [0-1]", "-", "-", "-"});
+		AbilityDescriptions.Add(AbilityCats.ARMOR, new List<string>(){"Amount to increase HTK [TODO]", "-", "-", "-"});
+	}
+	
+	
 	#region Static Component Storage and identities
 
 	static List<DesignerToken>MasterDesignerTokenList = new List<DesignerToken>();

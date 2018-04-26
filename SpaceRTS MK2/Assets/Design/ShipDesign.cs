@@ -132,5 +132,4 @@ public class ShipDesign {
 		}
 		Debug.Log ("Done. Check " + path);
 	}
-
 }

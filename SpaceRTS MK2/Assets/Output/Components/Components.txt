@@ -1,0 +1,10 @@
+#
+ffffff
+
+UTILITY
+33
+12
+2
+$
+CONTROL|: Rating 1: |1| Rating 2: |0| Rating 3: |0| Thrust: 0
+
