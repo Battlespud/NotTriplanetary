@@ -1,10 +1,126 @@
 #
-ffffff
-
-UTILITY
-33
-12
-2
++Name: Fuel Cell (S)
++Description: A small fuel cell for lighter craft.
++Component Category: 4
++Mass: 15
++Crew: 0
++Maint: 0
 $
-CONTROL|: Rating 1: |1| Rating 2: |0| Rating 3: |0| Thrust: 0
-
+FUEL|: Rating 1: |1000| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: Fuel Cell
++Description: A refillable fuel cell used to power modern engines.
++Component Category: 4
++Mass: 150
++Crew: 0
++Maint: 0
+$
+FUEL|: Rating 1: |10000| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: Cargo Hold (S)
++Description: Empty space and the infrastructure needed to service it.
++Component Category: 4
++Mass: 25
++Crew: 0
++Maint: 0
+$
+CARGO|: Rating 1: |10| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: Cargo Hold
++Description: Empty space and the infrastructure needed to service it.
++Component Category: 4
++Mass: 250
++Crew: 0
++Maint: 0
+$
+CARGO|: Rating 1: |100| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: Maintenance Locker
++Description: Contains a reserve of maintenance supplies.
++Component Category: 4
++Mass: 25
++Crew: 15
++Maint: 0
+$
+MAINT|: Rating 1: |0| Rating 2: |50| Rating 3: |50| Thrust: 0
+#
++Name: Bridge
++Description: A command and control center for the ship's officers.
++Component Category: 1
++Mass: 50
++Crew: 15
++Maint: 0
+$
+CONTROL|: Rating 1: |0| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: Crew Quarters (S)
++Description: Small area for the crew to sleep, eat and pray.
++Component Category: 1
++Mass: 10
++Crew: 0
++Maint: 0
+$
+CREW|: Rating 1: |10| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: Engineering Section
++Description: Provides engineering personnel and equipment to keep the ship in functional condition.
++Component Category: 4
++Mass: 35
++Crew: 15
++Maint: 0
+$
+MAINT|: Rating 1: |35| Rating 2: |25| Rating 3: |25| Thrust: 0
+#
++Name: Crew Quarters
++Description: Area for the crew to sleep, eat and pray.
++Component Category: 1
++Mass: 100
++Crew: 0
++Maint: 0
+$
+CREW|: Rating 1: |100| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: Manuevering Thruster
++Description: Small thruster mounted on the exterior in order to improve turn rates.
++Component Category: 0
++Mass: 25
++Crew: 10
++Maint: 0
+$
+TURN|: Rating 1: |35| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: CivEngine Mk1
++Description: An engine designed for efficiency.
++Component Category: 2
++Mass: 500
++Crew: 125
++Maint: 0
+$
+THRUST|: Rating 1: |6| Rating 2: |0.75| Rating 3: |1| Thrust: 55
+USEFUEL|: Rating 1: |3000| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: MilEngine Mk1
++Description: An engine designed for maximum thrust with minimum weight.
++Component Category: 2
++Mass: 200
++Crew: 50
++Maint: 0
+$
+THRUST|: Rating 1: |6| Rating 2: |2| Rating 3: |1| Thrust: 52
+USEFUEL|: Rating 1: |6000| Rating 2: |0| Rating 3: |0| Thrust: 0
+#
++Name: Heavy Test
++Description: 
++Component Category: 0
++Mass: 500
++Crew: 200
++Maint: 0
+$
+#
++Name: Light Test
++Description: 
++Component Category: 0
++Mass: 250
++Crew: 50
++Maint: 0
+$

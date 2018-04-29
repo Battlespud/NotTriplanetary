@@ -66,7 +66,7 @@ public class ShipComponentUIManager : MonoBehaviour {
 		}
 		else
 		{
-				Manager.AddComponent(comp , numberOfTimes);
+			Manager.AddComponent(comp , numberOfTimes);
 		}
 	}
 

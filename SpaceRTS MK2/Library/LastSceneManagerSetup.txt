@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Design/Utilities.unity
+- path: Assets/Strategic/Design/Utilities.unity
   isLoaded: 1
   isActive: 1
